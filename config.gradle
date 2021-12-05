@@ -1,0 +1,27 @@
+/*
+ * Copyright: (c) 2009-2019 ChangChun Genghis Corp. All rights reserved.
+ * Created with IntelliJ IDEA on 2019-07-04 17:14:23
+ * Author: Lixin Xu
+ * Version: 1.0
+ * Title: Version of the dependent package.
+ */
+
+ext {
+    version = [
+            // For Developing
+            junit        : '4.12',
+            selenide     : '5.14.2',
+            // For Release
+            snakeyaml    : '1.25',
+            hutool       : '5.2.1',
+            jna          : '5.6.0',
+            oshi         : '5.3.6',
+            dom4j        : '2.1.1',
+            findbugs     : '3.0.1',
+            flyway       : '5.2.4',
+            itext        : '2.1.7',
+            jasperreports: '6.9.0',
+            mysql        : '8.0.22',
+            shiro        : '1.7.0',
+    ]
+}

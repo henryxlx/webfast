@@ -1,0 +1,70 @@
+apply from: 'config.gradle'
+
+buildscript {
+    ext {
+        springBootVersion = '2.2.13.RELEASE'
+        FAST_MIRROR_REPO_URL = 'https://maven.aliyun.com/nexus/content/groups/public/'
+    }
+    repositories {
+        maven { url FAST_MIRROR_REPO_URL }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'org.edunext'
+    version = '0.1.5-SNAPSHOT'
+    sourceCompatibility = 1.8
+    ext {
+        jarVersion = rootProject.ext.version
+    }
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile) {
+            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        maven { url FAST_MIRROR_REPO_URL }
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly('com.google.code.findbugs:annotations:3.0.1')
+        implementation('org.springframework.boot:spring-boot-starter')
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+    }
+
+    jar {
+        enabled = true
+        bootJar.enabled = false
+        manifest {
+            attributes('Implementation-Title': 'Gradle')
+        }
+    }
+
+    test {
+        systemProperty "spring.profiles.active", System.getProperty("spring.profiles.active")
+    }
+}
+
+Task taskForSourceZip = project.task("makeSourceZip", type:Zip){
+    archiveBaseName = "${rootProject.name}-${subprojects.version[0]}"
+    from (project.rootDir){
+        excludes = ['.gradle/**', '.idea/**', 'backup4dev/**', '**/out/**', '**/build/**']
+    }
+    into ("${rootProject.name}")
+    destinationDirectory = file("../${rootProject.name}-backup4dev")
+}
