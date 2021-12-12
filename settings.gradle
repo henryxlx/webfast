@@ -1,4 +1,9 @@
 rootProject.name = 'webfast'
-include 'webfast-common'
-
-
+include 'webfast-common',
+        'webfast-kernel',
+        'webfast-kernel-dao-impl-jdbc',
+        'webfast-kernel-service-impl',
+        'webfast-support-shiro',
+        'webfast-starter-demo',
+        'webfast-webapp',
+        'webfast-webapp-freemarker'
