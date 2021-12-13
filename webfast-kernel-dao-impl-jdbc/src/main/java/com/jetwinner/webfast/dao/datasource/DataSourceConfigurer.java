@@ -4,10 +4,12 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.EncodedResource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -36,6 +38,12 @@ public class DataSourceConfigurer implements DataSourceConfig {
             dataSourceDisabled = true;
             return DummyDateSource.getInstance();
         }
+    }
+
+    @Bean("txManager")
+    @Conditional(AvailableDataSourceCondition.class)
+    public DataSourceTransactionManager txManager(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Override
