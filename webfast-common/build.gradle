@@ -1,10 +1,5 @@
 dependencies {
     implementation("org.yaml:snakeyaml:${jarVersion['snakeyaml']}")
-    implementation("com.github.oshi:oshi-core:${jarVersion['oshi']}")
-    implementation('com.fasterxml.jackson.dataformat:jackson-dataformat-xml')
-    implementation("cn.hutool:hutool-all:${jarVersion['hutool']}")
-    implementation('de.ruedigermoeller:fst:2.57')
-    implementation('org.bouncycastle:bcprov-jdk15on:1.69')
     implementation('org.springframework.boot:spring-boot-starter-aop')
     implementation('org.springframework.boot:spring-boot-starter-web')
 }
