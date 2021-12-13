@@ -227,7 +227,7 @@ public class InstallController {
         if (isNotCurrentStep(session, 4)) {
             return redirectSessionStepPage(session);
         }
-        dataSourceConfig.setDataSourceNotConfiguredProperly(false);
+        dataSourceConfig.setDataSourceDisabled(false);
         return "/install/step4";
     }
 

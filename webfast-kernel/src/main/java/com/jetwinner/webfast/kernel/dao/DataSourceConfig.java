@@ -22,7 +22,7 @@ public interface DataSourceConfig {
         return String.format(buf.toString(), dbHost, dbPort, dbName);
     }
 
-    boolean isDataSourceNotConfiguredProperly();
+    boolean getDataSourceDisabled();
 
-    void setDataSourceNotConfiguredProperly(boolean dataSourceNotConfiguredProperly);
+    void setDataSourceDisabled(boolean dataSourceDisabled);
 }

@@ -43,7 +43,7 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             throws Exception {
 
         if (handler instanceof HandlerMethod) {
-            if (this.dataSourceConfig.isDataSourceNotConfiguredProperly()) {
+            if (this.dataSourceConfig.getDataSourceDisabled()) {
                 response.sendRedirect(request.getContextPath() + INSTALL_PATH);
                 return false;
             }

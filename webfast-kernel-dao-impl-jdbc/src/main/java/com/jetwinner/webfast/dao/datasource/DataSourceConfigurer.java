@@ -18,7 +18,7 @@ import java.util.Properties;
 @Configuration
 public class DataSourceConfigurer implements DataSourceConfig {
 
-    private boolean dataSourceNotConfiguredProperly = false;
+    private boolean dataSourceDisabled = false;
 
     @Value("${custom.app.storage.path}")
     private String appStoragePath;
@@ -26,25 +26,25 @@ public class DataSourceConfigurer implements DataSourceConfig {
     @Bean
     public DataSource dataSource(){
         try {
-            dataSourceNotConfiguredProperly = false;
+            dataSourceDisabled = false;
             Resource resource = new FileSystemResource(appStoragePath + "/datasource.yml");
             Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, "UTF-8"));
             DruidDataSource dataSource = new DruidDataSource();
             dataSource.setConnectProperties(properties);
             return dataSource;
         } catch (Exception e) {
-            dataSourceNotConfiguredProperly = true;
+            dataSourceDisabled = true;
             return DummyDateSource.getInstance();
         }
     }
 
     @Override
-    public boolean isDataSourceNotConfiguredProperly() {
-        return dataSourceNotConfiguredProperly;
+    public boolean getDataSourceDisabled() {
+        return dataSourceDisabled;
     }
 
     @Override
-    public void setDataSourceNotConfiguredProperly(boolean dataSourceNotConfiguredProperly) {
-        this.dataSourceNotConfiguredProperly = dataSourceNotConfiguredProperly;
+    public void setDataSourceDisabled(boolean dataSourceDisabled) {
+        this.dataSourceDisabled = dataSourceDisabled;
     }
 }
