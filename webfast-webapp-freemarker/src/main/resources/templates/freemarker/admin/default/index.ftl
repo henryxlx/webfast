@@ -24,22 +24,6 @@
 
     <div class="col-md-6">
         <div class="panel panel-default">
-
-            <div class="panel-heading clearfix">
-     <span class="pull-right" style="display:block">
-         <span id="onlineNum" data-url="${ctx}/admin/online/count">正在载入在线人数...</span>（<span id="loginNum" data-url="${ctx}/admin/login/count">正在载入登录人数...</span>）
-     </span>
-                <h3 class="panel-title pull-left" id="operation-analysis-title" data-url="${ctx}/admin/operation/analysis"> 数据统计
-
-                </h3>
-            </div>
-            <div id="operation-analysis-table" >
-                <div class="empty">正在载入数据，请稍等。</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title" id="system-status-title" data-url="${ctx}/admin/system/status">系统状态</h3>
             </div>
@@ -49,15 +33,18 @@
         </div>
     </div>
     <div class="col-md-6"></div>
-    <div id="popular-courses-panel" class="col-md-6">
+    <div class="col-md-6">
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <select id="popular-courses-type" class="pull-right" data-url="${ctx}/admin/popular/courses">
-                    <@select_options dict['dateType']!{} RequestParameters['dateType']! />
-                </select>
-                <h3 class="panel-title">受欢迎课程</h3>
+
+            <div class="panel-heading clearfix">
+     <span class="pull-right" style="display:block">
+         <span id="onlineNum" data-url="${ctx}/admin/online/count">正在载入在线人数...</span>（<span id="loginNum" data-url="${ctx}/admin/login/count">正在载入登录人数...</span>）
+     </span>
+                <h3 class="panel-title pull-left" id="operation-analysis-title" data-url="${ctx}/admin/operation/analysis"> 用户统计
+
+                </h3>
             </div>
-            <div id="popular-courses-table">
+            <div id="operation-analysis-table" >
                 <div class="empty">正在载入数据，请稍等。</div>
             </div>
         </div>

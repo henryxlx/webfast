@@ -11,7 +11,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="${csrf_token('site')}" name="csrf-token" />
-    <#assign blockTitleParent>${setting('copyright.owned', 'EduSoho')}管理后台</#assign>
+    <#assign blockTitleParent>${setting('copyright.owned', 'WebFast')}管理后台</#assign>
     <title><#if blockTitle??><@blockTitle/><#else>${blockTitleParent!}</#if></title>
     <#if setting('site.favicon')??>
     <link href="${ctx}/${setting('site.favicon')}" rel="shortcut icon" />
@@ -42,13 +42,17 @@
 
             <ul class="nav navbar-nav">
                 <#if userAcl.hasRole('ROLE_ADMIN')>
-                <li <#if nav! == 'course'>class="active"</#if>><a href="${ctx}/admin/course">课程</a></li>
-                <li <#if nav! == 'user'>class="active"</#if>><a href="${ctx}/admin/user">用户</a></li>
-                <li <#if nav! == 'content'>class="active"</#if>><a href="${ctx}/admin/navigation">内容</a></li>
-                <li <#if nav! == 'group'>class="active"</#if>><a href="${ctx}/admin/group">小组</a></li>
-                <li <#if nav! == 'classroom'>class="active"</#if>><a href="${ctx}/admin/classroom">班级</a></li>
-                <li <#if nav! == 'app'>class="active"</#if>> <a href="${ctx}/admin/app/installed">应用</a>
-                </li>
+                    <#if adminMenus??>
+                    <#else>
+                        <#assign adminMenus = [
+                        {'key':'user', 'title':'用户'},
+                        {'key':'content', 'title':'内容'},
+                        {'key':'group', 'title':'小组'},
+                        {'key':'app', 'title':'应用'}] />
+                    </#if>
+                    <#list adminMenus! as menu>
+                <li <#if nav! == menu.key>class="active"</#if>><a href="${ctx}/admin/${menu.key}">${menu.title}</a></li>
+                    </#list>
                 </#if>
 
                 <#if userAcl.hasRole('ROLE_SUPER_ADMIN')>

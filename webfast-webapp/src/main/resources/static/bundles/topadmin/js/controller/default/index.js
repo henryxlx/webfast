@@ -12,18 +12,9 @@ define(function(require, exports, module) {
             });
         });
 
-        step1();
+        step2();
 
     };
-
-    function step1() {
-        $("#popular-courses-type").on('change', function() {
-            $.get($(this).data('url'), {dateType: this.value}, function(html) {
-                $('#popular-courses-table').html(html);
-                step2();
-            });
-        }).trigger('change');
-    }
 
     function step2() {
         $.post($('#operation-analysis-title').data('url'),function(html){
