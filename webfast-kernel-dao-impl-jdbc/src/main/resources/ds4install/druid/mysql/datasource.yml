@@ -1,0 +1,20 @@
+druid:
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  type: com.alibaba.druid.pool.DruidDataSource
+
+  initiaSize: 5
+  minIdle: 5
+  maxActive: 20
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECE 1 FROM DUAL
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+
+  filters: stat,wall,slf4j
+  maxPoolPrepareStatementPerConnectionSize: 20
+  useGlobalDataSourceStat: true
+  connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
