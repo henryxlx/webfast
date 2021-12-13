@@ -11,11 +11,8 @@
 
 <div class="es-row-wrap container-gap userpage-body">
     <ul class="nav nav-pills userpage-nav clearfix">
-        <#if (user.roles)?? && user.roles?seq_contains('ROLE_TEACHER')>
-        <li <#if pageNav! == 'teach'>class="active"</#if>><a href="${ctx}/user/teach?id=${(user.id)!}">在教课程</a></li>
-        </#if>
-        <li <#if pageNav! == 'learn'>class="active"</#if>><a href="${ctx}/user/learn?id=${(user.id)!}">在学课程</a></li>
-        <li <#if pageNav! == 'favorited'>class="active"</#if>><a href="${ctx}/user/favorited?id=${(user.id)!}">收藏的课程</a></li>
+        <li <#if pageNav! == 'learn'>class="active"</#if>><a href="${ctx}/user/about?id=${(user.id)!}">个人介绍</a></li>
+        <li <#if pageNav! == 'favorited'>class="active"</#if>><a href="${ctx}/user/favorited?id=${(user.id)!}">收藏的内容</a></li>
         <li <#if pageNav! == 'group'>class="active"</#if>><a href="${ctx}/user/group?id=${(user.id)!}">加入的小组</a></li>
         <li <#if pageNav! == 'friend'>class="active"</#if>><a href="${ctx}/user/following?id=${(user.id)!}">关注/粉丝</a></li>
 
