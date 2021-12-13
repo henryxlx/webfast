@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller("webfastAdminAppController")
 public class AdminAppController {
 
-    @RequestMapping("/admin/app/installed")
+    @RequestMapping({"/admin/app", "/admin/app/installed"})
     public String appInstalledPage() {
         return "/admin/app/installed";
     }
