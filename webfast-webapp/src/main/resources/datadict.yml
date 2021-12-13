@@ -1,0 +1,30 @@
+data:
+  dict:
+    contentStatus:
+      published: 已发布
+      unpublished: 未发布
+      trash: 回收站
+    contentType:
+      article: 文章
+      activity: 活动
+      page: 页面
+    courseStatus:
+      draft: 未发布
+      published: 已发布
+      closed: 已关闭
+    dateType:
+      today: 今日
+      yesterday: 昨日
+      this_week: 本周
+      last_week: 上周
+      this_month: 本月
+      last_month: 上月
+    userKeyWordType:
+      nickname: 用户名
+      email: 邮件地址
+      loginIp: 登录IP
+    userRole:
+      ROLE_USER: 学员
+      ROLE_TEACHER: 教师
+      ROLE_ADMIN: 管理员
+      ROLE_SUPER_ADMIN: 超级管理员
