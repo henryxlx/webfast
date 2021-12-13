@@ -1,0 +1,4 @@
+username=admin
+password2plaintext=admin123
+password=xlcCgpKVU0WyymojNTUwzA1IOmYB8KitkBF54DkzWH8=
+salt=74rLDmaXBZ/J76iSchcNZA==
