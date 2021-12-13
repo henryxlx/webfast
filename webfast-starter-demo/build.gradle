@@ -1,0 +1,22 @@
+dependencies {
+    implementation project(':webfast-common')
+    implementation project(':webfast-kernel')
+    implementation project(':webfast-kernel-dao-impl-jdbc')
+    implementation project(':webfast-kernel-service-impl')
+    implementation project(':webfast-support-shiro')
+    implementation project(':webfast-webapp')
+    implementation project(':webfast-webapp-freemarker')
+    implementation("net.java.dev.jna:jna:${jarVersion['jna']}")
+    implementation("net.java.dev.jna:jna-platform:${jarVersion['jna']}")
+    implementation('org.springframework.boot:spring-boot-starter')
+    implementation('org.springframework.boot:spring-boot-starter-cache')
+    implementation('org.springframework.boot:spring-boot-starter-aop')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+}
+
+jar {
+    enabled = false
+    bootJar.enabled = true
+}
+
+uploadArchives.enabled = false

@@ -1,0 +1,24 @@
+shrio:
+  # 开启 Shrio 配置，默认为 true
+  enabled:
+    true
+  # 开启 Shrio Web 配置，默认为 true
+  web:
+    enabled:
+      true
+  # 配置登录地址，默认为"login.jsp"
+  loginUrl:
+    /login
+  # 配置登录成功地址，默认为"/"
+  successUrl:
+    /
+  # 配置未获授权默认跳转地址
+  unauthorizedUrl:
+    /unauthorized
+  # 是否允许通过 URL 参数实现会话跟踪，默认为 true。如果网站支持 Cookie，可以关闭次选项。
+  sessionManager:
+    sessionIdUrlRewritingEnabled:
+      true
+    # 是否允许通过 Cookie 实现会话跟踪，默认为 true。
+    sessionIdCookieEnabled:
+      true
