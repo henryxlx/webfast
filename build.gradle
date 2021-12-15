@@ -21,7 +21,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.jetwinner'
-    version = '0.0.2'
+    version = '0.0.3'
     sourceCompatibility = 1.8
     ext {
         jarVersion = rootProject.ext.version
@@ -57,6 +57,12 @@ subprojects {
 
     test {
         systemProperty "spring.profiles.active", System.getProperty("spring.profiles.active")
+    }
+
+    processResources {
+        filesMatching('application-dev.properties') {
+            expand(project.properties)
+        }
     }
 
     // 获取本地仓库路径
