@@ -16,7 +16,7 @@
 
         <a href="${ctx}/admin/message" class="list-group-item <#if menu! == 'message'>active</#if>">私信管理</a>
 
-        <a href="${ctx}/admin/login/record" class="list-group-item <#if menu! == 'login_record'>active</#if>">用户登录日志</a>
+        <a href="${ctx}/admin/login-record" class="list-group-item <#if menu! == 'login_record'>active</#if>">用户登录日志</a>
     </div>
     </#if>
 </div>
