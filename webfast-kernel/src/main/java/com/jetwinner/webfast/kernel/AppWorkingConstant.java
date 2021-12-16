@@ -11,11 +11,14 @@ public class AppWorkingConstant {
 
     public static final String CHARSET_UTF8 = "UTF-8";
 
-    @Value("${custom.app.debug}")
+    @Value("${custom.app.debug:false}")
     private String debug;
 
-    @Value("${custom.app.version}")
+    @Value("${custom.app.version:5.3.3}")
     private String version;
+
+    @Value("${custom.app.storage.path:d:/webfast/storage}")
+    private String storagePath;
 
     public String getDebug() {
         return debug;
@@ -31,5 +34,13 @@ public class AppWorkingConstant {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getStoragePath() {
+        return storagePath;
+    }
+
+    public void setStoragePath(String storagePath) {
+        this.storagePath = storagePath;
     }
 }
