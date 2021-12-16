@@ -126,7 +126,7 @@ public class InstallController {
 
             String toNewDatabaseJdbcUrl =
                     DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort(), setting.getDbname());
-            runSqlFile("sql/mysql/coursework.sql", toNewDatabaseJdbcUrl,
+            runSqlFile("sql/mysql/webfast-kernel.sql", toNewDatabaseJdbcUrl,
                     setting.getUser(), setting.getPassword());
             buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml",
                     appStoragePath + "/datasource.yml", setting);

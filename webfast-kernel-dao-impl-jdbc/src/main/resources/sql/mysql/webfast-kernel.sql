@@ -1,18 +1,3 @@
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : phpStudy2018
-Source Server Version : 50726
-Source Host           : localhost:3306
-Source Database       : coursework
-
-Target Server Type    : MYSQL
-Target Server Version : 50726
-File Encoding         : 65001
-
-Date: 2021-12-05 08:03:13
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
