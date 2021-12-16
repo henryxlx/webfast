@@ -24,7 +24,7 @@
 <div class="install-container">
     <div class="paper">
         <div class="paper-heading">
-            <h1><span class="brand">WebFast开发平台</span> <span class="text-muted">安装向导 <small class="text-info">v${app_version!'5.3.2'}</small></span></h1>
+            <h1><span class="brand">WebFast开发平台</span> <span class="text-muted">安装向导 <small class="text-info">v${(appConst.version)!'5.3.2'}</small></span></h1>
         </div>
         <div class="paper-body">
             <#if step?? && step gt 0>
