@@ -1,11 +1,14 @@
 <#include '/article/layout.ftl'>
 
 <#macro blockArticleMain>
-{% include 'TopxiaWebBundle:Article:nav.html.twig' %}
 
-{% if not featuredArticles and is_granted('ROLE_ADMIN') %}
-<div class="alert alert-warning">头条大图轮播功能需先在后台资讯管理页面给正文上传图片以及添加头条属性<a href="{{ path('admin_article') }}">前往设置</a></div>
-{% endif %}
+    <#include '/article/nav.ftl'/>
+
+<#if featuredArticles??><#else>
+    <#if userAcl.hasRole('ROLE_ADMIN')>
+<div class="alert alert-warning">头条大图轮播功能需先在后台资讯管理页面给正文上传图片以及添加头条属性<a href="${ctx}/admin/article">前往设置</a></div>
+    </#if>
+</#if>
 
 <#if featuredArticles??>
 <div class="homepage-feature homepage-feature-slides mbl" data-cycle-overlay-template='{% verbatim %}{{title}}{% endverbatim %}'>
@@ -51,6 +54,6 @@
 </#macro>
 
 <#macro blockArticleSide>
-{{ render(controller('TopxiaWebBundle:Article:popularArticlesBlock')) }}
-{{ render(controller('TopxiaWebBundle:Article:recommendArticlesBlock')) }}
+    <@renderController path='/article/popularArticlesBlock' />
+    <@renderController path='/article/recommendArticlesBlock' />
 </#macro>
