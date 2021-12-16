@@ -6,7 +6,7 @@
 <link rel="stylesheet" media="screen" href="${ctx}/bundles/topxiaweb/css/article.css" />
 </#macro>
 
-<#macro blockTitle>${setting.name} - ${blockTitleParent}</#macro>
+<#macro blockTitle>${(articleSetting.name)!} - ${blockTitleParent}</#macro>
 
 <#macro blockContent>
 
@@ -15,7 +15,7 @@
     <#if blockArticleHeader??><@blockArticleHeader/><#else>
       <div class="row">
         <div class="col-md-12">
-          <div class="page-header"><h1>${(setting.name)!}</h1></div>
+          <div class="page-header"><h1>${(articleSetting.name)!}</h1></div>
         </div>
       </div>
     </#if>
