@@ -18,7 +18,7 @@
         <label for="name">频道名称</label>
       </div>
       <div class="col-md-8 controls">
-        <input type="text" id="name" name="name" class="form-control" value="{{ articleSetting.name }}">
+        <input type="text" id="name" name="name" class="form-control" value="${(articleSetting.name)!}">
       </div>
     </div>
 
@@ -27,7 +27,7 @@
         <label for="pageNums">列表每页资讯数</label> 
       </div>
       <div class="col-md-8 controls">
-        <input type="text" id="pageNums" name="pageNums" class="form-control" value="{{ articleSetting.pageNums }}">
+        <input type="text" id="pageNums" name="pageNums" class="form-control" value="${(articleSetting.pageNums)!}">
       </div>
     </div>
 
