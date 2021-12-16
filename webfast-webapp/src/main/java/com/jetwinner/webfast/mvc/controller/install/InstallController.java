@@ -32,15 +32,19 @@ import java.util.Map;
 public class InstallController {
 
     private DataSourceConfig dataSourceConfig;
+    private AppWorkingConstant appWorkingConstant;
 
-    public InstallController(DataSourceConfig dataSourceConfig) {
+    public InstallController(DataSourceConfig dataSourceConfig,
+                             AppWorkingConstant appWorkingConstant) {
+
         this.dataSourceConfig = dataSourceConfig;
+        this.appStoragePath = appWorkingConstant.getStoragePath();
+        this.appWorkingConstant = appWorkingConstant;
     }
 
     /**
      * 应用程序使用外部存储位置路径
      */
-    @Value("${custom.app.storage.path}")
     private String appStoragePath;
 
     /**

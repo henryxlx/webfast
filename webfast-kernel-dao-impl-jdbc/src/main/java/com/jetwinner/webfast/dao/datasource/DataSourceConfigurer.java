@@ -1,10 +1,8 @@
 package com.jetwinner.webfast.dao.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.jetwinner.util.NamingUtil;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -23,14 +21,17 @@ public class DataSourceConfigurer implements DataSourceConfig {
 
     private boolean dataSourceDisabled = false;
 
-    @Value("${custom.app.storage.path}")
-    private String appStoragePath;
+    private AppWorkingConstant appConst;
+
+    public DataSourceConfigurer(AppWorkingConstant constant) {
+        this.appConst = constant;
+    }
 
     @Bean
     public DataSource dataSource(){
         try {
             dataSourceDisabled = false;
-            Resource resource = new FileSystemResource(appStoragePath + "/datasource.yml");
+            Resource resource = new FileSystemResource(appConst.getStoragePath() + "/datasource.yml");
             Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, AppWorkingConstant.CHARSET_UTF8));
             DruidDataSource dataSource = new DruidDataSource();
             dataSource.setConnectProperties(properties);
