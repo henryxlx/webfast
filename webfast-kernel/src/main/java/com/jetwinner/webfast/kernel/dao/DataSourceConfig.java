@@ -5,6 +5,9 @@ package com.jetwinner.webfast.kernel.dao;
  */
 public interface DataSourceConfig {
 
+    String MYSQL_NEW_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
+    String MYSQL_OLD_DRIVER_CLASS = "com.mysql.jdbc.Driver";
+
     String JDBC_URL_MYSQL_HOST_FORMATTER = "jdbc:mysql://%s:%s";
     String JDBC_URL_DATABASE_SETTING_FORMATTER = "?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai";
 
