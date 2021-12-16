@@ -4,9 +4,9 @@ import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
-import org.apache.ibatis.jdbc.ScriptRunner;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
+import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -31,8 +32,15 @@ import java.util.Map;
 @Controller
 public class InstallController {
 
-    private DataSourceConfig dataSourceConfig;
-    private AppWorkingConstant appWorkingConstant;
+    private static final String STEP_KEY = "step";
+    private static final int STEP_0 = 0;
+    private static final int STEP_1 = 1;
+    private static final int STEP_2 = 2;
+    private static final int STEP_3 = 3;
+    private static final int STEP_4 = 4;
+
+    private final DataSourceConfig dataSourceConfig;
+    private final AppWorkingConstant appWorkingConstant;
 
     public InstallController(DataSourceConfig dataSourceConfig,
                              AppWorkingConstant appWorkingConstant) {
@@ -45,7 +53,7 @@ public class InstallController {
     /**
      * 应用程序使用外部存储位置路径
      */
-    private String appStoragePath;
+    private final String appStoragePath;
 
     /**
      * 单个文件的最大上限
@@ -59,25 +67,35 @@ public class InstallController {
     @Value("${spring.servlet.multipart.max-request-size}")
     private String postMaxsize;
 
+    private ModelAndView toModelAndView() {
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("appConst", appWorkingConstant);
+        return mav;
+    }
+
     @RequestMapping("/install")
-    public String indexPage(HttpSession session) {
-        session.setAttribute("step", 0);
-        return "/install/index";
+    public ModelAndView indexPage(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        session.setAttribute(STEP_KEY, STEP_0);
+        mav.setViewName("/install/index");
+        return mav;
     }
 
     @GetMapping("/install/step1")
-    public String step1Page(HttpSession session, Model model) {
-        session.setAttribute("step", 1);
+    public ModelAndView step1Page(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        session.setAttribute(STEP_KEY, STEP_1);
         SystemInfoBean systemInfoBean = new SystemInfoBean();
-        model.addAttribute("envOs", systemInfoBean.getOsInfo());
-        model.addAttribute("javaVersion", systemInfoBean.getJavaVersion());
-        model.addAttribute("jvmVersion", systemInfoBean.getJvmVersion());
-        model.addAttribute("mysqlOk", checkMysqlJdbcDriver());
-        model.addAttribute("appStoragePath", appStoragePath);
-        model.addAttribute("appStoragePathOk", checkPathExist(appStoragePath));
-        model.addAttribute("uploadMaxFilesize", uploadMaxFilesize);
-        model.addAttribute("postMaxsize", postMaxsize);
-        return "/install/step1";
+        mav.addObject("envOs", systemInfoBean.getOsInfo());
+        mav.addObject("javaVersion", systemInfoBean.getJavaVersion());
+        mav.addObject("jvmVersion", systemInfoBean.getJvmVersion());
+        mav.addObject("mysqlOk", checkMysqlJdbcDriver());
+        mav.addObject("appStoragePath", appStoragePath);
+        mav.addObject("appStoragePathOk", checkPathExist(appStoragePath));
+        mav.addObject("uploadMaxFilesize", uploadMaxFilesize);
+        mav.addObject("postMaxsize", postMaxsize);
+        mav.setViewName("/install/step1");
+        return mav;
     }
 
     private Boolean checkMysqlJdbcDriver() {
@@ -100,7 +118,7 @@ public class InstallController {
 
     @PostMapping("/install/step1")
     public String checkAppConfigPassAction(HttpSession session) {
-        session.setAttribute("step", 2);
+        session.setAttribute(STEP_KEY, STEP_2);
         return "redirect:/install/step2";
     }
 
@@ -114,11 +132,14 @@ public class InstallController {
     }
 
     @GetMapping("/install/step2")
-    public String step2Page(HttpSession session) {
-        if (isNotCurrentStep(session, 2)) {
-            return redirectSessionStepPage(session);
+    public ModelAndView step2Page(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        if (isNotCurrentStep(session, STEP_2)) {
+            mav.setViewName(redirectSessionStepPage(session));
+        } else {
+            mav.setViewName("/install/step2");
         }
-        return "/install/step2";
+        return mav;
     }
 
     @PostMapping("/install/step2")
@@ -135,7 +156,7 @@ public class InstallController {
                     setting.getUser(), setting.getPassword());
             buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml",
                     appStoragePath + "/datasource.yml", setting);
-            session.setAttribute("step", 3);
+            session.setAttribute(STEP_KEY, STEP_3);
             return "redirect:/install/step3";
         } catch (Exception e) {
             model.addAttribute("error", "数据库创建失败：" + e.getMessage());
@@ -214,26 +235,32 @@ public class InstallController {
     }
 
     @GetMapping("/install/step3")
-    public String step3Page(HttpSession session) {
-        if (isNotCurrentStep(session, 3)) {
-            return redirectSessionStepPage(session);
+    public ModelAndView step3Page(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        if (isNotCurrentStep(session, STEP_3)) {
+            mav.setViewName(redirectSessionStepPage(session));
+        } else {
+            mav.setViewName("/install/step3");
         }
-        return "/install/step3";
+        return mav;
     }
 
     @PostMapping("/install/step3")
     public String doSiteConfigAction(HttpSession session) {
-        session.setAttribute("step", 4);
+        session.setAttribute(STEP_KEY, STEP_4);
         return "redirect:/install/step4";
     }
 
     @GetMapping("/install/step4")
-    public String step4Page(HttpSession session) {
-        if (isNotCurrentStep(session, 4)) {
-            return redirectSessionStepPage(session);
+    public ModelAndView step4Page(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        if (isNotCurrentStep(session, STEP_4)) {
+            mav.setViewName(redirectSessionStepPage(session));
+        } else {
+            dataSourceConfig.setDataSourceDisabled(false);
+            mav.setViewName("/install/step4");
         }
-        dataSourceConfig.setDataSourceDisabled(false);
-        return "/install/step4";
+        return mav;
     }
 
     @PostMapping("/install/finish")
