@@ -2,6 +2,7 @@ package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
@@ -217,12 +218,13 @@ public class InstallController {
                     if (strLineData.startsWith("druid:")) {
                         writer.write(strLineData);
                         writer.newLine();
-                        writer.write("  username: " + setting.getUser());
+                        writer.write("  username: " + StringEncoderUtil.encode(setting.getUser()));
                         writer.newLine();
-                        writer.write("  password: " + setting.getPassword());
+                        writer.write("  password: " + StringEncoderUtil.encode(setting.getPassword()));
                         writer.newLine();
-                        writer.write("  url: " + DataSourceConfig.getMysqlJdbcUrl(setting.getHost(),
-                                setting.getPort(), setting.getDbname()));
+                        String url = DataSourceConfig.getMysqlJdbcUrl(setting.getHost(),
+                                setting.getPort(), setting.getDbname());
+                        writer.write("  url: " + StringEncoderUtil.encode(url));
                         writer.newLine();
                     } else {
                         writer.write(strLineData);
