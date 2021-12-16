@@ -82,8 +82,8 @@ public class InstallController {
 
     private Boolean checkMysqlJdbcDriver() {
         try {
-            // This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'.
-            Class.forName("com.mysql.jdbc.Driver");
+            // Driver class `com.mysql.jdbc.Driver` is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver`.
+            Class.forName(DataSourceConfig.MYSQL_NEW_DRIVER_CLASS);
             return Boolean.TRUE;
         } catch (ClassNotFoundException e) {
             return Boolean.FALSE;
