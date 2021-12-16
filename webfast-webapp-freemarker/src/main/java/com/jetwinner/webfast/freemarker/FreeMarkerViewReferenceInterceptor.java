@@ -68,7 +68,7 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             return;
         }
 
-//        mav.addObject("appConst", appWorkingConstant);
+        mav.addObject("appConst", appWorkingConstant);
         mav.addObject("ctx", request.getContextPath());
         mav.addObject("dict", dataDictHolder.getDict());
         mav.addObject("userAcl", userAccessControlService);
