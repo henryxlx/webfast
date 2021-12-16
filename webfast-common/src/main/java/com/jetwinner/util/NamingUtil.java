@@ -9,7 +9,6 @@ import static org.springframework.util.StringUtils.uncapitalize;
 public class NamingUtil {
 
     private static final char SEPARATOR = '_';
-    private static final String CHARSET_NAME = "UTF-8";
 
     private NamingUtil() {
         // reserved.
