@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.install;
 import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.util.ValueParser;
+import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
@@ -184,7 +185,7 @@ public class InstallController {
 
         Resource resource = new ClassPathResource(fromFileClasspath);
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(resource.getInputStream(), "UTF-8"))) {
+                new InputStreamReader(resource.getInputStream(), AppWorkingConstant.CHARSET_UTF8))) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(toFilePath))) {
                 String strLineData;
                 while ((strLineData = reader.readLine()) != null) {

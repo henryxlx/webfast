@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class AppWorkingConstant {
 
+    public static final String CHARSET_UTF8 = "UTF-8";
+
     @Value("${custom.app.debug}")
     private String debug;
 

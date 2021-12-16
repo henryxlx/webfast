@@ -1,6 +1,8 @@
 package com.jetwinner.webfast.dao.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.jetwinner.util.NamingUtil;
+import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +31,7 @@ public class DataSourceConfigurer implements DataSourceConfig {
         try {
             dataSourceDisabled = false;
             Resource resource = new FileSystemResource(appStoragePath + "/datasource.yml");
-            Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, "UTF-8"));
+            Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, AppWorkingConstant.CHARSET_UTF8));
             DruidDataSource dataSource = new DruidDataSource();
             dataSource.setConnectProperties(properties);
             return dataSource;
