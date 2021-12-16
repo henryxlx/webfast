@@ -1,6 +1,6 @@
 <script>
     var app = {};
-    app.debug = <#if appDebug?? && appDebug>true<#else>false</#if>;
+    app.debug = ${(appConst.debug)!'false'};
     app.version = '5.3.2';
     app.httpHost = '${webExtPack.getSchemeAndHttpHost()}';
     app.basePath = '${webExtPack.getBasePath()}';

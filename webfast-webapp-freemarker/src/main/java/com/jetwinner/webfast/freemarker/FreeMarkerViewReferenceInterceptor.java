@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.freemarker;
 
 import com.jetwinner.webfast.DataDictHolder;
+import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.service.UserAccessControlService;
@@ -22,16 +23,19 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
 
     private static final String INSTALL_PATH = "/install";
 
+    private final AppWorkingConstant appWorkingConstant;
     private final DataSourceConfig dataSourceConfig;
     private final DataDictHolder dataDictHolder;
     private final UserAccessControlService userAccessControlService;
     private final ApplicationContext applicationContext;
 
-    public FreeMarkerViewReferenceInterceptor(DataSourceConfig dataSourceConfig,
+    public FreeMarkerViewReferenceInterceptor(AppWorkingConstant appWorkingConstant,
+                                              DataSourceConfig dataSourceConfig,
                                               DataDictHolder dataDictHolder,
                                               UserAccessControlService userAccessControlService,
                                               ApplicationContext applicationContext) {
 
+        this.appWorkingConstant = appWorkingConstant;
         this.dataSourceConfig = dataSourceConfig;
         this.dataDictHolder = dataDictHolder;
         this.userAccessControlService = userAccessControlService;
@@ -64,6 +68,7 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             return;
         }
 
+//        mav.addObject("appConst", appWorkingConstant);
         mav.addObject("ctx", request.getContextPath());
         mav.addObject("dict", dataDictHolder.getDict());
         mav.addObject("userAcl", userAccessControlService);
