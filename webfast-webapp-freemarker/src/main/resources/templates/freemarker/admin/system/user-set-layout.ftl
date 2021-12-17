@@ -9,7 +9,7 @@
         </a>
     </li>
     <li class="<#if submenu! == 'login_bind'>active</#if>">
-        <a href="${ctx}/admin/setting/login-bind">登录设置
+        <a href="${ctx}/admin/setting/login-connect">登录设置
         </a>
     </li>
     <li class="<#if submenu! == 'user_center'>active</#if>">

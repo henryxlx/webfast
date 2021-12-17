@@ -35,6 +35,26 @@ public class SystemDefaultSettingController {
         return "/admin/system/auth";
     }
 
+    @RequestMapping("/admin/setting/login-connect")
+    public String loginConnectPage() {
+        return "/admin/system/login-connect";
+    }
+
+    @RequestMapping("/admin/setting/user-center")
+    public String userCenterPage() {
+        return "/admin/system/user-center";
+    }
+
+    @RequestMapping("/admin/setting/admin-sync")
+    public String adminSyncPage() {
+        return "/admin/system/admin-sync";
+    }
+
+    @RequestMapping("/admin/setting/user-fields")
+    public String userFieldsPage() {
+        return "/admin/system/user-fields";
+    }
+
     @RequestMapping("/admin/setting/mobile")
     public String mobilePage(Model model) {
         return "/admin/system/mobile";
