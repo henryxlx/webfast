@@ -1,10 +1,15 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.spring.YmlPropertySourceFactory;
 import com.jetwinner.webfast.kernel.AppUser;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,22 +17,42 @@ import java.util.Set;
  */
 @Primary
 @Service
+@PropertySource("classpath:buildin-user.properties")
+@ConfigurationProperties(prefix = "prop")
 public class FakeAppUserServiceImpl implements AppUserService {
+
+    private List<AppUser> users = new ArrayList<>();
+
+    public List<AppUser> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<AppUser> users) {
+        this.users = users;
+    }
 
     @Override
     public AppUser getByUsername(String username) {
         AppUser appUser = new AppUser();
-        appUser.setUsername("admin");
-        appUser.setPassword("xlcCgpKVU0WyymojNTUwzA1IOmYB8KitkBF54DkzWH8=");
-        appUser.setSalt("74rLDmaXBZ/J76iSchcNZA==");
-        appUser.setLocked(0);
+        if (users != null) {
+            for (AppUser user : users) {
+                if (username.equals(user.getUsername())) {
+                    appUser.setUsername(user.getUsername());
+                    appUser.setPassword(user.getPassword());
+                    appUser.setSalt(user.getSalt());
+                    appUser.setLocked(0);
+                    break;
+                }
+            }
+        }
+
         return appUser;
     }
 
     @Override
     public Set<String> findRolesByUsername(String username) {
         Set<String> roles = new HashSet<>();
-        if ("admin".equals(username)) {
+        if ("admin".equals(username) || "super".equals(username)) {
             roles.add("ROLE_BACKEND");
             roles.add("ROLE_ADMIN");
             roles.add("ROLE_SUPER_ADMIN");
