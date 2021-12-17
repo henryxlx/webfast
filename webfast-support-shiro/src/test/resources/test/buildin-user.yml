@@ -1,0 +1,11 @@
+data:
+  users:
+    - username: admin
+      password: xlcCgpKVU0WyymojNTUwzA1IOmYB8KitkBF54DkzWH8=
+      salt: 74rLDmaXBZ/J76iSchcNZA==
+    - username: super
+      password: FxnzDXLOO8yqOqg64RA5erBujL+iw3z8UvuTr+Y16Ak=
+      salt: 2pfHj21OUy1rBfVGyCb6qw==
+    - username: test
+      password: RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=
+      salt: FYMMdLVItihBsvfsp+ImFg==
