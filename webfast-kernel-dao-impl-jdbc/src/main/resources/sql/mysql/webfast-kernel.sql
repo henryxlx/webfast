@@ -6,8 +6,8 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `app_role`;
 CREATE TABLE `app_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL COMMENT '权限名称',
-  `code` varchar(32) NOT NULL COMMENT '权限代码',
+  `label` varchar(32) NOT NULL COMMENT '权限名称',
+  `roleName` varchar(32) NOT NULL COMMENT '权限代码',
   `data` text COMMENT '权限配置',
   `data_v2` text COMMENT 'admin_v2权限配置',
   `createdTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
@@ -34,7 +34,7 @@ CREATE TABLE `app_setting` (
   `value` longblob COMMENT '系统设置值',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of app_setting
@@ -46,7 +46,6 @@ INSERT INTO `app_setting` VALUES ('4', 'storage', 0x613A353A7B733A31313A2275706C
 INSERT INTO `app_setting` VALUES ('5', 'theme', 0x613A313A7B733A333A22757269223B733A373A2264656661756C74223B7D);
 INSERT INTO `app_setting` VALUES ('6', 'article', 0x613A323A7B733A343A226E616D65223B733A31323A22E8B584E8AEAFE9A291E98193223B733A383A22706167654E756D73223B693A32303B7D);
 INSERT INTO `app_setting` VALUES ('7', 'default', 0x613A333A7B733A393A22757365725F6E616D65223B733A363A22E5ADA6E59198223B733A31323A22636861707465725F6E616D65223B733A333A22E7ABA0223B733A393A22706172745F6E616D65223B733A333A22E88A82223B7D);
-INSERT INTO `app_setting` VALUES ('8', 'course', 0x613A303A7B7D);
 
 -- ----------------------------
 -- Table structure for `app_user`
@@ -58,15 +57,10 @@ CREATE TABLE `app_user` (
   `verifiedMobile` varchar(32) NOT NULL DEFAULT '',
   `password` varchar(64) NOT NULL COMMENT '用户密码',
   `salt` varchar(32) NOT NULL COMMENT '密码SALT',
-  `payPassword` varchar(64) NOT NULL DEFAULT '' COMMENT '支付密码',
-  `payPasswordSalt` varchar(64) NOT NULL DEFAULT '' COMMENT '支付密码Salt',
-  `uri` varchar(64) NOT NULL DEFAULT '' COMMENT '用户URI',
-  `nickname` varchar(64) NOT NULL COMMENT '昵称',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
+  `username` varchar(64) NOT NULL COMMENT '用户名',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '头衔',
   `tags` varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
   `type` varchar(32) NOT NULL COMMENT 'default默认为网站注册, weibo新浪微薄登录',
-  `point` int(11) NOT NULL DEFAULT '0' COMMENT '积分',
-  `coin` int(11) NOT NULL DEFAULT '0' COMMENT '金币',
   `smallAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '小头像',
   `mediumAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '中头像',
   `largeAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '大头像',
@@ -90,11 +84,11 @@ CREATE TABLE `app_user` (
   `createdTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `nickname` (`nickname`)
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of app_user
 -- ----------------------------
-INSERT INTO `app_user` VALUES ('1', 'admin@hotmail.com', '', 'iYu/f2/FOqHXSHknn0zeME5LCgoeawK1TWonLSsIKgg=', 'hjaisyfl080kog88ks040owc0o0gcok', '', '', '', 'admin', 'Bookfan', '', 'default', '0', '0', 'public://user/2021/10-31/162139305458301713.jpg', 'public://user/2021/10-31/16213930449e898200.jpg', 'public://user/2021/10-31/162139302286665315.jpg', '0', '1', '|ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN|', '0', '0', '0', '0', '0', '0', '1635668402', '::1', 'l04bkr6d261jsfeg3tn25hltin', '0', 'unapprove', '0', '0', '', '1635668142');
-INSERT INTO `app_user` VALUES ('2', 'test123@qq.com', '', 'cMd9BQbbpZr6UuJ/nths3ffJkT2xlYx+wbkwNe/STyw=', 'o744eg0pn34gkgos4c8s8s8wo4wgswk', '', '', '', 'test4student', '', '', 'default', '0', '0', '', '', '', '0', '1', '|ROLE_USER|', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723');
+INSERT INTO `app_user` VALUES ('1', 'super@hotmail.com', '', 'FxnzDXLOO8yqOqg64RA5erBujL+iw3z8UvuTr+Y16Ak=', '2pfHj21OUy1rBfVGyCb6qw==', 'super', 'Bookfan', '', 'default', 'public://user/2021/10-31/162139305458301713.jpg', 'public://user/2021/10-31/16213930449e898200.jpg', 'public://user/2021/10-31/162139302286665315.jpg', '0', '1', '|ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN|', '0', '0', '0', '0', '0', '0', '1635668402', '::1', 'l04bkr6d261jsfeg3tn25hltin', '0', 'unapprove', '0', '0', '', '1635668142');
+INSERT INTO `app_user` VALUES ('2', 'test4user@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=', 'FYMMdLVItihBsvfsp+ImFg==', 'test4user', '', '', 'default', '', '', '', '0', '1', '|ROLE_USER|', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723');
