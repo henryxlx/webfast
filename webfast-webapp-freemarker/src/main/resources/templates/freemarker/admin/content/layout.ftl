@@ -20,7 +20,7 @@
             <a href="${ctx}/admin/article" class="list-group-item <#if menu! == 'article'>active</#if>">资讯管理</a>
             <a href="${ctx}/admin/article/category" class="list-group-item <#if menu! == 'category'>active</#if>">栏目管理</a>
             <a href="${ctx}/admin/article/setting" class="list-group-item <#if menu! == 'setting'>active</#if>">资讯频道设置</a>
-            <a class="list-group-item" href="${ctx}/article" target="_blank">资讯频道首页</a>
+            <a href="${ctx}/article" class="list-group-item">资讯频道首页</a>
         </div>
     </div>
 
