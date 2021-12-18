@@ -1,9 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.platform.SystemInfoBean;
-import com.jetwinner.util.MapUtil;
-import com.jetwinner.util.StringEncoderUtil;
-import com.jetwinner.util.ValueParser;
+import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
@@ -25,6 +23,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,6 +49,9 @@ public class InstallController {
         this.appStoragePath = appWorkingConstant.getStoragePath();
         this.appWorkingConstant = appWorkingConstant;
     }
+
+    @Value("${custom.app.install.sqlscript.classpath:}")
+    private String customInstallSqlScriptClasspath;
 
     /**
      * 应用程序使用外部存储位置路径
@@ -153,8 +155,7 @@ public class InstallController {
 
             String toNewDatabaseJdbcUrl =
                     DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort(), setting.getDbname());
-            runSqlFile("sql/mysql/webfast-kernel.sql", toNewDatabaseJdbcUrl,
-                    setting.getUser(), setting.getPassword());
+            batchRunSqlFile(toNewDatabaseJdbcUrl, setting.getUser(), setting.getPassword());
             buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml",
                     appStoragePath + "/datasource.yml", setting);
             session.setAttribute(STEP_KEY, STEP_3);
@@ -179,6 +180,39 @@ public class InstallController {
             }
         } catch (SQLException se) {
             throw new ActionGraspException("无法连接数据库！ " + se.getMessage());
+        }
+    }
+
+    private boolean checkResourceExist(String location) {
+        ClassPathResource resource = new ClassPathResource(location);
+        return resource.exists();
+    }
+
+    private void parseMultipleClasspath(List<String> list, String manyPath) {
+        if (EasyStringUtil.isBlank(manyPath)) {
+            return;
+        }
+        String[] arrPath = manyPath.split(",");
+        if (arrPath == null || arrPath.length < 1) {
+            return;
+        }
+        for (String path : arrPath) {
+            if (EasyStringUtil.isNotBlank(path)) {
+                String sqlScriptClassPath = path.trim();
+                if (checkResourceExist(sqlScriptClassPath)) {
+                    list.add(sqlScriptClassPath);
+                }
+            }
+        }
+    }
+
+    private void batchRunSqlFile(String jdbcUrl, String jdbcUsername, String jdbcPassword)
+            throws SQLException, IOException {
+
+        List<String> sqlFiles = ListUtil.newArrayList("sql/mysql/webfast-kernel.sql");
+        parseMultipleClasspath(sqlFiles, customInstallSqlScriptClasspath);
+        for (String sqlFile : sqlFiles) {
+            runSqlFile(sqlFile, jdbcUrl, jdbcUsername, jdbcPassword);
         }
     }
 
