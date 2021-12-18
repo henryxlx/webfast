@@ -158,6 +158,7 @@ public class InstallController {
             buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml",
                     appStoragePath + "/datasource.yml", setting);
             session.setAttribute(STEP_KEY, STEP_3);
+            dataSourceConfig.reloadDataSource();
             return "redirect:/install/step3";
         } catch (Exception e) {
             model.addAttribute("error", "数据库创建失败：" + e.getMessage());

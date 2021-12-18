@@ -5,6 +5,8 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
@@ -22,16 +24,27 @@ import java.util.Set;
 @Configuration
 public class DataSourceConfigurer implements DataSourceConfig {
 
+    static final String DEFAULT_DATA_SOURCE_BEAN_NAME = "dataSource";
+    static final String DEFAULT_TRANSACTION_BEAN_NAME = "txManager";
+
     private boolean dataSourceDisabled = false;
 
     private final AppWorkingConstant appConst;
+    private final ApplicationContext applicationContext;
 
-    public DataSourceConfigurer(AppWorkingConstant constant) {
+    public DataSourceConfigurer(AppWorkingConstant constant,
+                                ApplicationContext applicationContext) {
+
         this.appConst = constant;
+        this.applicationContext = applicationContext;
     }
 
-    @Bean
-    public DataSource dataSource(){
+    @Bean(DEFAULT_DATA_SOURCE_BEAN_NAME)
+    public DataSource dataSource() {
+        return createDataSource();
+    }
+
+    private DataSource createDataSource() {
         try {
             dataSourceDisabled = false;
             Resource resource = new FileSystemResource(appConst.getStoragePath() + "/datasource.yml");
@@ -51,7 +64,7 @@ public class DataSourceConfigurer implements DataSourceConfig {
         }
     }
 
-    @Bean("txManager")
+    @Bean(DEFAULT_TRANSACTION_BEAN_NAME)
     public DataSourceTransactionManager txManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
@@ -64,5 +77,16 @@ public class DataSourceConfigurer implements DataSourceConfig {
     @Override
     public void setDataSourceDisabled(boolean dataSourceDisabled) {
         this.dataSourceDisabled = dataSourceDisabled;
+    }
+
+    @Override
+    public void reloadDataSource() {
+        DefaultListableBeanFactory beanFactory =
+                (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
+        beanFactory.removeBeanDefinition(DEFAULT_TRANSACTION_BEAN_NAME);
+        beanFactory.removeBeanDefinition(DEFAULT_DATA_SOURCE_BEAN_NAME);
+        DataSource dataSource = createDataSource();
+        beanFactory.registerSingleton(DEFAULT_DATA_SOURCE_BEAN_NAME, dataSource);
+        beanFactory.registerSingleton(DEFAULT_TRANSACTION_BEAN_NAME, new DataSourceTransactionManager(dataSource));
     }
 }

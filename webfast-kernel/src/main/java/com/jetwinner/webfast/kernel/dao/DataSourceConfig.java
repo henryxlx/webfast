@@ -28,4 +28,6 @@ public interface DataSourceConfig {
     boolean getDataSourceDisabled();
 
     void setDataSourceDisabled(boolean dataSourceDisabled);
+
+    void reloadDataSource();
 }
