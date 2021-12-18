@@ -15,11 +15,10 @@ import java.util.Set;
 /**
  * @author xulixin
  */
-@Primary
 @Service
 @PropertySource(value = {"classpath:test/buildin-user.yml"}, factory = YmlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "data")
-public class FakeAppUserServiceImpl implements AppUserService {
+public class TestAppUserServiceWithYmlFile implements AppUserService {
 
     private List<AppUser> users = new ArrayList<>();
 
