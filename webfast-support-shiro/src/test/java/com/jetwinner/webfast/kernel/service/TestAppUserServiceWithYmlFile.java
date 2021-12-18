@@ -18,7 +18,7 @@ import java.util.Set;
 @Service
 @PropertySource(value = {"classpath:test/buildin-user.yml"}, factory = YmlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "data")
-public class TestAppUserServiceWithYmlFile implements AppUserService {
+public class TestAppUserServiceWithYmlFile {
 
     private List<AppUser> users = new ArrayList<>();
 
@@ -30,7 +30,6 @@ public class TestAppUserServiceWithYmlFile implements AppUserService {
         this.users = users;
     }
 
-    @Override
     public AppUser getByUsername(String username) {
         AppUser appUser = new AppUser();
         if (users != null) {
@@ -48,21 +47,4 @@ public class TestAppUserServiceWithYmlFile implements AppUserService {
         return appUser;
     }
 
-    @Override
-    public Set<String> findRolesByUsername(String username) {
-        Set<String> roles = new HashSet<>();
-        if ("admin".equals(username) || "super".equals(username)) {
-            roles.add("ROLE_BACKEND");
-            roles.add("ROLE_ADMIN");
-            roles.add("ROLE_SUPER_ADMIN");
-        } else {
-            roles.add("ROLE_GUEST");
-        }
-        return roles;
-    }
-
-    @Override
-    public Set<String> findPermissionsByUsername(String username) {
-        return new HashSet<>(0);
-    }
 }
