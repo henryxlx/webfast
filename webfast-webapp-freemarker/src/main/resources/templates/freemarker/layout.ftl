@@ -128,7 +128,7 @@
     </div>
 
     <div id="content-container" class="container">
-        <#if appUser?? && appUser.setup == 0 && (!hideSetupHint?? || hideSetupHint != true)>
+        <#if (appUser.setup)?? && appUser.setup == 0 && (!hideSetupHint?? || hideSetupHint != true)>
             <div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 为了帐号的安全，以及更好的使用体验，请设置您的Email地址。
