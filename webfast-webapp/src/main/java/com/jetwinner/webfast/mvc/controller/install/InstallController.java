@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.platform.SystemInfoBean;
+import com.jetwinner.spring.SpringBootAppContextHandler;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
@@ -11,10 +12,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -39,12 +37,15 @@ public class InstallController {
     private static final int STEP_3 = 3;
     private static final int STEP_4 = 4;
 
+    private final FastAppSetupServiceImpl setupService;
     private final DataSourceConfig dataSourceConfig;
     private final AppWorkingConstant appWorkingConstant;
 
-    public InstallController(DataSourceConfig dataSourceConfig,
+    public InstallController(FastAppSetupServiceImpl setupService,
+                             DataSourceConfig dataSourceConfig,
                              AppWorkingConstant appWorkingConstant) {
 
+        this.setupService = setupService;
         this.dataSourceConfig = dataSourceConfig;
         this.appStoragePath = appWorkingConstant.getStoragePath();
         this.appWorkingConstant = appWorkingConstant;
@@ -283,8 +284,9 @@ public class InstallController {
     }
 
     @PostMapping("/install/step3")
-    public String doSiteConfigAction(HttpSession session) {
+    public String doSiteConfigAction(HttpSession session, @RequestParam Map<String,String> params) {
         session.setAttribute(STEP_KEY, STEP_4);
+        setupService.initAdmin(params);
         return "redirect:/install/step4";
     }
 
