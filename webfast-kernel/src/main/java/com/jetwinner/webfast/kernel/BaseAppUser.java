@@ -7,6 +7,8 @@ public class BaseAppUser {
 
     public static final String MODEL_VAR_NAME = "appUser";
 
+    private Integer id;
+
     private String username;
 
     private String password;
@@ -18,6 +20,14 @@ public class BaseAppUser {
     private String email;
 
     private String mobile;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -51,4 +61,19 @@ public class BaseAppUser {
         this.locked = locked;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
 }
