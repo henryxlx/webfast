@@ -47,7 +47,7 @@ public class DataSourceConfigurer implements DataSourceConfig {
     private DataSource createDataSource() {
         try {
             dataSourceDisabled = false;
-            Resource resource = new FileSystemResource(appConst.getStoragePath() + "/datasource.yml");
+            Resource resource = new FileSystemResource(appConst.getStoragePath() + DATA_SOURCE_CONFIG_FILE_LOC);
             Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, AppWorkingConstant.CHARSET_UTF8));
             Set<Object> keys = properties.keySet();
             keys.forEach(k -> {
