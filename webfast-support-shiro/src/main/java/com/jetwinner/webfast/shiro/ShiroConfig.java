@@ -1,7 +1,9 @@
 package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.properties.LinkedHashMapProperties;
+import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.service.AppUserService;
+import com.jetwinner.webfast.kernel.service.ShiroAccountService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -51,7 +53,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public UserRealm userRealm(AppUserService accountService,
+    public UserRealm userRealm(ShiroAccountService accountService,
                                HashedCredentialsMatcher credentialsMatcher) {
 
         UserRealm userRealm = new UserRealm(accountService);
@@ -61,7 +63,7 @@ public class ShiroConfig {
     }
 
     /**
-     * 配置security并设置userReaml，避免报错：xxxx required a bean named 'authorizer' that could not be found.
+     * 配置security并设置userRealm，避免报错：xxxx required a bean named 'authorizer' that could not be found.
      */
     @Bean
     public DefaultWebSecurityManager securityManager(UserRealm userRealm) {
@@ -84,10 +86,10 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
-        // 配置拦截器,实现无权限返回401,而不是跳转到登录页
-        // filters.put("authc", new FormLoginFilter());
-        // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
+        /* Map<String, Filter> filters = shiroFilterFactoryBean.getFilters();
+         * 配置拦截器,实现无权限返回401,而不是跳转到登录页
+         * filters.put("authc", new FormLoginFilter());
+         * 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面 */
         shiroFilterFactoryBean.setLoginUrl("/login");
         // 登录成功后要跳转的链接
         shiroFilterFactoryBean.setSuccessUrl("/index");
