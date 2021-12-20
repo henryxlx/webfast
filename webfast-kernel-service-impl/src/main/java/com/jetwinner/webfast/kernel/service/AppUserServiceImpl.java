@@ -3,8 +3,10 @@ package com.jetwinner.webfast.kernel.service;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
+import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +17,23 @@ import java.util.Set;
 public class AppUserServiceImpl implements AppUserService {
 
     private AppUserDao userDao;
+    private DataSourceConfig dataSourceConfig;
+    private ShiroAccountService shiroAccountService;
 
-    public AppUserServiceImpl(AppUserDao userDao) {
+    public AppUserServiceImpl(AppUserDao userDao,
+                              DataSourceConfig dataSourceConfig,
+                              ShiroAccountService shiroAccountService) {
+
         this.userDao = userDao;
+        this.dataSourceConfig = dataSourceConfig;
+        this.shiroAccountService = shiroAccountService;
+    }
+
+    @PostConstruct
+    public void checkPutMeIntoShrio() {
+        if (!dataSourceConfig.getDataSourceDisabled()) {
+            shiroAccountService.setUserService(this);
+        }
     }
 
     @Override
