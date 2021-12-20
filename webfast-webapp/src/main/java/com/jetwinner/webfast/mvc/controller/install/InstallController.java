@@ -1,7 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.platform.SystemInfoBean;
-import com.jetwinner.spring.SpringBootAppContextHandler;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
@@ -157,8 +156,7 @@ public class InstallController {
             String toNewDatabaseJdbcUrl =
                     DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort(), setting.getDbname());
             batchRunSqlFile(toNewDatabaseJdbcUrl, setting.getUser(), setting.getPassword());
-            buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml",
-                    appStoragePath + "/datasource.yml", setting);
+            buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml", setting);
             session.setAttribute(STEP_KEY, STEP_3);
             dataSourceConfig.reloadDataSource();
             return "redirect:/install/step3";
@@ -241,9 +239,15 @@ public class InstallController {
         }
     }
 
-    private void buildDataSourceConfigToAppStorage(String fromFileClasspath, String toFilePath,
-                                                   DbConnectionSetting setting)
+    private void buildDataSourceConfigToAppStorage(String fromFileClasspath, DbConnectionSetting setting)
             throws IOException {
+
+        String toFilePath = appStoragePath + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_DIR;
+        File dir = new File(toFilePath);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        toFilePath = toFilePath + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_NAME;
 
         Resource resource = new ClassPathResource(fromFileClasspath);
         try (BufferedReader reader = new BufferedReader(
