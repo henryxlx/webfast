@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 
 /**
@@ -14,4 +15,6 @@ public interface UserAccessControlService {
     Object getCurrentUser();
 
     boolean hasRole(String roleName);
+
+    void setEncryptPassword(AppUser user);
 }
