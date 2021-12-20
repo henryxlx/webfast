@@ -30,7 +30,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @PostConstruct
-    public void checkPutMeIntoShrio() {
+    @Override
+    public void checkPutMeIntoShrioAccountService() {
         if (!dataSourceConfig.getDataSourceDisabled()) {
             shiroAccountService.setUserService(this);
         }
