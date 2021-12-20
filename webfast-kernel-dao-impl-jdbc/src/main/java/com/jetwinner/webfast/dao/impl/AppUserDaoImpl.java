@@ -16,8 +16,8 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
 
     @Override
     public AppUser getByUsername(String username) {
-        return getJdbcTemplate().queryForObject("SELECT * FROM app_user WHERE username = ?",
-                new BeanPropertyRowMapper<>(AppUser.class), username);
+        return getJdbcTemplate().query("SELECT * FROM app_user WHERE username = ?",
+                new BeanPropertyRowMapper<>(AppUser.class), username).stream().findFirst().orElse(null);
     }
 
     @Override
