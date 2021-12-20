@@ -1,11 +1,9 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.spring.YmlPropertySourceFactory;
 import com.jetwinner.webfast.kernel.AppUser;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,11 +13,11 @@ import java.util.Set;
 /**
  * @author xulixin
  */
-@Primary
-@Service
+@Deprecated
+@Component
 @PropertySource("classpath:buildin-user.properties")
 @ConfigurationProperties(prefix = "prop")
-public class FakeAppUserServiceImpl implements AppUserService {
+public class FakeAppUserServiceImpl implements ShiroAccountService {
 
     private List<AppUser> users = new ArrayList<>();
 
