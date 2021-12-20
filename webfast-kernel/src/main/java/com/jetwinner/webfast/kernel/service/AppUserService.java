@@ -9,6 +9,8 @@ import java.util.Set;
  */
 public interface AppUserService {
 
+    void checkPutMeIntoShrioAccountService();
+
     AppUser getByUsername(String username);
 
     Set<String> findRolesByUsername(String username);
