@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import org.springframework.stereotype.Service;
@@ -21,24 +22,25 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public AppUser getByUsername(String username) {
-//        userDao.getByUsername(username);
-        AppUser appUser = new AppUser();
-        appUser.setUsername("admin");
-        appUser.setPassword("xlcCgpKVU0WyymojNTUwzA1IOmYB8KitkBF54DkzWH8=");
-        appUser.setSalt("74rLDmaXBZ/J76iSchcNZA==");
-        appUser.setLocked(0);
-        return appUser;
+        return userDao.getByUsername(username);
     }
 
     @Override
     public Set<String> findRolesByUsername(String username) {
-        Set<String> roles = new HashSet<>();
-        if ("admin".equals(username)) {
-            roles.add("ROLE_BACKEND");
-            roles.add("ROLE_ADMIN");
-            roles.add("ROLE_SUPER_ADMIN");
-        } else {
-            roles.add("ROLE_GUEST");
+        AppUser user = userDao.getByUsername(username);
+        return toRoleSet(user.getRoles());
+    }
+
+    private Set<String> toRoleSet(String strRoles) {
+        String[] roleStrArray = strRoles.split("\\|");
+        HashSet<String> roles = new HashSet<>();
+        if (roleStrArray == null || roleStrArray.length < 1) {
+            return roles;
+        }
+        for (String role : roleStrArray) {
+            if (EasyStringUtil.isNotBlank(role)) {
+                roles.add(role);
+            }
         }
         return roles;
     }
@@ -46,5 +48,10 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public Set<String> findPermissionsByUsername(String username) {
         return new HashSet<>(0);
+    }
+
+    @Override
+    public void register(AppUser user) {
+        userDao.insert(user);
     }
 }

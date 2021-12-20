@@ -14,4 +14,6 @@ public interface AppUserService {
     Set<String> findRolesByUsername(String username);
 
     Set<String> findPermissionsByUsername(String username);
+
+    void register(AppUser user);
 }

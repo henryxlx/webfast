@@ -8,4 +8,6 @@ import com.jetwinner.webfast.kernel.AppUser;
 public interface AppUserDao {
 
     AppUser getByUsername(String username);
+
+    void insert(AppUser user);
 }
