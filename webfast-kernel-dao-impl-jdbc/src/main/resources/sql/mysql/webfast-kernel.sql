@@ -91,4 +91,4 @@ CREATE TABLE `app_user` (
 -- Records of app_user
 -- ----------------------------
 INSERT INTO `app_user` VALUES ('1', 'super@hotmail.com', '', 'FxnzDXLOO8yqOqg64RA5erBujL+iw3z8UvuTr+Y16Ak=', '2pfHj21OUy1rBfVGyCb6qw==', 'super', 'Bookfan', '', 'default', 'public://user/2021/10-31/162139305458301713.jpg', 'public://user/2021/10-31/16213930449e898200.jpg', 'public://user/2021/10-31/162139302286665315.jpg', '0', '1', '|ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN|', '0', '0', '0', '0', '0', '0', '1635668402', '::1', 'l04bkr6d261jsfeg3tn25hltin', '0', 'unapprove', '0', '0', '', '1635668142');
-INSERT INTO `app_user` VALUES ('2', 'test4user@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=', 'FYMMdLVItihBsvfsp+ImFg==', 'test4user', '', '', 'default', '', '', '', '0', '1', '|ROLE_USER|', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723');
+INSERT INTO `app_user` VALUES ('2', 'test@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=', 'FYMMdLVItihBsvfsp+ImFg==', 'test', '', '', 'default', '', '', '', '0', '1', '|ROLE_USER|', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723');
