@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.kernel.dao;
 
+import java.io.File;
+
 /**
  * @author xulixin
  */
@@ -10,6 +12,10 @@ public interface DataSourceConfig {
 
     String JDBC_URL_MYSQL_HOST_FORMATTER = "jdbc:mysql://%s:%s";
     String JDBC_URL_DATABASE_SETTING_FORMATTER = "?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai";
+
+    String DATA_SOURCE_CONFIG_FILE_NAME = "datasource.yml";
+    String DATA_SOURCE_CONFIG_FILE_DIR = File.separator + "config" + File.separator;
+    String DATA_SOURCE_CONFIG_FILE_LOC = DATA_SOURCE_CONFIG_FILE_DIR + DATA_SOURCE_CONFIG_FILE_NAME;
 
     static String getMysqlJdbcUrl(String dbHost, String dbPort) {
         return getMysqlJdbcUrl(dbHost, dbPort, null);
