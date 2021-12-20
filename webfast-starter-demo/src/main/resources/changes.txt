@@ -5,6 +5,12 @@ TODO list
 # 后台管理用户的创建与使用
 # 权限管理机制建RBAC??? role
 -------------------------------------------------------------------------------
+0.0.7: @2021-12-20
+* 重新实现Shiro权限管理需要调用的用户账号与角色权限服务ShiroAccountService，修复更新Spring上下文中
+  数据源和事务管理后Shrio出现的空指针错误
+* 定义用于快速访问SpringJDBC，简化DAO使用的抽象类FastJdbcDaoSupport
+* 创建应用程序安装过程中系统设置与初始化类FastAppSetupServiceImpl
+
 0.0.6: @2021-12-18
 * 安装程序正确配置数据源后，重新载入Spring上下文中的DataSource和事务Bean实例
 * 安装程序执行SpringBoot应用配置文件application.properties中定义的参数custom.app.install.sqlscript.classpath设置的多个脚本，
