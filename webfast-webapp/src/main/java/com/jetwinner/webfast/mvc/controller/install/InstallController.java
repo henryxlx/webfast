@@ -5,6 +5,7 @@ import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -71,6 +72,9 @@ public class InstallController {
     private String postMaxsize;
 
     private ModelAndView toModelAndView() {
+        if (!dataSourceConfig.getDataSourceDisabled()) {
+            throw new RuntimeGoingException("Application is running cannot be installed!");
+        }
         ModelAndView mav = new ModelAndView();
         mav.addObject("appConst", appWorkingConstant);
         return mav;
@@ -120,9 +124,11 @@ public class InstallController {
     }
 
     @PostMapping("/install/step1")
-    public String checkAppConfigPassAction(HttpSession session) {
+    public ModelAndView checkAppConfigPassAction(HttpSession session) {
+        ModelAndView mav = toModelAndView();
+        mav.setViewName("redirect:/install/step2");
         session.setAttribute(STEP_KEY, STEP_2);
-        return "redirect:/install/step2";
+        return mav;
     }
 
     private boolean isNotCurrentStep(HttpSession session, int currentStep) {
@@ -146,9 +152,10 @@ public class InstallController {
     }
 
     @PostMapping("/install/step2")
-    public String createDatabaseAction(DbConnectionSetting setting,
-                                       HttpSession session, Model model) {
+    public ModelAndView createDatabaseAction(DbConnectionSetting setting,
+                                             HttpSession session, Model model) {
 
+        ModelAndView mav = toModelAndView();
         try {
             String toTestJdbcUrl = DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort());
             testDbConnectionOrCreateNew(toTestJdbcUrl, setting.getUser(), setting.getPassword(), setting.getDbname());
@@ -159,12 +166,13 @@ public class InstallController {
             buildDataSourceConfigToAppStorage("ds4install/druid/mysql/datasource.yml", setting);
             session.setAttribute(STEP_KEY, STEP_3);
             dataSourceConfig.reloadDataSource();
-            return "redirect:/install/step3";
+            mav.setViewName("redirect:/install/step3");
         } catch (Exception e) {
             model.addAttribute("error", "数据库创建失败：" + e.getMessage());
             model.addAttribute("post", setting);
-            return "/install/step2";
+            mav.setViewName("/install/step2");
         }
+        return mav;
     }
 
     private void testDbConnectionOrCreateNew(String jdbcUrl, String jdbcUsername, String jdbcPassword, String dbname)
@@ -288,10 +296,13 @@ public class InstallController {
     }
 
     @PostMapping("/install/step3")
-    public String doSiteConfigAction(HttpSession session, @RequestParam Map<String,String> params) {
+    public ModelAndView doSiteConfigAction(HttpSession session, @RequestParam Map<String, String> params) {
+
+        ModelAndView mav = toModelAndView();
         session.setAttribute(STEP_KEY, STEP_4);
         setupService.initAdmin(params);
-        return "redirect:/install/step4";
+        mav.setViewName("redirect:/install/step4");
+        return mav;
     }
 
     @GetMapping("/install/step4")
