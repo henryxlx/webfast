@@ -83,8 +83,8 @@ public class DataSourceConfigurer implements DataSourceConfig {
     public void reloadDataSource() {
         DefaultListableBeanFactory beanFactory =
                 (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-        beanFactory.removeBeanDefinition(DEFAULT_TRANSACTION_BEAN_NAME);
-        beanFactory.removeBeanDefinition(DEFAULT_DATA_SOURCE_BEAN_NAME);
+        beanFactory.destroySingleton(DEFAULT_TRANSACTION_BEAN_NAME);
+        beanFactory.destroySingleton(DEFAULT_DATA_SOURCE_BEAN_NAME);
         DataSource dataSource = createDataSource();
         beanFactory.registerSingleton(DEFAULT_DATA_SOURCE_BEAN_NAME, dataSource);
         beanFactory.registerSingleton(DEFAULT_TRANSACTION_BEAN_NAME, new DataSourceTransactionManager(dataSource));
