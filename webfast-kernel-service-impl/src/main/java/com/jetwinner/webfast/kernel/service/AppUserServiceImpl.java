@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -68,7 +69,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void register(AppUser user) {
+    public void register(Map<String, Object> user) {
         userDao.insert(user);
     }
 }

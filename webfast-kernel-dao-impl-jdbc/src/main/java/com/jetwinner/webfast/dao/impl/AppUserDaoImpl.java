@@ -6,6 +6,8 @@ import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.Map;
+
 /**
  * @author xulixin
  */
@@ -21,7 +23,7 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
     }
 
     @Override
-    public void insert(AppUser user) {
-        insert(TABLE_NAME, user);
+    public void insert(Map<String, Object> user) {
+        insertMap(TABLE_NAME, user);
     }
 }

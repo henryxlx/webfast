@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.webfast.kernel.AppUser;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -17,5 +18,5 @@ public interface AppUserService {
 
     Set<String> findPermissionsByUsername(String username);
 
-    void register(AppUser user);
+    void register(Map<String, Object> user);
 }

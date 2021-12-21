@@ -29,14 +29,18 @@ public class FastAppSetupServiceImpl {
         Map<String, Object> map = MapUtil.newHashMap();
         map.putAll(params);
         try {
-            AppUser user = new AppUser();
-            user.setPassword(params.get("password"));
-            userAccessControlService.setEncryptPassword(user);
-            user.setEmail(params.get("email"));
-            user.setUsername(params.get("nickname"));
-            user.setSetup(0);
-            user.setRoles("ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN");
-            user.setCreatedIp("127.0.0.1");
+            Map<String, Object> user = MapUtil.newHashMap();
+            AppUser appUser = new AppUser();
+            appUser.setPassword(params.get("password"));
+            userAccessControlService.setEncryptPassword(appUser);
+            user.put("password", appUser.getPassword());
+            user.put("salt", appUser.getSalt());
+            user.put("email", params.get("email"));
+            user.put("username", params.get("nickname"));
+            user.put("setup", (0));
+            user.put("roles", "ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN");
+            user.put("createdIp", "127.0.0.1");
+            user.put("type", "default");
             userService.register(user);
         } catch (Exception e) {
             throw new RuntimeGoingException(e.getMessage());
