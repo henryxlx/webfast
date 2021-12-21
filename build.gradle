@@ -95,7 +95,7 @@ Task copyJarToCourseWork = project.task("copyJarToCourseWork", type: Copy, depen
 Task taskForSourceZip = project.task("makeSourceZip", type: Zip) {
     archiveBaseName = "${rootProject.name}-${subprojects.version[0]}"
     from(project.rootDir) {
-        excludes = ['.gradle/**', '.idea/**', 'backup4dev/**', '**/out/**', '**/build/**']
+        excludes = ['dist/**', '.gradle/**', '.idea/**', 'backup4dev/**', '**/out/**', '**/build/**']
     }
     into("${rootProject.name}")
     destinationDirectory = file("../${rootProject.name}-backup4dev")
