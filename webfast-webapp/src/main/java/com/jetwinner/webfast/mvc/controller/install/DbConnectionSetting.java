@@ -10,7 +10,7 @@ public class DbConnectionSetting {
     private String user;
     private String password;
     private String dbname;
-    private Boolean replaceData;
+    private Boolean replaceDatabase;
 
     public String getHost() {
         return host;
@@ -52,11 +52,11 @@ public class DbConnectionSetting {
         this.dbname = dbname;
     }
 
-    public Boolean getReplaceData() {
-        return replaceData;
+    public Boolean getReplaceDatabase() {
+        return replaceDatabase;
     }
 
-    public void setReplaceData(Boolean replaceData) {
-        this.replaceData = replaceData;
+    public void setReplaceDatabase(Boolean replaceDatabase) {
+        this.replaceDatabase = replaceDatabase;
     }
 }

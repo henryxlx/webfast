@@ -48,7 +48,7 @@
         <div class="controls col-sm-offset-4 col-sm-5">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="replaceData" value="1" <#if (post.replaceData)?? && post.replaceData>checked</#if>> 覆盖现有数据库
+                    <input type="checkbox" name="replaceDatabase" value="1" <#if (post.replaceDatabase)?? && post.replaceDatabase>checked</#if>> 覆盖现有数据库
                 </label>
             </div>
         </div>
