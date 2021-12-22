@@ -5,7 +5,6 @@ import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
-import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -17,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -155,7 +155,7 @@ public class InstallController {
         ModelAndView mav = toModelAndView();
         try {
             String toTestJdbcUrl = DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort());
-            testDbConnectionOrCreateNew(toTestJdbcUrl, setting.getUser(), setting.getPassword(), setting.getDbname());
+            testDbConnectionOrCreateNew(toTestJdbcUrl, setting);
 
             String toNewDatabaseJdbcUrl =
                     DataSourceConfig.getMysqlJdbcUrl(setting.getHost(), setting.getPort(), setting.getDbname());
@@ -167,18 +167,22 @@ public class InstallController {
         } catch (Exception e) {
             model.addAttribute("error", "数据库创建失败：" + e.getMessage());
             model.addAttribute("post", setting);
+            session.setAttribute(STEP_KEY, STEP_2);
             mav.setViewName("/install/step2");
         }
         return mav;
     }
 
-    private void testDbConnectionOrCreateNew(String jdbcUrl, String jdbcUsername, String jdbcPassword, String dbname)
+    private void testDbConnectionOrCreateNew(String jdbcUrl, DbConnectionSetting setting)
             throws ActionGraspException {
 
-        try (Connection conn = DriverManager.getConnection(jdbcUrl, jdbcUsername, jdbcPassword)) {
+        try (Connection conn = DriverManager.getConnection(jdbcUrl, setting.getUser(), setting.getPassword())) {
             try (Statement stmt = conn.createStatement()) {
-                String sql = "CREATE DATABASE IF NOT EXISTS " + dbname + " DEFAULT CHARACTER SET UTF8MB4";
-                stmt.executeUpdate(sql);
+                StringBuilder sql = new StringBuilder();
+                sql.append(setting.getReplaceDatabase() != null && setting.getReplaceDatabase() ?
+                        "CREATE DATABASE IF NOT EXISTS" : "CREATE DATABASE");
+                sql.append(" ").append(setting.getDbname()).append(" DEFAULT CHARACTER SET UTF8MB4");
+                stmt.executeUpdate(sql.toString());
             } catch (SQLException se2) {
                 throw new ActionGraspException("无法创建数据库！ " + se2.getMessage());
             }
@@ -256,7 +260,7 @@ public class InstallController {
 
         Resource resource = new ClassPathResource(fromFileClasspath);
         try (BufferedReader reader = new BufferedReader(
-                new InputStreamReader(resource.getInputStream(), AppWorkingConstant.CHARSET_UTF8))) {
+                new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(toFilePath))) {
                 String strLineData;
                 while ((strLineData = reader.readLine()) != null) {
