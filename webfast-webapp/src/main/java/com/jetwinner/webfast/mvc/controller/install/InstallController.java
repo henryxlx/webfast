@@ -72,9 +72,6 @@ public class InstallController {
     private String postMaxsize;
 
     private ModelAndView toModelAndView() {
-        if (!dataSourceConfig.getDataSourceDisabled()) {
-            throw new RuntimeGoingException("Application is running cannot be installed!");
-        }
         ModelAndView mav = new ModelAndView();
         mav.addObject("appConst", appWorkingConstant);
         return mav;
