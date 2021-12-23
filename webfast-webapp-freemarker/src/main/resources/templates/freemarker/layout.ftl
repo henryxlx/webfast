@@ -98,9 +98,9 @@
                                     <img src="${default_path('qiandai.png')}"/>
                                 </a>
                             </li>
-                            <li class="visible-lt-ie8"><a href="${ctx}/settings">${(appUser.nickname)!}</a></li>
+                            <li class="visible-lt-ie8"><a href="${ctx}/settings">${(appUser.username)!}</a></li>
                             <li class="dropdown hidden-lt-ie8">
-                                <a href="javascript:;" class="dropdown-toggle"  data-toggle="dropdown">${(appUser.nickname)!'佚名'} <b class="caret"></b></a>
+                                <a href="javascript:;" class="dropdown-toggle"  data-toggle="dropdown">${(appUser.username)!'佚名'} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="${ctx}/user/show/${(appUser.id)!}"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
                                     <li><a href="${ctx}/settings"><i class="glyphicon glyphicon-cog"></i> 个人中心</a></li>

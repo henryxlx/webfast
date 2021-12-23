@@ -63,7 +63,7 @@
 
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="${ctx}/index"><i class="glyphicon glyphicon-home"></i> 回首页</a></li>
-                <li><a href="${ctx}/user/show/${(appUser.uri)!(appUser.id)!}"><i class="glyphicon glyphicon-user"></i> ${(appUser.nickname)!'佚名'}</a></li>
+                <li><a href="${ctx}/user/show/${(appUser.uri)!(appUser.id)!}"><i class="glyphicon glyphicon-user"></i> ${(appUser.username)!'佚名'}</a></li>
                 <li><a href="${ctx}/logout"><i class="glyphicon glyphicon-off"></i> 退出</a></li>
             </ul>
 
