@@ -5,6 +5,8 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -40,8 +42,16 @@ public class DataSourceConfigurer implements DataSourceConfig {
     }
 
     @Bean(DEFAULT_DATA_SOURCE_BEAN_NAME)
-    public DataSource dataSource() {
-        return createDataSource();
+    public DataSource dataSource(InstallControllerRegisterService installControllerRegisterService) {
+        DataSource dataSource = createDataSource();
+        if (dataSourceDisabled) {
+            try {
+                installControllerRegisterService.addInstallControllerMapping();
+            } catch (Exception e) {
+                throw new RuntimeGoingException(e.getMessage());
+            }
+        }
+        return dataSource;
     }
 
     private DataSource createDataSource() {
