@@ -5,11 +5,11 @@ import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
+import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,7 +27,6 @@ import java.util.Map;
 /**
  * @author xulixin
  */
-@Controller
 public class InstallController {
 
     private static final String STEP_KEY = "step";
@@ -37,14 +36,17 @@ public class InstallController {
     private static final int STEP_3 = 3;
     private static final int STEP_4 = 4;
 
+    private final InstallControllerRegisterService installControllerRegisterService;
     private final FastAppSetupServiceImpl setupService;
     private final DataSourceConfig dataSourceConfig;
     private final AppWorkingConstant appWorkingConstant;
 
-    public InstallController(FastAppSetupServiceImpl setupService,
+    public InstallController(InstallControllerRegisterService installControllerRegisterService,
+                             FastAppSetupServiceImpl setupService,
                              DataSourceConfig dataSourceConfig,
                              AppWorkingConstant appWorkingConstant) {
 
+        this.installControllerRegisterService = installControllerRegisterService;
         this.setupService = setupService;
         this.dataSourceConfig = dataSourceConfig;
         this.appStoragePath = appWorkingConstant.getStoragePath();
@@ -313,6 +315,7 @@ public class InstallController {
             mav.setViewName(redirectSessionStepPage(session));
         } else {
             dataSourceConfig.setDataSourceDisabled(false);
+            installControllerRegisterService.removeInstallControllerMapping();
             mav.setViewName("/install/step4");
         }
         return mav;
