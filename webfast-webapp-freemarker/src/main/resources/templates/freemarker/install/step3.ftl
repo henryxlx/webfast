@@ -23,9 +23,9 @@
     </div>
 
     <div class="form-group">
-        <label for="nickname-field" class="col-sm-4 control-label">管理员昵称</label>
+        <label for="username-field" class="col-sm-4 control-label">管理员用户名</label>
         <div class="controls col-sm-5">
-            <input type="text" class="form-control" id="nickname-field" name="nickname" value="${(site.nickname)!''}">
+            <input type="text" class="form-control" id="username-field" name="username" value="${(site.username)!''}">
         </div>
     </div>
 
