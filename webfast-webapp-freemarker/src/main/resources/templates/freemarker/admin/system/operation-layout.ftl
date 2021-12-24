@@ -6,21 +6,6 @@
 <#macro blockMain>
 <ul class="nav nav-tabs mbl">
 
-    <#--<li class="<#if submenu! == 'course_setting'>active</#if>">
-        <a href="${ctx}/admin/setting/course-setting">课程设置
-        </a>
-    </li>-->
-
-    <#--<li class="<#if submenu! == 'questions_setting'>active</#if>">
-        <a href="${ctx}/admin/setting/questions-setting">题库设置
-        </a>
-    </li>-->
-
-    <li class="<#if submenu! == 'default'>active</#if>">
-        <a href="${ctx}/admin/setting/default">系统默认设置
-        </a>
-    </li>
-
     <li class="<#if submenu! == 'mailer'>active</#if>">
         <a href="${ctx}/admin/setting/mailer">邮件服务器设置
         </a>

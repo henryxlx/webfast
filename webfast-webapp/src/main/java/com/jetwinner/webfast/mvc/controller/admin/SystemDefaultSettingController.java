@@ -55,6 +55,11 @@ public class SystemDefaultSettingController {
         return "/admin/system/user-fields";
     }
 
+    @RequestMapping("/admin/setting/user-avatar")
+    public String userAvatarPage() {
+        return "/admin/system/user-avatar";
+    }
+
     @RequestMapping("/admin/setting/mobile")
     public String mobilePage(Model model) {
         return "/admin/system/mobile";

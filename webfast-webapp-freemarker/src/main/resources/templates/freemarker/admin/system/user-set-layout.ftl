@@ -20,7 +20,10 @@
         <a href="${ctx}/admin/setting/user-fields">字段自定义
         </a>
     </li>
-
+    <li class="<#if submenu! == 'user_avatar'>active</#if>">
+        <a href="${ctx}/admin/setting/user-avatar">用户默认头像
+        </a>
+    </li>
 </ul>
 
 
