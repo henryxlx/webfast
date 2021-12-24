@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.platform.SystemInfoBean;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.mvc.block.BlockRenderController;
 import com.jetwinner.webfast.mvc.block.BlockRenderMethod;
 import org.springframework.stereotype.Controller;
@@ -51,13 +52,12 @@ public class DefaultController implements BlockRenderController {
         model.addAttribute("percentageFree", "" + systemInfoBean.getPercentageFree());
 
         if (dataSource != null) {
-            try {
-                Connection conn = dataSource.getConnection();
+            try (Connection conn = dataSource.getConnection()) {
                 DatabaseMetaData md = conn.getMetaData();
                 model.addAttribute("dbinfo", md.getDatabaseProductName() + " " + md.getDatabaseProductVersion());
                 model.addAttribute("driverinfo", md.getDriverName() + " " + md.getDriverVersion());
             } catch (Exception e) {
-                // noops.
+                throw new RuntimeGoingException("Fetch database and driver information error: " + e.getMessage());
             }
         }
 
