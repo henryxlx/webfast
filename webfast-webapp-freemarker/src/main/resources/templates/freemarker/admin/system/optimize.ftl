@@ -10,9 +10,6 @@
 
 	<@web_macro.flash_messages />
 
-
-
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">刷新缓存</h3>
@@ -59,9 +56,11 @@
   </div>
 </div>
 
+<#--
 <hr/>
 <h1><small>谨慎操作区域</small></h1>
 <hr/>
+-->
 
 <#if disabled_features?? && disabled_features?seq_contains('upgrade')>
 	<div class="panel panel-default">
@@ -82,22 +81,5 @@
 	</div>
 </#if>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title text-warning">优化课程视频和相关资料文件</h3>
-  </div>
-  <div class="panel-body">
-   	<p class="text-warning">
-       注意：该功能慎用。请仔细阅读下列说明： 
-    </p>
-     <p>
-       优化课程文件，将已经不存在系统中的课程相关上传文件移除。假如您希望保留这些数据，
-       请不要执行该功能。
-    </p>
-    <p>
-  		<button id="optimizeFile" class="btn btn-danger fr" type="button"  data-url="{{ url('admin_optimize_remove_upload_files') }}">优化课程文件</button>
-  	</p>
-  </div>
-</div>
 
 </#macro>
