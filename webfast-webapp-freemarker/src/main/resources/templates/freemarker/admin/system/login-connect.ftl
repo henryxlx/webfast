@@ -2,7 +2,7 @@
 <#assign script_controller = 'system/login_bind'/>
 
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>注册设置 - 登录设置 - ${blockTitleParent}</#macro>
+<#macro blockTitle>登录设置 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 <div class="page-header"><h1>登录设置</h1></div>

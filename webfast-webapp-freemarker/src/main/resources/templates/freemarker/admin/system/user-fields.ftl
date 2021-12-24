@@ -2,7 +2,7 @@
 <#assign script_controller = 'system/user-fields'/>
 
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>注册设置 - 用户字段自定义 - ${blockTitleParent}</#macro>
+<#macro blockTitle>用户字段自定义 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">添加字段</button>

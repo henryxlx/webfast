@@ -2,7 +2,7 @@
 <#assign script_controller = 'setting/user-center'/>
 
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>注册设置 - 用户中心设置 - ${blockTitleParent}</#macro>
+<#macro blockTitle>用户中心设置 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 
