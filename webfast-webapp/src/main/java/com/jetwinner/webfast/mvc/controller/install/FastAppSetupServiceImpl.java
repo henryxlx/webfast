@@ -3,8 +3,10 @@ package com.jetwinner.webfast.mvc.controller.install;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.service.UserAccessControlService;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -17,12 +19,15 @@ public class FastAppSetupServiceImpl {
 
     private AppUserService userService;
     private UserAccessControlService userAccessControlService;
+    private AppSettingService settingService;
 
     public FastAppSetupServiceImpl(AppUserService userService,
-                                   UserAccessControlService userAccessControlService) {
+                                   UserAccessControlService userAccessControlService,
+                                   AppSettingService settingService) {
 
         this.userService = userService;
         this.userAccessControlService = userAccessControlService;
+        this.settingService = settingService;
     }
 
     public void initAdmin(Map<String, String> params) {
@@ -47,14 +52,36 @@ public class FastAppSetupServiceImpl {
         }
     }
 
-    public void initSiteSettings() {
-
+    public void initSiteSettings(Map<String, String> params) {
+        ParamMap defaultSetting = new ParamMap()
+                .add("name", params.get("sitename"))
+                .add("slogan","")
+                .add("url","")
+                .add("logo","")
+                .add("seo_keywords","")
+                .add("seo_description","")
+                .add("master_email", params.get("email"))
+                .add("icp","")
+                .add("analytics","")
+                .add("status","open")
+                .add("closed_note","")
+                .add("homepage_template","less");
+        settingService.set("site", defaultSetting.toMap());
     }
 
     public void initRegisterSetting(Object admin) {
     }
 
     public void initMailerSetting(String siteName) {
+        ParamMap defaultSetting = new ParamMap()
+                .add("enabled", 0)
+                .add("host", "smtp.example.com")
+                .add("port", "25")
+                .add("username", "user@example.com")
+                .add("password", "")
+                .add("from", "user@example.com")
+                .add("name",  siteName);
+        settingService.set("mailer", defaultSetting.toMap());
     }
 
     public void initStorageSetting() {
