@@ -1,8 +1,6 @@
 package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.properties.LinkedHashMapProperties;
-import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
-import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.service.ShiroAccountService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
