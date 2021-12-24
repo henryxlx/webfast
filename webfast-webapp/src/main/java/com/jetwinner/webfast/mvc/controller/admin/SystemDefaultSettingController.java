@@ -17,7 +17,7 @@ public class SystemDefaultSettingController {
 
     @RequestMapping("/admin/setting/default")
     public String defaultPage() {
-        return "/admin/system/default";
+        return "redirect:/admin/setting/mailer";
     }
 
     @RequestMapping("/admin/setting/mailer")
