@@ -308,6 +308,8 @@ public class InstallController {
         ModelAndView mav = toModelAndView();
         session.setAttribute(STEP_KEY, STEP_4);
         setupService.initAdmin(params);
+        setupService.initSiteSettings(params);
+        setupService.initMailerSetting(params.get("sitename"));
         mav.setViewName("redirect:/install/step4");
         return mav;
     }
