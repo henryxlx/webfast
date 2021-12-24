@@ -10,11 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller("webfastAdminSystemDefaultSettingController")
 public class SystemDefaultSettingController {
 
-    @RequestMapping("/admin/setting/site")
-    public String sitePage() {
-        return "/admin/system/site";
-    }
-
     @RequestMapping("/admin/setting/default")
     public String defaultPage() {
         return "redirect:/admin/setting/mailer";
