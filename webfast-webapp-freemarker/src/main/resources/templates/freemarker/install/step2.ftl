@@ -40,7 +40,7 @@
     <div class="form-group">
         <label for="database-name-field" class="col-sm-4 control-label">数据库名</label>
         <div class="controls col-sm-5">
-            <input type="text" id="database-name-field" class="form-control" name="dbname" value="${(post.dbname)!'webfast'}">
+            <input type="text" id="database-name-field" class="form-control" name="dbname" value="${(post.dbname)!customDbName!''}">
         </div>
     </div>
 

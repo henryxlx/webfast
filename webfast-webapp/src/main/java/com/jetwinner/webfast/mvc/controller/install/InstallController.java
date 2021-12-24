@@ -73,6 +73,9 @@ public class InstallController {
     @Value("${spring.servlet.multipart.max-request-size}")
     private String postMaxsize;
 
+    @Value("${custom.app.database.name:}")
+    private String customDbName;
+
     private ModelAndView toModelAndView() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("appConst", appWorkingConstant);
@@ -145,6 +148,7 @@ public class InstallController {
         if (isNotCurrentStep(session, STEP_2)) {
             mav.setViewName(redirectSessionStepPage(session));
         } else {
+            mav.addObject("customDbName", customDbName);
             mav.setViewName("/install/step2");
         }
         return mav;
