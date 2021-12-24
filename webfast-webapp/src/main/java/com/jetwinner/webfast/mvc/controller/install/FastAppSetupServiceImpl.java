@@ -36,7 +36,7 @@ public class FastAppSetupServiceImpl {
             user.put("password", appUser.getPassword());
             user.put("salt", appUser.getSalt());
             user.put("email", params.get("email"));
-            user.put("username", params.get("nickname"));
+            user.put("username", params.get("username"));
             user.put("setup", (0));
             user.put("roles", "ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN|ROLE_ADMIN|ROLE_BACKEND");
             user.put("createdIp", "127.0.0.1");
