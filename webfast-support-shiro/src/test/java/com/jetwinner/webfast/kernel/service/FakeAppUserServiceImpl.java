@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @Deprecated
 @Component
-@PropertySource("classpath:buildin-user.properties")
+@PropertySource("classpath:test/buildin-user.properties")
 @ConfigurationProperties(prefix = "prop")
 public class FakeAppUserServiceImpl implements ShiroAccountService {
 
