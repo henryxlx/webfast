@@ -1,10 +1,9 @@
-package com.jetwinner.webfast.dao.datasource;
+package com.jetwinner.webfast.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
-import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;

@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.dao.datasource;
+package com.jetwinner.webfast.datasource;
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.support.EncodedResource;

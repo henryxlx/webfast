@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.dao.datasource;
+package com.jetwinner.webfast.datasource;
 
 import javax.sql.DataSource;
 import java.io.PrintWriter;

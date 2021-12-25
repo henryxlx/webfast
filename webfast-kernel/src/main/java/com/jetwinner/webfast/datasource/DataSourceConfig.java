@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.dao;
+package com.jetwinner.webfast.datasource;
 
 import java.io.File;
 
