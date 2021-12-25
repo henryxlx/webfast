@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
-import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
