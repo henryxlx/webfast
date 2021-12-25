@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.dao.impl;
+package com.jetwinner.webfast.kernel.dao.impl;
 
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppSettingDao;
