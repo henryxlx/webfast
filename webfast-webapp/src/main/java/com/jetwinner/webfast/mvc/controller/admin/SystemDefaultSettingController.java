@@ -10,16 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller("webfastAdminSystemDefaultSettingController")
 public class SystemDefaultSettingController {
 
-    @RequestMapping("/admin/setting/default")
-    public String defaultPage() {
-        return "redirect:/admin/setting/mailer";
-    }
-
-    @RequestMapping("/admin/setting/mailer")
-    public String mailerPage() {
-        return "/admin/system/mailer";
-    }
-
     @RequestMapping("/admin/setting/theme")
     public String themePage() {
         return "/admin/system/theme";
