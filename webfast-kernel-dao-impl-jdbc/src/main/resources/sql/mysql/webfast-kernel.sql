@@ -1,6 +1,86 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
+-- Table structure for `app_block`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_block`;
+CREATE TABLE `app_block` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区ID',
+  `userId` int(11) NOT NULL COMMENT '编辑区创建人ID',
+  `title` varchar(255) NOT NULL COMMENT '编辑区名称',
+  `mode` enum('html','template') NOT NULL DEFAULT 'html' COMMENT '模式',
+  `template` text COMMENT '模板',
+  `templateData` text COMMENT '模板数据',
+  `content` text COMMENT '编辑区内容',
+  `code` varchar(64) NOT NULL DEFAULT '' COMMENT '编辑区编码',
+  `tips` text COMMENT '编辑区编辑提示',
+  `updateTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '编辑区最后更新时间',
+  `createdTime` int(11) unsigned NOT NULL COMMENT '编辑区创建时间',  
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_block_history`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_block_history`;
+CREATE TABLE `app_block_history` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区历史记录ID',
+  `blockId` int(11) NOT NULL COMMENT '编辑区ID',
+  `templateData` text COMMENT '模板历史数据',
+  `content` text COMMENT '编辑区历史内容',
+  `userId` int(11) NOT NULL COMMENT '编辑区编辑人ID',
+  `createdTime` int(11) unsigned NOT NULL COMMENT '编辑区历史记录创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='历史表';
+
+-- ----------------------------
+-- Table structure for `app_content`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_content`;
+CREATE TABLE `app_content` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容ID',
+  `title` varchar(255) NOT NULL COMMENT '内容标题',
+  `editor` enum('richeditor','none') NOT NULL DEFAULT 'richeditor' COMMENT '编辑器选择类型字段',
+  `type` varchar(255) NOT NULL COMMENT '内容类型',
+  `alias` varchar(255) NOT NULL DEFAULT '' COMMENT '内容别名',
+  `summary` text COMMENT '内容摘要',
+  `body` text COMMENT '内容正文',
+  `picture` varchar(255) NOT NULL DEFAULT '' COMMENT '内容头图',
+  `template` varchar(255) NOT NULL DEFAULT '' COMMENT '内容模板',
+  `status` enum('published','unpublished','trash') NOT NULL COMMENT '内容状态',
+  `categoryId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容分类ID',
+  `tagIds` tinytext COMMENT '内容标签ID',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容点击量',
+  `featured` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否头条',
+  `promoted` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否推荐',
+  `sticky` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否置顶',
+  `userId` int(10) unsigned NOT NULL COMMENT '发布人ID',
+  `extraField` text COMMENT '扩展字段',
+  `publishedTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  `createdTime` int(10) unsigned NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_navigation`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_navigation`;
+CREATE TABLE `app_navigation` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '导航ID',
+  `name` varchar(255) NOT NULL COMMENT '导航名称',
+  `url` varchar(300) NOT NULL COMMENT '链接地址',
+  `sequence` tinyint(4) unsigned NOT NULL COMMENT '显示顺序',
+  `parentId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父导航ID',
+  `type` varchar(30) NOT NULL COMMENT '类型',
+  `isOpen` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认1，为开启',
+  `isNewWin` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认为1,另开窗口',
+  `updateTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  `createdTime` int(10) NOT NULL COMMENT '创建时间',  
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='导航数据表';
+
+-- ----------------------------
 -- Table structure for `app_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_role`;
