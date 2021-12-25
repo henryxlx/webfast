@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.freemarker;
 
 import com.jetwinner.webfast.DataDictHolder;
+import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.BaseAppUser;
-import com.jetwinner.webfast.kernel.dao.DataSourceConfig;
 import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import com.jetwinner.webfast.mvc.WebExtensionPack;
 import org.springframework.context.ApplicationContext;
