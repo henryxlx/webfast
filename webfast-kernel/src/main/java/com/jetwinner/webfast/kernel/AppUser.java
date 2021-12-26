@@ -5,7 +5,6 @@ package com.jetwinner.webfast.kernel;
  */
 public class AppUser extends BaseAppUser {
 
-    private Integer id;
     private String verifiedMobile;
     private String title;
     private String tags;
@@ -30,15 +29,7 @@ public class AppUser extends BaseAppUser {
     private Integer newMessageNum;
     private Integer newNotificationNum;
     private String createdIp;
-    private Integer createdTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    private Long createdTime;
 
     public String getVerifiedMobile() {
         return verifiedMobile;
@@ -234,11 +225,11 @@ public class AppUser extends BaseAppUser {
         this.createdIp = createdIp;
     }
 
-    public Integer getCreatedTime() {
+    public Long getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Integer createdTime) {
+    public void setCreatedTime(Long createdTime) {
         this.createdTime = createdTime;
     }
 }
