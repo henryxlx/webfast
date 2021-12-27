@@ -42,7 +42,7 @@
     <#list contents! as content>
     {% set user = users[content.userId] %}
     {% set category = categories[content.categoryId]|default(null) %}
-    {% include 'TopxiaAdminBundle:Content:content-tr.html.twig' %}
+        <#include '/admin/content/content-tr.ftl'/>
     <#else>
     <tr><td colspan="20"><div class="empty">暂无页面记录</div></td></tr>
     </#list>
