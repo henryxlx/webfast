@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc;
 import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.DataDictHolder;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,14 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public static final String MODEL_VAR_NAME = "webExtPack";
 
-    public WebExtensionPack(HttpServletRequest request, ApplicationContext appContext) {
+    private final DataDictHolder dataDictHolder;
+
+    public WebExtensionPack(HttpServletRequest request,
+                            ApplicationContext appContext,
+                            DataDictHolder dataDictHolder) {
+
         super(request, appContext);
+        this.dataDictHolder = dataDictHolder;
     }
 
     public String getDefaultPath(String category, String uri, String size, boolean absolute) {
@@ -89,6 +96,10 @@ public class WebExtensionPack extends BaseWebExtensionPack {
             return String.valueOf(cs);
         }
         return s;
+    }
+
+    public String getDictText(String type, String key) {
+        return dataDictHolder.text(type, key);
     }
 
 }

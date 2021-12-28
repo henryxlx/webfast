@@ -72,7 +72,8 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
         addObject("ctx", request.getContextPath(), request, mav);
         addObject("dict", dataDictHolder.getDict(), request, mav);
         addObject("userAcl", userAccessControlService, request, mav);
-        addObject(WebExtensionPack.MODEL_VAR_NAME, new WebExtensionPack(request, applicationContext), request, mav);
+        addObject(WebExtensionPack.MODEL_VAR_NAME,
+                new WebExtensionPack(request, applicationContext, dataDictHolder), request, mav);
     }
 
     private void addObject(String name, Object value, HttpServletRequest request, ModelAndView mav) {

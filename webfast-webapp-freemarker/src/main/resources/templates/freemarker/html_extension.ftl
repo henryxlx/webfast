@@ -46,6 +46,10 @@
     </#if>
 </#function>
 
+<#function dict_text type key>
+    <#return webExtPack.getDictText(type, key) />
+</#function>
+
 <#function csrf_token intention=''>
     <#return ''/>
 </#function>
