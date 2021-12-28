@@ -8,8 +8,8 @@
         <span class="text-muted text-sm">分类：{{ category.name }}</span>
         </#if>
     </td>
-    <td>{{ dict_text('contentType', content.type) }}</td>
-    <td>{{ dict_text('contentStatus:html', content.status) }}</td>
+    <td>${dict_text('contentType', content.type)}</td>
+    <td>${dict_text('contentStatus:html', content.status)}</td>
     <td>
         ${content.publishedTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}<br />
         {{ user.nickname }}
