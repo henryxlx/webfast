@@ -17,31 +17,20 @@ public final class RequestContextPathUtil {
 
     public static final String REQ_CONTEXT = "ctx";
 
-    public static final String createBaseUrl(HttpServletRequest request) {
+    public static String createBaseUrl(HttpServletRequest request) {
         return createBaseUrl(request, null);
     }
 
-    // 获取当前Web应用程序下HTTP请求的URL，比如：http://localhost:8080/jetmambo。结尾没有斜杠(/）
-    public static final String createBaseUrl(HttpServletRequest request, String contextPath) {
-        String scheme = request.getScheme();
-        String server = request.getServerName();
-        int port = request.getServerPort();
+    /**
+     * 获取当前Web应用程序下HTTP请求的URL，比如：http://localhost:8080/webfast。结尾没有斜杠(/）
+     */
+    public static String createBaseUrl(HttpServletRequest request, String contextPath) {
+        StringBuilder url = new StringBuilder();
+        url.append(getSchemeAndHost(request));
+
         if (contextPath == null) {
             contextPath = request.getContextPath();
         }
-
-        StringBuffer url = new StringBuffer();
-        if (port < 0) {
-            port = 80; // Work around java.net.URL bug
-        }
-        url.append(scheme);
-        url.append("://");
-        url.append(server);
-        if ((scheme.equals("http") && (port != 80)) || (scheme.equals("https") && (port != 443))) {
-            url.append(':');
-            url.append(port);
-        }
-
         if (contextPath == null || "".equals(contextPath.trim())) {
             // noops;
         } else {
@@ -53,19 +42,19 @@ public final class RequestContextPathUtil {
         return url.toString();
     }
 
-    public static final String getSchemeAndHost(ServletRequest request) {
+    public static String getSchemeAndHost(ServletRequest request) {
         String scheme = request.getScheme();
         String server = request.getServerName();
         int port = request.getServerPort();
 
-        StringBuffer url = new StringBuffer();
+        StringBuilder url = new StringBuilder();
         if (port < 0) {
             port = 80; // Work around java.net.URL bug
         }
         url.append(scheme);
         url.append("://");
         url.append(server);
-        if ((scheme.equals("http") && (port != 80)) || (scheme.equals("https") && (port != 443))) {
+        if (("http".equals(scheme) && (port != 80)) || ("https".equals(scheme) && (port != 443))) {
             url.append(':');
             url.append(port);
         }
@@ -73,7 +62,7 @@ public final class RequestContextPathUtil {
         return url.toString();
     }
 
-    public static final String getContextPath(HttpServletRequest request) {
+    public static String getContextPath(HttpServletRequest request) {
         String path = request.getContextPath();
         return path.endsWith("/") ? path : path + "/";
     }
