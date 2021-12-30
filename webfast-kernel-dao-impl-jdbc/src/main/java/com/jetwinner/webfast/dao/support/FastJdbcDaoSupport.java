@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.dao.support;
 
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;

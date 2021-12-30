@@ -1,10 +1,16 @@
-package com.jetwinner.webfast.dao.support;
+package com.jetwinner.webfast.kernel.dao.support;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
- * Created by x230-think-joomla on 2015/6/19.
+ *
+ * @author x230-think-joomla
+ * @date 2015/6/19
  */
 public class OrderBy {
 
+    public static final String SORT_TYPE_ASC = "ASC";
     public static final String SORT_TYPE_DESC = "DESC";
 
     private String columnName;
@@ -20,12 +26,32 @@ public class OrderBy {
         this.alter(columnName, sortType);
     }
 
+    public OrderBy(String columnName, Object sortType) {
+        this.alter(columnName, String.valueOf(sortType));
+    }
+
+    public static OrderBy[] toArray(Map<String, Object> sortMap) {
+        Set<String> keys = sortMap.keySet();
+        OrderBy[] orderByArray = new OrderBy[keys.size()];
+        int i = 0;
+        for (String key : keys) {
+            orderByArray[i++] = new OrderBy(key, sortMap.get(key));
+        }
+        return orderByArray;
+    }
+
     public void alter(String columnName, String sortType) {
         this.columnName = columnName;
         if (sortType == null) {
             this.sortType = "";
         }
         this.sortType = sortType;
+    }
+
+    public void setSortType(Object sortType) {
+        if (sortType != null) {
+            this.sortType = sortType.toString();
+        }
     }
 
     public String getColumnName() {
