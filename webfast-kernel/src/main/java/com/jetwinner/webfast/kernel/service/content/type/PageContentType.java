@@ -1,8 +1,11 @@
 package com.jetwinner.webfast.kernel.service.content.type;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author xulixin
  */
+@Component
 public class PageContentType extends BaseContentType {
 
     @Override
