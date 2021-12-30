@@ -4,6 +4,13 @@ TODO list
 # 后台管理用户的创建与使用
 # 权限管理机制建RBAC??? role
 -------------------------------------------------------------------------------
+0.1.4: @2021-12-30
+* 网站内容类型ContentType交给Spring容器管理，可动态添加自定义类型
+* FreeMarker页面扩展新定义获取数据字典条目文件的函数data_text
+* 数据字典添加新的类型contentStatus4html，注意不能使用冒号
+* 实现分页的处理类Paginator
+* 简化数据表动态查询支持类DynamicQueryBuilder及相关处理辅助类
+
 0.1.3: @2021-12-26
 * MySQL数据库中日期使用int（4字节）保存，在使用java.util.Date类型数据时出现Data truncation: Out of range value for column 'publishTime'
   由于日期时间型数据是8字节，因此将原有保存日期的字段由int改为bigint（8字节）
