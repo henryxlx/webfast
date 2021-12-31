@@ -3,9 +3,11 @@ package com.jetwinner.webfast.kernel.service;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppContentDao;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.content.type.BaseContentType;
 import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +50,14 @@ public class AppContentServiceImpl implements AppContentService {
     }
 
     @Override
-    public List<Map<String, Object>> findAllContent() {
-        return contentDao.findAll();
+    public int searchContentCount(Map<String, Object> conditions) {
+        return contentDao.searchContentCount(conditions);
+    }
+
+    @Override
+    public List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
+                                                    Integer start, Integer limit) {
+
+        return contentDao.searchContent(conditions, OrderBy.toArray(sort.toMap()), start, limit);
     }
 }

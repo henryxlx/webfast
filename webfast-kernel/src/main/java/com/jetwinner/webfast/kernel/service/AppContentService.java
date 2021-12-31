@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 
 import java.util.List;
 import java.util.Map;
@@ -12,5 +13,8 @@ public interface AppContentService {
 
     void createContent(Map<String, Object> model, BaseAppUser currentUser);
 
-    List<Map<String, Object>> findAllContent();
+    int searchContentCount(Map<String, Object> conditions);
+
+    List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
+                                             Integer start, Integer limit);
 }
