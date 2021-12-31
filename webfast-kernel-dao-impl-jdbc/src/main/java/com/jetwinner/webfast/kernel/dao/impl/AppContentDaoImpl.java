@@ -47,6 +47,11 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
         return getJdbcTemplate().queryForMap(sql, id);
     }
 
+    @Override
+    public void updateContent(Integer id, Map<String, Object> fields) {
+        updateMap(TABLE_NAME, fields, "id", id);
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
         if (conditions.containsKey("keywords")) {
             conditions.put("keywordsLike", "%" + conditions.get("keywords") + "%");

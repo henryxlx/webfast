@@ -19,4 +19,8 @@ public interface AppContentService {
                                              Integer start, Integer limit);
 
     Map<String, Object> getContent(Integer id);
+
+    void trashContent(Integer id);
+
+    void publishContent(Integer id);
 }

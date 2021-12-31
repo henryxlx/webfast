@@ -19,4 +19,6 @@ public interface AppContentDao {
                                             Integer start, Integer limit);
 
     Map<String, Object> getContent(Integer id);
+
+    void updateContent(Integer id, Map<String, Object> fields);
 }

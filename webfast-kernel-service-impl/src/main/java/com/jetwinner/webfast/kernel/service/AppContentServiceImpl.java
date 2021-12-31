@@ -65,4 +65,16 @@ public class AppContentServiceImpl implements AppContentService {
     public Map<String, Object> getContent(Integer id) {
         return contentDao.getContent(id);
     }
+
+    @Override
+    public void trashContent(Integer id) {
+        contentDao.updateContent(id, new ParamMap().add("status", "trash").toMap());
+        // logService.info("content", "trash", String.format("内容#{%d}移动到回收站", id));
+    }
+
+    @Override
+    public void publishContent(Integer id) {
+        contentDao.updateContent(id, new ParamMap().add("status", "published").toMap());
+        // logService.info('content', 'publish', String.format("内容#{%d}发布", id));
+    }
 }
