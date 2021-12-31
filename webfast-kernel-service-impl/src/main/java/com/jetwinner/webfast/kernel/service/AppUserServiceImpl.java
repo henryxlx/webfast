@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.util.ArrayTookKit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
@@ -17,9 +18,9 @@ import java.util.Set;
 @Service
 public class AppUserServiceImpl implements AppUserService {
 
-    private AppUserDao userDao;
-    private DataSourceConfig dataSourceConfig;
-    private ShiroAccountService shiroAccountService;
+    private final AppUserDao userDao;
+    private final DataSourceConfig dataSourceConfig;
+    private final ShiroAccountService shiroAccountService;
 
     public AppUserServiceImpl(AppUserDao userDao,
                               DataSourceConfig dataSourceConfig,
@@ -52,7 +53,7 @@ public class AppUserServiceImpl implements AppUserService {
     private Set<String> toRoleSet(String strRoles) {
         String[] roleStrArray = strRoles.split("\\|");
         HashSet<String> roles = new HashSet<>();
-        if (roleStrArray == null || roleStrArray.length < 1) {
+        if (roleStrArray.length < 1) {
             return roles;
         }
         for (String role : roleStrArray) {
@@ -71,5 +72,10 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public void register(Map<String, Object> user) {
         userDao.insert(user);
+    }
+
+    @Override
+    public Map<String, Map<String, Object>> findUsersByIds(Set<Object> userIds) {
+        return ArrayTookKit.toMapForFreeMarkerView(userDao.findByIds(userIds), "id");
     }
 }

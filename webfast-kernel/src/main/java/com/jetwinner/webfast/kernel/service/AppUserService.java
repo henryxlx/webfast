@@ -19,4 +19,6 @@ public interface AppUserService {
     Set<String> findPermissionsByUsername(String username);
 
     void register(Map<String, Object> user);
+
+    Map<String, Map<String, Object>> findUsersByIds(Set<Object> userIds);
 }
