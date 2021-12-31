@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.dao.support;
 
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,6 +55,15 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
         return this;
     }
 
+    public DynamicQueryBuilder orderBy(OrderBy[] orderByArray) {
+        if (orderByArray != null && orderByArray.length > 0) {
+            for (OrderBy orderBy : orderByArray) {
+                super.orderBy(orderBy.getColumnName(), orderBy.getSortType());
+            }
+        }
+        return this;
+    }
+
     @Override
     public DynamicQueryBuilder setFirstResult(int firstResult) {
         super.setFirstResult(firstResult);
@@ -101,12 +112,14 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
         }
 
         String value = conditions.get(conditionName).toString();
-        if (value != null && value.indexOf(",") > 0) { // categoryId IN ( :categoryIds )
+        // categoryId IN ( :categoryIds )
+        if (value != null && value.indexOf(",") > 0) {
             String[] arr = value.split(",");
             StringBuilder marks = new StringBuilder();
             for (int i = 0; i < arr.length; i++) {
                 String key = String.format("%s_%d", conditionName, i);
-                marks.append(i > 0 ? ", :" : ":").append(key); // ":%s_%s" eg. :categoryIds_0, :categoryIds_1, :categoryIds_2
+                // ":%s_%s" eg. :categoryIds_0, :categoryIds_1, :categoryIds_2
+                marks.append(i > 0 ? ", :" : ":").append(key);
                 conditions.put(key, arr[i]);
             }
             where = where.replace(":" + conditionName, marks);
@@ -119,20 +132,13 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
     private boolean isInCondition(String where) {
         Pattern p = Pattern.compile("\\s+(IN)\\s+");
         Matcher m = p.matcher(where);
-        if (m.find()) {
-            return true;
-        } else {
-            return false;
-        }
+        return m.find();
     }
 
     private String getConditionName(String where) {
         Pattern p = Pattern.compile(":([a-zA-z0-9_]+)");
         Matcher m = p.matcher(where);
-        if (m.find()) {
-            return m.group();
-        }
-        return null;
+        return m.find() ? m.group() : null;
     }
 
     private boolean isWhereInConditions(String where) {
