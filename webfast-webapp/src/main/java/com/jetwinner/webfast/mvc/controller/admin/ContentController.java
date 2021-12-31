@@ -8,9 +8,7 @@ import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -77,5 +75,19 @@ public class ContentController {
         model.addAttribute("type", ContentTypeFactory.create(type));
         model.addAttribute("content", content);
         return "/admin/content/content-modal";
+    }
+
+    @PostMapping("/admin/content/{id}/trash")
+    @ResponseBody
+    public Boolean trashAction(@PathVariable Integer id) {
+        contentService.trashContent(id);
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/admin/content/{id}/publish")
+    @ResponseBody
+    public Boolean publishAction(@PathVariable Integer id) {
+        contentService.publishContent(id);
+        return Boolean.TRUE;
     }
 }
