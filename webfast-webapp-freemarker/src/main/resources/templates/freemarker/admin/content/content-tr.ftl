@@ -1,6 +1,6 @@
 <tr id="content-${content.id}">
     <td>
-        <a href="${ctx}/content/${(content.alias)!content.id}" target="_blank">${content.title}</a><br />
+        <a href="${ctx}/content/${(content.alias)!content.id}">${content.title}</a><br />
         <#if content.type == 'page'>
         <span class="text-muted text-sm">地址：page/${(content.alias)!content.id}</span>
         </#if>
