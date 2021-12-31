@@ -12,6 +12,16 @@ public class ParamMap {
 
     private Map<String, Object> map = new HashMap<String, Object>();
 
+    public static Map<String, Object> toMap(Map<String, String[]> map) {
+        Map<String, Object> targetMap = new HashMap<>(map != null ? map.size() : 0);
+        if (map != null) {
+            map.forEach((k, v) -> {
+                targetMap.put(k, v == null ? null : v[0]);
+            });
+        }
+        return targetMap;
+    }
+
     public ParamMap add(String key, Object value) {
         this.map.put(key, value);
         return this;
