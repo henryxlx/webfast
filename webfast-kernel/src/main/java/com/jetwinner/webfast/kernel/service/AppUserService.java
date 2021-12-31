@@ -21,4 +21,6 @@ public interface AppUserService {
     void register(Map<String, Object> user);
 
     Map<String, Map<String, Object>> findUsersByIds(Set<Object> userIds);
+
+    AppUser getUser(Object id);
 }

@@ -78,4 +78,9 @@ public class AppUserServiceImpl implements AppUserService {
     public Map<String, Map<String, Object>> findUsersByIds(Set<Object> userIds) {
         return ArrayTookKit.toMapForFreeMarkerView(userDao.findByIds(userIds), "id");
     }
+
+    @Override
+    public AppUser getUser(Object id) {
+        return userDao.getUser(id);
+    }
 }

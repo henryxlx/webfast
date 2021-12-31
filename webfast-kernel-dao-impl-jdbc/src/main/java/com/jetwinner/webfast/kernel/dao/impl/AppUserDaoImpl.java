@@ -40,4 +40,11 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
         String sql = String.format("SELECT * FROM %s WHERE id IN (%s)", TABLE_NAME, marks);
         return getJdbcTemplate().queryForList(sql, ids.toArray());
     }
+
+    @Override
+    public AppUser getUser(Object id) {
+        String sql = String.format("SELECT * FROM %s WHERE id = ? LIMIT 1", TABLE_NAME);
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppUser.class), id)
+                .stream().findFirst().orElse(null);
+    }
 }
