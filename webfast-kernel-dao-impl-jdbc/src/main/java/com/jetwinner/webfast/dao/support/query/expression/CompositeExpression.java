@@ -6,7 +6,9 @@ import java.util.List;
 /**
  * Composite expression is responsible to build a group of similar expression.
  * <p/>
- * Created by x230-think-joomla on 2015/6/8.
+ *
+ * @author x230-think-joomla
+ * @date 2015/6/8
  */
 public class CompositeExpression {
     /**
@@ -27,7 +29,7 @@ public class CompositeExpression {
     /**
      * array Each expression part of the composite expression
      */
-    private List parts = new ArrayList();
+    private List parts;
 
     private CompositeExpression() {
         this.parts = new ArrayList();
