@@ -41,6 +41,12 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
         return getNamedParameterJdbcTemplate().queryForList(builder.getSQL(), conditions);
     }
 
+    @Override
+    public Map<String, Object> getContent(Integer id) {
+        String sql = String.format("SELECT * FROM %s WHERE id = ? LIMIT 1", TABLE_NAME);
+        return getJdbcTemplate().queryForMap(sql, id);
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
         if (conditions.containsKey("keywords")) {
             conditions.put("keywordsLike", "%" + conditions.get("keywords") + "%");

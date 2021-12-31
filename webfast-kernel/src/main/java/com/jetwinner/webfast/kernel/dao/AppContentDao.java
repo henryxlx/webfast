@@ -17,4 +17,6 @@ public interface AppContentDao {
     List<Map<String, Object>> searchContent(Map<String, Object> conditions,
                                             OrderBy[] orderByArray,
                                             Integer start, Integer limit);
+
+    Map<String, Object> getContent(Integer id);
 }

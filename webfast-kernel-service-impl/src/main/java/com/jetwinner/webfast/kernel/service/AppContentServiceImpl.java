@@ -60,4 +60,9 @@ public class AppContentServiceImpl implements AppContentService {
 
         return contentDao.searchContent(conditions, OrderBy.toArray(sort.toMap()), start, limit);
     }
+
+    @Override
+    public Map<String, Object> getContent(Integer id) {
+        return contentDao.getContent(id);
+    }
 }

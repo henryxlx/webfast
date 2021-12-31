@@ -17,4 +17,6 @@ public interface AppContentService {
 
     List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
                                              Integer start, Integer limit);
+
+    Map<String, Object> getContent(Integer id);
 }
