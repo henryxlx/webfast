@@ -4,9 +4,12 @@ import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.service.AppCategoryService;
 import com.jetwinner.webfast.kernel.service.AppContentService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
+import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,5 +62,20 @@ public class ContentController {
         model.addAttribute("paginator", paginator);
         model.addAttribute("contents", contents);
         return "/admin/content/index";
+    }
+
+    @GetMapping("/admin/content/create")
+    public String createPage(String type, Model model) {
+        model.addAttribute("type", ContentTypeFactory.create(type));
+        return "/admin/content/content-modal";
+    }
+
+    @GetMapping("/admin/content/{id}/edit")
+    public String editPage(@PathVariable Integer id, Model model) {
+        Map<String, Object> content = contentService.getContent(id);
+        String type = String.valueOf(content.get("type"));
+        model.addAttribute("type", ContentTypeFactory.create(type));
+        model.addAttribute("content", content);
+        return "/admin/content/content-modal";
     }
 }
