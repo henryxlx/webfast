@@ -41,18 +41,18 @@ public class SqlStatementComposer {
     public static String getUpdateSql(String tableName, Map<String, ?> mapFromBean, String... primaryKeyNames) {
         return getUpdateSql(tableName, mapFromBean.keySet().toArray(new String[0]), primaryKeyNames);
     }
-    public static String getUpdateSql(String tableName, String[] keys, String[] primaryKeyNames) {
+
+    public static String getUpdateSql(String tableName, String[] columnNames, String[] primaryKeyNames) {
         StringBuilder sql = new StringBuilder();
         sql.append("UPDATE ").append(tableName).append(" SET ");
-        for (int len = keys.length, i = 0; i < len; i++) {
-            String key = keys[i];
-            if (key == null || EasyStringUtil.inArray(key, primaryKeyNames)) {
+        int count = 0;
+        for (String columnName : columnNames) {
+            if (columnName == null || EasyStringUtil.inArray(columnName, primaryKeyNames)) {
                 continue;
             }
-            if (i > 0) {
-                sql.append(", ");
-            }
-            sql.append(key).append(" = :").append(key);
+            sql.append(count > 0 ? ", " : "");
+            sql.append(columnName).append(" = :").append(columnName);
+            count++;
         }
         sql.append(" WHERE ");
         for (int len = primaryKeyNames.length, i = 0; i < len; i++) {
