@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.kernel.typedef;
 
+import com.jetwinner.util.EasyStringUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,9 @@ public class ParamMap {
         Map<String, Object> targetMap = new HashMap<>(map != null ? map.size() : 0);
         if (map != null) {
             map.forEach((k, v) -> {
-                targetMap.put(k, v == null ? null : v[0]);
+                if (v != null && v.length > 0 && EasyStringUtil.isNotBlank(v[0])) {
+                    targetMap.put(k, v[0]);
+                }
             });
         }
         return targetMap;
