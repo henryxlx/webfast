@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * @author xulixin
  */
-public class SqlBuilder {
+public class SqlStatementComposer {
 
-    private SqlBuilder() {
+    private SqlStatementComposer() {
         // reserved.
     }
 

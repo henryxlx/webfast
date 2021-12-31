@@ -24,13 +24,13 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
 
     protected <T> int insert(String tableName, T anyBean) {
         BeanPropertySqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(anyBean);
-        String sql = SqlBuilder.getInsertSql(tableName, sqlParameterSource.getParameterNames());
+        String sql = SqlStatementComposer.getInsertSql(tableName, sqlParameterSource.getParameterNames());
         return getNamedParameterJdbcTemplate().update(sql, sqlParameterSource);
     }
 
     protected <T> Number insertReturnKey(String tableName, T anyBean) {
         BeanPropertySqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(anyBean);
-        String sql = SqlBuilder.getInsertSql(tableName, sqlParameterSource.getParameterNames());
+        String sql = SqlStatementComposer.getInsertSql(tableName, sqlParameterSource.getParameterNames());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         getNamedParameterJdbcTemplate().update(sql, sqlParameterSource, keyHolder);
         return keyHolder.getKey();
@@ -40,7 +40,7 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         if (map == null || map.size() < 1) {
             return 0;
         }
-        String sql = SqlBuilder.getInsertSql(tableName, map);
+        String sql = SqlStatementComposer.getInsertSql(tableName, map);
         return getNamedParameterJdbcTemplate().update(sql, map);
     }
 
@@ -48,7 +48,7 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         if (map == null || map.size() < 1) {
             return 0;
         }
-        String sql = SqlBuilder.getInsertSql(tableName, map);
+        String sql = SqlStatementComposer.getInsertSql(tableName, map);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         getNamedParameterJdbcTemplate().update(sql, new MapSqlParameterSource(map), keyHolder);
         return keyHolder.getKey();
@@ -56,7 +56,7 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
 
     protected <T> int update(String tableName, T anyBean, String... primaryKeyNames) {
         BeanPropertySqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(anyBean);
-        String sql = SqlBuilder.getUpdateSql(tableName, sqlParameterSource.getParameterNames(), primaryKeyNames);
+        String sql = SqlStatementComposer.getUpdateSql(tableName, sqlParameterSource.getParameterNames(), primaryKeyNames);
         return getNamedParameterJdbcTemplate().update(sql, sqlParameterSource);
     }
 
@@ -73,7 +73,7 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
             map.put(primaryKeyName, pkValue);
         }
 
-        String sql = SqlBuilder.getUpdateSql(tableName, map, primaryKeyName);
+        String sql = SqlStatementComposer.getUpdateSql(tableName, map, primaryKeyName);
         return getNamedParameterJdbcTemplate().update(sql, map);
     }
 
