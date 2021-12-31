@@ -40,8 +40,8 @@
     </thead>
     <tbody>
     <#list contents! as content>
-    {% set user = users[content.userId] %}
-    {% set category = categories[content.categoryId]|default(null) %}
+        <#assign user = (users[content.userId?c])! />
+        <#assign category = (categories[content.categoryId?c])!'N/A'/>
         <#include '/admin/content/content-tr.ftl'/>
     <#else>
     <tr><td colspan="20"><div class="empty">暂无页面记录</div></td></tr>
