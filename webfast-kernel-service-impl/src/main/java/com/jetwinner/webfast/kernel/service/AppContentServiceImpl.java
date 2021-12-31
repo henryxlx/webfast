@@ -77,4 +77,9 @@ public class AppContentServiceImpl implements AppContentService {
         contentDao.updateContent(id, new ParamMap().add("status", "published").toMap());
         // logService.info('content', 'publish', String.format("内容#{%d}发布", id));
     }
+
+    @Override
+    public Map<String, Object> getContentByAlias(String alias) {
+        return contentDao.getContentByAlias(alias);
+    }
 }

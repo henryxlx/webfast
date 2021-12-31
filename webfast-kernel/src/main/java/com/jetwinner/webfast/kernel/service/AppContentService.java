@@ -23,4 +23,6 @@ public interface AppContentService {
     void trashContent(Integer id);
 
     void publishContent(Integer id);
+
+    Map<String, Object> getContentByAlias(String alias);
 }

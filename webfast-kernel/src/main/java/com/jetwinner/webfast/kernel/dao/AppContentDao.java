@@ -21,4 +21,6 @@ public interface AppContentDao {
     Map<String, Object> getContent(Integer id);
 
     void updateContent(Integer id, Map<String, Object> fields);
+
+    Map<String, Object> getContentByAlias(String alias);
 }

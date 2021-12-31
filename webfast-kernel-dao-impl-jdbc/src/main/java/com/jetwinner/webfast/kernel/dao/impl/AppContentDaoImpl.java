@@ -52,6 +52,12 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
         updateMap(TABLE_NAME, fields, "id", id);
     }
 
+    @Override
+    public Map<String, Object> getContentByAlias(String alias) {
+        String sql = String.format("SELECT * FROM %s WHERE alias = ? LIMIT 1", TABLE_NAME);
+        return getJdbcTemplate().queryForMap(sql, alias);
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
         if (conditions.containsKey("keywords")) {
             conditions.put("keywordsLike", "%" + conditions.get("keywords") + "%");
