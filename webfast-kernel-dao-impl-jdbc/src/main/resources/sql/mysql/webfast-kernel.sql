@@ -35,6 +35,36 @@ CREATE TABLE `app_block_history` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='历史表';
 
 -- ----------------------------
+-- Table structure for `app_category`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_category`;
+CREATE TABLE `app_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+  `code` varchar(64) NOT NULL DEFAULT '' COMMENT '分类编码',
+  `name` varchar(255) NOT NULL COMMENT '分类名称',
+  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
+  `path` varchar(255) NOT NULL DEFAULT '' COMMENT '分类完整路径',
+  `weight` int(11) NOT NULL DEFAULT '0' COMMENT '分类权重',
+  `groupId` int(10) unsigned NOT NULL COMMENT '分类组ID',
+  `parentId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父分类ID',
+  `description` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uri` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_category_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_category_group`;
+CREATE TABLE `app_category_group` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类组ID',
+  `code` varchar(64) NOT NULL COMMENT '分类组编码',
+  `name` varchar(255) NOT NULL COMMENT '分类组名称',
+  `depth` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '该组下分类允许的最大层级数',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for `app_content`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_content`;
