@@ -18,7 +18,7 @@
 <form class="well well-sm form-inline">
     <div class="form-group">
         <select class="form-control" name="status">
-            <@select_options dict['contentStatus']!{} RequestParameters['status']! '--所有状态--' />
+            <@select_options dict['contentStatus']!{} RequestParameters['status']!'' '--所有状态--' />
         </select>
     </div>
     <div class="form-group">
