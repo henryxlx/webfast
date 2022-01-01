@@ -17,4 +17,6 @@ public interface AppBlockDao {
     Map<String, Object> getBlock(Object id);
 
     void updateBlock(Object id, Map<String, Object> fields);
+
+    Map<String, Object> getBlockByCode(String code);
 }

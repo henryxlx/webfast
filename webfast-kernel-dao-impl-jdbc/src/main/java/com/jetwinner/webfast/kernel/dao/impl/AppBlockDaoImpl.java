@@ -42,4 +42,10 @@ public class AppBlockDaoImpl extends FastJdbcDaoSupport implements AppBlockDao {
     public void updateBlock(Object id, Map<String, Object> fields) {
         updateMap(TABlE_NAME, fields, "id", id);
     }
+
+    @Override
+    public Map<String, Object> getBlockByCode(String code) {
+        String sql = "SELECT * FROM app_block WHERE code = ?  LIMIT 1";
+        return getJdbcTemplate().queryForList(sql, code).stream().findFirst().orElse(null);
+    }
 }
