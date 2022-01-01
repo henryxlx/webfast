@@ -42,4 +42,8 @@ public final class JsonUtil {
         return null;
     }
 
+
+    public static String jsonDecode(Object jsonStr, boolean assoc) {
+        return String.valueOf(jsonStr);
+    }
 }
