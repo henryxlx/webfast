@@ -29,4 +29,6 @@ public interface AppBlockService {
     Object generateBlockTemplateItems(Map<String, Object> block);
 
     List<Map<String, Object>> findBlockHistoriesByBlockId(Object id, Integer start, Integer limit);
+
+    Map<String, Object> getBlockHistory(Object id);
 }

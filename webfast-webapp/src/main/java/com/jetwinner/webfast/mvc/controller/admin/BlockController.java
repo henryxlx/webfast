@@ -72,4 +72,10 @@ public class BlockController {
         model.addAttribute("paginator", paginator);
         return "/admin/block/block-update-modal";
     }
+
+    @GetMapping("admin/blockhistory/{id}/preview")
+    public String previewPage(Integer id, Model model) {
+        model.addAttribute("blockHistory", blockService.getBlockHistory(id));
+        return "/admin/block/blockhistory-preview";
+    }
 }

@@ -34,4 +34,10 @@ public class AppBlockHistoryDaoImpl extends FastJdbcDaoSupport implements AppBlo
                 TABLE_NAME, start, limit);
         return getJdbcTemplate().queryForList(sql, blockId);
     }
+
+    @Override
+    public Map<String, Object> getBlockHistory(Object id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM app_block_history WHERE id = ? LIMIT 1", id)
+                .stream().findFirst().orElse(new HashMap<>(0));
+    }
 }

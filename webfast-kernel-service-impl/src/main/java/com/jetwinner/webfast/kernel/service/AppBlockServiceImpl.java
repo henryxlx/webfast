@@ -90,4 +90,9 @@ public class AppBlockServiceImpl implements AppBlockService {
     public List<Map<String, Object>> findBlockHistoriesByBlockId(Object blockId, Integer start, Integer limit) {
         return blockHistoryDao.findByBlockId(blockId, start, limit);
     }
+
+    @Override
+    public Map<String, Object> getBlockHistory(Object id) {
+        return blockHistoryDao.getBlockHistory(id);
+    }
 }
