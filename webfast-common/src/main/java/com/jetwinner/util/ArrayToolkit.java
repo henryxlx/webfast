@@ -1,8 +1,6 @@
 package com.jetwinner.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author xulixin
@@ -17,5 +15,15 @@ public final class ArrayToolkit {
         final Map<String, Map<String, Object>> map = new HashMap<>(list.size());
         list.forEach(e -> map.put(String.valueOf(e.get(keyFor)), e));
         return map;
+    }
+
+    public static Set<Object> column(List<Map<String, Object>> mapList, String fieldName) {
+        Set<Object> columnValues = new HashSet<>();
+        mapList.forEach(v -> {
+            if (EasyStringUtil.isNotBlank(v.get(fieldName))) {
+                columnValues.add(v.get(fieldName));
+            }
+        });
+        return columnValues;
     }
 }
