@@ -102,7 +102,7 @@
                             <li class="dropdown hidden-lt-ie8">
                                 <a href="javascript:;" class="dropdown-toggle"  data-toggle="dropdown">${(appUser.username)!'佚名'} <b class="caret"></b></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="${ctx}/user/show/${(appUser.id)!}"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
+                                    <li><a href="${ctx}/user/${(appUser.id)!}"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
                                     <li><a href="${ctx}/settings"><i class="glyphicon glyphicon-cog"></i> 个人中心</a></li>
                                     <li class="divider"></li>
                                     <#if userAcl?? && userAcl.hasRole('ROLE_BACKEND')>
