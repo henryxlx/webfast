@@ -7,9 +7,9 @@ import java.util.Map;
 /**
  * @author xulixin
  */
-public final class ArrayTookKit {
+public final class ArrayToolkit {
 
-    private ArrayTookKit() {
+    private ArrayToolkit() {
         // reserved.
     }
 

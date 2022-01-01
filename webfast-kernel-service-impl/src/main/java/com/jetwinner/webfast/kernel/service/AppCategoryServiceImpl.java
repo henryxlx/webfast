@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.util.ArrayTookKit;
+import com.jetwinner.util.ArrayToolkit;
 import com.jetwinner.webfast.kernel.dao.AppCategoryDao;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,6 @@ public class AppCategoryServiceImpl implements AppCategoryService {
 
     @Override
     public Map<String, Map<String, Object>> findCategoriesByIds(Set<Object> categoryIds) {
-        return ArrayTookKit.toMapForFreeMarkerView(categoryDao.findByIds(categoryIds), "id");
+        return ArrayToolkit.toMapForFreeMarkerView(categoryDao.findByIds(categoryIds), "id");
     }
 }
