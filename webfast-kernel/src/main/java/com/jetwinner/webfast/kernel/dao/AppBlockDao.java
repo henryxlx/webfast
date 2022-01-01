@@ -14,7 +14,7 @@ public interface AppBlockDao {
 
     List<Map<String, Object>> findBlocks(int start, int limit);
 
-    Map<String, Object> getBlock(Integer id);
+    Map<String, Object> getBlock(Object id);
 
-    void updateBlock(Integer id, Map<String, Object> fields);
+    void updateBlock(Object id, Map<String, Object> fields);
 }
