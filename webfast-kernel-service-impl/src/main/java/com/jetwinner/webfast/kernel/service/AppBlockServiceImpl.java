@@ -65,4 +65,29 @@ public class AppBlockServiceImpl implements AppBlockService {
     public Map<String, Object> getLatestBlockHistory() {
         return blockHistoryDao.getLatestBlockHistory();
     }
+
+    @Override
+    public Map<String, Object> getBlock(Object id) {
+        return blockDao.getBlock(id);
+    }
+
+    @Override
+    public Map<String, Object> getBlockByCode(String code) {
+        return blockDao.getBlockByCode(code);
+    }
+
+    @Override
+    public int countBlockHistoryByBlockId(Object blockId) {
+        return blockHistoryDao.countByBlockId(blockId);
+    }
+
+    @Override
+    public Object generateBlockTemplateItems(Map<String, Object> block) {
+        return null;
+    }
+
+    @Override
+    public List<Map<String, Object>> findBlockHistoriesByBlockId(Object blockId, Integer start, Integer limit) {
+        return blockHistoryDao.findByBlockId(blockId, start, limit);
+    }
 }

@@ -19,4 +19,14 @@ public interface AppBlockService {
     List<Map<String, Object>> searchBlocks(int start, int limit);
 
     Map<String, Object> getLatestBlockHistory();
+
+    Map<String, Object> getBlock(Object id);
+
+    Map<String, Object> getBlockByCode(String code);
+
+    int countBlockHistoryByBlockId(Object id);
+
+    Object generateBlockTemplateItems(Map<String, Object> block);
+
+    List<Map<String, Object>> findBlockHistoriesByBlockId(Object id, Integer start, Integer limit);
 }
