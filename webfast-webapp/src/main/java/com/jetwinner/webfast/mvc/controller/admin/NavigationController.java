@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.service.AppNavigationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -18,10 +18,16 @@ import java.util.Map;
 @Controller("webfastAdminNavigationController")
 public class NavigationController {
 
+    private final AppNavigationService navigationService;
+
+    public NavigationController(AppNavigationService navigationService) {
+        this.navigationService = navigationService;
+    }
+
     @RequestMapping("/admin/navigation")
     public String indexPage(@RequestParam(defaultValue = "top") String type, Model model) {
         model.addAttribute("type", type);
-        // model.addAttribute("navigations", navigationService.getNavigationsListByType(type));
+        model.addAttribute("navigations", navigationService.getNavigationsListByType(type));
         return "/admin/navigation/index";
     }
 

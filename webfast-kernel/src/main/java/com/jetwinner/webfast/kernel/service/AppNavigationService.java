@@ -8,4 +8,6 @@ import java.util.Map;
 public interface AppNavigationService {
 
     void createNavigation(Map<String, Object> model);
+
+    Object getNavigationsListByType(String type);
 }
