@@ -116,8 +116,8 @@ CREATE TABLE `app_navigation` (
 DROP TABLE IF EXISTS `app_role`;
 CREATE TABLE `app_role` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) NOT NULL COMMENT '权限名称',
-  `roleName` varchar(32) NOT NULL COMMENT '权限代码',
+  `label` varchar(32) NOT NULL COMMENT '角色文字标签',
+  `roleName` varchar(32) NOT NULL COMMENT '角色名称',
   `data` text COMMENT '权限配置',
   `data_v2` text COMMENT 'admin_v2权限配置',
   `createdUserId` int(10) unsigned NOT NULL COMMENT '创建用户ID',
