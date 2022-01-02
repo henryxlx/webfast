@@ -13,10 +13,10 @@
 
     <table id="role-table" class="table table-striped">
         <thead>
-        <th width="10%">ID</th>
-        <th width="30%">角色名</th>
-        <th width="30%">描述</th>
-        <#--<th width="20%">添加时间</th>-->
+        <th width="10%">角色名</th>
+        <th width="30%">编码</th>
+        <th width="30%">权限</th>
+        <th width="20%">添加时间</th>
         <th width="10%">操作</th>
         </thead>
         <tbody>
