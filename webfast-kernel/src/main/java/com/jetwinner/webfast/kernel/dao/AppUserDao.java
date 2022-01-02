@@ -15,7 +15,7 @@ public interface AppUserDao {
 
     void insert(Map<String, Object> user);
 
-    List<Map<String, Object>> findByIds(Set<Object> ids);
+    List<AppUser> findByIds(Set<Object> ids);
 
     AppUser getUser(Object id);
 }

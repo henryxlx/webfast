@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.util.ArrayToolkit;
+import com.jetwinner.util.ArrayToolkitJava8Util;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
@@ -75,8 +75,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public Map<String, Map<String, Object>> findUsersByIds(Set<Object> userIds) {
-        return ArrayToolkit.toMapForFreeMarkerView(userDao.findByIds(userIds), "id");
+    public Map<String, AppUser> findUsersByIds(Set<Object> userIds) {
+        return ArrayToolkitJava8Util.index(userDao.findByIds(userIds), AppUser::getId);
     }
 
     @Override

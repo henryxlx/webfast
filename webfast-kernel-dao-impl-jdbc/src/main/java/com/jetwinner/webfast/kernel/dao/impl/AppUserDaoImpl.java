@@ -32,13 +32,13 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
     }
 
     @Override
-    public List<Map<String, Object>> findByIds(Set<Object> ids) {
+    public List<AppUser> findByIds(Set<Object> ids) {
         if (ids == null || ids.size() == 0) {
             return ListUtil.newArrayList();
         }
         String marks = ids.stream().map(v -> "?").collect(Collectors.joining(","));
         String sql = String.format("SELECT * FROM %s WHERE id IN (%s)", TABLE_NAME, marks);
-        return getJdbcTemplate().queryForList(sql, ids.toArray());
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppUser.class), ids.toArray());
     }
 
     @Override
