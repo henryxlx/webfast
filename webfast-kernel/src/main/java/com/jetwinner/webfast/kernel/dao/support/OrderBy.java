@@ -1,72 +1,46 @@
 package com.jetwinner.webfast.kernel.dao.support;
 
-import java.util.Map;
-import java.util.Set;
-
 /**
- *
  * @author x230-think-joomla
  * @date 2015/6/19
  */
 public class OrderBy {
 
-    public static final String SORT_TYPE_ASC = "ASC";
-    public static final String SORT_TYPE_DESC = "DESC";
+    public static final String ASC = "ASC";
+    public static final String DESC = "DESC";
+
+    public static final OrderByBuilder builder() {
+        return new OrderByBuilder();
+    }
 
     private String columnName;
 
     private String sortType;
 
     public OrderBy(String columnName) {
+        this(columnName, true);
+    }
+
+    public OrderBy(String columnName, boolean ascending) {
         this.columnName = columnName;
-        this.sortType = "";
+        this.sortType = ascending ? OrderBy.ASC : OrderBy.DESC;
     }
 
-    public OrderBy(String columnName, String sortType) {
-        this.alter(columnName, sortType);
-    }
-
-    public OrderBy(String columnName, Object sortType) {
-        this.alter(columnName, String.valueOf(sortType));
-    }
-
-    public static OrderBy[] toArray(Map<String, Object> sortMap) {
-        Set<String> keys = sortMap.keySet();
-        OrderBy[] orderByArray = new OrderBy[keys.size()];
-        int i = 0;
-        for (String key : keys) {
-            orderByArray[i++] = new OrderBy(key, sortMap.get(key));
-        }
-        return orderByArray;
-    }
-
-    public void alter(String columnName, String sortType) {
+    public void alterAsc(String columnName) {
         this.columnName = columnName;
-        if (sortType == null) {
-            this.sortType = "";
-        }
-        this.sortType = sortType;
+        this.sortType = OrderBy.ASC;
     }
 
-    public void setSortType(Object sortType) {
-        if (sortType != null) {
-            this.sortType = sortType.toString();
-        }
+    public void alterDesc(String columnName) {
+        this.columnName = columnName;
+        this.sortType = OrderBy.DESC;
     }
 
     public String getColumnName() {
         return columnName;
     }
 
-    public void setColumnName(String columnName) {
-        this.columnName = columnName;
-    }
-
     public String getSortType() {
         return sortType;
-    }
-
-    public void setSortType(String sortType) {
-        this.sortType = sortType;
     }
 }
