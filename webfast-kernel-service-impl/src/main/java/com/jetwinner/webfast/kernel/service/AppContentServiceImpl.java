@@ -3,7 +3,7 @@ package com.jetwinner.webfast.kernel.service;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppContentDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.content.type.BaseContentType;
 import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
@@ -34,7 +34,6 @@ public class AppContentServiceImpl implements AppContentService {
         BaseContentType type = ContentTypeFactory.create(content.get("type").toString());
         content.put("type", type.getAlias());
 
-
         if (EasyStringUtil.isBlank(content.get("title"))) {
             throw new RuntimeGoingException("内容标题不能为空，创建内容失败！");
         }
@@ -58,7 +57,7 @@ public class AppContentServiceImpl implements AppContentService {
     public List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
                                                     Integer start, Integer limit) {
 
-        return contentDao.searchContent(conditions, OrderBy.toArray(sort.toMap()), start, limit);
+        return contentDao.searchContent(conditions, OrderByBuilder.toArray(sort.toMap()), start, limit);
     }
 
     @Override
