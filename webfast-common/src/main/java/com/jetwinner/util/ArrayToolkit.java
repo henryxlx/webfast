@@ -26,4 +26,20 @@ public final class ArrayToolkit {
         });
         return columnValues;
     }
+
+    public static Map<String, Object> filter(Map<String, String[]> parameterMap, String... parameterNames) {
+        int len = parameterNames != null ? parameterNames.length : 0;
+        Map<String, Object> map = new HashMap<>(len);
+        if (parameterNames != null) {
+            for (String pName : parameterNames) {
+                if (parameterMap.containsKey(pName)) {
+                    String[] values = parameterMap.get(pName);
+                    if (values != null && values.length > 0) {
+                        map.put(pName, values[0]);
+                    }
+                }
+            }
+        }
+        return map;
+    }
 }
