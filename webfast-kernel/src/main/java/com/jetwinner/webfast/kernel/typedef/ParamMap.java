@@ -26,7 +26,7 @@ public class ParamMap {
     public static Map<String, Object> toConditionMap(HttpServletRequest request) {
         Enumeration<String> parameterNames = request.getParameterNames();
         List<String> keyList = Collections.list(parameterNames);
-        Map<String, Object> map = new HashMap<>(keyList == null ? 0 : keyList.size());
+        Map<String, Object> map = new HashMap<>(keyList.size());
         for (String key : keyList) {
             String value = request.getParameter(key);
             if (EasyStringUtil.isNotBlank(value)) {
