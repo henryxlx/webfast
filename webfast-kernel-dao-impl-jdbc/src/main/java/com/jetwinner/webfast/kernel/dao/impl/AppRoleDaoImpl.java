@@ -3,7 +3,7 @@ package com.jetwinner.webfast.kernel.dao.impl;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,10 +20,10 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     private static final String TABLE_NAME = "app_role";
 
     @Override
-    public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderBy[] sort, Integer start, Integer limit) {
+    public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")
-                .orderBy(sort)
+                .orderBy(orderByBuilder)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions,

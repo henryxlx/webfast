@@ -54,10 +54,10 @@ public class AppContentServiceImpl implements AppContentService {
     }
 
     @Override
-    public List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
+    public List<Map<String, Object>> searchContents(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                                     Integer start, Integer limit) {
 
-        return contentDao.searchContent(conditions, OrderByBuilder.toArray(sort.toMap()), start, limit);
+        return contentDao.searchContent(conditions, orderByBuilder, start, limit);
     }
 
     @Override

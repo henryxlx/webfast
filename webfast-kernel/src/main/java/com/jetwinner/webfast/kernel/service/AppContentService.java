@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.webfast.kernel.BaseAppUser;
-import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ public interface AppContentService {
 
     int searchContentCount(Map<String, Object> conditions);
 
-    List<Map<String, Object>> searchContents(Map<String, Object> conditions, ParamMap sort,
+    List<Map<String, Object>> searchContents(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                              Integer start, Integer limit);
 
     Map<String, Object> getContent(Integer id);

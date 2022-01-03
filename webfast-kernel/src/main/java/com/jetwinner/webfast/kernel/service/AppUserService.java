@@ -1,7 +1,9 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,4 +25,8 @@ public interface AppUserService {
     Map<String, AppUser> findUsersByIds(Set<Object> userIds);
 
     AppUser getUser(Object id);
+
+    int searchUserCount(Map<String, Object> conditions);
+
+    List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
 }

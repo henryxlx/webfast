@@ -5,10 +5,12 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,5 +84,15 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public AppUser getUser(Object id) {
         return userDao.getUser(id);
+    }
+
+    @Override
+    public int searchUserCount(Map<String, Object> conditions) {
+        return 0;
+    }
+
+    @Override
+    public List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
+        return null;
     }
 }
