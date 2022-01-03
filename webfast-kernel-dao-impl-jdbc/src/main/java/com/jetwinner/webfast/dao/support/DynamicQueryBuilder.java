@@ -3,6 +3,7 @@ package com.jetwinner.webfast.dao.support;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,18 +51,11 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
         return this;
     }
 
-    public DynamicQueryBuilder orderBy(OrderBy orderBy) {
-        super.orderBy(orderBy.getColumnName(), orderBy.getSortType());
-        return this;
-    }
-
     public DynamicQueryBuilder orderBy(OrderByBuilder builder) {
         if (builder != null) {
-            OrderBy[] orderByArray = builder.toArray();
-            if (orderByArray != null) {
-                for (OrderBy orderBy : orderByArray) {
-                    super.orderBy(orderBy.getColumnName(), orderBy.getSortType());
-                }
+            List<OrderBy> orderByList = builder.toList();
+            for (OrderBy orderBy : orderByList) {
+                super.orderBy(orderBy.getColumnName(), orderBy.getSortType());
             }
         }
         return this;
