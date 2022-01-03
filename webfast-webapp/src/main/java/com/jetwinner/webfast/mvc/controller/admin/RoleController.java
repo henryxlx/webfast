@@ -34,7 +34,7 @@ public class RoleController {
 
     @GetMapping("/admin/role")
     public String indexPage(HttpServletRequest request, Model model) {
-        Map<String, Object> fields = ArrayToolkit.filter(request.getParameterMap(), "keyword", "keywordType");
+        Map<String, Object> fields = ArrayToolkit.filterRequestMap(request.getParameterMap(), "keyword", "keywordType");
         Map<String, Object> conditions = new ParamMap().toMap();
 
         if (EasyStringUtil.isNotBlank(fields.get("keywordType")) &&

@@ -42,7 +42,7 @@ public final class ArrayToolkit {
         return columnValues;
     }
 
-    public static Map<String, Object> filter(Map<String, String[]> parameterMap, String... parameterNames) {
+    public static Map<String, Object> filterRequestMap(Map<String, String[]> parameterMap, String... parameterNames) {
         int len = parameterNames != null ? parameterNames.length : 0;
         Map<String, Object> map = new HashMap<>(len);
         if (parameterNames != null) {
