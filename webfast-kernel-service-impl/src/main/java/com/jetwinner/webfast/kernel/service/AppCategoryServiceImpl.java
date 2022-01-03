@@ -21,6 +21,6 @@ public class AppCategoryServiceImpl implements AppCategoryService {
 
     @Override
     public Map<String, Map<String, Object>> findCategoriesByIds(Set<Object> categoryIds) {
-        return ArrayToolkit.toMapForFreeMarkerView(categoryDao.findByIds(categoryIds), "id");
+        return ArrayToolkit.index(categoryDao.findByIds(categoryIds), "id");
     }
 }
