@@ -38,7 +38,7 @@ public class ContentController {
 
     @RequestMapping("/admin/content")
     public String indexPage(HttpServletRequest request, Model model) {
-        Map<String, Object> conditions = ParamMap.toMap(request.getParameterMap());
+        Map<String, Object> conditions = ParamMap.toConditionMap(request);
 
         Paginator paginator = new Paginator(
                 request,

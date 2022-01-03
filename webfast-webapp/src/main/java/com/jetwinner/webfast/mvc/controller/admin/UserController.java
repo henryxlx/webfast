@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
-import com.jetwinner.util.ArrayToolkit;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.service.AppUserService;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping("/admin/user")
     public String indexPage(HttpServletRequest request, Model model) {
-        Map<String, Object> conditions = ArrayToolkit.toConditionMap(request);
+        Map<String, Object> conditions = ParamMap.toConditionMap(request);
         Paginator paginator = new Paginator(request, userService.searchUserCount(conditions), 20);
 
         model.addAttribute("users", userService.searchUsers(

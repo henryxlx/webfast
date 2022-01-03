@@ -2,8 +2,8 @@ package com.jetwinner.webfast.kernel.typedef;
 
 import com.jetwinner.util.EasyStringUtil;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 
 /**
  *
@@ -12,19 +12,7 @@ import java.util.Map;
  */
 public class ParamMap {
 
-    private Map<String, Object> map = new HashMap<String, Object>();
-
-    public static Map<String, Object> toMap(Map<String, String[]> map) {
-        Map<String, Object> targetMap = new HashMap<>(map != null ? map.size() : 0);
-        if (map != null) {
-            map.forEach((k, v) -> {
-                if (v != null && v.length > 0 && EasyStringUtil.isNotBlank(v[0])) {
-                    targetMap.put(k, v[0]);
-                }
-            });
-        }
-        return targetMap;
-    }
+    private final Map<String, Object> map = new HashMap<>();
 
     public ParamMap add(String key, Object value) {
         this.map.put(key, value);
@@ -33,6 +21,62 @@ public class ParamMap {
 
     public Map<String, Object> toMap() {
         return this.map;
+    }
+
+    public static Map<String, Object> toConditionMap(HttpServletRequest request) {
+        Enumeration<String> parameterNames = request.getParameterNames();
+        List<String> keyList = Collections.list(parameterNames);
+        Map<String, Object> map = new HashMap<>(keyList == null ? 0 : keyList.size());
+        for (String key : keyList) {
+            String value = request.getParameter(key);
+            if (EasyStringUtil.isNotBlank(value)) {
+                map.put(key, value);
+            }
+        }
+        return map;
+    }
+
+    public static Map<String, Object> toConditionMap(Map<String, String[]> sourceMap) {
+        Map<String, Object> toMap = new HashMap<>(sourceMap != null ? sourceMap.size() : 0);
+        if (sourceMap != null) {
+            sourceMap.forEach((k, v) -> {
+                if (v != null && v.length > 0 && EasyStringUtil.isNotBlank(v[0])) {
+                    toMap.put(k, v[0]);
+                }
+            });
+        }
+        return toMap;
+    }
+
+    public static Map<String, Object> mergeConditionMap(Map<String, Object> fields) {
+        return mergeConditionMap(null, fields);
+    }
+
+    public static Map<String, Object> mergeConditionMap(Map<String, Object> conditions, Map<String, Object> fields) {
+        if (conditions == null) {
+            conditions = new HashMap<>(fields == null ? 0 : fields.size());
+        }
+        if (fields != null) {
+            for (Map.Entry<String, Object> entry : fields.entrySet()) {
+                if (EasyStringUtil.isNotBlank(entry.getValue())) {
+                    conditions.put(entry.getKey(), entry.getValue());
+                }
+            }
+        }
+        return conditions;
+    }
+
+    public static Map<String, Object> filterConditionMap(Map<String, Object> conditions, String... includeKeys) {
+        Map<String, Object> map = new HashMap<>(includeKeys != null ? includeKeys.length : 0);
+        if (includeKeys != null) {
+            for (String key : includeKeys) {
+                Object value = conditions.get(key);
+                if (EasyStringUtil.isNotBlank(value)) {
+                    map.put(key, value);
+                }
+            }
+        }
+        return map;
     }
 
 }
