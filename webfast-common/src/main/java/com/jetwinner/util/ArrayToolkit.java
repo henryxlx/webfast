@@ -1,5 +1,6 @@
 package com.jetwinner.util;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
@@ -9,6 +10,20 @@ public final class ArrayToolkit {
 
     private ArrayToolkit() {
         // reserved.
+    }
+
+    public static Map<String, Object> toConditionMap(HttpServletRequest request) {
+        Set<String> keySet = request.getParameterMap().keySet();
+        Map<String, Object> map = new HashMap<>(keySet == null ? 0 : keySet.size());
+        if (keySet != null) {
+            for (String key : keySet) {
+                String value = request.getParameter(key);
+                if (EasyStringUtil.isNotBlank(value)) {
+                    map.put(key, value);
+                }
+            }
+        }
+        return map;
     }
 
     public static Map<String, Map<String, Object>> toMapForFreeMarkerView(List<Map<String, Object>> list, final String keyFor) {
