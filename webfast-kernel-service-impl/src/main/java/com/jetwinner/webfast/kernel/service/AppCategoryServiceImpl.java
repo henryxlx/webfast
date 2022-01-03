@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.util.ArrayToolkit;
+import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.webfast.kernel.dao.AppCategoryDao;
 import org.springframework.stereotype.Service;
 

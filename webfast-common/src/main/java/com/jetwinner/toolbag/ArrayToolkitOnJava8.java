@@ -1,4 +1,4 @@
-package com.jetwinner.util;
+package com.jetwinner.toolbag;
 
 import org.springframework.util.Assert;
 
@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 /**
  * @author xulixin
  */
-public final class ArrayToolkitJava8Util {
+public final class ArrayToolkitOnJava8 {
 
-    private ArrayToolkitJava8Util() {
+    private ArrayToolkitOnJava8() {
         // reserved.
     }
 

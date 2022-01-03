@@ -1,4 +1,6 @@
-package com.jetwinner.util;
+package com.jetwinner.toolbag;
+
+import com.jetwinner.util.EasyStringUtil;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
-import com.jetwinner.util.ArrayToolkit;
-import com.jetwinner.util.ArrayToolkitJava8Util;
+import com.jetwinner.toolbag.ArrayToolkit;
+import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -47,7 +47,7 @@ public class RoleController {
                 paginator.getPerPageCount()
         );
 
-        Set<Object> userIds = ArrayToolkitJava8Util.column(roles, AppModelRole::getCreatedUserId);
+        Set<Object> userIds = ArrayToolkitOnJava8.column(roles, AppModelRole::getCreatedUserId);
         model.addAttribute("users", userService.findUsersByIds(userIds));
         model.addAttribute("roles", roles);
         model.addAttribute("paginator", paginator);

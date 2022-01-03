@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
-import com.jetwinner.util.ArrayToolkit;
+import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.Paginator;
