@@ -37,8 +37,7 @@ public class RoleController {
         Map<String, Object> fields = ArrayToolkit.filterRequestMap(request.getParameterMap(), "keyword", "keywordType");
         Map<String, Object> conditions = new ParamMap().toMap();
 
-        if (EasyStringUtil.isNotBlank(fields.get("keywordType")) &&
-                EasyStringUtil.isNotBlank(fields.get("keywordType"))) {
+        if (EasyStringUtil.isNotBlank(fields.get("keywordType"))) {
             conditions.put(String.valueOf(fields.get("keywordType")), fields.get("keyword"));
         }
         Paginator paginator = new Paginator(request, roleService.searchRolesCount(conditions), 30);
