@@ -25,6 +25,13 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     }
 
     @Override
+    public int searchRolesCount(Map<String, Object> conditions) {
+        DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
+                .select("COUNT(id)");
+        return getNamedParameterJdbcTemplate().queryForObject(builder.getSQL(), conditions, Integer.class);
+    }
+
+    @Override
     public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")

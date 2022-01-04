@@ -27,7 +27,7 @@ public class AppRoleServiceImpl implements AppRoleService {
 
     @Override
     public int searchRolesCount(Map<String, Object> conditions) {
-        return 0;
+        return roleDao.searchRolesCount(conditions);
     }
 
     @Override

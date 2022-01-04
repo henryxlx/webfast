@@ -13,5 +13,7 @@ public interface AppRoleDao {
 
     List<AppModelRole> listAll();
 
+    int searchRolesCount(Map<String, Object> conditions);
+
     List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder builder, Integer start, Integer limit);
 }
