@@ -48,7 +48,7 @@
     </td>
     <td>
         <div class="btn-group">
-            <a href="#modal" data-toggle="modal" data-url="${ctx}/user/${user.id}" data-url="" class="btn btn-default btn-sm">查看</a>
+            <a href="#modal" data-toggle="modal" data-url="${ctx}/admin/user/${user.id}" data-url="" class="btn btn-default btn-sm">查看</a>
             <a href="#" type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown">
                 <span class="caret"></span>
             </a>

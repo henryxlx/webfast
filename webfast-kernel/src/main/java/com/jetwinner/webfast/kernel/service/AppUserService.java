@@ -29,4 +29,6 @@ public interface AppUserService {
     int searchUserCount(Map<String, Object> conditions);
 
     List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
+
+    Map<String, Object> getUserProfile(Integer id);
 }

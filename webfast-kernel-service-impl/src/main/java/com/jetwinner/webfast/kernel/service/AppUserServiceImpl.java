@@ -95,4 +95,9 @@ public class AppUserServiceImpl implements AppUserService {
     public List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         return userDao.searchUsers(conditions, orderByBuilder, start, limit);
     }
+
+    @Override
+    public Map<String, Object> getUserProfile(Integer id) {
+        return userDao.getProfile(id);
+    }
 }

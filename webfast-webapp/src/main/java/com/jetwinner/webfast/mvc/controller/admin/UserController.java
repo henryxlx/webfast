@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
@@ -8,6 +9,7 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -75,5 +77,17 @@ public class UserController {
             map.put("message", "该昵称可以使用");
         }
         return map;
+    }
+
+    @GetMapping("/admin/user/{id}")
+    public String showUserPage(@PathVariable Integer id, Model model) {
+        AppUser user = userService.getUser(id);
+        Map<String, Object> profile = userService.getUserProfile(id);
+        profile.put("title", user.getTitle());
+        model.addAttribute("profile", profile);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.listAllRole());
+        // model.addAttribute("fields", getFields());
+        return "/admin/user/show-modal";
     }
 }

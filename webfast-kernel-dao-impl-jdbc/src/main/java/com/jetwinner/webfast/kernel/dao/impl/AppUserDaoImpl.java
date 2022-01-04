@@ -9,6 +9,7 @@ import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -66,6 +67,12 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
                 .setFirstResult(start)
                 .setMaxResults(limit);
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions, new BeanPropertyRowMapper<>(AppUser.class));
+    }
+
+    @Override
+    public Map<String, Object> getProfile(Integer id) {
+        String sql = "SELECT * FROM app_user_profile WHERE id = ? LIMIT 1";
+        return getJdbcTemplate().queryForList(sql, id).stream().findFirst().orElse(new HashMap<>(0));
     }
 
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
