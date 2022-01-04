@@ -9,7 +9,7 @@
         <span class="text-muted text-sm">
             <#list roles! as role>
                 <#if user.roles?contains(role.roleName)>
-                    role.label
+                    ${role.label}
                 </#if>
             </#list>
     </span>
