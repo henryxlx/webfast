@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public interface AppRoleService {
 
+    List<AppModelRole> listAllRole();
+
     int searchRolesCount(Map<String, Object> conditions);
 
     List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);

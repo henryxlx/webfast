@@ -20,6 +20,11 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     private static final String TABLE_NAME = "app_role";
 
     @Override
+    public List<AppModelRole> listAll() {
+        return getJdbcTemplate().query("SELECT * FROM " + TABLE_NAME, new BeanPropertyRowMapper<>(AppModelRole.class));
+    }
+
+    @Override
     public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")

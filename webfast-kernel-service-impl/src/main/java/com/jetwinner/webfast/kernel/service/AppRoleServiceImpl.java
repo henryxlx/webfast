@@ -21,6 +21,11 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
+    public List<AppModelRole> listAllRole() {
+        return roleDao.listAll();
+    }
+
+    @Override
     public int searchRolesCount(Map<String, Object> conditions) {
         return 0;
     }
