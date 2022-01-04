@@ -33,10 +33,8 @@
     <button class="btn btn-primary">搜索</button>
 
     <#if userAcl.hasRole('ROLE_SUPER_ADMIN')>
-    <#if showUserExport??>
     <a class="btn btn-primary mhs" id="user-export" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/user/export">导出用户</a>
 
-    </#if>
     </#if>
 
 </form>
