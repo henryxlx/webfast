@@ -60,3 +60,7 @@
 <#function data key count=5>
     <#return []/>
 </#function>
+
+<#function convertIP ipAddress>
+    <#return webExtPack.getConvertIp(ipAddress) />
+</#function>

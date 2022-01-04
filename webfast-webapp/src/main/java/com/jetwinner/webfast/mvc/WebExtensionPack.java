@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc;
 
 import com.jetwinner.servlet.RequestContextPathUtil;
+import com.jetwinner.toolbag.ConvertIpToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.DataDictHolder;
@@ -28,7 +29,7 @@ public class WebExtensionPack extends BaseWebExtensionPack {
     }
 
     public String getDefaultPath(String category, String uri, String size, boolean absolute) {
-        String url = "";
+        String url;
         if (EasyStringUtil.isBlank(uri)) {
             String publicUrlpath = "assets/img/default/";
             url = getUrl(publicUrlpath, size, category);
@@ -56,7 +57,7 @@ public class WebExtensionPack extends BaseWebExtensionPack {
     }
 
     private String parseUri(String uri, Boolean absolute) {
-        String url = "";
+        String url;
 
         int pos = uri.indexOf("://");
         if (pos >= 0) {
@@ -100,6 +101,14 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public String getDictText(String type, String key) {
         return dataDictHolder.text(type, key);
+    }
+
+    public String getConvertIp(String ipAddress) {
+        if (EasyStringUtil.isNotBlank(ipAddress)) {
+            String location = ConvertIpToolkit.convertIp(ipAddress);
+            return "INNA".equals(location) ? "未知区域" : location;
+        }
+        return "";
     }
 
 }

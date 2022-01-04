@@ -88,11 +88,11 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public int searchUserCount(Map<String, Object> conditions) {
-        return 0;
+        return userDao.searchUserCount(conditions);
     }
 
     @Override
     public List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
-        return null;
+        return userDao.searchUsers(conditions, orderByBuilder, start, limit);
     }
 }

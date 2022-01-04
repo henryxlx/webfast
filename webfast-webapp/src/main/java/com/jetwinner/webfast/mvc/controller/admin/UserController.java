@@ -2,6 +2,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
@@ -21,9 +22,11 @@ import java.util.Map;
 public class UserController {
 
     private final AppUserService userService;
+    private final AppRoleService roleService;
 
-    public UserController(AppUserService userService) {
+    public UserController(AppUserService userService, AppRoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @RequestMapping("/admin/user")
@@ -31,8 +34,8 @@ public class UserController {
         Map<String, Object> conditions = ParamMap.toConditionMap(request);
         Paginator paginator = new Paginator(request, userService.searchUserCount(conditions), 20);
 
-        model.addAttribute("users", userService.searchUsers(
-                conditions,
+        model.addAttribute("roles", roleService.listAllRole());
+        model.addAttribute("users", userService.searchUsers(conditions,
                 OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()));
