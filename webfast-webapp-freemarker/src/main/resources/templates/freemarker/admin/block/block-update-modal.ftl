@@ -48,7 +48,8 @@
 </#if>
 
 <div class="mbm mtl"><strong>编辑帮助</strong></div>
-<div class="text-info">${block.tips}|nl2br</div>
+<#-- 将block.tips中的回车与换行替换成HTML中的标签<br/>，注意replace函数中的第三个参数是说明被替换的内容是正则表达式，否则replace不起作用 -->
+<div class="text-info">${block.tips!''?replace("(\r\n)+", "<br/>", 'r')}</div>
 
 <div class="mbm mtl"><strong>变更记录</strong></div>
   <table id="block-history-table" class="table table-striped table-condensed">
