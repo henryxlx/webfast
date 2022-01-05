@@ -53,7 +53,7 @@
                 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="#modal" data-toggle="modal" data-url="${ctx}/user/${user.id}/edit">编辑用户信息</a></li>
+                <li><a href="#modal" data-toggle="modal" data-url="${ctx}/admin/user/${user.id}/edit">编辑用户信息</a></li>
 
                 <#if !userAcl.hasRole('ROLE_SUPER_ADMIN')>
                 <#if user.roles?contains('ROLE_SUPER_ADMIN')>
