@@ -29,4 +29,9 @@
         </tbody>
     </table>
     <@web_macro.paginator paginator!/>
+
+    <div class="alert alert-info" role="alert">
+        <p>1、初始化的4个角色，无法编辑和删除</p>
+        <p>2、角色创建成功后编码不可修改</p>
+    </div>
 </#macro>
