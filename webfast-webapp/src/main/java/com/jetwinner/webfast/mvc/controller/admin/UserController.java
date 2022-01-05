@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -77,6 +80,39 @@ public class UserController {
             map.put("message", "该昵称可以使用");
         }
         return map;
+    }
+
+    @GetMapping("/admin/user/{id}/edit")
+    public String editPage(@PathVariable Integer id, Model model) {
+        AppUser user = userService.getUser(id);
+        Map<String, Object> profile = userService.getUserProfile(id);
+        profile.put("title", user.getTitle());
+        model.addAttribute("profile", profile);
+        model.addAttribute("user", user);
+        model.addAttribute("roles", roleService.listAllRole());
+        // model.addAttribute("fields", getFields());
+        return "/admin/user/edit-modal";
+    }
+
+    @GetMapping("/admin/user/{id}/roles")
+    public String rolePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        List<AppModelRole> list = roleService.listAllRole();
+        Map<String, String> rolesMap = list.stream().collect(Collectors.toMap(AppModelRole::getRoleName, AppModelRole::getLabel));
+        model.addAttribute("rolesMap", rolesMap);
+        return "/admin/user/roles-modal";
+    }
+
+    @GetMapping("/admin/user/{id}/avatar")
+    public String avatarPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "/admin/user/user-avatar-modal";
+    }
+
+    @GetMapping("/admin/user/{id}/change-password")
+    public String changePasswordPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "/admin/user/change-password-modal";
     }
 
     @GetMapping("/admin/user/{id}")
