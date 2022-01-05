@@ -41,7 +41,7 @@ public class UserController {
                 OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()));
-        model.addAttribute("paginator", paginator);
+        model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         return "/admin/user/index";
     }
 

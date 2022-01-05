@@ -50,7 +50,7 @@ public class RoleController {
         Set<Object> userIds = ArrayToolkitOnJava8.column(roles, AppModelRole::getCreatedUserId);
         model.addAttribute("users", userService.findUsersByIds(userIds));
         model.addAttribute("roles", roles);
-        model.addAttribute("paginator", paginator);
+        model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         return "/admin/role/index";
     }
 

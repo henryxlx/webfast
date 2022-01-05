@@ -39,7 +39,7 @@ public class BlockController {
         Map<String, Object> latestBlockHistory = blockService.getLatestBlockHistory();
         model.addAttribute("latestBlockHistory", latestBlockHistory);
         model.addAttribute("latestUpdateUser", userService.getUser(latestBlockHistory.get("userId")));
-        model.addAttribute("paginator", paginator);
+        model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         return "/admin/block/index";
     }
 
@@ -69,7 +69,7 @@ public class BlockController {
         model.addAttribute("historyUsers",
                 userService.findUsersByIds(ArrayToolkit.column(blockHistories, "userId")));
         model.addAttribute("block", block);
-        model.addAttribute("paginator", paginator);
+        model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         return "/admin/block/block-update-modal";
     }
 

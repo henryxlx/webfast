@@ -11,6 +11,8 @@ import java.util.Enumeration;
  */
 public class Paginator {
 
+    public static final String MODEL_ATTR_NAME = "paginator";
+
     protected int itemCount;
 
     protected int perPageCount;

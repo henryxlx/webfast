@@ -58,7 +58,7 @@ public class ContentController {
         Set<Object> categoryIds = contents.stream().map(x -> x.get("categoryId")).collect(Collectors.toSet());
         model.addAttribute("categories", categoryService.findCategoriesByIds(categoryIds));
 
-        model.addAttribute("paginator", paginator);
+        model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         model.addAttribute("contents", contents);
         return "/admin/content/index";
     }
