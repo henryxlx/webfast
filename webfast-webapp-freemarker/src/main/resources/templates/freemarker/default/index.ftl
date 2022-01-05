@@ -10,7 +10,7 @@
     <#if home_top_banner??>
     <div class="homepage-feature homepage-feature-slides mbl">
         <div class="cycle-pager"></div>
-        ${home_top_banner!}
+        ${home_top_banner.content!}
     </div>
     </#if>
 
