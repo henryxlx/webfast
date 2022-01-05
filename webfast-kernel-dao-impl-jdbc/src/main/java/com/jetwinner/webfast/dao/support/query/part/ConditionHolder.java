@@ -13,7 +13,7 @@ public class ConditionHolder {
 
     private CompositeExpression expression;
 
-    private List list;
+    private List<Object> list;
 
     private boolean isList = false;
 
@@ -28,12 +28,12 @@ public class ConditionHolder {
         this.isList = false;
     }
 
-    public void add(List list) {
+    public void add(List<Object> list) {
         this.list = list;
         this.isList = true;
     }
 
-    public List getList() {
+    public List<Object> getList() {
         return this.list;
     }
 
@@ -58,6 +58,7 @@ public class ConditionHolder {
         return this;
     }
 
+    @Override
     public String toString() {
         if (this.expression != null && !isList) {
             return this.getExpression().toString();

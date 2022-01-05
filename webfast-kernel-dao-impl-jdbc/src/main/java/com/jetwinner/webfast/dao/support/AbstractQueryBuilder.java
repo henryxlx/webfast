@@ -7,7 +7,7 @@ import com.jetwinner.webfast.dao.support.query.part.FromAttribute;
 import com.jetwinner.webfast.dao.support.query.part.JoinAttribute;
 import com.jetwinner.webfast.dao.support.query.part.SqlPart;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -589,20 +589,15 @@ public abstract class AbstractQueryBuilder {
         if (where.isExpression() && where.getExpression().getType() == CompositeExpression.TYPE_AND) {
             where.addMultiple(args);
         } else {
-            List list = arrayUnshift(where.getList(), args);
+            List<Object> list = arrayUnshift(where.getList(), args);
             where.add(new CompositeExpression(CompositeExpression.TYPE_AND, list));
         }
 
         return this;
     }
 
-    private List arrayUnshift(List list, Object[] args) {
-        List newList = new ArrayList();
-        if (args != null) {
-            for (Object obj : args) {
-                newList.add(obj);
-            }
-        }
+    private List<Object> arrayUnshift(List<Object> list, Object[] args) {
+        List<Object> newList = Arrays.asList(args);
         if (list != null && list.size() > 0) {
             newList.addAll(list);
         }

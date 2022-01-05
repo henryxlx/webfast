@@ -3,10 +3,7 @@ package com.jetwinner.webfast.dao.support.query.part;
 
 import com.jetwinner.webfast.dao.support.query.expression.CompositeExpression;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -14,37 +11,29 @@ import java.util.Map;
  * @date 2015/6/9
  */
 public class SqlPart {
-    private List<String> select = new ArrayList<String>();
-    private List<FromAttribute> from = new ArrayList<FromAttribute>();
-    private Map<String, JoinAttribute> join = new HashMap<String, JoinAttribute>();
-    private List<String> set = new ArrayList<String>();
-    private ConditionHolder where = new ConditionHolder();
-    private List<String> groupBy = new ArrayList<String>();
-    private ConditionHolder having = new ConditionHolder();
-    private List<String> orderBy = new ArrayList<String>();
+    private final List<String> select = new ArrayList<>();
+    private final List<FromAttribute> from = new ArrayList<>();
+    private final Map<String, JoinAttribute> join = new HashMap<>();
+    private final List<String> set = new ArrayList<>();
+    private final ConditionHolder where = new ConditionHolder();
+    private final List<String> groupBy = new ArrayList<>();
+    private final ConditionHolder having = new ConditionHolder();
+    private final List<String> orderBy = new ArrayList<>();
 
     public void addSelect(String... columns) {
-        for (String value : columns) {
-            this.select.add(value);
-        }
+        Collections.addAll(this.select, columns);
     }
 
     public void addSet(String... sets) {
-        for (String value : sets) {
-            this.set.add(value);
-        }
+        Collections.addAll(this.set, sets);
     }
 
     public void addGroupBy(String... groupBys) {
-        for (String value : groupBys) {
-            this.groupBy.add(value);
-        }
+        Collections.addAll(this.groupBy, groupBys);
     }
 
     public void addOrderBy(String... orderBys) {
-        for (String value : orderBys) {
-            this.orderBy.add(value);
-        }
+        Collections.addAll(this.orderBy, orderBys);
     }
 
     public void addWhere(CompositeExpression where) {
@@ -55,11 +44,7 @@ public class SqlPart {
         if (where == null || where.length < 1) {
             return;
         }
-        List list = new ArrayList();
-        for (Object obj : where) {
-            list.add(obj);
-        }
-        this.where.add(list);
+        this.where.add(Arrays.asList(where));
     }
 
     public void addHaving(CompositeExpression where) {
@@ -70,11 +55,7 @@ public class SqlPart {
         if (where == null || where.length < 1) {
             return;
         }
-        List list = new ArrayList();
-        for (Object obj : where) {
-            list.add(obj);
-        }
-        this.having.add(list);
+        this.having.add(Arrays.asList(where));
     }
 
     public void addFrom(FromAttribute fromAttribute) {
@@ -87,7 +68,6 @@ public class SqlPart {
 
     public void reset(String queryPartName) {
         String key = queryPartName.toLowerCase();
-
     }
 
     public List<String> getSelect() {
@@ -115,7 +95,7 @@ public class SqlPart {
     }
 
     public boolean hasGroupBy() {
-        return this.groupBy != null && this.groupBy.size() > 0;
+        return this.groupBy.size() > 0;
     }
 
     public ConditionHolder getHaving() {
@@ -127,7 +107,7 @@ public class SqlPart {
     }
 
     public boolean hasOrderBy() {
-        return this.orderBy != null && this.orderBy.size() > 0;
+        return this.orderBy.size() > 0;
     }
 
 }

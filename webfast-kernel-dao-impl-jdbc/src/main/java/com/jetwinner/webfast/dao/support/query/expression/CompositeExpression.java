@@ -29,13 +29,13 @@ public class CompositeExpression {
     /**
      * array Each expression part of the composite expression
      */
-    private List parts;
+    private List<Object> parts;
 
     private CompositeExpression() {
-        this.parts = new ArrayList();
+        this.parts = new ArrayList<>();
     }
 
-    public CompositeExpression(String type, List parts) {
+    public CompositeExpression(String type, List<Object> parts) {
         this();
         this.type = type;
         this.parts = parts;
@@ -74,7 +74,15 @@ public class CompositeExpression {
      * @return CompositeExpression
      */
     public CompositeExpression add(Object part) {
-        if (part != null || (part instanceof CompositeExpression && ((CompositeExpression) part).count() > 0)) {
+        boolean flag = false;
+        if (part != null) {
+            if (part instanceof CompositeExpression && ((CompositeExpression) part).count() > 0) {
+                flag = true;
+            } else if (part instanceof String) {
+                flag = true;
+            }
+        }
+        if (flag) {
             this.parts.add(part);
         }
 
@@ -95,6 +103,7 @@ public class CompositeExpression {
      *
      * @return string
      */
+    @Override
     public String toString() {
         if (count() == 1) {
             return this.parts.get(0).toString();
