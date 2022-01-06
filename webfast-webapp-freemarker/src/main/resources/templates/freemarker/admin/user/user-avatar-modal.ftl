@@ -24,7 +24,7 @@
       <div class="controls col-md-8 controls">
         <input name="form[avatar]" id="form_avatar" required="required" type="file"
                accept="image/gif,image/jpeg,image/png" data-widget-cid="widget-8"/>
-        <p class="help-block">你可以上传JPG、GIF或PNG格式的文件，文件大小不能超过<strong>{{ upload_max_filesize() }}</strong>。</p>
+        <p class="help-block">你可以上传JPG、GIF或PNG格式的文件，文件大小不能超过<strong>${upload_max_filesize()}</strong>。</p>
       </div>
     </div>
 
