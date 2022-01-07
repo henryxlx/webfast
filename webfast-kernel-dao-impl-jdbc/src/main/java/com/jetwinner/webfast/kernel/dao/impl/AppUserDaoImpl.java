@@ -75,6 +75,11 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
         return getJdbcTemplate().queryForList(sql, id).stream().findFirst().orElse(new HashMap<>(0));
     }
 
+    @Override
+    public int countForEmail(String email) {
+        return getJdbcTemplate().queryForObject("SELECT COUNT(id) FROM app_user WHERE email = ?", Integer.class, email);
+    }
+
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
 
         if (conditions.containsKey("roles")) {

@@ -100,4 +100,9 @@ public class AppUserServiceImpl implements AppUserService {
     public Map<String, Object> getUserProfile(Integer id) {
         return userDao.getProfile(id);
     }
+
+    @Override
+    public boolean existEmail(String value) {
+        return userDao.countForEmail(value) > 0;
+    }
 }

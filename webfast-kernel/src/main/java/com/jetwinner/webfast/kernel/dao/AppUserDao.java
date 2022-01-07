@@ -25,4 +25,6 @@ public interface AppUserDao {
     List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
 
     Map<String, Object> getProfile(Integer id);
+
+    int countForEmail(String email);
 }

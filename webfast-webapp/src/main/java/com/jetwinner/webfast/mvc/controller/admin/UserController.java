@@ -56,8 +56,10 @@ public class UserController {
     @RequestMapping("/admin/user/create-email-check")
     @ResponseBody
     public Map<String, Object> checkEmailAction(String value) {
+        String email = value.replace("!", ".");
+        boolean result = userService.existEmail(email);
         Map<String, Object> map = new HashMap<>(2);
-        if ("admin@hotmail!com".equals(value)) {
+        if (result) {
             map.put("success", Boolean.FALSE);
             map.put("message", "该Email地址已经被使用，请重新修改！");
         } else {
