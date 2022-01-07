@@ -67,17 +67,17 @@ public class UserController {
         return map;
     }
 
-    @RequestMapping("/admin/user/create-nickname-check")
+    @RequestMapping("/admin/user/create-username-check")
     @ResponseBody
-    public Map<String, Object> nicknameCheckAction(String value) {
-        // list($result, $message) = $this->getAuthService()->checkUsername($nickname);
+    public Map<String, Object> usernameCheckAction(String value) {
+        AppUser user = userService.getByUsername(value);
         Map<String, Object> map = new HashMap<>(2);
-        if ("admin".equals(value)) {
+        if (user != null) {
             map.put("success", Boolean.FALSE);
-            map.put("message", "该昵称已存在，不能被使用");
+            map.put("message", "该用户名已存在，不能被使用");
         } else {
             map.put("success", Boolean.TRUE);
-            map.put("message", "该昵称可以使用");
+            map.put("message", "该用户名可以使用");
         }
         return map;
     }

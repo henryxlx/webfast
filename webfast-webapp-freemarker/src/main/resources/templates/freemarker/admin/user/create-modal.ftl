@@ -21,7 +21,7 @@
             <label for="nickname">用户名</label>
         </div>
         <div class="col-md-7 controls">
-            <input type="text" id="nickname" name="nickname" data-url="${ctx}/admin/user/create-nickname-check" class="form-control" >
+            <input type="text" id="username" name="username" data-url="${ctx}/admin/user/create-username-check" class="form-control" >
         </div>
     </div>
 
