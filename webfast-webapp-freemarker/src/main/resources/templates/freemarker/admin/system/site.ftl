@@ -52,7 +52,7 @@
                 <label for="logo">网站LOGO</label>
             </div>
             <div class="col-md-8 controls">
-                <div id="site-logo-container"><#if (site.logo)??><img src="{{ asset(site.logo) }}"></#if></div>
+                <div id="site-logo-container"><#if (site.logo)?? && site.logo != ''><img src="${ctx}/assets/${site.logo}"></#if></div>
                 <button class="btn btn-default btn-sm" id="site-logo-upload" type="button" data-url="${ctx}/admin/setting/logo/upload">上传</button>
                 <button class="btn btn-default btn-sm" id="site-logo-remove" type="button" data-url="${ctx}/admin/setting/logo/remove" <#if !(site.logo)??>style="display:none;"</#if>>删除</button>
                 <p class="help-block">请上传png, gif, jpg格式的图片文件。LOGO图片建议不要超过50*250。</p>
