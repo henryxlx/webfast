@@ -421,14 +421,17 @@ public abstract class EasyStringUtil {
         return str == null ? null : str.replaceFirst(target, replace);
     }
 
-    public static boolean notEquals(String src, String dest) {
-        boolean result = false;
+    public static boolean equals(String src, String dest) {
         if (src != null) {
-            result = !src.equals(dest);
+            return src.equals(dest);
         }
         if (dest != null) {
-            result = !dest.equals(src);
+            return dest.equals(src);
         }
-        return result;
+        return false;
+    }
+
+    public static boolean notEquals(String src, String dest) {
+        return !equals(src, dest);
     }
 }
