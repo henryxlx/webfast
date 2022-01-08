@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.typedef;
 
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.SetUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -21,6 +22,34 @@ public class ParamMap {
 
     public Map<String, Object> toMap() {
         return this.map;
+    }
+
+    private static final String[] EXCLUDE_PARAMETER_NAME_ARRAY = {"_csrf_token"};
+
+    private static Set<String> getExcludeParameterNames(String... array) {
+        Set<String> set = SetUtil.newHashSet(EXCLUDE_PARAMETER_NAME_ARRAY);
+        if (array != null && array.length > 0) {
+            Collections.addAll(set, array);
+        }
+        return set;
+    }
+
+    public static Map<String, Object> toPostDataMap(HttpServletRequest request, String... excludeKeys) {
+        Set<String> excludeParameterNames = getExcludeParameterNames(excludeKeys);
+        Map<String, Object> map = new HashMap<>(request.getParameterMap().size());
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String key = parameterNames.nextElement();
+            if (excludeParameterNames.contains(key)) {
+                continue;
+            }
+            String value = request.getParameter(key);
+            if (EasyStringUtil.isBlank(value)) {
+                continue;
+            }
+            map.put(key, value);
+        }
+        return map;
     }
 
     public static Map<String, Object> toConditionMap(HttpServletRequest request) {
