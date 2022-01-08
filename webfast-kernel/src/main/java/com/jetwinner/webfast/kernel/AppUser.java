@@ -1,9 +1,16 @@
 package com.jetwinner.webfast.kernel;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author xulixin
  */
 public class AppUser extends BaseAppUser {
+
+    public static final AppUser getCurrentUser(HttpServletRequest request) {
+        AppUser user = (AppUser) request.getAttribute(MODEL_VAR_NAME);
+        return user != null ? user : new AppUser();
+    }
 
     private String verifiedMobile;
     private String title;
