@@ -5,6 +5,19 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.2.0: @2022-01-05
+* 后台内容编辑区管理编辑内容功能保存完成，编辑区历史BlockHistory恢复功能JavaScript修复
+  admin/block/update.js中的方法原来使用text()方法无法返回HTML内容
+  $('.btn-recover-content').on('click', function() {
+      // var html = $(this).parents('tr').find('.data-role-content').text();
+      var html = $(this).parents('tr').find('.data-role-content').html();
+      $("#blockContent").val(html);
+  });
+* [Added] 视图渲染服务接口ViewRenderService及实现类ViewRenderServiceImpl（只适用于FreeMarker）
+  在自定义的环境下使用系统中的FreeMarker模板生成静态的HTML内容
+* AppUser类增加静态方法getCurrentUser()获取HttpServletRequest中的当前用户
+* ParamMap类中增加静态方法getPostDataMap()获取HttpServletRequest中的请求数据，可排除不需要的参数值
+
 0.1.9: @2022-01-05
 * 函数nl2br将字符串中回车与换行替换成HTML中的标签<br/>，改为使用FreeMarker中字符串的replace函数
   ${block.tips!''?replace("(\r\n)+", "<br/>", 'r')}
