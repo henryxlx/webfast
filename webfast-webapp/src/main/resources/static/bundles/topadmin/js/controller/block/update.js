@@ -90,7 +90,7 @@ define(function(require, exports, module) {
         });
 
         $('.btn-recover-content').on('click', function() {
-            var html = $(this).parents('tr').find('.data-role-content').text();
+            var html = $(this).parents('tr').find('.data-role-content').html();
             $("#blockContent").val(html);
         });
 

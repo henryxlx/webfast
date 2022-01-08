@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppBlockDao;
 import com.jetwinner.webfast.kernel.dao.AppBlockHistoryDao;
@@ -94,5 +95,29 @@ public class AppBlockServiceImpl implements AppBlockService {
     @Override
     public Map<String, Object> getBlockHistory(Object id) {
         return blockHistoryDao.getBlockHistory(id);
+    }
+
+    @Override
+    public Map<String, Object> updateBlock(AppUser currentUser, String blockId, Map<String, Object> fields) {
+        Map<String, Object> block = blockDao.getBlock(blockId);
+
+        if (block == null || block.size() == 0) {
+            throw new RuntimeGoingException("此编辑区不存在，更新失败!");
+        }
+        fields.put("updateTime", System.currentTimeMillis());
+        blockDao.updateBlock(blockId, fields);
+        Map<String, Object> updatedBlock = blockDao.getBlock(blockId);
+
+        Map<String, Object> blockHistoryInfo = new ParamMap()
+                .add("blockId", updatedBlock.get("id"))
+                .add("content", updatedBlock.get("content"))
+                .add("templateData", updatedBlock.get("templateData"))
+                .add("userId", currentUser.getId())
+                .add("createdTime", System.currentTimeMillis())
+                .toMap();
+        blockHistoryDao.addBlockHistory(blockHistoryInfo);
+
+        // logService.info('block', 'update', "更新编辑区#{$id}", array('content' => $updatedBlock['content']));
+        return updatedBlock;
     }
 }

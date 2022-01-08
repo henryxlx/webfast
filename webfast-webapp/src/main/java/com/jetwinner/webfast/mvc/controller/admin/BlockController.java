@@ -3,16 +3,18 @@ package com.jetwinner.webfast.mvc.controller.admin;
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.service.AppBlockService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
+import com.jetwinner.webfast.kernel.service.ViewRenderService;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,10 +26,15 @@ public class BlockController {
 
     private final AppBlockService blockService;
     private final AppUserService userService;
+    private final ViewRenderService viewRenderService;
 
-    public BlockController(AppBlockService blockService, AppUserService userService) {
+    public BlockController(AppBlockService blockService,
+                           AppUserService userService,
+                           ViewRenderService viewRenderService) {
+
         this.blockService = blockService;
         this.userService = userService;
+        this.viewRenderService = viewRenderService;
     }
 
     @RequestMapping("/admin/block")
@@ -41,6 +48,12 @@ public class BlockController {
         model.addAttribute("latestUpdateUser", userService.getUser(latestBlockHistory.get("userId")));
         model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
         return "/admin/block/index";
+    }
+
+    @GetMapping("admin/blockhistory/{id}/preview")
+    public String previewPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("blockHistory", blockService.getBlockHistory(id));
+        return "/admin/block/blockhistory-preview";
     }
 
     @GetMapping("/admin/block/{blockId}/update")
@@ -73,9 +86,38 @@ public class BlockController {
         return "/admin/block/block-update-modal";
     }
 
-    @GetMapping("admin/blockhistory/{id}/preview")
-    public String previewPage(Integer id, Model model) {
-        model.addAttribute("blockHistory", blockService.getBlockHistory(id));
-        return "/admin/block/blockhistory-preview";
+    @PostMapping("/admin/block/{blockId}/update")
+    @ResponseBody
+    public Map<String, Object> updateAction(@PathVariable String blockId, HttpServletRequest request) {
+        Map<String, Object> block = EasyStringUtil.isNumeric(blockId) ?
+                blockService.getBlock(blockId) : blockService.getBlockByCode(blockId);
+        Map<String, Object> fields = ParamMap.toPostDataMap(request);
+        if ("template".equals(block.get("mode"))) {
+            String template = String.valueOf(block.get("template"));
+            // template = str_replace(array("(( "," ))","((  ","  )"),array("((","))","((","))"),$template);
+
+            String content = "";
+            for (Map.Entry entry : fields.entrySet()) {
+                content = template.replace("((" + entry.getKey() + "))", String.valueOf(entry.getValue()));
+                break;
+            }
+            for (Map.Entry entry : fields.entrySet()) {
+                content = content.replace("((" + entry.getKey() + "))", String.valueOf(entry.getValue()));
+                break;
+            }
+            Map<String, Object> templateData = new HashMap<>(fields.size());
+            templateData.putAll(fields);
+            fields.clear();
+            fields.put("content", content);
+            fields.put("templateData", JsonUtil.objectToString(templateData));
+        }
+
+        block = blockService.updateBlock(AppUser.getCurrentUser(request), blockId, fields);
+        Map<String, Object> latestBlockHistory = blockService.getLatestBlockHistory();
+        AppUser latestUpdateUser = userService.getUser(latestBlockHistory.get("userId"));
+        String html = viewRenderService.renderView("/admin/block/list-tr.ftl",
+                new ParamMap().add("block", block).add("latestUpdateUser", latestUpdateUser).toMap());
+        return new ParamMap().add("status", "ok").add("html", html).toMap();
     }
+
 }

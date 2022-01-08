@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.BaseAppUser;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface AppBlockService {
     List<Map<String, Object>> findBlockHistoriesByBlockId(Object id, Integer start, Integer limit);
 
     Map<String, Object> getBlockHistory(Object id);
+
+    Map<String, Object> updateBlock(AppUser currentUser, String blockId, Map<String, Object> fields);
 }
