@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author xulixin
+ */
 public abstract class EasyStringUtil {
 
     public static final String SPACE = " ";
@@ -16,12 +19,58 @@ public abstract class EasyStringUtil {
     public static final int INDEX_NOT_FOUND = -1;
     private static final int PAD_LIMIT = 8192;
 
-    public static boolean isBlank(String str) {
-        return str == null || "".equals(str.trim());
+    /**
+     * <p>Checks if a CharSequence is empty (""), null or whitespace only.</p>
+     *
+     * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.</p>
+     *
+     * <pre>
+     * StringUtils.isBlank(null)      = true
+     * StringUtils.isBlank("")        = true
+     * StringUtils.isBlank(" ")       = true
+     * StringUtils.isBlank("bob")     = false
+     * StringUtils.isBlank("  bob  ") = false
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is null, empty or whitespace only
+     * @since 2.0
+     * @since 3.0 Changed signature from isBlank(String) to isBlank(CharSequence)
+     */
+    public static boolean isBlank(final CharSequence cs) {
+        final int strLen =  cs == null ? 0 : cs.length();
+        if (strLen == 0) {
+            return true;
+        }
+        for (int i = 0; i < strLen; i++) {
+            if (!Character.isWhitespace(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    public static boolean isNotBlank(String str) {
-        return !isBlank(str);
+    /**
+     * <p>Checks if a CharSequence is not empty (""), not null and not whitespace only.</p>
+     *
+     * <p>Whitespace is defined by {@link Character#isWhitespace(char)}.</p>
+     *
+     * <pre>
+     * StringUtils.isNotBlank(null)      = false
+     * StringUtils.isNotBlank("")        = false
+     * StringUtils.isNotBlank(" ")       = false
+     * StringUtils.isNotBlank("bob")     = true
+     * StringUtils.isNotBlank("  bob  ") = true
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is
+     *  not empty and not null and not whitespace only
+     * @since 2.0
+     * @since 3.0 Changed signature from isNotBlank(String) to isNotBlank(CharSequence)
+     */
+    public static boolean isNotBlank(final CharSequence cs) {
+        return !isBlank(cs);
     }
 
     public static boolean isBlank(Object obj) {
@@ -32,7 +81,131 @@ public abstract class EasyStringUtil {
     }
 
     public static boolean isNotBlank(Object obj) {
-        return !EasyStringUtil.isBlank(obj);
+        return !isBlank(obj);
+    }
+
+    /**
+     * <p>Checks if a CharSequence is empty ("") or null.</p>
+     *
+     * <pre>
+     * StringUtils.isEmpty(null)      = true
+     * StringUtils.isEmpty("")        = true
+     * StringUtils.isEmpty(" ")       = false
+     * StringUtils.isEmpty("bob")     = false
+     * StringUtils.isEmpty("  bob  ") = false
+     * </pre>
+     *
+     * <p>NOTE: This method changed in Lang version 2.0.
+     * It no longer trims the CharSequence.
+     * That functionality is available in isBlank().</p>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is empty or null
+     * @since 3.0 Changed signature from isEmpty(String) to isEmpty(CharSequence)
+     */
+    public static boolean isEmpty(final CharSequence cs) {
+        return cs == null || cs.length() == 0;
+    }
+
+    /**
+     * <p>Checks if a CharSequence is not empty ("") and not null.</p>
+     *
+     * <pre>
+     * StringUtils.isNotEmpty(null)      = false
+     * StringUtils.isNotEmpty("")        = false
+     * StringUtils.isNotEmpty(" ")       = true
+     * StringUtils.isNotEmpty("bob")     = true
+     * StringUtils.isNotEmpty("  bob  ") = true
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if the CharSequence is not empty and not null
+     * @since 3.0 Changed signature from isNotEmpty(String) to isNotEmpty(CharSequence)
+     */
+    public static boolean isNotEmpty(final CharSequence cs) {
+        return !isEmpty(cs);
+    }
+
+    /**
+     * <p>Checks if the CharSequence contains only Unicode digits.
+     * A decimal point is not a Unicode digit and returns false.</p>
+     *
+     * <p>{@code null} will return {@code false}.
+     * An empty CharSequence (length()=0) will return {@code false}.</p>
+     *
+     * <p>Note that the method does not allow for a leading sign, either positive or negative.
+     * Also, if a String passes the numeric test, it may still generate a NumberFormatException
+     * when parsed by Integer.parseInt or Long.parseLong, e.g. if the value is outside the range
+     * for int or long respectively.</p>
+     *
+     * <pre>
+     * StringUtils.isNumeric(null)   = false
+     * StringUtils.isNumeric("")     = false
+     * StringUtils.isNumeric("  ")   = false
+     * StringUtils.isNumeric("123")  = true
+     * StringUtils.isNumeric("\u0967\u0968\u0969")  = true
+     * StringUtils.isNumeric("12 3") = false
+     * StringUtils.isNumeric("ab2c") = false
+     * StringUtils.isNumeric("12-3") = false
+     * StringUtils.isNumeric("12.3") = false
+     * StringUtils.isNumeric("-123") = false
+     * StringUtils.isNumeric("+123") = false
+     * </pre>
+     *
+     * @param cs  the CharSequence to check, may be null
+     * @return {@code true} if only contains digits, and is non-null
+     * @since 3.0 Changed signature from isNumeric(String) to isNumeric(CharSequence)
+     * @since 3.0 Changed "" to return false and not true
+     */
+    public static boolean isNumeric(final CharSequence cs) {
+        if (isEmpty(cs)) {
+            return false;
+        }
+        final int sz = cs.length();
+        for (int i = 0; i < sz; i++) {
+            if (!Character.isDigit(cs.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Compares two strings.
+     *
+     * This method implements a constant-time algorithm to compare strings.
+     *
+     * @param src The string of known length to compare against
+     * @param dest The string that the user can control
+     *
+     * @return boolean    true if the two strings are the same, false otherwise
+     */
+    public static boolean equals(String src, String dest) {
+        if (src != null) {
+            return src.equals(dest);
+        }
+        return src == null && dest == null ? true : false;
+    }
+
+    public static boolean notEquals(String src, String dest) {
+        return !equals(src, dest);
+    }
+
+    /**
+     * 可变参数数组中是否包含指定字符串
+     * @param str 验证字符串
+     * @param array 字符串组
+     * @return 包含返回true
+     */
+    public static boolean inArray(String str, String... array) {
+        if (str != null && array != null){
+            for (String s : array){
+                if (str.equals(s)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public static String ltrim(String str, char trimStr) {
@@ -47,6 +220,10 @@ public abstract class EasyStringUtil {
         return str.substring(pos);
     }
 
+    public static String trim(String str) {
+        return str == null ? null : str.trim();
+    }
+
     public static int substrCount(String target, String substr) {
         int count = 0;
         int length = target.length() - substr.length();
@@ -58,15 +235,6 @@ public abstract class EasyStringUtil {
             }
         }
         return count;
-    }
-
-    public static boolean inArray(String value, String[] array) {
-        for (String str : array) {
-            if (str != null && str.equals(value)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static String implode(String separator, Object obj) {
@@ -124,40 +292,6 @@ public abstract class EasyStringUtil {
             sb.append(list.get(i));
         }
         return sb.toString();
-    }
-
-    public static boolean isNumeric(String str) {
-        if (str == null) {
-            return false;
-        }
-        int sz = str.length();
-        for (int i = 0; i < sz; i++) {
-            if (Character.isDigit(str.charAt(i)) == false) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * 是否包含字符串
-     * @param str 验证字符串
-     * @param strs 字符串组
-     * @return 包含返回true
-     */
-    public static boolean inString(String str, String... strs){
-        if (str != null && strs != null){
-            for (String s : strs){
-                if (str.equals(trim(s))){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public static String trim(String str) {
-        return str == null ? null : str.trim();
     }
 
     public static boolean startsWith(CharSequence str, CharSequence prefix) {
@@ -318,10 +452,6 @@ public abstract class EasyStringUtil {
         return false;
     }
 
-    public static boolean isEmpty(final CharSequence cs) {
-        return cs == null || cs.length() == 0;
-    }
-
     private static String replace(final String text, String searchString, final String replacement, int max, final boolean ignoreCase) {
         if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
             return text;
@@ -419,19 +549,5 @@ public abstract class EasyStringUtil {
 
     public static String replaceOnce(String str, String target, String replace) {
         return str == null ? null : str.replaceFirst(target, replace);
-    }
-
-    public static boolean equals(String src, String dest) {
-        if (src != null) {
-            return src.equals(dest);
-        }
-        if (dest != null) {
-            return dest.equals(src);
-        }
-        return false;
-    }
-
-    public static boolean notEquals(String src, String dest) {
-        return !equals(src, dest);
     }
 }
