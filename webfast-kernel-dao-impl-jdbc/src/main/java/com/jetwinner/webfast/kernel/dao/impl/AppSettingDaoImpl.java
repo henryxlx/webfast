@@ -40,13 +40,14 @@ public class AppSettingDaoImpl extends FastJdbcDaoSupport implements AppSettingD
         getNamedParameterJdbcTemplate().update(updateSql, in);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Map<String, Object> getSettingValueByName(String name) {
         final LobHandler lobHandler = new DefaultLobHandler();
         final Object[] result = new Object[1];
         getJdbcTemplate().query(
                 "SELECT value FROM app_setting WHERE name = ?", new Object[] {name},
-                new AbstractLobStreamingResultSetExtractor() {
+                new AbstractLobStreamingResultSetExtractor<Object>() {
                     @Override
                     public void streamData(ResultSet rs) throws SQLException, IOException {
                         result[0] = SerializationUtils.deserialize(lobHandler.getBlobAsBytes(rs, 1));

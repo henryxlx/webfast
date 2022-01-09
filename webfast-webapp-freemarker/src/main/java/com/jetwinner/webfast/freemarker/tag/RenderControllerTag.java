@@ -194,11 +194,12 @@ public class RenderControllerTag implements TemplateDirectiveModel {
             return Collections.enumeration(paramsMap.keySet());
         }
 
-//        @SuppressWarnings("unchecked")
+        @SuppressWarnings("unchecked")
         @Override
         public Map<String, String[]> getParameterMap() {
             HashMap<String, String[]> clone = (HashMap<String, String[]>) paramsMap.clone();
-            for (Iterator<Map.Entry<String, String[]>> it = clone.entrySet().iterator(); it.hasNext(); ) {
+            Iterator<Map.Entry<String, String[]>> it = clone.entrySet().iterator();
+            while (it.hasNext()) {
                 Map.Entry<String, String[]> entry = it.next();
                 entry.setValue(entry.getValue().clone());
             }
