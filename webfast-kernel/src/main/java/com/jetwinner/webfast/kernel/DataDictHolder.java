@@ -1,4 +1,4 @@
-package com.jetwinner.webfast;
+package com.jetwinner.webfast.kernel;
 
 import com.jetwinner.spring.YmlPropertySourceFactory;
 import com.jetwinner.util.MapUtil;

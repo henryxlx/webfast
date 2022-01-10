@@ -4,7 +4,7 @@ import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.toolbag.ConvertIpToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
-import com.jetwinner.webfast.DataDictHolder;
+import com.jetwinner.webfast.kernel.DataDictHolder;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
