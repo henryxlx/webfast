@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -19,21 +19,21 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "prop")
 public class FakeAppUserServiceImpl implements ShiroAccountService {
 
-    private List<AppUser> users = new ArrayList<>();
+    private List<BaseAppUser> users = new ArrayList<>();
 
-    public List<AppUser> getUsers() {
+    public List<BaseAppUser> getUsers() {
         return users;
     }
 
-    public void setUsers(List<AppUser> users) {
+    public void setUsers(List<BaseAppUser> users) {
         this.users = users;
     }
 
     @Override
-    public AppUser getByUsername(String username) {
-        AppUser appUser = new AppUser();
+    public BaseAppUser getBaseAppUserByUsername(String username) {
+        BaseAppUser appUser = new BaseAppUser();
         if (users != null) {
-            for (AppUser user : users) {
+            for (BaseAppUser user : users) {
                 if (username.equals(user.getUsername())) {
                     appUser.setUsername(user.getUsername());
                     appUser.setPassword(user.getPassword());

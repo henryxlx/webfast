@@ -24,8 +24,8 @@ public class ShiroAccountServiceImpl implements ShiroAccountService {
     }
 
     @Override
-    public BaseAppUser getByUsername(String username) {
-        return userService == null ? dummyShiroAccountService.getByUsername(username)
+    public BaseAppUser getBaseAppUserByUsername(String username) {
+        return userService == null ? dummyShiroAccountService.getBaseAppUserByUsername(username)
                 : userService.getByUsername(username);
     }
 

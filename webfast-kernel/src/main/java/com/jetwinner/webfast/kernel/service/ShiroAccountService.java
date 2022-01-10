@@ -11,7 +11,7 @@ public interface ShiroAccountService {
 
     default void setUserService(AppUserService userService) {}
 
-    BaseAppUser getByUsername(String username);
+    BaseAppUser getBaseAppUserByUsername(String username);
 
     Set<String> findRolesByUsername(String username);
 

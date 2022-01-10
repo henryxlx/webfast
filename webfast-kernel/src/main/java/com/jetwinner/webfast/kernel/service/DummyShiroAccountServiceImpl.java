@@ -11,7 +11,7 @@ import java.util.Set;
 public class DummyShiroAccountServiceImpl implements ShiroAccountService {
 
     @Override
-    public BaseAppUser getByUsername(String username) {
+    public BaseAppUser getBaseAppUserByUsername(String username) {
         return new BaseAppUser();
     }
 
