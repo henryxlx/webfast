@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,8 +11,8 @@ import java.util.Set;
 public class DummyShiroAccountServiceImpl implements ShiroAccountService {
 
     @Override
-    public AppUser getByUsername(String username) {
-        return new AppUser();
+    public BaseAppUser getByUsername(String username) {
+        return new BaseAppUser();
     }
 
     @Override

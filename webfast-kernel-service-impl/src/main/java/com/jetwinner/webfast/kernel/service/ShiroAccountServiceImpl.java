@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -24,7 +24,7 @@ public class ShiroAccountServiceImpl implements ShiroAccountService {
     }
 
     @Override
-    public AppUser getByUsername(String username) {
+    public BaseAppUser getByUsername(String username) {
         return userService == null ? dummyShiroAccountService.getByUsername(username)
                 : userService.getByUsername(username);
     }

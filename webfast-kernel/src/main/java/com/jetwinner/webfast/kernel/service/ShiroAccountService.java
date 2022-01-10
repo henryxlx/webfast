@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 
 import java.util.Set;
 
@@ -11,7 +11,7 @@ public interface ShiroAccountService {
 
     default void setUserService(AppUserService userService) {}
 
-    AppUser getByUsername(String username);
+    BaseAppUser getByUsername(String username);
 
     Set<String> findRolesByUsername(String username);
 
