@@ -32,7 +32,7 @@ public class InstallControllerRegisterServiceImpl implements InstallControllerRe
         requestMappingHandlerMapping = (RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping");
         DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
 
-        Class<?> myController = ClassLoader.getSystemClassLoader().loadClass("com.jetwinner.webfast.mvc.controller.install.InstallController");
+        Class<?> myController = ClassUtils.getDefaultClassLoader().loadClass("com.jetwinner.webfast.mvc.controller.install.InstallController");
         // 这里通过builder直接生成了installController的definition，然后注册进去
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(myController);
         defaultListableBeanFactory.registerBeanDefinition(INSTALL_CONTROLLER_BEAN_NAME, beanDefinitionBuilder.getBeanDefinition());
