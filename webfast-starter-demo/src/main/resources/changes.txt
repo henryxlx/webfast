@@ -5,7 +5,13 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
-0.2.0: @2022-01-05
+0.2.1: @2022-01-10
+* 添加视图中使用外部变量引用门面接口ViewReferenceFacade及实现，减少冗余的依赖注入，便于自定义视图渲染其它调用
+* 自定义视图渲染方法renderView的多态用法，增加导入FreeMarker外部宏定义的参数importMacroModel
+* 系统内置数据字典数据类移到webfast-kernel模块中
+* 视图渲染服务ViewRenderService移到新的包com.jetwinner.webfast.kernel.view
+
+0.2.0: @2022-01-09
 * 后台内容编辑区管理编辑内容功能保存完成，编辑区历史BlockHistory恢复功能JavaScript修复
   admin/block/update.js中的方法原来使用text()方法无法返回HTML内容
   $('.btn-recover-content').on('click', function() {
