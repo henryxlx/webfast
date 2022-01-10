@@ -4,6 +4,7 @@ import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser getByUsername(String username) {
+    public BaseAppUser getBaseAppUserByUsername(String username) {
         return userDao.getByUsername(username);
     }
 
@@ -69,6 +70,11 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public Set<String> findPermissionsByUsername(String username) {
         return new HashSet<>(0);
+    }
+
+    @Override
+    public AppUser getUserByUsername(String username) {
+        return userDao.getByUsername(username);
     }
 
     @Override

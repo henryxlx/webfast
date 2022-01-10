@@ -11,7 +11,7 @@ import java.util.Set;
 @Component
 public class ShiroAccountServiceImpl implements ShiroAccountService {
 
-    private AppUserService userService;
+    private BaseAppUserService userService;
     private DummyShiroAccountServiceImpl dummyShiroAccountService;
 
     public ShiroAccountServiceImpl() {
@@ -19,14 +19,14 @@ public class ShiroAccountServiceImpl implements ShiroAccountService {
     }
 
     @Override
-    public void setUserService(AppUserService userService) {
+    public void setUserService(BaseAppUserService userService) {
         this.userService = userService;
     }
 
     @Override
     public BaseAppUser getBaseAppUserByUsername(String username) {
         return userService == null ? dummyShiroAccountService.getBaseAppUserByUsername(username)
-                : userService.getByUsername(username);
+                : userService.getBaseAppUserByUsername(username);
     }
 
     @Override

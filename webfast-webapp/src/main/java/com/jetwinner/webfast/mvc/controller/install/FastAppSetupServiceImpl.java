@@ -206,6 +206,6 @@ public class FastAppSetupServiceImpl {
     }
 
     public BaseAppUser getUserByUsername(String username) {
-        return userService.getByUsername(username);
+        return userService.getBaseAppUserByUsername(username);
     }
 }

@@ -7,9 +7,9 @@ import java.util.Set;
 /**
  * @author xulixin
  */
-public interface ShiroAccountService {
+public interface BaseAppUserService {
 
-    default void setUserService(BaseAppUserService userService) {}
+    void checkPutMeIntoShrioAccountService();
 
     BaseAppUser getBaseAppUserByUsername(String username);
 

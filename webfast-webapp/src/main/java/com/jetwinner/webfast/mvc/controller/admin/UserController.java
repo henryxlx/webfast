@@ -72,7 +72,7 @@ public class UserController {
     @RequestMapping("/admin/user/create-username-check")
     @ResponseBody
     public Map<String, Object> usernameCheckAction(String value) {
-        AppUser user = userService.getByUsername(value);
+        AppUser user = userService.getUserByUsername(value);
         Map<String, Object> map = new HashMap<>(2);
         if (user != null) {
             map.put("success", Boolean.FALSE);
