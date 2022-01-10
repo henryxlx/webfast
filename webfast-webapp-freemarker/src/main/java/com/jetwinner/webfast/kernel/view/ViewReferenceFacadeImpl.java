@@ -1,8 +1,8 @@
 package com.jetwinner.webfast.kernel.view;
 
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.DataDictHolder;
-import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 

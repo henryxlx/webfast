@@ -1,8 +1,7 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.kernel.exception.ActionGraspException;
-import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +37,7 @@ public class LoginController {
                 targetPath = "/";
             }
             return "redirect:" + targetPath;
-        } catch (ActionGraspException e) {
+        } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
             model.addAttribute("last_username", username);
             return "/login/index";

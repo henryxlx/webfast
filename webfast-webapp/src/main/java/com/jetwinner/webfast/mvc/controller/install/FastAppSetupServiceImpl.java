@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.security.BaseAppUser;
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.*;
