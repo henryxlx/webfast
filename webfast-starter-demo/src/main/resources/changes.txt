@@ -5,6 +5,13 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.2.2: @2022-01-11
+* 添加AppUserService服务接口的上级接口BaseAppUserService，用于权限管理基本信息访问
+* 基本用户与权限管理信息处理服务类移至webfast-common模块下，提高抽象级别方便复用
+* 用户访问控制服务移至webfast-common模块下，便于复用，方法中抛出的异常使用标准Exception
+* SpringBoot打包后运行找不到jar文件中的IntallController.class类，使用Spring提供的ClassUtils.getDefaultClassLoader()
+  https://www.cnblogs.com/famary/p/14718994.html
+
 0.2.1: @2022-01-10
 * 添加视图中使用外部变量引用门面接口ViewReferenceFacade及实现，减少冗余的依赖注入，便于自定义视图渲染其它调用
 * 自定义视图渲染方法renderView的多态用法，增加导入FreeMarker外部宏定义的参数importMacroModel
