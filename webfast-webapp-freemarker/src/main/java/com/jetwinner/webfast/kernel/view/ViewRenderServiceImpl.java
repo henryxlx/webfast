@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.view;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
