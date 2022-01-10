@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.shiro;
 
-import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import org.apache.shiro.SecurityUtils;

@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.shiro;
 
-import com.jetwinner.webfast.kernel.BaseAppUser;
-import com.jetwinner.webfast.kernel.service.ShiroAccountService;
+import com.jetwinner.security.BaseAppUser;
+import com.jetwinner.security.ShiroAccountService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;

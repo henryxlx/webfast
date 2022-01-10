@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.security.BaseAppUser;
+import com.jetwinner.security.ShiroAccountService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;

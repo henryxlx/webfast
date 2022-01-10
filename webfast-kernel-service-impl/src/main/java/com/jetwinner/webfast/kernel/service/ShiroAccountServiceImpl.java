@@ -1,6 +1,9 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.security.BaseAppUser;
+import com.jetwinner.security.BaseAppUserService;
+import com.jetwinner.security.DummyShiroAccountServiceImpl;
+import com.jetwinner.security.ShiroAccountService;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;

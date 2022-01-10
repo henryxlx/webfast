@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppContentDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;

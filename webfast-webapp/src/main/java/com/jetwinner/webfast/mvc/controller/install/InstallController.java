@@ -1,10 +1,10 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.platform.SystemInfoBean;
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
-import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.apache.ibatis.jdbc.ScriptRunner;

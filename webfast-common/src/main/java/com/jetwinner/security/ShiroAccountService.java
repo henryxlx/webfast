@@ -1,15 +1,13 @@
-package com.jetwinner.webfast.kernel.service;
-
-import com.jetwinner.webfast.kernel.BaseAppUser;
+package com.jetwinner.security;
 
 import java.util.Set;
 
 /**
  * @author xulixin
  */
-public interface BaseAppUserService {
+public interface ShiroAccountService {
 
-    void checkPutMeIntoShrioAccountService();
+    default void setUserService(BaseAppUserService userService) {}
 
     BaseAppUser getBaseAppUserByUsername(String username);
 

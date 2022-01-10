@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.freemarker;
 
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
-import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.view.ViewReferenceFacadeImpl;
 import com.jetwinner.webfast.kernel.view.ViewReferenceKeyEnum;
 import com.jetwinner.webfast.mvc.WebExtensionPack;

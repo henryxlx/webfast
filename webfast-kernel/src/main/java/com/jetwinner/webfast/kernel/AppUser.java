@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.kernel;
 
+import com.jetwinner.security.BaseAppUser;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**

@@ -1,6 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
-
-import com.jetwinner.webfast.kernel.BaseAppUser;
+package com.jetwinner.security;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.properties.LinkedHashMapProperties;
-import com.jetwinner.webfast.kernel.service.ShiroAccountService;
+import com.jetwinner.security.ShiroAccountService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;

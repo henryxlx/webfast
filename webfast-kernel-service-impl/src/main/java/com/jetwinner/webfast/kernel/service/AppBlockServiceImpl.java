@@ -1,8 +1,8 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.AppBlockDao;
 import com.jetwinner.webfast.kernel.dao.AppBlockHistoryDao;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;

@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel;
+package com.jetwinner.security;
 
 /**
  * @author xulixin

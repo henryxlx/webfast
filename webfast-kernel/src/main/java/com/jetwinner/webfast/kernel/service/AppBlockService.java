@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.BaseAppUser;
 
 import java.util.List;
 import java.util.Map;
