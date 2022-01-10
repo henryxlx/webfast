@@ -1,12 +1,10 @@
 package com.jetwinner.webfast.freemarker;
 
-import com.jetwinner.webfast.DataDictHolder;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
-import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.BaseAppUser;
-import com.jetwinner.webfast.kernel.service.UserAccessControlService;
+import com.jetwinner.webfast.kernel.view.ViewReferenceFacadeImpl;
+import com.jetwinner.webfast.kernel.view.ViewReferenceKeyEnum;
 import com.jetwinner.webfast.mvc.WebExtensionPack;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -23,23 +21,14 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
 
     private static final String INSTALL_PATH = "/install";
 
-    private final AppWorkingConstant appWorkingConstant;
     private final DataSourceConfig dataSourceConfig;
-    private final DataDictHolder dataDictHolder;
-    private final UserAccessControlService userAccessControlService;
-    private final ApplicationContext applicationContext;
+    private final ViewReferenceFacadeImpl viewRef;
 
-    public FreeMarkerViewReferenceInterceptor(AppWorkingConstant appWorkingConstant,
-                                              DataSourceConfig dataSourceConfig,
-                                              DataDictHolder dataDictHolder,
-                                              UserAccessControlService userAccessControlService,
-                                              ApplicationContext applicationContext) {
+    public FreeMarkerViewReferenceInterceptor(DataSourceConfig dataSourceConfig,
+                                              ViewReferenceFacadeImpl viewRef) {
 
-        this.appWorkingConstant = appWorkingConstant;
         this.dataSourceConfig = dataSourceConfig;
-        this.dataDictHolder = dataDictHolder;
-        this.userAccessControlService = userAccessControlService;
-        this.applicationContext = applicationContext;
+        this.viewRef = viewRef;
     }
 
     @Override
@@ -51,8 +40,8 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
                 response.sendRedirect(request.getContextPath() + INSTALL_PATH);
                 return false;
             }
-            if (userAccessControlService.isLoggedIn()) {
-                request.setAttribute(BaseAppUser.MODEL_VAR_NAME, userAccessControlService.getCurrentUser());
+            if (viewRef.userAcl().isLoggedIn()) {
+                request.setAttribute(BaseAppUser.MODEL_VAR_NAME, viewRef.userAcl().getCurrentUser());
             }
         }
 
@@ -68,12 +57,15 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             return;
         }
 
-        addObject("appConst", appWorkingConstant, request, mav);
-        addObject("ctx", request.getContextPath(), request, mav);
-        addObject("dict", dataDictHolder.getDict(), request, mav);
-        addObject("userAcl", userAccessControlService, request, mav);
+        addObject(ViewReferenceKeyEnum.AppConst.getName(),
+                viewRef.appConst(), request, mav);
+        addObject(ViewReferenceKeyEnum.RequestContextPath.getName(),
+                request.getContextPath(), request, mav);
+        addObject("dict", viewRef.dictHolder().getDict(), request, mav);
+        addObject(ViewReferenceKeyEnum.UserAcl.getName(),
+                viewRef.userAcl(), request, mav);
         addObject(WebExtensionPack.MODEL_VAR_NAME,
-                new WebExtensionPack(request, applicationContext, dataDictHolder), request, mav);
+                new WebExtensionPack(request, viewRef.appContext(), viewRef.dictHolder()), request, mav);
     }
 
     private void addObject(String name, Object value, HttpServletRequest request, ModelAndView mav) {
