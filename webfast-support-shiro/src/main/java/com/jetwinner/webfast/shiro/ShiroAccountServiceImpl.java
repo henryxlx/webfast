@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.BaseAppUserService;
@@ -15,7 +15,7 @@ import java.util.Set;
 public class ShiroAccountServiceImpl implements ShiroAccountService {
 
     private BaseAppUserService userService;
-    private DummyShiroAccountServiceImpl dummyShiroAccountService;
+    private final DummyShiroAccountServiceImpl dummyShiroAccountService;
 
     public ShiroAccountServiceImpl() {
         this.dummyShiroAccountService = new DummyShiroAccountServiceImpl();
