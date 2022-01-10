@@ -15,7 +15,7 @@ import java.util.Map;
  * @author xulixin
  */
 @Component
-public class ViewRenderServiceImpl implements ViewRenderService{
+public class ViewRenderServiceImpl implements ViewRenderService {
 
     private static final Logger log = LoggerFactory.getLogger(ViewRenderServiceImpl.class);
 
