@@ -3,8 +3,8 @@ package com.jetwinner.webfast.mvc.controller.install;
 import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
-import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.AppWorkingConstant;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -309,7 +309,7 @@ public class InstallController {
         ModelAndView mav = toModelAndView();
         session.setAttribute(STEP_KEY, STEP_4);
         setupService.initAdmin(params);
-        AppUser user = setupService.getUserByUsername(params.get("username"));
+        BaseAppUser user = setupService.getUserByUsername(params.get("username"));
         setupService.initSiteSettings(params);
         setupService.initRegisterSetting(params);
         setupService.initMailerSetting(params.get("sitename"));

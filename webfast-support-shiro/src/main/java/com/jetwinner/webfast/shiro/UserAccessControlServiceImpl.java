@@ -1,11 +1,11 @@
 package com.jetwinner.webfast.shiro;
 
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
+import com.jetwinner.webfast.kernel.exception.ActionGraspException;
+import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.UnauthorizedException;
-import com.jetwinner.webfast.kernel.exception.ActionGraspException;
-import com.jetwinner.webfast.kernel.service.UserAccessControlService;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +55,7 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
     }
 
     @Override
-    public void setEncryptPassword(AppUser user) {
+    public void setEncryptPassword(BaseAppUser user) {
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
         String password = PasswordEncoder.encodePassword(user.getPassword(), salt);
         user.setSalt(salt);

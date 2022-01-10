@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.util.MapUtil;
-import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.BaseAppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -42,7 +42,7 @@ public class FastAppSetupServiceImpl {
         map.putAll(params);
         try {
             Map<String, Object> user = MapUtil.newHashMap();
-            AppUser appUser = new AppUser();
+            BaseAppUser appUser = new BaseAppUser();
             appUser.setPassword(params.get("password"));
             userAccessControlService.setEncryptPassword(appUser);
             user.put("password", appUser.getPassword());
@@ -122,7 +122,7 @@ public class FastAppSetupServiceImpl {
                 .add("upload_mode", "local")
                 .add("cloud_access_key", "")
                 .add("cloud_secret_key", "")
-                .add("cloud_api_server", "http://api.webfast.net")
+                .add("cloud_api_server", "https://api.webfast.com")
                 .add("cloud_bucket", "");
 
         settingService.set("storage", defaultSetting.toMap());
@@ -131,7 +131,7 @@ public class FastAppSetupServiceImpl {
     public void initFile() {
     }
 
-    public void initPages(AppUser user) {
+    public void initPages(BaseAppUser user) {
         ParamMap paramMap = new ParamMap()
                 .add("title", "关于我们")
                 .add("type", "page")
@@ -178,7 +178,7 @@ public class FastAppSetupServiceImpl {
         navigationService.createNavigation(paramMap.toMap());
     }
 
-    public void initBlocks(AppUser user) {
+    public void initBlocks(BaseAppUser user) {
         String content = "<a href=\"\"><img src=\"../assets/img/placeholder/carousel-1200x256-1.png\" /></a>" +
                 "\n" +
                 "<a href=\"#\"><img src=\"../assets/img/placeholder/carousel-1200x256-2.png\" /></a>" +
@@ -205,7 +205,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("article", setting.toMap());
     }
 
-    public AppUser getUserByUsername(String username) {
+    public BaseAppUser getUserByUsername(String username) {
         return userService.getByUsername(username);
     }
 }
