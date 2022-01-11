@@ -77,16 +77,11 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         return getNamedParameterJdbcTemplate().update(sql, map);
     }
 
-    protected int deleteByPrimaryKey(String tableName, String primaryKeyName, Object pkValue) {
+    private int deleteByPrimaryKey(String tableName, String primaryKeyName, Object pkValue) {
         StringBuilder sql = new StringBuilder();
         sql.append("DELETE FROM ").append(tableName);
-        sql.append(" WHERE ").append(primaryKeyName).append("=");
-        if (pkValue instanceof String) {
-            sql.append('"').append(pkValue).append('"');
-        } else {
-            sql.append(pkValue);
-        }
-        return getJdbcTemplate().update(sql.toString());
+        sql.append(" WHERE ").append(primaryKeyName).append(" = ?");
+        return getJdbcTemplate().update(sql.toString(), pkValue);
     }
 
     protected void checkOrderBy(OrderBy orderBy, String[] allowedOrderByFields) {
