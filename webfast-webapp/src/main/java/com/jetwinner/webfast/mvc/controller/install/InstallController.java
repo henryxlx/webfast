@@ -250,8 +250,8 @@ public class InstallController {
             runner.setFullLineDelimiter(false);
             // 设置是否输出日志，null不输出日志，不设置自动将日志输出到控制台
             runner.setLogWriter(null);
-            runner.runScript(new BufferedReader(new InputStreamReader(
-                    new ClassPathResource(sqlFilePath).getInputStream())));
+            runner.runScript(new InputStreamReader(
+                    new ClassPathResource(sqlFilePath).getInputStream(), StandardCharsets.UTF_8));
         }
     }
 
