@@ -21,3 +21,8 @@ jar {
 }
 
 uploadArchives.enabled = false
+
+Task copyBootJar = project.task("copyBootJarToDZRun", type: Copy, dependsOn: project.bootJar) {
+    from project.file('/build/libs')
+    into 'd:/zrun'
+}
