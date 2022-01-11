@@ -16,4 +16,10 @@ public interface AppRoleService {
     int searchRolesCount(Map<String, Object> conditions);
 
     List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
+
+    void addRole(Map<String, Object> mapRole);
+
+    boolean isRoleNameAvailable(String roleName, String exclude);
+
+    int deleteRoleById(Integer id);
 }

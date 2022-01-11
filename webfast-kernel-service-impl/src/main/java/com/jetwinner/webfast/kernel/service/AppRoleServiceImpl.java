@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
@@ -33,5 +34,28 @@ public class AppRoleServiceImpl implements AppRoleService {
     @Override
     public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         return roleDao.searchRoles(conditions, orderByBuilder, start, limit);
+    }
+
+    @Override
+    public void addRole(Map<String, Object> mapRole) {
+        roleDao.insert(mapRole);
+    }
+
+    @Override
+    public boolean isRoleNameAvailable(String roleName, String exclude) {
+        if (EasyStringUtil.isBlank(roleName)) {
+            return false;
+        }
+        if (roleName.equals(exclude)) {
+            return true;
+        }
+
+        int count = roleDao.countByRoleName(roleName);
+        return count > 0 ? false : true;
+    }
+
+    @Override
+    public int deleteRoleById(Integer id) {
+        return roleDao.deleteById(id);
     }
 }
