@@ -180,11 +180,11 @@ public class FastAppSetupServiceImpl {
     }
 
     public void initBlocks(BaseAppUser user) {
-        String content = "<a href=\"\"><img src=\"../assets/img/placeholder/carousel-1200x256-1.png\" /></a>" +
+        String content = "<a href=\"\"><img src=\"assets/img/placeholder/carousel-1200x256-1.png\" /></a>" +
                 "\n" +
-                "<a href=\"#\"><img src=\"../assets/img/placeholder/carousel-1200x256-2.png\" /></a>" +
+                "<a href=\"#\"><img src=\"assets/img/placeholder/carousel-1200x256-2.png\" /></a>" +
                 "\n" +
-                "<a href=\"#\"><img src=\"../assets/img/placeholder/carousel-1200x256-3.png\" /></a>" +
+                "<a href=\"#\"><img src=\"assets/img/placeholder/carousel-1200x256-3.png\" /></a>" +
                 "\n";
         Integer id = blockService.createBlock(new ParamMap()
                 .add("code", "home_top_banner")
