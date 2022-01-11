@@ -1,7 +1,7 @@
 druid:
   username: root
   password: root
-  url: jdbc:mysql://localhost:3306/coursework4dev?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+  url: jdbc:mysql://localhost:3306/webfast4dev?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
 #  serverTimezone GMT%2B8是GMT+8的转义，时区是东八区，但在MySQL的JDBC升级为8.0之后该用法会发生错误，需要使用Asia/Shanghai替代
 #  url: jdbc:mysql://localhost:3306/coursework4dev?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
 #  driver-class-name: com.mysql.jdbc.Driver  # deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'.
