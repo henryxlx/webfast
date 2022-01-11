@@ -44,7 +44,7 @@ public class RoleController {
         }
         Paginator paginator = new Paginator(request, roleService.searchRolesCount(conditions), 30);
 
-        List<AppModelRole> roles = roleService.searchRoles(conditions, OrderBy.builder().add("createdTime"),
+        List<AppModelRole> roles = roleService.searchRoles(conditions, OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
