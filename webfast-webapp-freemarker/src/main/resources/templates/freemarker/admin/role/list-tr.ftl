@@ -16,7 +16,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="#modal" data-toggle="modal" data-url="${ctx}/admin/role/${role.id}/edit">编辑角色信息</a>
                     </li>
-                    <li><a href="#modal" data-toggle="modal" data-url="${ctx}/admin/role/${role.id}/delete">删除角色信息</a>
+                    <li><a href="javascript:" data-role="delete-item" data-url="${ctx}/admin/role/${role.id}/delete">删除角色信息</a>
                     </li>
                 </ul>
             </#if>
