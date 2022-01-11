@@ -332,7 +332,6 @@ public class InstallController {
             mav.setViewName(redirectSessionStepPage(session));
         } else {
             dataSourceConfig.setDataSourceDisabled(false);
-            installControllerRegisterService.removeInstallControllerMapping();
             mav.setViewName("/install/step4");
         }
         return mav;
@@ -343,6 +342,7 @@ public class InstallController {
     public Map<String, Object> finishAction() {
         Map<String, Object> map = MapUtil.newHashMap();
         map.put("error", "can not connect cloud server.");
+        installControllerRegisterService.removeInstallControllerMapping();
         return map;
     }
 }
