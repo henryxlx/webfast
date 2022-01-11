@@ -64,7 +64,7 @@ public class RoleController {
     @RequestMapping("/admin/role/checkname")
     @ResponseBody
     public Map checkRoleNameAction(@RequestParam("value") String roleName, String exclude) {
-        Map map = new HashMap(2);
+        Map<String, Object> map = new HashMap<>(2);
         boolean available = roleService.isRoleNameAvailable(roleName, exclude);
 
         if (available) {
