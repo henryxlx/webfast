@@ -18,7 +18,7 @@ CREATE TABLE `app_block` (
   `createdTime` bigint NOT NULL COMMENT '编辑区创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面编辑区表';
 
 -- ----------------------------
 -- Table structure for `app_block_history`
@@ -32,7 +32,7 @@ CREATE TABLE `app_block_history` (
   `userId` int(11) NOT NULL COMMENT '编辑区编辑人ID',
   `createdTime` bigint NOT NULL COMMENT '编辑区历史记录创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='历史表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='编辑区历史表';
 
 -- ----------------------------
 -- Table structure for `app_category`
@@ -50,7 +50,7 @@ CREATE TABLE `app_category` (
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uri` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 -- ----------------------------
 -- Table structure for `app_category_group`
@@ -62,7 +62,7 @@ CREATE TABLE `app_category_group` (
   `name` varchar(255) NOT NULL COMMENT '分类组名称',
   `depth` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '该组下分类允许的最大层级数',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类分组表';
 
 -- ----------------------------
 -- Table structure for `app_content`
@@ -90,7 +90,7 @@ CREATE TABLE `app_content` (
   `publishedTime` bigint NOT NULL DEFAULT '0' COMMENT '发布时间',
   `createdTime` bigint  NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面内容表';
 
 -- ----------------------------
 -- Table structure for `app_navigation`
@@ -108,7 +108,21 @@ CREATE TABLE `app_navigation` (
   `updateTime` bigint NOT NULL DEFAULT '0' COMMENT '最后更新时间',
   `createdTime` bigint NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='导航数据表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站导航表';
+
+-- ----------------------------
+-- Table structure for `app_permission`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_permission`;
+CREATE TABLE `app_permission` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `label` varchar(32) NOT NULL COMMENT '角色文字标签',
+  `permissionKey` varchar(32) NOT NULL COMMENT '角色名称',
+  `createdUserId` int(10) unsigned NOT NULL COMMENT '创建用户ID',
+  `createdTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatedTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限定义表';
 
 -- ----------------------------
 -- Table structure for `app_role`
@@ -124,7 +138,7 @@ CREATE TABLE `app_role` (
   `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatedTime` bigint NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色定义表';
 
 -- ----------------------------
 -- Records of app_role
@@ -144,7 +158,7 @@ CREATE TABLE `app_setting` (
   `value` longblob COMMENT '系统设置值',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='系统设置表';
 
 -- ----------------------------
 -- Records of app_setting
@@ -194,7 +208,7 @@ CREATE TABLE `app_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Records of app_user
@@ -261,4 +275,4 @@ CREATE TABLE `app_user_profile` (
   `textField9` text,
   `textField10` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
