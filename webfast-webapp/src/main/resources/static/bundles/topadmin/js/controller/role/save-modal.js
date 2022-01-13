@@ -39,18 +39,5 @@ define(function(require, exports, module) {
             rule: 'remote'
         });
 
-        $modal.find('.delete-role').on('click', function() {
-            if (!confirm('真的要删除该角色吗？')) {
-                return ;
-            }
-
-            var trId = '#role-tr-' + $(this).data('roleId');
-            $.post($(this).data('url'), function(html) {
-                $modal.modal('hide');
-                $table.find(trId).remove();
-            });
-
-        });
-
 	};
 });
