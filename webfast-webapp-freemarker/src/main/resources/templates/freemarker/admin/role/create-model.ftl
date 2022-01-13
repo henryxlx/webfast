@@ -23,10 +23,6 @@
 </#macro>
 
 <#macro blockFooter>
-        <#if (role.id)!0 gt 0>
-        <button class="btn btn-default pull-left delete-role" data-url="${ctx}/admin/role/delete/${(role.id)!}" data-target="${(role.id)!}" data-role-id="${(role.id)!}"><i class="glyphicon glyphicon-trash"></i> 删除</button>
-        </#if>
-
         <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
         <button id="role-create-btn" data-submiting-text="正在提交" type="submit" class="btn btn-primary" data-toggle="form-submit" data-target="#role-form">保存</button>
 </#macro>

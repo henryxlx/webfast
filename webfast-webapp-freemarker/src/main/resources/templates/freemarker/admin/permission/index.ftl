@@ -43,11 +43,11 @@
 
     <table id="permission-table" class="table table-striped">
         <thead>
-        <th width="10%">ID</th>
-        <th width="30%">权限名</th>
-        <th width="30%">描述</th>
-        <#--<th width="20%">添加时间</th>-->
-        <th width="10%">操作</th>
+        <th>ID</th>
+        <th>权限名</th>
+        <th>描述</th>
+        <th>添加时间</th>
+        <th>操作</th>
         </thead>
         <tbody>
         <#list permissions! as perm>
