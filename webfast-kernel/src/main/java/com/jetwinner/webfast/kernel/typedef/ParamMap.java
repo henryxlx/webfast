@@ -108,4 +108,23 @@ public class ParamMap {
         return map;
     }
 
+    public static Map<String, Object> toUpdateDataMap(Map<String, String[]> parameterMap, Map<String, Object> oldMap) {
+        Map<String, Object> map = new HashMap<>(0);
+        if (parameterMap != null) {
+            for (String key : parameterMap.keySet()) {
+                if (!oldMap.containsKey(key)) {
+                    continue;
+                }
+                String[] values = parameterMap.get(key);
+                if (EasyStringUtil.isNotBlank(values[0])) {
+                    Object oldValue = oldMap.get(key);
+                    if (!values[0].equals(oldValue)) {
+                        map.put(key, values[0]);
+                    }
+                }
+            }
+        }
+        return map;
+    }
+
 }
