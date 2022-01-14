@@ -69,4 +69,19 @@ public class PermissionController {
         int nums = permissionDao.delete(id);
         return nums > 0 ? Boolean.TRUE : Boolean.FALSE;
     }
+
+    @GetMapping("/admin/permission/{id}/edit")
+    public String editPermissionPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("perm", permissionDao.get(id));
+        return "/admin/permission/permission-model";
+    }
+
+    @PostMapping("/admin/permission/{id}/update")
+    public String updatePermissionAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        Map<String, Object> mapPermission = permissionDao.get(id);
+
+        permissionDao.update(mapPermission);
+        model.addAttribute("perm", mapPermission);
+        return "/admin/permission/list-tr";
+    }
 }

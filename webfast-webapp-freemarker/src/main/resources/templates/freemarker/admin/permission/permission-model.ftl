@@ -5,7 +5,7 @@
 
 <#macro blockBody>
     <form class="form-horizontal" id="permission-form"
-          action="<#if (perm.id)!0 gt 0>${ctx}/admin/permission/${perm.id}/update<#else>${ctx}/admin/permission/create</#if>"
+          action="${ctx}/admin/permission/<#if (perm.id)?? && perm.id gt 0>${perm.id}/update<#else>create</#if>"
           method="post">
         <div class="form-group">
             <label class="col-md-3 control-label" for="permission-key-field">权限标识关键字</label>

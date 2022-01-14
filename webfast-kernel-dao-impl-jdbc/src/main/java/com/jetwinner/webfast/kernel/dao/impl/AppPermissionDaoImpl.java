@@ -5,6 +5,7 @@ import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +45,17 @@ public class AppPermissionDaoImpl extends FastJdbcDaoSupport implements AppPermi
     @Override
     public int delete(Integer id) {
         return getJdbcTemplate().update("DELETE FROM app_permission WHERE id = ?", id);
+    }
+
+    @Override
+    public Map<String, Object> get(Integer id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM app_permission WHERE id = ?", id)
+                .stream().findFirst().orElse(new HashMap<>(0));
+    }
+
+    @Override
+    public void update(Map<String, Object> mapPermission) {
+
     }
 
     private int countByRoleName(String permissionKey) {

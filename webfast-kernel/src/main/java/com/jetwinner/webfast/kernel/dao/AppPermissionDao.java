@@ -15,4 +15,8 @@ public interface AppPermissionDao {
     boolean isPermissionKeyAvailable(String permissionKey, String exclude);
 
     int delete(Integer id);
+
+    Map<String, Object> get(Integer id);
+
+    void update(Map<String, Object> mapPermission);
 }
