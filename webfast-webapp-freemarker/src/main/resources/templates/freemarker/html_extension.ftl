@@ -55,6 +55,7 @@
 </#function>
 
 <#function upload_max_filesize>
+    <#return (appConst.uploadMaxFilesize)! />
 </#function>
 
 <#function data key count=5>
