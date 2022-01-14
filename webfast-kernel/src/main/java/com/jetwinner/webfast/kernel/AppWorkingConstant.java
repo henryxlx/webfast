@@ -17,8 +17,23 @@ public class AppWorkingConstant {
     @Value("${custom.app.version:5.3.3}")
     private String version;
 
+    /**
+     * 应用程序使用外部存储位置路径
+     */
     @Value("${custom.app.storage.path:d:/webfast/storage}")
     private String storagePath;
+
+    /**
+     * 单个文件的最大上限
+     */
+    @Value("${spring.servlet.multipart.max-file-size}")
+    private String uploadMaxFilesize;
+
+    /**
+     * 单个请求的文件总大小上限
+     */
+    @Value("${spring.servlet.multipart.max-request-size}")
+    private String postMaxsize;
 
     public String getDebug() {
         return debug;
@@ -42,5 +57,13 @@ public class AppWorkingConstant {
 
     public void setStoragePath(String storagePath) {
         this.storagePath = storagePath;
+    }
+
+    public String getUploadMaxFilesize() {
+        return uploadMaxFilesize;
+    }
+
+    public String getPostMaxsize() {
+        return postMaxsize;
     }
 }

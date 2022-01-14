@@ -50,29 +50,11 @@ public class InstallController {
         this.installControllerRegisterService = installControllerRegisterService;
         this.setupService = setupService;
         this.dataSourceConfig = dataSourceConfig;
-        this.appStoragePath = appWorkingConstant.getStoragePath();
         this.appWorkingConstant = appWorkingConstant;
     }
 
     @Value("${custom.app.install.sqlscript.classpath:}")
     private String customInstallSqlScriptClasspath;
-
-    /**
-     * 应用程序使用外部存储位置路径
-     */
-    private final String appStoragePath;
-
-    /**
-     * 单个文件的最大上限
-     */
-    @Value("${spring.servlet.multipart.max-file-size}")
-    private String uploadMaxFilesize;
-
-    /**
-     * 单个请求的文件总大小上限
-     */
-    @Value("${spring.servlet.multipart.max-request-size}")
-    private String postMaxsize;
 
     @Value("${custom.app.database.name:}")
     private String customDbName;
@@ -100,10 +82,10 @@ public class InstallController {
         mav.addObject("javaVersion", systemInfoBean.getJavaVersion());
         mav.addObject("jvmVersion", systemInfoBean.getJvmVersion());
         mav.addObject("mysqlOk", checkMysqlJdbcDriver());
-        mav.addObject("appStoragePath", appStoragePath);
-        mav.addObject("appStoragePathOk", checkPathExist(appStoragePath));
-        mav.addObject("uploadMaxFilesize", uploadMaxFilesize);
-        mav.addObject("postMaxsize", postMaxsize);
+        mav.addObject("appStoragePath", appWorkingConstant.getStoragePath());
+        mav.addObject("appStoragePathOk", checkPathExist(appWorkingConstant.getStoragePath()));
+        mav.addObject("uploadMaxFilesize", appWorkingConstant.getUploadMaxFilesize());
+        mav.addObject("postMaxsize", appWorkingConstant.getPostMaxsize());
         mav.setViewName("/install/step1");
         return mav;
     }
@@ -258,7 +240,7 @@ public class InstallController {
     private void buildDataSourceConfigToAppStorage(String fromFileClasspath, DbConnectionSetting setting)
             throws IOException {
 
-        String toFilePath = appStoragePath + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_DIR;
+        String toFilePath = appWorkingConstant.getStoragePath() + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_DIR;
         File dir = new File(toFilePath);
         if (!dir.exists()) {
             dir.mkdir();
