@@ -55,7 +55,9 @@ public class AppPermissionDaoImpl extends FastJdbcDaoSupport implements AppPermi
 
     @Override
     public void update(Map<String, Object> mapPermission) {
-
+        Long now = System.currentTimeMillis();
+        mapPermission.put("updatedTime", now);
+        updateMap("app_permission", mapPermission, "id");
     }
 
     private int countByRoleName(String permissionKey) {

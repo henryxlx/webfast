@@ -79,8 +79,14 @@ public class PermissionController {
     @PostMapping("/admin/permission/{id}/update")
     public String updatePermissionAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
         Map<String, Object> mapPermission = permissionDao.get(id);
-
-        permissionDao.update(mapPermission);
+        Map<String, Object> mapForNew = ParamMap.toUpdateDataMap(request.getParameterMap(), mapPermission);
+        if (!mapForNew.isEmpty()) {
+            mapForNew.put("id", id);
+            permissionDao.update(mapForNew);
+            mapForNew.forEach((k, v) -> {
+                mapPermission.put(k, v);
+            });
+        }
         model.addAttribute("perm", mapPermission);
         return "/admin/permission/list-tr";
     }
