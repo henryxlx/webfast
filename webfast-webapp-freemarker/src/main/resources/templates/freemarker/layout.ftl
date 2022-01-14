@@ -75,7 +75,7 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <#if appUser??>
-                            <li><a href="${ctx}/my"> 我的课程 </a></li>
+                            <li><a href="${ctx}/my"> 我的 </a></li>
                             <#if setting('mobile.enabled')??>
                                 <li><a href="${ctx}/mobile" class="mobile-badge-container">
                                         <span class="glyphicon glyphicon-phone"></span>
