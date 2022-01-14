@@ -7,7 +7,7 @@ import java.util.Set;
  */
 public interface BaseAppUserService {
 
-    void checkPutMeIntoShrioAccountService();
+    void checkPutMeIntoRbacService();
 
     BaseAppUser getBaseAppUserByUsername(String username);
 

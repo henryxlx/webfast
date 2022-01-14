@@ -5,7 +5,7 @@ import java.util.Set;
 /**
  * @author xulixin
  */
-public interface ShiroAccountService {
+public interface RbacService {
 
     default void setUserService(BaseAppUserService userService) {}
 

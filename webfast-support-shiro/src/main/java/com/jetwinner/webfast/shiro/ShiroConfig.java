@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.properties.LinkedHashMapProperties;
-import com.jetwinner.security.ShiroAccountService;
+import com.jetwinner.security.RbacService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -51,10 +51,10 @@ public class ShiroConfig {
     }
 
     @Bean
-    public UserRealm userRealm(ShiroAccountService accountService,
+    public UserRealm userRealm(RbacService rbacService,
                                HashedCredentialsMatcher credentialsMatcher) {
 
-        UserRealm userRealm = new UserRealm(accountService);
+        UserRealm userRealm = new UserRealm(rbacService);
         // 配置使用哈希密码匹配
         userRealm.setCredentialsMatcher(credentialsMatcher);
         return userRealm;

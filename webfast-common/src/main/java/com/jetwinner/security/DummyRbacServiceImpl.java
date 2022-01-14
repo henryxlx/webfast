@@ -6,7 +6,7 @@ import java.util.Set;
 /**
  * @author xulixin
  */
-public class DummyShiroAccountServiceImpl implements ShiroAccountService {
+public class DummyRbacServiceImpl implements RbacService {
 
     @Override
     public BaseAppUser getBaseAppUserByUsername(String username) {

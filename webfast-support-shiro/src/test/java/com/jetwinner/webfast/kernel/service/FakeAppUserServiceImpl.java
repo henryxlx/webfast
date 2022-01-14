@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.security.BaseAppUser;
-import com.jetwinner.security.ShiroAccountService;
+import com.jetwinner.security.RbacService;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ import java.util.Set;
 @Component
 @PropertySource("classpath:test/buildin-user.properties")
 @ConfigurationProperties(prefix = "prop")
-public class FakeAppUserServiceImpl implements ShiroAccountService {
+public class FakeAppUserServiceImpl implements RbacService {
 
     private List<BaseAppUser> users = new ArrayList<>();
 

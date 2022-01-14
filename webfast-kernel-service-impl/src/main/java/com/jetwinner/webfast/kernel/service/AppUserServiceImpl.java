@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.security.BaseAppUser;
-import com.jetwinner.security.ShiroAccountService;
+import com.jetwinner.security.RbacService;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
@@ -24,22 +24,22 @@ public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserDao userDao;
     private final DataSourceConfig dataSourceConfig;
-    private final ShiroAccountService shiroAccountService;
+    private final RbacService rbacService;
 
     public AppUserServiceImpl(AppUserDao userDao,
                               DataSourceConfig dataSourceConfig,
-                              ShiroAccountService shiroAccountService) {
+                              RbacService rbacService) {
 
         this.userDao = userDao;
         this.dataSourceConfig = dataSourceConfig;
-        this.shiroAccountService = shiroAccountService;
+        this.rbacService = rbacService;
     }
 
     @PostConstruct
     @Override
-    public void checkPutMeIntoShrioAccountService() {
+    public void checkPutMeIntoRbacService() {
         if (!dataSourceConfig.getDataSourceDisabled()) {
-            shiroAccountService.setUserService(this);
+            rbacService.setUserService(this);
         }
     }
 
