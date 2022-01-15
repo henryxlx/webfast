@@ -22,4 +22,10 @@ public interface AppRoleService {
     boolean isRoleNameAvailable(String roleName, String exclude);
 
     int deleteRoleById(Integer id);
+
+    AppModelRole getRoleById(Integer id);
+
+    Map<String, Object> getRoleMapById(Integer id);
+
+    boolean update(Map<String, Object> mapForNew);
 }

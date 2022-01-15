@@ -58,4 +58,19 @@ public class AppRoleServiceImpl implements AppRoleService {
     public int deleteRoleById(Integer id) {
         return roleDao.deleteById(id);
     }
+
+    @Override
+    public AppModelRole getRoleById(Integer id) {
+        return roleDao.getById(id);
+    }
+
+    @Override
+    public Map<String, Object> getRoleMapById(Integer id) {
+        return roleDao.getRoleMapById(id);
+    }
+
+    @Override
+    public boolean update(Map<String, Object> mapForNew) {
+        return roleDao.updateMap(mapForNew) > 0;
+    }
 }

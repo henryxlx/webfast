@@ -58,7 +58,7 @@ public class RoleController {
 
     @GetMapping("/admin/role/create")
     public String createRolePage() {
-        return "/admin/role/create-model";
+        return "/admin/role/role-model";
     }
 
     @RequestMapping("/admin/role/checkname")
@@ -94,5 +94,33 @@ public class RoleController {
     public Boolean deleteAction(@PathVariable Integer id) {
         int nums = roleService.deleteRoleById(id);
         return nums > 0 ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @GetMapping("/admin/role/{id}")
+    public String viewRolePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("role", roleService.getRoleById(id));
+        model.addAttribute("dataReadOnly", "true");
+        return "/admin/role/role-model";
+    }
+
+    @GetMapping("/admin/role/{id}/edit")
+    public String editRolePage(@PathVariable Integer id, Model model) {
+        model.addAttribute("role", roleService.getRoleById(id));
+        return "/admin/role/role-model";
+    }
+
+    @PostMapping("/admin/role/{id}/update")
+    public String updateRoleAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        Map<String, Object> mapRole = roleService.getRoleMapById(id);
+        Map<String, Object> mapForNew = ParamMap.toUpdateDataMap(request.getParameterMap(), mapRole);
+        if (!mapForNew.isEmpty()) {
+            mapForNew.put("id", id);
+            boolean updateOk = roleService.update(mapForNew);
+            if (updateOk) {
+                mapForNew.forEach(mapRole::put);
+            }
+        }
+        model.addAttribute("role", mapRole);
+        return "/admin/role/list-tr";
     }
 }

@@ -62,6 +62,24 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
         return getJdbcTemplate().update("DELETE FROM app_role WHERE id = ?", id);
     }
 
+    @Override
+    public AppModelRole getById(Integer id) {
+        return getJdbcTemplate().query("SELECT * FROM app_role WHERE id = ?",
+                        new BeanPropertyRowMapper<>(AppModelRole.class), id)
+                .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public Map<String, Object> getRoleMapById(Integer id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM app_role WHERE id = ?", id)
+                .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public int updateMap(Map<String, Object> mapForRole) {
+        return updateMap(TABLE_NAME, mapForRole, "id");
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
         DynamicQueryBuilder builder = new DynamicQueryBuilder(conditions)
                 .from(TABLE_NAME)
