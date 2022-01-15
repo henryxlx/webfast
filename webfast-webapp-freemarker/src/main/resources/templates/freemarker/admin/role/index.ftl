@@ -14,7 +14,7 @@
     <table id="role-table" class="table table-striped">
         <thead>
         <th>角色名</th>
-        <th>编码</th>
+        <th>角色编码</th>
         <th>权限</th>
         <th>添加时间</th>
         <th>操作</th>

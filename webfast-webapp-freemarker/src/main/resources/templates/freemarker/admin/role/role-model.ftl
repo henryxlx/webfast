@@ -8,7 +8,7 @@
           action="${ctx}/admin/role/<#if (role.id)?? && role.id gt 0>${role.id}/update<#else>create</#if>"
           method="post">
         <div class="form-group">
-            <label class="col-md-3 control-label" for="role-name-field">角色名称</label>
+            <label class="col-md-3 control-label" for="role-name-field">角色编码</label>
             <div class="col-md-6 controls">
                 <input class="form-control" id="role-name-field" type="text"
                        <#if dataReadOnly??>readOnly="true"</#if>
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-3 control-label" for="role-label-field">角色描述</label>
+            <label class="col-md-3 control-label" for="role-label-field">角色名描述</label>
             <div class="col-md-6 controls">
                 <input class="form-control" id="role-label-field" type="text"
                        <#if dataReadOnly??>readOnly="true"</#if>
