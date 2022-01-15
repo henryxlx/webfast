@@ -70,7 +70,7 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
-    public boolean update(Map<String, Object> mapForNew) {
-        return roleDao.updateMap(mapForNew) > 0;
+    public boolean updateRoleMap(Map<String, Object> mapForUpdate) {
+        return roleDao.updateMap(mapForUpdate) > 0;
     }
 }

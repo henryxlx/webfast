@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -112,12 +113,12 @@ public class RoleController {
     @PostMapping("/admin/role/{id}/update")
     public String updateRoleAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
         Map<String, Object> mapRole = roleService.getRoleMapById(id);
-        Map<String, Object> mapForNew = ParamMap.toUpdateDataMap(request.getParameterMap(), mapRole);
-        if (!mapForNew.isEmpty()) {
-            mapForNew.put("id", id);
-            boolean updateOk = roleService.update(mapForNew);
+        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), mapRole);
+        if (MapUtil.isNotEmpty(mapForUpdate)) {
+            mapForUpdate.put("id", id);
+            boolean updateOk = roleService.updateRoleMap(mapForUpdate);
             if (updateOk) {
-                mapForNew.forEach(mapRole::put);
+                mapForUpdate.forEach(mapRole::put);
             }
         }
         model.addAttribute("role", mapRole);

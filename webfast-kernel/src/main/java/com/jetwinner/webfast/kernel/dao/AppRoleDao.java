@@ -27,5 +27,5 @@ public interface AppRoleDao {
 
     Map<String, Object> getRoleMapById(Integer id);
 
-    int updateMap(Map<String, Object> mapForRole);
+    int updateMap(Map<String, Object> mapRole);
 }

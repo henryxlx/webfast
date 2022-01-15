@@ -27,5 +27,5 @@ public interface AppRoleService {
 
     Map<String, Object> getRoleMapById(Integer id);
 
-    boolean update(Map<String, Object> mapForNew);
+    boolean updateRoleMap(Map<String, Object> mapForUpdate);
 }
