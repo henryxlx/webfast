@@ -1,11 +1,11 @@
 package com.jetwinner.webfast.mvc.controller.install;
 
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
-import org.springframework.beans.BeansException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
@@ -14,36 +14,47 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 
 import java.lang.reflect.Method;
 
+/**
+ * @author xulixin
+ */
 @Component
-public class InstallControllerRegisterServiceImpl implements InstallControllerRegisterService, ApplicationContextAware {
+public class InstallControllerRegisterServiceImpl implements InstallControllerRegisterService {
+
+    private static final Logger logger = LoggerFactory.getLogger(InstallControllerRegisterServiceImpl.class);
 
     static final String INSTALL_CONTROLLER_BEAN_NAME = "webfastInstallController";
 
-    private RequestMappingHandlerMapping requestMappingHandlerMapping;
-    private ApplicationContext applicationContext;
+    private final RequestMappingHandlerMapping requestMappingHandlerMapping;
+    private final ApplicationContext applicationContext;
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+    public InstallControllerRegisterServiceImpl(RequestMappingHandlerMapping requestMappingHandlerMapping,
+                                                ApplicationContext applicationContext) {
+
+        this.requestMappingHandlerMapping = requestMappingHandlerMapping;
         this.applicationContext = applicationContext;
     }
 
     @Override
     public void addInstallControllerMapping() throws Exception {
-        requestMappingHandlerMapping = (RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping");
-        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
-
-        Class<?> myController = ClassUtils.getDefaultClassLoader().loadClass("com.jetwinner.webfast.mvc.controller.install.InstallController");
-        // 这里通过builder直接生成了installController的definition，然后注册进去
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(myController);
-        defaultListableBeanFactory.registerBeanDefinition(INSTALL_CONTROLLER_BEAN_NAME, beanDefinitionBuilder.getBeanDefinition());
-        Method method = requestMappingHandlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
+        if (!applicationContext.containsBean(INSTALL_CONTROLLER_BEAN_NAME)) {
+            registerInstallControllerBeanDefinition();
+        }
+        Method method = requestMappingHandlerMapping.getClass().getSuperclass().getSuperclass()
+                .getDeclaredMethod("detectHandlerMethods", Object.class);
         method.setAccessible(true);
         method.invoke(requestMappingHandlerMapping, INSTALL_CONTROLLER_BEAN_NAME);
     }
 
+    private void registerInstallControllerBeanDefinition() throws ClassNotFoundException {
+        DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
+        Class<?> myController = ClassUtils.getDefaultClassLoader().loadClass("com.jetwinner.webfast.mvc.controller.install.InstallController");
+        // 这里通过builder直接生成了installController的definition，然后注册进去
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(myController);
+        defaultListableBeanFactory.registerBeanDefinition(INSTALL_CONTROLLER_BEAN_NAME, beanDefinitionBuilder.getBeanDefinition());
+    }
+
     @Override
     public void removeInstallControllerMapping() {
-        requestMappingHandlerMapping = (RequestMappingHandlerMapping) applicationContext.getBean("requestMappingHandlerMapping");
         Object controller = applicationContext.getBean(INSTALL_CONTROLLER_BEAN_NAME);
         if (controller == null) {
             return;
@@ -61,7 +72,7 @@ public class InstallControllerRegisterServiceImpl implements InstallControllerRe
                     requestMappingHandlerMapping.unregisterMapping(requestMappingInfo);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Removing InstallController request mapping error: " +  e.getMessage());
             }
         }, ReflectionUtils.USER_DECLARED_METHODS);
     }
