@@ -31,6 +31,7 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
 
     @Override
     public void insert(Map<String, Object> user) {
+        user.put("createdTime", System.currentTimeMillis());
         insertMap(TABLE_NAME, user);
     }
 
