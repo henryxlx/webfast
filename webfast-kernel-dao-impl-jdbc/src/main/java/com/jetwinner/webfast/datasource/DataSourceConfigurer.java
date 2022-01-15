@@ -3,7 +3,7 @@ package com.jetwinner.webfast.datasource;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
-import com.jetwinner.webfast.kernel.AppWorkingConstant;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -30,13 +30,13 @@ public class DataSourceConfigurer implements DataSourceConfig {
 
     private boolean dataSourceDisabled = false;
 
-    private final AppWorkingConstant appConst;
+    private final FastAppConst appConst;
     private final ApplicationContext applicationContext;
 
-    public DataSourceConfigurer(AppWorkingConstant constant,
+    public DataSourceConfigurer(FastAppConst appConst,
                                 ApplicationContext applicationContext) {
 
-        this.appConst = constant;
+        this.appConst = appConst;
         this.applicationContext = applicationContext;
     }
 
@@ -57,7 +57,7 @@ public class DataSourceConfigurer implements DataSourceConfig {
         try {
             dataSourceDisabled = false;
             Resource resource = new FileSystemResource(appConst.getStoragePath() + DATA_SOURCE_CONFIG_FILE_LOC);
-            Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, AppWorkingConstant.CHARSET_UTF8));
+            Properties properties = YamlPropertiesUtil.loadYaml(new EncodedResource(resource, FastAppConst.CHARSET_UTF8));
             Set<Object> keys = properties.keySet();
             keys.forEach(k -> {
                 if (EasyStringUtil.containsAny(k.toString(), "url", "username", "password")) {

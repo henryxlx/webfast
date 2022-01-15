@@ -1,8 +1,8 @@
 package com.jetwinner.webfast.kernel.view;
 
 import com.jetwinner.security.UserAccessControlService;
-import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.DataDictHolder;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
  */
 public interface ViewReferenceFacade {
 
-    AppWorkingConstant appConst();
+    FastAppConst appConst();
 
     DataDictHolder dictHolder();
 

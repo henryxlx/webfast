@@ -1,8 +1,8 @@
 package com.jetwinner.webfast.kernel.view;
 
 import com.jetwinner.security.UserAccessControlService;
-import com.jetwinner.webfast.kernel.AppWorkingConstant;
 import com.jetwinner.webfast.kernel.DataDictHolder;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -12,25 +12,25 @@ import org.springframework.stereotype.Component;
 @Component
 public class ViewReferenceFacadeImpl implements ViewReferenceFacade {
 
-    private final AppWorkingConstant appWorkingConstant;
+    private final FastAppConst appConst;
     private final DataDictHolder dataDictHolder;
     private final UserAccessControlService userAccessControlService;
     private final ApplicationContext applicationContext;
 
-    public ViewReferenceFacadeImpl(AppWorkingConstant appWorkingConstant,
+    public ViewReferenceFacadeImpl(FastAppConst appConst,
                                    DataDictHolder dataDictHolder,
                                    UserAccessControlService userAccessControlService,
                                    ApplicationContext applicationContext) {
 
-        this.appWorkingConstant = appWorkingConstant;
+        this.appConst = appConst;
         this.dataDictHolder = dataDictHolder;
         this.userAccessControlService = userAccessControlService;
         this.applicationContext = applicationContext;
     }
 
     @Override
-    public AppWorkingConstant appConst() {
-        return this.appWorkingConstant;
+    public FastAppConst appConst() {
+        return this.appConst;
     }
 
     @Override

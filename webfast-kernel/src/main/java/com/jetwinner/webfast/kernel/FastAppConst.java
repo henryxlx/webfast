@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * @author xulixin
  */
 @Component
-public class AppWorkingConstant {
+public class FastAppConst {
 
     public static final String CHARSET_UTF8 = "UTF-8";
 

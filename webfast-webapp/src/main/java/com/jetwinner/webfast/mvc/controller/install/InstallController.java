@@ -4,7 +4,7 @@ import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
-import com.jetwinner.webfast.kernel.AppWorkingConstant;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -40,17 +40,17 @@ public class InstallController {
     private final InstallControllerRegisterService installControllerRegisterService;
     private final FastAppSetupServiceImpl setupService;
     private final DataSourceConfig dataSourceConfig;
-    private final AppWorkingConstant appWorkingConstant;
+    private final FastAppConst appConst;
 
     public InstallController(InstallControllerRegisterService installControllerRegisterService,
                              FastAppSetupServiceImpl setupService,
                              DataSourceConfig dataSourceConfig,
-                             AppWorkingConstant appWorkingConstant) {
+                             FastAppConst appConst) {
 
         this.installControllerRegisterService = installControllerRegisterService;
         this.setupService = setupService;
         this.dataSourceConfig = dataSourceConfig;
-        this.appWorkingConstant = appWorkingConstant;
+        this.appConst = appConst;
     }
 
     @Value("${custom.app.install.sqlscript.classpath:}")
@@ -61,7 +61,7 @@ public class InstallController {
 
     private ModelAndView toModelAndView() {
         ModelAndView mav = new ModelAndView();
-        mav.addObject("appConst", appWorkingConstant);
+        mav.addObject("appConst", appConst);
         return mav;
     }
 
@@ -82,10 +82,10 @@ public class InstallController {
         mav.addObject("javaVersion", systemInfoBean.getJavaVersion());
         mav.addObject("jvmVersion", systemInfoBean.getJvmVersion());
         mav.addObject("mysqlOk", checkMysqlJdbcDriver());
-        mav.addObject("appStoragePath", appWorkingConstant.getStoragePath());
-        mav.addObject("appStoragePathOk", checkPathExist(appWorkingConstant.getStoragePath()));
-        mav.addObject("uploadMaxFilesize", appWorkingConstant.getUploadMaxFilesize());
-        mav.addObject("postMaxsize", appWorkingConstant.getPostMaxsize());
+        mav.addObject("appStoragePath", appConst.getStoragePath());
+        mav.addObject("appStoragePathOk", checkPathExist(appConst.getStoragePath()));
+        mav.addObject("uploadMaxFilesize", appConst.getUploadMaxFilesize());
+        mav.addObject("postMaxsize", appConst.getPostMaxsize());
         mav.setViewName("/install/step1");
         return mav;
     }
@@ -240,7 +240,7 @@ public class InstallController {
     private void buildDataSourceConfigToAppStorage(String fromFileClasspath, DbConnectionSetting setting)
             throws IOException {
 
-        String toFilePath = appWorkingConstant.getStoragePath() + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_DIR;
+        String toFilePath = appConst.getStoragePath() + DataSourceConfig.DATA_SOURCE_CONFIG_FILE_DIR;
         File dir = new File(toFilePath);
         if (!dir.exists()) {
             dir.mkdir();
