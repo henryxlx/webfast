@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AppUser extends BaseAppUser {
 
-    public static final AppUser getCurrentUser(HttpServletRequest request) {
+    public static AppUser getCurrentUser(HttpServletRequest request) {
         AppUser user = (AppUser) request.getAttribute(MODEL_VAR_NAME);
         return user != null ? user : new AppUser();
     }
@@ -25,15 +25,15 @@ public class AppUser extends BaseAppUser {
     private Integer setup;
     private String roles;
     private Integer promoted;
-    private Integer promotedTime;
+    private Long promotedTime;
     private Integer locked;
     private Integer lockDeadline;
     private Integer consecutivePasswordErrorTimes;
-    private Integer lastPasswordFailTime;
-    private Integer loginTime;
+    private Long lastPasswordFailTime;
+    private Long loginTime;
     private String loginIp;
     private String loginSessionId;
-    private Integer approvalTime;
+    private Long approvalTime;
     private String approvalStatus;
     private Integer newMessageNum;
     private Integer newNotificationNum;
@@ -128,11 +128,11 @@ public class AppUser extends BaseAppUser {
         this.promoted = promoted;
     }
 
-    public Integer getPromotedTime() {
+    public Long getPromotedTime() {
         return promotedTime;
     }
 
-    public void setPromotedTime(Integer promotedTime) {
+    public void setPromotedTime(Long promotedTime) {
         this.promotedTime = promotedTime;
     }
 
@@ -162,19 +162,19 @@ public class AppUser extends BaseAppUser {
         this.consecutivePasswordErrorTimes = consecutivePasswordErrorTimes;
     }
 
-    public Integer getLastPasswordFailTime() {
+    public Long getLastPasswordFailTime() {
         return lastPasswordFailTime;
     }
 
-    public void setLastPasswordFailTime(Integer lastPasswordFailTime) {
+    public void setLastPasswordFailTime(Long lastPasswordFailTime) {
         this.lastPasswordFailTime = lastPasswordFailTime;
     }
 
-    public Integer getLoginTime() {
+    public Long getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(Integer loginTime) {
+    public void setLoginTime(Long loginTime) {
         this.loginTime = loginTime;
     }
 
@@ -194,11 +194,11 @@ public class AppUser extends BaseAppUser {
         this.loginSessionId = loginSessionId;
     }
 
-    public Integer getApprovalTime() {
+    public Long getApprovalTime() {
         return approvalTime;
     }
 
-    public void setApprovalTime(Integer approvalTime) {
+    public void setApprovalTime(Long approvalTime) {
         this.approvalTime = approvalTime;
     }
 
