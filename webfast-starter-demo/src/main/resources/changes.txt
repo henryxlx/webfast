@@ -5,6 +5,14 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.2.7: @2022-01-16
+* 注册安装控制器InstallController类后在安装结束后没有删除该Bean，只是删除了其中请求的映射，
+  因此多次重复安装时需要判断安装控制器类是否存在再注册，优化了InstallControllerRegisterServiceImpl中的代码
+* 后端管理应用功能添加重新安装应用功能
+* 在访问受限页面或在其它页面中转到登录页面，在弹出登录页面成功完成登录后自动转到登录前的页面
+* 添加内容权限字典项permission及内建权限ACCESS_BACKEND
+* 添加权限表内建数据ACCESS_BACKEND，用于控制访问后台管理，修改时间类型为bigint，时间数据末尾添加三个零（000）符合Java时间长度
+
 0.2.6: @2022-01-15
 * AppWorkingConst中明确定义系统使用的各类属性，删除InstallController中重复内容改为AppConst调用
 * 修复html_extension.ftl中函数upload_max_filesize没有返回值的错误，改为返回appConst中定义的常量
