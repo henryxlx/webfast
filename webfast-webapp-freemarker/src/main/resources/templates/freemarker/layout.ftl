@@ -117,8 +117,8 @@
                                 <li><a href="${ctx}/mobile"><span class="glyphicon glyphicon-phone"></span> 手机版</a></li>
                             </#if>
                             <li><a href="${ctx}/search"><span class="glyphicon glyphicon-search"></span> 搜索</a></li>
-                            <li><a href="${ctx}/login?goto=${_target_path!(request.requestUri)!''}">登录</a></li>
-                            <li><a href="${ctx}/register?goto=${_target_path!(request.requestUri)!''}">注册</a></li>
+                            <li><a href="${ctx}/login?_target_path=${(request.requestUri)!''}">登录</a></li>
+                            <li><a href="${ctx}/register?_target_path=${(request.requestUri)!''}">注册</a></li>
                         </#if> <#-- <#if appUser??> -->
 
                     </ul>

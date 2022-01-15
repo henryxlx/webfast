@@ -1,5 +1,7 @@
 package com.jetwinner.security;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author xulixin
  */
@@ -14,4 +16,6 @@ public interface UserAccessControlService {
     boolean hasRole(String roleName);
 
     void setEncryptPassword(BaseAppUser user);
+
+    String getSavedUrlBeforeLogin(HttpServletRequest request);
 }

@@ -6,7 +6,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xulixin
@@ -59,5 +63,11 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
         String password = PasswordEncoder.encodePassword(user.getPassword(), salt);
         user.setSalt(salt);
         user.setPassword(password);
+    }
+
+    @Override
+    public String getSavedUrlBeforeLogin(HttpServletRequest request) {
+        SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+        return savedRequest != null ? savedRequest.getRequestUrl() : null;
     }
 }
