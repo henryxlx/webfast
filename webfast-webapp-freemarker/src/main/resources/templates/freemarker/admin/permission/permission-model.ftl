@@ -8,7 +8,7 @@
           action="${ctx}/admin/permission/<#if (perm.id)?? && perm.id gt 0>${perm.id}/update<#else>create</#if>"
           method="post">
         <div class="form-group">
-            <label class="col-md-3 control-label" for="permission-key-field">权限标识关键字</label>
+            <label class="col-md-3 control-label" for="permission-key-field">权限标识</label>
             <div class="col-md-6 controls">
                 <input class="form-control" id="permission-key-field" type="text" name="permissionKey"
                        value="${(perm.permissionKey)!}"

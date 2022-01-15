@@ -1,5 +1,4 @@
 <tr id="perm-tr-${perm.id}">
-    <td>${perm.id}</td>
     <td>${perm.permissionKey}</td>
     <td>${perm.label}</td>
     <td>${perm.createdTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}</td>

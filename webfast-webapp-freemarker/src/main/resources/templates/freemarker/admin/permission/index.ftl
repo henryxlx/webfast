@@ -22,7 +22,7 @@
 
         <div class="form-group">
             <select id="keywordType" name="keywordType" class="form-control">
-                <@select_options {'perm_name':'权限名', 'perm_description':'权限描述'} RequestParameters['keywordType']!'' '--关键词类型--'/>
+                <@select_options {'perm_name':'权限标识', 'perm_description':'权限描述'} RequestParameters['keywordType']!'' '--关键词类型--'/>
             </select>
         </div>
 
@@ -43,8 +43,7 @@
 
     <table id="permission-table" class="table table-striped">
         <thead>
-        <th>ID</th>
-        <th>权限名</th>
+        <th>权限标识</th>
         <th>描述</th>
         <th>添加时间</th>
         <th>操作</th>
