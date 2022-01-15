@@ -5,6 +5,12 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.2.6: @2022-01-15
+* AppWorkingConst中明确定义系统使用的各类属性，删除InstallController中重复内容改为AppConst调用
+* 修复html_extension.ftl中函数upload_max_filesize没有返回值的错误，改为返回appConst中定义的常量
+* 重命名AppWorkingConstant为FastAppConst
+* 完成角色查看与编辑保存功能
+
 0.2.5: @2022-01-14
 * 重命名将原来ShiroAccountService接口改为更为通用的RbacService，代表基于角色的权限管理
 * 完成权限编辑的保存功能
