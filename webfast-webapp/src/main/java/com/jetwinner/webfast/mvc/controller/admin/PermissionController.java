@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -79,13 +80,13 @@ public class PermissionController {
     @PostMapping("/admin/permission/{id}/update")
     public String updatePermissionAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
         Map<String, Object> mapPermission = permissionDao.get(id);
-        Map<String, Object> mapForNew = ParamMap.toUpdateDataMap(request.getParameterMap(), mapPermission);
-        if (!mapForNew.isEmpty()) {
-            mapForNew.put("id", id);
-            permissionDao.update(mapForNew);
-            mapForNew.forEach((k, v) -> {
-                mapPermission.put(k, v);
-            });
+        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), mapPermission);
+        if (MapUtil.isNotEmpty(mapForUpdate)) {
+            mapForUpdate.put("id", id);
+            int num = permissionDao.update(mapForUpdate);
+            if (num > 0) {
+                mapForUpdate.forEach(mapPermission::put);
+            }
         }
         model.addAttribute("perm", mapPermission);
         return "/admin/permission/list-tr";

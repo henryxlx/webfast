@@ -18,5 +18,5 @@ public interface AppPermissionDao {
 
     Map<String, Object> get(Integer id);
 
-    void update(Map<String, Object> mapPermission);
+    int update(Map<String, Object> mapPermission);
 }
