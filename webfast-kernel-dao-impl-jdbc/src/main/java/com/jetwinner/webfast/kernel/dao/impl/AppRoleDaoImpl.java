@@ -77,8 +77,7 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
 
     @Override
     public int updateMap(Map<String, Object> mapRole) {
-        Long now = System.currentTimeMillis();
-        mapRole.put("updatedTime", now);
+        mapRole.put("updatedTime", System.currentTimeMillis());
         return updateMap(TABLE_NAME, mapRole, "id");
     }
 

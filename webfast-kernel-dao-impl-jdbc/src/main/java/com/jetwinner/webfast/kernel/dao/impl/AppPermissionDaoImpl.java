@@ -55,8 +55,7 @@ public class AppPermissionDaoImpl extends FastJdbcDaoSupport implements AppPermi
 
     @Override
     public int update(Map<String, Object> mapPermission) {
-        Long now = System.currentTimeMillis();
-        mapPermission.put("updatedTime", now);
+        mapPermission.put("updatedTime", System.currentTimeMillis());
         return updateMap("app_permission", mapPermission, "id");
     }
 
