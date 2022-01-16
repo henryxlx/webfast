@@ -74,7 +74,7 @@ public class PermissionController {
     @GetMapping("/admin/permission/{id}/edit")
     public String editPermissionPage(@PathVariable Integer id, Model model) {
         model.addAttribute("perm", permissionDao.get(id));
-        return "/admin/permission/permission-model";
+        return "/admin/permission/permission-modal";
     }
 
     @PostMapping("/admin/permission/{id}/update")
@@ -96,6 +96,6 @@ public class PermissionController {
     public String viewPermissionPage(@PathVariable Integer id, Model model) {
         model.addAttribute("perm", permissionDao.get(id));
         model.addAttribute("dataReadOnly", "true");
-        return "/admin/permission/permission-model";
+        return "/admin/permission/permission-modal";
     }
 }
