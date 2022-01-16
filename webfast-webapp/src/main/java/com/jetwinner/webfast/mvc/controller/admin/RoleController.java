@@ -6,6 +6,7 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
+import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
@@ -29,10 +30,14 @@ public class RoleController {
 
     private final AppRoleService roleService;
     private final AppUserService userService;
+    private final AppPermissionDao permissionDao;
 
-    public RoleController(AppRoleService roleService, AppUserService userService) {
+    public RoleController(AppRoleService roleService, AppUserService userService,
+                          AppPermissionDao permissionDao) {
+
         this.roleService = roleService;
         this.userService = userService;
+        this.permissionDao = permissionDao;
     }
 
     @GetMapping("/admin/role")
@@ -123,5 +128,12 @@ public class RoleController {
         }
         model.addAttribute("role", mapRole);
         return "/admin/role/list-tr";
+    }
+
+    @GetMapping("/admin/role/{id}/permissions")
+    public String rolePermissionPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("roleId", id);
+        model.addAttribute("permissions", permissionDao.findAll());
+        return "/admin/role/permissons-modal";
     }
 }
