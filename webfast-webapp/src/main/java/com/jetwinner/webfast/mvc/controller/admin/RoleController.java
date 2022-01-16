@@ -106,13 +106,13 @@ public class RoleController {
     public String viewRolePage(@PathVariable Integer id, Model model) {
         model.addAttribute("role", roleService.getRoleById(id));
         model.addAttribute("dataReadOnly", "true");
-        return "/admin/role/role-model";
+        return "/admin/role/role-modal";
     }
 
     @GetMapping("/admin/role/{id}/edit")
     public String editRolePage(@PathVariable Integer id, Model model) {
         model.addAttribute("role", roleService.getRoleById(id));
-        return "/admin/role/role-model";
+        return "/admin/role/role-modal";
     }
 
     @PostMapping("/admin/role/{id}/update")
