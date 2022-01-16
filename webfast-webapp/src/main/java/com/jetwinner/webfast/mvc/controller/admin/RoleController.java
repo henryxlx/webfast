@@ -64,12 +64,12 @@ public class RoleController {
 
     @GetMapping("/admin/role/create")
     public String createRolePage() {
-        return "/admin/role/role-model";
+        return "/admin/role/role-modal";
     }
 
     @RequestMapping("/admin/role/checkname")
     @ResponseBody
-    public Map checkRoleNameAction(@RequestParam("value") String roleName, String exclude) {
+    public Map<String, Object> checkRoleNameAction(@RequestParam("value") String roleName, String exclude) {
         Map<String, Object> map = new HashMap<>(2);
         boolean available = roleService.isRoleNameAvailable(roleName, exclude);
 
