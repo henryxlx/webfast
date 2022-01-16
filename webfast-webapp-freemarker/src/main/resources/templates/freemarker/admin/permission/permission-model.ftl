@@ -11,6 +11,7 @@
             <label class="col-md-3 control-label" for="permission-key-field">权限标识</label>
             <div class="col-md-6 controls">
                 <input class="form-control" id="permission-key-field" type="text" name="permissionKey"
+                       <#if dataReadOnly??>readOnly="true"</#if>
                        value="${(perm.permissionKey)!}"
                        data-url="${ctx}/admin/permission/checkname?exclude=${(perm.permissionKey)!}">
             </div>
@@ -19,6 +20,7 @@
             <label class="col-md-3 control-label" for="permission-label-field">权限描述</label>
             <div class="col-md-6 controls">
                 <input class="form-control" id="permission-label-field" type="text" name="label"
+                       <#if dataReadOnly??>readOnly="true"</#if>
                        value="${(perm.label)!}">
             </div>
         </div>

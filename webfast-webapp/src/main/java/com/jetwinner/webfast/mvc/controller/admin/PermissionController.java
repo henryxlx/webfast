@@ -91,4 +91,11 @@ public class PermissionController {
         model.addAttribute("perm", mapPermission);
         return "/admin/permission/list-tr";
     }
+
+    @GetMapping("/admin/permission/{id}")
+    public String viewPermissionPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("perm", permissionDao.get(id));
+        model.addAttribute("dataReadOnly", "true");
+        return "/admin/permission/permission-model";
+    }
 }
