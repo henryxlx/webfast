@@ -31,6 +31,8 @@
 
 <#macro blockFooter>
     <button type="button" class="btn btn-link" data-dismiss="modal">取消</button>
+    <#if !dataReadOnly??>
     <button id="permission-create-btn" data-submiting-text="正在提交" type="submit" class="btn btn-primary"
             data-toggle="form-submit" data-target="#permission-form">保存</button>
+    </#if>
 </#macro>
