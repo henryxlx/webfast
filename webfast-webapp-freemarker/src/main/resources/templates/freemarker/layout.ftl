@@ -105,7 +105,7 @@
                                     <li><a href="${ctx}/user/${(appUser.id)!}"><i class="glyphicon glyphicon-home"></i> 我的主页</a></li>
                                     <li><a href="${ctx}/settings"><i class="glyphicon glyphicon-cog"></i> 个人中心</a></li>
                                     <li class="divider"></li>
-                                    <#if userAcl?? && userAcl.hasRole('ROLE_BACKEND')>
+                                    <#if userAcl?? && userAcl.isGranted('ACCESS_BACKEND')>
                                         <li><a href="${ctx}/admin"><i class="glyphicon glyphicon-dashboard"></i> 管理后台</a></li>
                                         <li class="divider"></li>
                                     </#if>
