@@ -24,6 +24,7 @@ public class AppUser extends BaseAppUser {
     private Integer emailVerified;
     private Integer setup;
     private String roles;
+    private String permissionData;
     private Integer promoted;
     private Long promotedTime;
     private Integer locked;
@@ -118,6 +119,14 @@ public class AppUser extends BaseAppUser {
 
     public void setRoles(String roles) {
         this.roles = roles;
+    }
+
+    public String getPermissionData() {
+        return permissionData;
+    }
+
+    public void setPermissionData(String permissionData) {
+        this.permissionData = permissionData;
     }
 
     public Integer getPromoted() {
