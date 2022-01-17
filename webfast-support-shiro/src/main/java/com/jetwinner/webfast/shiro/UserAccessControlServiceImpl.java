@@ -58,6 +58,11 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
     }
 
     @Override
+    public boolean isGranted(String permissionKey) {
+        return SecurityUtils.getSubject().isPermitted(permissionKey);
+    }
+
+    @Override
     public void setEncryptPassword(BaseAppUser user) {
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
         String password = PasswordEncoder.encodePassword(user.getPassword(), salt);

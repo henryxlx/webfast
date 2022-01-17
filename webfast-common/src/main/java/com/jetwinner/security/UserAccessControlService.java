@@ -15,6 +15,8 @@ public interface UserAccessControlService {
 
     boolean hasRole(String roleName);
 
+    boolean isGranted(String permissionKey);
+
     void setEncryptPassword(BaseAppUser user);
 
     String getSavedUrlBeforeLogin(HttpServletRequest request);
