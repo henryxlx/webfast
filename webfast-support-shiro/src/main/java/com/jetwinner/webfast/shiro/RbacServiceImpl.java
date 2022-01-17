@@ -1,12 +1,7 @@
 package com.jetwinner.webfast.shiro;
 
-import com.jetwinner.security.BaseAppUser;
-import com.jetwinner.security.BaseAppUserService;
-import com.jetwinner.security.DummyRbacServiceImpl;
-import com.jetwinner.security.RbacService;
+import com.jetwinner.security.*;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
 
 /**
  * @author xulixin
@@ -33,15 +28,8 @@ public class RbacServiceImpl implements RbacService {
     }
 
     @Override
-    public Set<String> findRolesByUsername(String username) {
-        return userService == null ? dummyRbacService.findRolesByUsername(username)
-                : userService.findRolesByUsername(username);
+    public UserHasRoleAndPermission getRoleAndPermissionByUsername(String username) {
+        return userService == null ? dummyRbacService.getRoleAndPermissionByUsername(username)
+                : userService.getRoleAndPermissionByUsername(username);
     }
-
-    @Override
-    public Set<String> findPermissionsByUsername(String username) {
-        return userService == null ? dummyRbacService.findPermissionsByUsername(username)
-                : userService.findPermissionsByUsername(username);
-    }
-
 }

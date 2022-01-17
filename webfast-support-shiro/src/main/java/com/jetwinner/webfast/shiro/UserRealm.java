@@ -2,6 +2,7 @@ package com.jetwinner.webfast.shiro;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
+import com.jetwinner.security.UserHasRoleAndPermission;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -9,8 +10,6 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-
-import java.util.Set;
 
 /**
  * @author xulixin
@@ -45,10 +44,9 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         BaseAppUser user = (BaseAppUser) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        Set<String> roles = rbacService.findRolesByUsername(user.getUsername());
-        authorizationInfo.setRoles(roles);
-        Set<String> permissions = rbacService.findPermissionsByUsername(user.getUsername());
-        authorizationInfo.setStringPermissions(permissions);
+        UserHasRoleAndPermission roleAndPermission = rbacService.getRoleAndPermissionByUsername(user.getUsername());
+        authorizationInfo.setRoles(roleAndPermission.getRoles());
+        authorizationInfo.setStringPermissions(roleAndPermission.getPermissions());
         return authorizationInfo;
     }
 

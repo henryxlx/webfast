@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
+import com.jetwinner.security.UserHasRoleAndPermission;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
@@ -49,7 +50,12 @@ public class FakeAppUserServiceImpl implements RbacService {
     }
 
     @Override
-    public Set<String> findRolesByUsername(String username) {
+    public UserHasRoleAndPermission getRoleAndPermissionByUsername(String username) {
+        return new UserHasRoleAndPermission(getBaseAppUserByUsername(username),
+                findRolesByUsername(username), new HashSet<>(0));
+    }
+
+    private Set<String> findRolesByUsername(String username) {
         Set<String> roles = new HashSet<>();
         if ("admin".equals(username) || "super".equals(username)) {
             roles.add("ROLE_BACKEND");
@@ -59,10 +65,5 @@ public class FakeAppUserServiceImpl implements RbacService {
             roles.add("ROLE_GUEST");
         }
         return roles;
-    }
-
-    @Override
-    public Set<String> findPermissionsByUsername(String username) {
-        return new HashSet<>(0);
     }
 }

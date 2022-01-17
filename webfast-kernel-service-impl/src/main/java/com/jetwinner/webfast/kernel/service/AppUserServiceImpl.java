@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
+import com.jetwinner.security.UserHasRoleAndPermission;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
@@ -49,12 +50,17 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public Set<String> findRolesByUsername(String username) {
+    public UserHasRoleAndPermission getRoleAndPermissionByUsername(String username) {
         AppUser user = userDao.getByUsername(username);
-        return toRoleSet(user.getRoles());
+        return new UserHasRoleAndPermission(user,
+                toRoleSet(user != null ? user.getRoles() : ""),
+                toPermissonSet(user));
     }
 
     private Set<String> toRoleSet(String strRoles) {
+        if (strRoles == null) {
+            strRoles = "";
+        }
         String[] roleStrArray = strRoles.split("\\|");
         HashSet<String> roles = new HashSet<>();
         if (roleStrArray.length < 1) {
@@ -68,8 +74,7 @@ public class AppUserServiceImpl implements AppUserService {
         return roles;
     }
 
-    @Override
-    public Set<String> findPermissionsByUsername(String username) {
+    private Set<String> toPermissonSet(AppUser user) {
         return new HashSet<>(0);
     }
 

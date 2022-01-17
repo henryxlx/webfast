@@ -1,7 +1,6 @@
 package com.jetwinner.security;
 
 import java.util.HashSet;
-import java.util.Set;
 
 /**
  * @author xulixin
@@ -14,12 +13,8 @@ public class DummyRbacServiceImpl implements RbacService {
     }
 
     @Override
-    public Set<String> findRolesByUsername(String username) {
-        return new HashSet<>(0);
-    }
-
-    @Override
-    public Set<String> findPermissionsByUsername(String username) {
-        return new HashSet<>(0);
+    public UserHasRoleAndPermission getRoleAndPermissionByUsername(String username) {
+        return new UserHasRoleAndPermission(new BaseAppUser(),
+                new HashSet<>(0), new HashSet<>(0));
     }
 }
