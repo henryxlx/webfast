@@ -147,10 +147,10 @@ CREATE TABLE `app_role` (
 -- ----------------------------
 -- Records of app_role
 -- ----------------------------
-INSERT INTO `app_role` VALUES ('1', '学员', 'ROLE_USER', 'ACCESS_BACKEND', '1', '1515719362000', '0');
-INSERT INTO `app_role` VALUES ('2', '教师', 'ROLE_TEACHER', 'ACCESS_BACKEND', '1', '1515719362000', '0');
-INSERT INTO `app_role` VALUES ('3', '管理员', 'ROLE_ADMIN', 'ACCESS_BACKEND', '1', '1515719362000', '0');
-INSERT INTO `app_role` VALUES ('4', '超级管理员', 'ROLE_SUPER_ADMIN', 'ACCESS_BACKEND', '1', '1515719362000', '0');
+INSERT INTO `app_role` VALUES ('1', '超级管理员', 'ROLE_SUPER_ADMIN', 'ACCESS_BACKEND', '1', '1515719012000', '0');
+INSERT INTO `app_role` VALUES ('2', '管理员', 'ROLE_ADMIN', 'ACCESS_BACKEND', '1', '1515719132000', '0');
+INSERT INTO `app_role` VALUES ('3', '基本用户', 'ROLE_USER', '', '1', '1515719252000', '0');
+INSERT INTO `app_role` VALUES ('4', '教师', 'ROLE_TEACHER', '', '1', '1515719362000', '0');
 
 -- ----------------------------
 -- Table structure for `app_setting`
