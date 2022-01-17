@@ -5,6 +5,14 @@ TODO list
 # 权限管理机制建RBAC??? role
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.2.8: @2022-01-17
+* 添加角色权限设置页面与控制器页面控制
+* 添加管理角色与权限的新类UserHasRoleAndPermission，RbacService获取角色与权限的方法合并改为getRoleAndPermissionByUsername
+* 权限控制添加判断允许权限的方法isGranted
+* FreeMarker前台页面布局layout.ftl中的用户菜单项访问后台管理权限控制使用新的许可方法isGrant和权限ACCESS_BACKEND
+* 安装程序创建新用户时删除原来的ROLE_BACKEND，改为使用新的权限访问控制ACCESS_BACKEND
+* 系统用户服务重新实现基于角色与权限的授权数据获取功能，可获得用户和角色的授权数据
+
 0.2.7: @2022-01-16
 * 注册安装控制器InstallController类后在安装结束后没有删除该Bean，只是删除了其中请求的映射，
   因此多次重复安装时需要判断安装控制器类是否存在再注册，优化了InstallControllerRegisterServiceImpl中的代码
