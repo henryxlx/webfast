@@ -7,8 +7,11 @@ import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
+import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.model.AppModelRole;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -24,14 +28,20 @@ import java.util.Set;
 public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserDao userDao;
+    private final AppPermissionDao permissionDao;
+    private final AppRoleDao roleDao;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
 
     public AppUserServiceImpl(AppUserDao userDao,
+                              AppPermissionDao permissionDao,
+                              AppRoleDao roleDao,
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService) {
 
         this.userDao = userDao;
+        this.permissionDao = permissionDao;
+        this.roleDao = roleDao;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
     }
@@ -52,30 +62,37 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public UserHasRoleAndPermission getRoleAndPermissionByUsername(String username) {
         AppUser user = userDao.getByUsername(username);
-        return new UserHasRoleAndPermission(user,
-                toRoleSet(user != null ? user.getRoles() : ""),
-                toPermissonSet(user));
+        Set<String> roles = strToSet(user != null ? user.getRoles() : "");
+        Set<String> permissions = toPermissionSet(user, roles);
+        return new UserHasRoleAndPermission(user, roles, permissions);
     }
 
-    private Set<String> toRoleSet(String strRoles) {
-        if (strRoles == null) {
-            strRoles = "";
-        }
-        String[] roleStrArray = strRoles.split("\\|");
-        HashSet<String> roles = new HashSet<>();
-        if (roleStrArray.length < 1) {
-            return roles;
-        }
-        for (String role : roleStrArray) {
-            if (EasyStringUtil.isNotBlank(role)) {
-                roles.add(role);
+    private Set<String> strToSet(String strData) {
+        String[] strArray = strData != null ? strData.split("\\|") : new String[0];
+        HashSet<String> set = new HashSet<>();
+        for (String str : strArray) {
+            if (EasyStringUtil.isNotBlank(str)) {
+                set.add(str);
             }
         }
-        return roles;
+        return set;
     }
 
-    private Set<String> toPermissonSet(AppUser user) {
-        return new HashSet<>(0);
+    private Set<String> toPermissionSet(AppUser user, Set<String> userRoles) {
+        Set<String> permissions = new HashSet<>();
+        Set<String> userPermissions = strToSet(user.getPermissionData());
+        if (!userPermissions.isEmpty()) {
+            permissions.addAll(userPermissions);
+        }
+        List<AppModelRole> roles = roleDao.listAll().stream()
+                .filter(r -> userRoles.contains(r.getRoleName())).collect(Collectors.toList());
+        roles.forEach(role -> {
+            Set<String> rolePermissions = strToSet(role.getPermissionData());
+            if (!rolePermissions.isEmpty()) {
+                permissions.addAll(rolePermissions);
+            }
+        });
+        return permissions;
     }
 
     @Override
