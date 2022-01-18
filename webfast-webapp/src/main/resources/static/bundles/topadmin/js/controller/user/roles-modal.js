@@ -43,12 +43,13 @@ define(function(require, exports, module) {
 
             $form.find('input[value=ROLE_SUPER_ADMIN]').removeAttr('disabled');
             $('#change-user-roles-btn').button('submiting').addClass('disabled');
-            $.post($form.attr('action'), $form.serialize(), function(html) {
-
-                $modal.modal('hide');
-                Notify.success('用户组保存成功');
-                var $tr = $(html);
-                $('#' + $tr.attr('id')).replaceWith($tr);
+            $.post($form.attr('action'), $form.serialize(), function(retData) {
+                if (retData) {
+                    $modal.modal('hide');
+                    Notify.success('用户组保存成功');
+                } else {
+                    Notify.danger('用户角色更新失败！');
+                }
             }).error(function(){
                 Notify.danger('操作失败');
             });

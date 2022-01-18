@@ -27,4 +27,6 @@ public interface AppUserDao {
     Map<String, Object> getProfile(Integer id);
 
     int countForEmail(String email);
+
+    int updateMap(Map<String, Object> mapUser);
 }

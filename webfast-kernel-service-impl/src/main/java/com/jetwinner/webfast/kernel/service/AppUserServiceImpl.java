@@ -12,13 +12,11 @@ import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -133,5 +131,12 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public boolean existEmail(String value) {
         return userDao.countForEmail(value) > 0;
+    }
+
+    @Override
+    public void updateUserRole(Integer id, String[] roles) {
+        String toStringRoles = Arrays.stream(roles).collect(Collectors.joining("|"));
+        Map<String, Object> model = new ParamMap().add("id", id).add("roles", toStringRoles).toMap();
+        userDao.updateMap(model);
     }
 }

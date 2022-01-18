@@ -28,4 +28,6 @@ public interface AppUserService extends BaseAppUserService {
     Map<String, Object> getUserProfile(Integer id);
 
     boolean existEmail(String value);
+
+    void updateUserRole(Integer id, String[] roles);
 }

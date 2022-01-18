@@ -6,7 +6,7 @@
 
 <#macro blockBody>
 
-<form id="user-roles-form" class="form-horizontal" method="post" action="{ctx}/admin/user/${user.id}/roles" data-currentuser="${appUser.id}" data-edituser="${user.id}">
+<form id="user-roles-form" class="form-horizontal" method="post" action="${ctx}/admin/user/${user.id}/roles" data-currentuser="${appUser.id}" data-edituser="${user.id}">
   <div class="checkboxs">
   	<#if userAcl.hasRole('ROLE_SUPER_ADMIN') >
     <@checkboxs 'roles' rolesMap user.roles?split('|') />

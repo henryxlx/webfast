@@ -9,10 +9,7 @@ import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -103,6 +100,16 @@ public class UserController {
         Map<String, String> rolesMap = list.stream().collect(Collectors.toMap(AppModelRole::getRoleName, AppModelRole::getLabel));
         model.addAttribute("rolesMap", rolesMap);
         return "/admin/user/roles-modal";
+    }
+
+    @PostMapping("/admin/user/{id}/roles")
+    public String userRolesAction(@PathVariable Integer id,
+                                  @RequestParam("roles[]") String[] roles,
+                                  Model model) {
+
+        model.addAttribute("user", userService.getUser(id));
+        userService.updateUserRole(id, roles);
+        return "/admin/user/user-table-tr";
     }
 
     @GetMapping("/admin/user/{id}/avatar")
