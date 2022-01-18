@@ -132,8 +132,18 @@ public class RoleController {
 
     @GetMapping("/admin/role/{id}/permissions")
     public String rolePermissionPage(@PathVariable Integer id, Model model) {
-        model.addAttribute("roleId", id);
+        model.addAttribute("role", roleService.getRoleById(id));
         model.addAttribute("permissions", permissionDao.findAll());
         return "/admin/role/permissons-modal";
+    }
+
+    @PostMapping("/admin/role/{id}/permissions")
+    public String rolePermissionAction(@PathVariable Integer id,
+                                       @RequestParam(value = "permissions[]", defaultValue = "") String[] permissionKeys,
+                                       Model model) {
+
+        roleService.updateRolePermissions(id, permissionKeys);
+        model.addAttribute("role", roleService.getRoleById(id));
+        return "/admin/role/list-tr";
     }
 }

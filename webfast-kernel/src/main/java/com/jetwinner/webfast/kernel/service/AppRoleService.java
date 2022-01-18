@@ -28,4 +28,6 @@ public interface AppRoleService {
     Map<String, Object> getRoleMapById(Integer id);
 
     boolean updateRoleMap(Map<String, Object> mapForUpdate);
+
+    void updateRolePermissions(Integer id, String[] permissionKeys);
 }

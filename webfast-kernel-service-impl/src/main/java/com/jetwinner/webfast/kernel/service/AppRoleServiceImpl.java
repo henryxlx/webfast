@@ -4,10 +4,13 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -72,5 +75,12 @@ public class AppRoleServiceImpl implements AppRoleService {
     @Override
     public boolean updateRoleMap(Map<String, Object> mapForUpdate) {
         return roleDao.updateMap(mapForUpdate) > 0;
+    }
+
+    @Override
+    public void updateRolePermissions(Integer id, String[] permissionKeys) {
+        String permissionKeyStr = Arrays.stream(permissionKeys).collect(Collectors.joining("|"));
+        Map<String, Object> model = new ParamMap().add("id", id).add("permissionData", permissionKeyStr).toMap();
+        roleDao.updateMap(model);
     }
 }
