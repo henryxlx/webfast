@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.servlet.RequestIpAddressUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
@@ -50,6 +51,24 @@ public class UserController {
     @GetMapping("/admin/user/create")
     public String createUserPage() {
         return "/admin/user/create-modal";
+    }
+
+    @PostMapping("/admin/user/create")
+    public String createUserAction(HttpServletRequest request) {
+        Map<String, Object> formData = ParamMap.toPostDataMap(request);
+        Map<String, Object> userData = ParamMap.filterConditionMap(formData,
+                "email", "username", "password");
+        userData.put("createdIp", RequestIpAddressUtil.getClientIp(request));
+        AppUser user = userService.register(userData);
+        request.getSession().setAttribute("register_email", user.getEmail());
+
+        if (EasyStringUtil.isNotBlank(formData.get("roles"))) {
+            // userService.updateUserRole(user.getId(), "ROLE_TEACHER", "ROLE_USER");
+        }
+
+        // logService.info("user", "add", String.format("管理员添加新用户 {%s} (%d)", user.getUsername(), user.getId()));
+
+        return "redirect:/admin/user";
     }
 
     @RequestMapping("/admin/user/create-email-check")
