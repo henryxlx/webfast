@@ -10,7 +10,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author xulixin
@@ -20,6 +23,33 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
     @Autowired
     public final void setSuperDataSource(DataSource dataSource) {
         setDataSource(dataSource);
+    }
+
+    private final Set<String> tableColumns = new HashSet<>();
+
+    protected Set<String> getTableColumns(String tableName) {
+        if (this.tableColumns.size()== 0) {
+            String[] strArray = getJdbcTemplate().queryForRowSet("SELECT * FROM "+ tableName + " LIMIT 1").getMetaData().getColumnNames();
+            for (String str : strArray) {
+                tableColumns.add(str);
+            }
+        }
+        return tableColumns;
+    }
+
+    protected void containColumnBySet(Map<String, Object> profile, Set<String> columns) {
+        Iterator<Map.Entry<String, Object>> it = profile.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            String key = entry.getKey();
+            if (!columns.contains(key)) {
+                it.remove();
+            }
+        }
+    }
+
+    protected void verifyMapKeyForTableColumn(Map<String, Object> mapForTable, String tableName) {
+        containColumnBySet(mapForTable, getTableColumns(tableName));
     }
 
     protected <T> int insert(String tableName, T anyBean) {
