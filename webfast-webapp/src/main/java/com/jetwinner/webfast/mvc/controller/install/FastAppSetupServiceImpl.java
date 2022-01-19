@@ -39,21 +39,11 @@ public class FastAppSetupServiceImpl {
     }
 
     public void initAdmin(Map<String, String> params) {
-        Map<String, Object> map = MapUtil.newHashMap();
-        map.putAll(params);
+        Map<String, Object> user = MapUtil.newHashMap();
+        user.putAll(params);
         try {
-            Map<String, Object> user = MapUtil.newHashMap();
-            BaseAppUser appUser = new BaseAppUser();
-            appUser.setPassword(params.get("password"));
-            userAccessControlService.setEncryptPassword(appUser);
-            user.put("password", appUser.getPassword());
-            user.put("salt", appUser.getSalt());
-            user.put("email", params.get("email"));
-            user.put("username", params.get("username"));
-            user.put("setup", (0));
             user.put("roles", "ROLE_USER|ROLE_TEACHER|ROLE_SUPER_ADMIN|ROLE_ADMIN");
             user.put("createdIp", "127.0.0.1");
-            user.put("type", "default");
             userService.register(user);
         } catch (Exception e) {
             throw new RuntimeGoingException(e.getMessage());
