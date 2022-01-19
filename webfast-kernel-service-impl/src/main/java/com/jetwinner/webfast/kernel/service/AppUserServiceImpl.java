@@ -2,8 +2,10 @@ package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.security.UserHasRoleAndPermission;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
+import com.jetwinner.util.ArrayUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
@@ -30,18 +32,21 @@ public class AppUserServiceImpl implements AppUserService {
     private final AppRoleDao roleDao;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
+    private final UserAccessControlService userAccessControlService;
 
     public AppUserServiceImpl(AppUserDao userDao,
                               AppUserProfileDao userProfileDao,
                               AppRoleDao roleDao,
                               DataSourceConfig dataSourceConfig,
-                              RbacService rbacService) {
+                              RbacService rbacService,
+                              UserAccessControlService userAccessControlService) {
 
         this.userDao = userDao;
         this.userProfileDao = userProfileDao;
         this.roleDao = roleDao;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
+        this.userAccessControlService = userAccessControlService;
     }
 
     @PostConstruct
@@ -99,7 +104,38 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser register(Map<String, Object> user) {
+    public AppUser register(Map<String, Object> registration) {
+        return register(registration, "default");
+    }
+
+    public AppUser register(Map<String, Object> registration, String type) {
+        Map<String, Object> user = new HashMap<>();
+        user.put("email", registration.get("email"));
+        if (EasyStringUtil.isNotBlank(registration.get("verifiedMobile"))) {
+            user.put("verifiedMobile", registration.get("verifiedMobile"));
+        } else {
+            user.put("verifiedMobile", "");
+        }
+        user.put("username", registration.get("username"));
+        user.put("roles", EasyStringUtil.isBlank(registration.get("roles")) ? "ROLE_USER" :
+                registration.get("roles"));
+        user.put("type", type);
+        user.put("createdIp", EasyStringUtil.isBlank(registration.get("createdIp")) ? "" :
+                registration.get("createdIp"));
+        user.put("createdTime", System.currentTimeMillis());
+
+        if (ArrayUtil.inArray(type, "default", "phpwind", "discuz")) {
+            BaseAppUser appUser = new BaseAppUser();
+            appUser.setPassword(String.valueOf(registration.get("password")));
+            userAccessControlService.setEncryptPassword(appUser);
+            user.put("salt", appUser.getSalt());
+            user.put("password", appUser.getPassword());
+            user.put("setup", 1);
+        } else {
+            user.put("salt", "");
+            user.put("password", "");
+            user.put("setup", 0);
+        }
         userDao.insert(user);
         return userDao.getByUsername(String.valueOf(user.get("username")));
     }
