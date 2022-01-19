@@ -24,11 +24,11 @@
     <div class="col-md-7 controls radios">
       <div id="gender">
         <input type="radio" id="gender_0" name="gender" value="male"
-        <#if profile.gender!'' == 'male'> checked="checked" </#if>>
+        <#if profile.gender?? && profile.gender == 'male'> checked="checked" </#if>>
         <label for="gender_0">男</label>
 
         <input type="radio" id="gender_1" name="gender" value="female"
-        <#if profile.gender!'' == 'female'> checked="checked" </#if>>
+        <#if profile.gender?? && profile.gender == 'female'> checked="checked" </#if>>
         <label for="gender_1">女</label>
       </div>
 

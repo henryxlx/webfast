@@ -30,4 +30,6 @@ public interface AppUserService extends BaseAppUserService {
     boolean existEmail(String value);
 
     void updateUserRole(Integer id, String[] roles);
+
+    void updateUserProfile(Integer userId, Map<String, Object> profile);
 }

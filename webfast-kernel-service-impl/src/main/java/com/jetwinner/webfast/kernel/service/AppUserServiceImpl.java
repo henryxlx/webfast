@@ -7,9 +7,9 @@ import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
+import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -26,19 +26,19 @@ import java.util.stream.Collectors;
 public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserDao userDao;
-    private final AppPermissionDao permissionDao;
+    private final AppUserProfileDao userProfileDao;
     private final AppRoleDao roleDao;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
 
     public AppUserServiceImpl(AppUserDao userDao,
-                              AppPermissionDao permissionDao,
+                              AppUserProfileDao userProfileDao,
                               AppRoleDao roleDao,
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService) {
 
         this.userDao = userDao;
-        this.permissionDao = permissionDao;
+        this.userProfileDao = userProfileDao;
         this.roleDao = roleDao;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
@@ -138,5 +138,10 @@ public class AppUserServiceImpl implements AppUserService {
         String toStringRoles = Arrays.stream(roles).collect(Collectors.joining("|"));
         Map<String, Object> model = new ParamMap().add("id", id).add("roles", toStringRoles).toMap();
         userDao.updateMap(model);
+    }
+
+    @Override
+    public void updateUserProfile(Integer id, Map<String, Object> profile) {
+        userProfileDao.updateOrInsert(id, profile);
     }
 }

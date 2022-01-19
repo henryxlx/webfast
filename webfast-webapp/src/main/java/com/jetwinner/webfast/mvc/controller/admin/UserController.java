@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -7,6 +8,7 @@ import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -91,6 +93,26 @@ public class UserController {
         model.addAttribute("roles", roleService.listAllRole());
         // model.addAttribute("fields", getFields());
         return "/admin/user/edit-modal";
+    }
+
+    @PostMapping("/admin/user/{id}/edit")
+    public String editAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        AppUser user = userService.getUser(id);
+        Map<String, Object> profile = userService.getUserProfile(id);
+        profile.put("title", user.getTitle());
+
+        Map<String, Object> profileMap = ParamMap.toPostDataMap(request);
+        profileMap.put("title", user.getTitle());
+        if (!(EasyStringUtil.isNotBlank(user.getVerifiedMobile()) &&
+                EasyStringUtil.isNotBlank(profile.get("mobile")))) {
+
+            userService.updateUserProfile(user.getId(), profileMap);
+            // logService.info("user", "edit", String.format("管理员编辑用户资料 {%s} (#%d)", user.getUsername(), user.getId()), profile);
+        } else {
+            FlashMessageUtil.setFlashMessage("danger", "用户已绑定的手机不能修改。", request.getSession());
+        }
+
+        return "redirect:/admin/user";
     }
 
     @GetMapping("/admin/user/{id}/roles")
