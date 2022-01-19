@@ -99,8 +99,9 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void register(Map<String, Object> user) {
+    public AppUser register(Map<String, Object> user) {
         userDao.insert(user);
+        return userDao.getByUsername(String.valueOf(user.get("username")));
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface AppUserService extends BaseAppUserService {
 
     AppUser getUserByUsername(String username);
 
-    void register(Map<String, Object> user);
+    AppUser register(Map<String, Object> user);
 
     Map<String, AppUser> findUsersByIds(Set<Object> userIds);
 
