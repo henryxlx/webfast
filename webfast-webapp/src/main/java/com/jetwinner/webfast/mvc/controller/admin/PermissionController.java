@@ -33,7 +33,7 @@ public class PermissionController {
 
     @GetMapping("/admin/permission/create")
     public String createPermissionPage() {
-        return "/admin/permission/permission-model";
+        return "/admin/permission/permission-modal";
     }
 
     @RequestMapping("/admin/permission/checkname")
