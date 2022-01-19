@@ -63,7 +63,7 @@ public class UserController {
         request.getSession().setAttribute("register_email", user.getEmail());
 
         if (EasyStringUtil.isNotBlank(formData.get("roles"))) {
-            // userService.updateUserRole(user.getId(), "ROLE_TEACHER", "ROLE_USER");
+            userService.changeUserRoles(user.getId(), "ROLE_TEACHER", "ROLE_USER");
         }
 
         // logService.info("user", "add", String.format("管理员添加新用户 {%s} (%d)", user.getUsername(), user.getId()));
@@ -149,7 +149,7 @@ public class UserController {
                                   Model model) {
 
         model.addAttribute("user", userService.getUser(id));
-        userService.updateUserRole(id, roles);
+        userService.changeUserRoles(id, roles);
         return "/admin/user/user-table-tr";
     }
 

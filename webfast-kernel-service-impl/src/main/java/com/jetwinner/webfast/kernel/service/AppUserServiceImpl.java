@@ -171,8 +171,11 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public void updateUserRole(Integer id, String[] roles) {
-        String toStringRoles = Arrays.stream(roles).collect(Collectors.joining("|"));
+    public void changeUserRoles(Integer id, String... roles) {
+        if (roles == null || roles.length == 0) {
+            return;
+        }
+        String toStringRoles = String.join("|", roles);
         Map<String, Object> model = new ParamMap().add("id", id).add("roles", toStringRoles).toMap();
         userDao.updateMap(model);
     }
