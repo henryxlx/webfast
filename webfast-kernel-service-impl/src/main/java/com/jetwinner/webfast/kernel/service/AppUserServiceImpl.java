@@ -13,6 +13,7 @@ import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
@@ -183,5 +184,24 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public void updateUserProfile(Integer id, Map<String, Object> profile) {
         userProfileDao.updateOrInsert(id, profile);
+    }
+
+    @Override
+    public void changePassword(Integer id, String oldPassword, String newPassword) {
+        AppUser user = getUser(id);
+        if (user == null || EasyStringUtil.isBlank(newPassword)) {
+            throw new RuntimeGoingException("参数不正确，更改密码失败。");
+        }
+
+        BaseAppUser userForPassword = new BaseAppUser();
+        userForPassword.setPassword(newPassword);
+        userAccessControlService.setEncryptPassword(userForPassword);
+
+        Map<String, Object> fields = new ParamMap().add("id", id)
+                .add("salt", userForPassword.getSalt())
+                .add("password", userForPassword.getPassword()).toMap();
+        userDao.updateMap(fields);
+
+        // logService.info("user", "password-changed", String.format("用户{%s}(ID:{%d})重置密码成功", user.getEmail(), user.getId()));
     }
 }

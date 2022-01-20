@@ -165,6 +165,13 @@ public class UserController {
         return "/admin/user/change-password-modal";
     }
 
+    @PostMapping("/admin/user/{id}/change-password")
+    @ResponseBody
+    public Boolean changePasswordAction(@PathVariable Integer id, String newPassword) {
+        userService.changePassword(id, null, newPassword);
+        return Boolean.TRUE;
+    }
+
     @GetMapping("/admin/user/{id}")
     public String showUserPage(@PathVariable Integer id, Model model) {
         AppUser user = userService.getUser(id);
