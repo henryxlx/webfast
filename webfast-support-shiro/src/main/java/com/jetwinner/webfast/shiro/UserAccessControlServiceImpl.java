@@ -58,6 +58,18 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
     }
 
     @Override
+    public boolean hasAnyRole(String... roleNames) {
+        if (roleNames != null && roleNames.length > 0) {
+            for (String roleName : roleNames) {
+                if (SecurityUtils.getSubject().hasRole(roleName)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean isGranted(String permissionKey) {
         return SecurityUtils.getSubject().isPermitted(permissionKey);
     }

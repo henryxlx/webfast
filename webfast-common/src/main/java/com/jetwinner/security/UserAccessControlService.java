@@ -15,6 +15,8 @@ public interface UserAccessControlService {
 
     boolean hasRole(String roleName);
 
+    boolean hasAnyRole(String... roleNames);
+
     boolean isGranted(String permissionKey);
 
     void setEncryptPassword(BaseAppUser user);
