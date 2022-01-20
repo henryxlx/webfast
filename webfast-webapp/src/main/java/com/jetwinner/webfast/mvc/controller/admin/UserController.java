@@ -183,4 +183,20 @@ public class UserController {
         // model.addAttribute("fields", getFields());
         return "/admin/user/show-modal";
     }
+
+    @PostMapping("/admin/user/{id}/lock")
+    public String lockAction(@PathVariable Integer id, Model model) {
+        userService.lockUser(id);
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", roleService.listAllRole());
+        return "/admin/user/user-table-tr";
+    }
+
+    @PostMapping("/admin/user/{id}/unlock")
+    public String unlockAction(@PathVariable Integer id, Model model) {
+        userService.unlockUser(id);
+        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("roles", roleService.listAllRole());
+        return "/admin/user/user-table-tr";
+    }
 }

@@ -34,4 +34,8 @@ public interface AppUserService extends BaseAppUserService {
     void updateUserProfile(Integer userId, Map<String, Object> profile);
 
     void changePassword(Integer id, String oldPassword, String newPassword);
+
+    void lockUser(Integer id);
+
+    void unlockUser(Integer id);
 }

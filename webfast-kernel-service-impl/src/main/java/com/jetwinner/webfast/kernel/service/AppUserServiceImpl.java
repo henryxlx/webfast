@@ -204,4 +204,26 @@ public class AppUserServiceImpl implements AppUserService {
 
         // logService.info("user", "password-changed", String.format("用户{%s}(ID:{%d})重置密码成功", user.getEmail(), user.getId()));
     }
+
+    @Override
+    public void lockUser(Integer id) {
+        AppUser user = getUser(id);
+        if (user == null) {
+            throw new RuntimeGoingException("用户不存在，封禁失败！");
+        }
+        userDao.updateMap(new ParamMap().add("id", id).add("locked", 1).toMap());
+
+        // logService.info("user", "lock", String.format("封禁用户{%s}(#{%d})", user.getUsername(), user.getId()));
+    }
+
+    @Override
+    public void unlockUser(Integer id) {
+        AppUser user = getUser(id);
+        if (user == null) {
+            throw new RuntimeGoingException("用户不存在，解禁失败！");
+        }
+        userDao.updateMap(new ParamMap().add("id", id).add("locked", 0).toMap());
+
+        // logService.info("user", "unlock", String.format("解禁用户{%s}(#{%d})", user.getUsername(), user.getId()));
+    }
 }
