@@ -2,6 +2,7 @@ package com.jetwinner.webfast.freemarker;
 
 import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.freemarker.tag.RenderControllerTag;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -32,5 +33,8 @@ public class FreeMarkerConfig {
         configuration.setSharedVariable(RenderControllerTag.MODEL_VAR_NAME, renderControllerTag);
         List list = ListUtil.newArrayList("/html_extension.ftl");
         configuration.setAutoIncludes(list);
+        ParamMap paramMap = new ParamMap().add("web_macro", "/web_macro.ftl");
+        paramMap.add("admin_macro", "/admin/admin_macro.ftl");
+        configuration.setAutoImports(paramMap.toMap());
     }
 }
