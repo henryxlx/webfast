@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.3.2: @2022-01-21
+* 添加用于图像处理的工具类ImageUtil和ImageSize
+* 添加文件处理的工具类FileToolkit
+* 添加Web控制器Controller的辅助工具类BaseControllerHelper
+
 0.3.1: @2022-01-20
 * 完成用户管理用户密码修改功能，封禁和解禁用户功能
 * FreeMarker模板引入的前台宏定义(/web_macro.ftl)与后台宏定义(/admin/admin_macro.ftl)使用配置方式统一导入
