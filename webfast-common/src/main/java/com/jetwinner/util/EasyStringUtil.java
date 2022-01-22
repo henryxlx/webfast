@@ -208,18 +208,6 @@ public abstract class EasyStringUtil {
         return false;
     }
 
-    public static String ltrim(String str, char trimStr) {
-        int pos = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if(str.charAt(i) == trimStr){
-                pos += 1;
-            } else {
-                break;
-            }
-        }
-        return str.substring(pos);
-    }
-
     public static String trim(String str) {
         return str == null ? null : str.trim();
     }
