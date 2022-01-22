@@ -3,7 +3,7 @@
     app.debug = ${(appConst.debug)!'false'};
     app.version = '5.3.2';
     app.httpHost = '${webExtPack.getSchemeAndHttpHost()}';
-    app.basePath = '${webExtPack.getBasePath()}';
+    app.basePath = '${webExtPack.getBaseUrl()}';
     app.theme = '${setting("theme.uri", "default")}';
     app.themeGlobalScript = '';
     app.jsPaths = {"common":"common","theme":"${ctx}/themes/default/js",
