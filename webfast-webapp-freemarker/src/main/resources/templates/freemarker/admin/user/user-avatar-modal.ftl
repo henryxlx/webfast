@@ -6,7 +6,7 @@
 
 <#macro blockBody>
 
-  <form id="user-avatar-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ path('admin_user_avatar', {id:user.id}) }}">
+  <form id="user-avatar-form" class="form-horizontal" method="post" enctype="multipart/form-data" action="${ctx}/admin/user/${user.id}/avatar">
 
     <@web_macro.flash_messages />
 
@@ -31,7 +31,7 @@
     <div class="form-group">
       <div class="col-md-2 control-label"></div>
       <div class="controls col-md-8 controls">
-        <a id="avatar-upload-btn" data-url="{{ path('admin_user_avatar', {id:user.id}) }}" class="btn btn-primary">上传</a>
+        <a id="avatar-upload-btn" data-url="${ctx}/admin/user/${user.id}/avatar" class="btn btn-primary">上传</a>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
       </div>
     </div>
