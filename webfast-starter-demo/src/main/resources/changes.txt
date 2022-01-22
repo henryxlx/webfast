@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.3.3: @2022-01-22
+* 完成后台用户管理修改用户头像上传图像功能
+* 添加PHP字符串相关处理的工具类PHPStringUtil
+* AppSettingDaoImpl中的方法getSettingValueByName捕获全局配置参数从数据库获取时若参数不存在发生的数据访问异常
+
 0.3.2: @2022-01-21
 * 添加用于图像处理的工具类ImageUtil和ImageSize
 * 添加文件处理的工具类FileToolkit
