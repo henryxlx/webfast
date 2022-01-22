@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.mvc;
 
-import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.toolbag.ConvertIpToolkit;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.MapUtil;
+import com.jetwinner.util.PhpStringUtil;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.DataDictHolder;
 import org.springframework.context.ApplicationContext;
 
@@ -28,75 +28,110 @@ public class WebExtensionPack extends BaseWebExtensionPack {
         this.dataDictHolder = dataDictHolder;
     }
 
-    public String getDefaultPath(String category, String uri, String size, boolean absolute) {
-        String url;
+    /**
+     *
+     * @param uri 不允许为空
+     * @param defaultPath 默认值是空串
+     * @param absolute 默认值是false
+     */
+    public String getFilePath(String uri, String defaultPath, boolean absolute) {
+        String url = "";
         if (EasyStringUtil.isBlank(uri)) {
-            String publicUrlpath = "assets/img/default/";
-            url = getUrl(publicUrlpath, size, category);
+            url = getAssetUrl("assets/img/default/" + defaultPath);
+            // url = getBaseUrl() + "/assets/img/default/"  + default;
+            if (absolute) {
+                url = getSchemeAndHttpHost()  + url;
+            }
+            return url;
+        }
+        Map<String, String> uriMap = parseFileUri(uri);
+        if ("public".equals(uriMap.get("access"))) {
+            url = PhpStringUtil.rtrim(getUploadPublicUrlPath(), " /") + "/" + uriMap.get("path");
+            url = PhpStringUtil.ltrim(url, " /");
+            url = getAssetUrl(url);
 
-            // AppSettingService settingService = appContext.getBean(AppSettingService.class);
-            // Map<String, ?> defaultSetting = settingService.get("default");
-            Map<String, ?> defaultSetting = null;
+            if (absolute) {
+                url = getSchemeAndHttpHost() + url;
+            }
+        }
+        return url;
+    }
 
-            String key = "default" + upperCaseFirst(category);
+    /**
+     *
+     * @param category 不能为空
+     * @param uri 默认值是空串
+     * @param size 默认值是空串
+     * @param absolute 默认值是false
+     */
+    public String getDefaultPath(String category, String uri, String size, boolean absolute) {
+        Map<String, Object> cdn = settingService.get("cdn");
+        String cdnUrl = EasyStringUtil.isBlank(cdn.get("enabled")) ? null :
+                PhpStringUtil.rtrim(String.valueOf(cdn.get("url")), " \\/");
+
+        String url = "";
+        if (EasyStringUtil.isBlank(uri)) {
+            String publicUrlPath = "assets/img/default/";
+            url = getAssetUrl(publicUrlPath + size + category);
+
+            Map<String, Object> defaultSetting = settingService.get("default");
+
+            String key = "default" + PhpStringUtil.ucfirst(category);
             String fileName = key + "FileName";
-            if (MapUtil.keyExists(key, defaultSetting) && MapUtil.keyExists(fileName, defaultSetting)) {
-                if ("1".equals(defaultSetting.get(key))) {
-                    url = getUrl(publicUrlpath, size, defaultSetting.get(fileName).toString());
+            if (defaultSetting.containsKey(key) && defaultSetting.containsKey(fileName)) {
+                if (ValueParser.parseInt(defaultSetting.get(key)) == 1) {
+                    url = getAssetUrl(publicUrlPath  + size + defaultSetting.get(fileName));
                 }
             }
 
             if (absolute) {
-                url = RequestContextPathUtil.getSchemeAndHost(request) + url;
+                url = getSchemeAndHttpHost() + url;
             }
 
             return url;
         }
 
-        return parseUri(uri, absolute);
-    }
+        Map<String, String> uriMap = parseFileUri(uri);
+        if ("public".equals(uriMap.get("access"))) {
+            url = PhpStringUtil.rtrim(getUploadPublicUrlPath(), " /") + "/" + uriMap.get("path");
+            url = PhpStringUtil.ltrim(url, " /");
+            url = getAssetUrl(url);
 
-    private String parseUri(String uri, Boolean absolute) {
-        String url;
-
-        int pos = uri.indexOf("://");
-        if (pos >= 0) {
-            url = uri.substring(pos);
-        } else {
-            url = uri;
+            if (cdnUrl != null) {
+                url = cdnUrl + url;
+            } else {
+                if (absolute) {
+                    url = getSchemeAndHttpHost() + url;
+                }
+            }
         }
-
-        String uploadPath = appContext.getEnvironment().getProperty("webfast.app.upload.public_url_path");
-        if (uploadPath != null && !uploadPath.endsWith("/")) {
-            uploadPath = uploadPath + "/";
-            url = uploadPath + url;
-        }
-
-        url = getUrl(url);
-
-        if (absolute) {
-            url = RequestContextPathUtil.getSchemeAndHost(request) + url;
-        }
-
         return url;
     }
 
-    private String getUrl(String... uri) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(RequestContextPathUtil.getContextPath(request));
-        for (String s : uri) {
-            sb.append(s);
+    /**
+     *
+     * @param uri 不允许为空
+     * @param defaultPath 默认值是空串
+     * @param absolute 默认值是false
+     */
+    public String getFileUrl(String uri, String defaultPath, boolean absolute) {
+        String url;
+        if (EasyStringUtil.isBlank(uri)) {
+            url = getAssetUrl("assets/img/default/" + defaultPath);
+            if (absolute) {
+                url = getSchemeAndHttpHost() + url;
+            }
+            return url;
         }
-        return sb.toString();
-    }
 
-    private String upperCaseFirst(String s) {
-        char[] cs = s.toCharArray();
-        if (cs[0] >= 97 && cs[0] <= 122) {
-            cs[0] -= 32;
-            return String.valueOf(cs);
+        url = PhpStringUtil.rtrim(getUploadPublicUrlPath(), " /") + "/" + uri;
+        url = PhpStringUtil.ltrim(url, " /");
+        url = getAssetUrl(url);
+
+        if (absolute) {
+            url = getSchemeAndHttpHost() + url;
         }
-        return s;
+        return url;
     }
 
     public String getDictText(String type, String key) {

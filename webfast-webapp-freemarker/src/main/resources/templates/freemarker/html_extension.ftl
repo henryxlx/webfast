@@ -38,6 +38,14 @@
     <#return webExtPack.getDefaultPath(category, uri, size, absolute)/>
 </#function>
 
+<#function file_path uri default='' absolute=false>
+    <#return webExtPack.getFilePath(uri, default, absolute)/>
+</#function>
+
+<#function file_url uri default='' absolute=false>
+    <#return webExtPack.getFileUrl(uri, default, absolute)/>
+</#function>
+
 <#function setting name defaultValue='null'>
     <#if defaultValue != 'null'>
         <#return webExtPack.getSetting(name, defaultValue)/>
