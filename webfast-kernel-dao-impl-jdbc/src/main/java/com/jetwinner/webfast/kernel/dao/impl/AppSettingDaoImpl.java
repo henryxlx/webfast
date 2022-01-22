@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -45,15 +46,19 @@ public class AppSettingDaoImpl extends FastJdbcDaoSupport implements AppSettingD
     public Map<String, Object> getSettingValueByName(String name) {
         final LobHandler lobHandler = new DefaultLobHandler();
         final Object[] result = new Object[1];
-        getJdbcTemplate().query(
-                "SELECT value FROM app_setting WHERE name = ?", new Object[] {name},
-                new AbstractLobStreamingResultSetExtractor<Object>() {
-                    @Override
-                    public void streamData(ResultSet rs) throws SQLException, IOException {
-                        result[0] = SerializationUtils.deserialize(lobHandler.getBlobAsBytes(rs, 1));
+        try {
+            getJdbcTemplate().query(
+                    "SELECT value FROM app_setting WHERE name = ?", new Object[]{name},
+                    new AbstractLobStreamingResultSetExtractor<Object>() {
+                        @Override
+                        public void streamData(ResultSet rs) throws SQLException, IOException {
+                            result[0] = SerializationUtils.deserialize(lobHandler.getBlobAsBytes(rs, 1));
+                        }
                     }
-                }
-        );
-        return (Map<String, Object>) result[0];
+            );
+            return (Map<String, Object>) result[0];
+        } catch (Exception e) {
+            return new HashMap<>(0);
+        }
     }
 }
