@@ -1,20 +1,31 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.servlet.RequestIpAddressUtil;
+import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.image.ImageSize;
+import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +39,18 @@ public class UserController {
 
     private final AppUserService userService;
     private final AppRoleService roleService;
+    private final UserAccessControlService userAccessControlService;
+    private final FastAppConst appConst;
 
-    public UserController(AppUserService userService, AppRoleService roleService) {
+    public UserController(AppUserService userService,
+                          AppRoleService roleService,
+                          UserAccessControlService userAccessControlService,
+                          FastAppConst appConst) {
+
         this.userService = userService;
         this.roleService = roleService;
+        this.userAccessControlService = userAccessControlService;
+        this.appConst = appConst;
     }
 
     @RequestMapping("/admin/user")
@@ -159,6 +178,51 @@ public class UserController {
         return "/admin/user/user-avatar-modal";
     }
 
+    @PostMapping("/admin/user/{id}/avatar")
+    public ModelAndView avatarAction(@PathVariable Integer id,
+                                     @RequestParam("form[avatar]") MultipartFile file) {
+
+        if (!FileToolkit.isImageFile(file.getOriginalFilename())) {
+            return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, gif, png格式的文件。");
+        }
+
+        String filenamePrefix = String.format("user_%d_", id);
+        String hash = FileToolkit.hashFilename(filenamePrefix);
+        String ext = FileToolkit.getFileExtension(file.getOriginalFilename());
+        String filename = filenamePrefix + hash + "!"  + ext;
+
+        String directory = appConst.getUploadPublicDir() + "/tmp/";
+        try {
+            file.transferTo(new File(directory + filename));
+        } catch (IOException e) {
+            return BaseControllerHelper.createMessageResponse("error", "图片上传失败，请检查上传目录或文件是否存在。");
+        }
+
+        ModelAndView mav = new ModelAndView("/admin/user/user-avatar-crop-modal");
+        try {
+            this.avatar2(id, filename, mav);
+        } catch (Exception e) {
+            return BaseControllerHelper.createMessageResponse("error", "该文件为非图片格式文件，请重新上传。");
+        }
+
+        mav.addObject("user", userService.getUser(id));
+        mav.addObject("filename", filename);
+        return mav;
+    }
+
+    private void avatar2(Integer id, String filename, ModelAndView mav) throws Exception {
+        if (!userAccessControlService.hasRole("ROLE_SUPER_ADMIN")) {
+            throw new RuntimeGoingException("Change user avatar need ROLE_SUPER_ADMIN role.");
+        }
+
+        String pictureFilePath = appConst.getUploadPublicDir() + "/tmp/"  + filename;
+
+        ImageSize imageSize = ImageUtil.getNaturalSize(new File(pictureFilePath));
+        mav.addObject("naturalSize", imageSize);
+        mav.addObject("scaledSize", new ImageSize(270, 270));
+        mav.addObject("pictureUrl", "tmp/"  + filename);
+    }
+
     @GetMapping("/admin/user/{id}/change-password")
     public String changePasswordPage(@PathVariable Integer id, Model model) {
         model.addAttribute("user", userService.getUser(id));
@@ -198,5 +262,10 @@ public class UserController {
         model.addAttribute("user", userService.getUser(id));
         model.addAttribute("roles", roleService.listAllRole());
         return "/admin/user/user-table-tr";
+    }
+
+    @GetMapping("/default/message")
+    public ModelAndView message() {
+        return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, gif, png格式的文件。");
     }
 }
