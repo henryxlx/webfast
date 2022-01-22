@@ -35,6 +35,15 @@ public class FastAppConst {
     @Value("${spring.servlet.multipart.max-request-size}")
     private String postMaxsize;
 
+    @Value("${custom.app.upload.public_url_path:/files}")
+    private String uploadPublicUrlPath;
+
+    @Value("${custom.app.upload.private_directory:/depot/private_files}")
+    private String uploadPrivateDirectory;
+
+    @Value("${custom.app.upload.public_directory:/web/files}")
+    private String uploadPublicDirectory;
+
     public String getDebug() {
         return debug;
     }
@@ -65,5 +74,17 @@ public class FastAppConst {
 
     public String getPostMaxsize() {
         return postMaxsize;
+    }
+
+    public String getUploadPrivateDirectory() {
+        return this.storagePath + uploadPrivateDirectory;
+    }
+
+    public String getUploadPublicDirectory() {
+        return this.storagePath + uploadPublicDirectory;
+    }
+
+    public String getUploadPublicUrlPath() {
+        return this.uploadPublicUrlPath;
     }
 }
