@@ -191,7 +191,7 @@ public class UserController {
         String ext = FileToolkit.getFileExtension(file.getOriginalFilename());
         String filename = filenamePrefix + hash + "!"  + ext;
 
-        String directory = appConst.getUploadPublicDir() + "/tmp/";
+        String directory = appConst.getUploadPublicDirectory() + "/tmp/";
         try {
             file.transferTo(new File(directory + filename));
         } catch (IOException e) {
@@ -215,7 +215,7 @@ public class UserController {
             throw new RuntimeGoingException("Change user avatar need ROLE_SUPER_ADMIN role.");
         }
 
-        String pictureFilePath = appConst.getUploadPublicDir() + "/tmp/"  + filename;
+        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
 
         ImageSize imageSize = ImageUtil.getNaturalSize(new File(pictureFilePath));
         mav.addObject("naturalSize", imageSize);
