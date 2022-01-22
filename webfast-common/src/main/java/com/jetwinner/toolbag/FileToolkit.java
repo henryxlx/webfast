@@ -14,12 +14,12 @@ public final class FileToolkit {
 
     private static final String[] IMAGE_FILE_EXT_NAME = {"bmp", "gif", "jpg", "jpeg", "png"};
 
-    public static String hash(String filenamePrefix) {
+    public static String hashFilename(String filenamePrefix) {
         if (filenamePrefix == null || filenamePrefix.length() == 0) {
             throw new IllegalArgumentException("Filename Prefix cannot be null or zero length");
         }
         String str = filenamePrefix + System.currentTimeMillis();
-        str = str.substring(str.length() - 9);
+        str = str.substring(str.length());
 
         StringBuilder hexString = new StringBuilder();
 
@@ -39,7 +39,8 @@ public final class FileToolkit {
             // noops;
         }
 
-        return hexString.toString();
+        String hashStr = hexString.toString();
+        return hashStr.substring(hashStr.length() - 8);
     }
 
     public static String getFileExtension(String name) {
