@@ -180,8 +180,11 @@ public class UserController {
 
     @PostMapping("/admin/user/{id}/avatar")
     public ModelAndView avatarAction(@PathVariable Integer id,
-                                     @RequestParam("form[avatar]") MultipartFile file) {
+                                     @RequestParam(value = "form[avatar]", required = false) MultipartFile file) {
 
+        if (file == null) {
+            return BaseControllerHelper.createMessageResponse("error", "没有可供上传的文件，请选择文件。");
+        }
         if (!FileToolkit.isImageFile(file.getOriginalFilename())) {
             return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, gif, png格式的文件。");
         }
