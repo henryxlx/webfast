@@ -19,10 +19,7 @@ public final class FileToolkit {
             throw new IllegalArgumentException("Filename Prefix cannot be null or zero length");
         }
         String str = filenamePrefix + System.currentTimeMillis();
-        str = str.substring(str.length());
-
-        StringBuilder hexString = new StringBuilder();
-
+        StringBuilder buf = new StringBuilder();
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(str.getBytes());
@@ -30,16 +27,16 @@ public final class FileToolkit {
 
             for (byte element : hash) {
                 if ((0xff & element) < 0x10) {
-                    hexString.append('0').append(Integer.toHexString((0xFF & element)));
+                    buf.append('0').append(Integer.toHexString((0xFF & element)));
                 } else {
-                    hexString.append(Integer.toHexString(0xFF & element));
+                    buf.append(Integer.toHexString(0xFF & element));
                 }
             }
         } catch (NoSuchAlgorithmException e) {
             // noops;
         }
 
-        String hashStr = hexString.toString();
+        String hashStr = buf.toString();
         return hashStr.substring(hashStr.length() - 8);
     }
 
