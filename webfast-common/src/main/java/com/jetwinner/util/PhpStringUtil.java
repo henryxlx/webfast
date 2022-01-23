@@ -68,7 +68,7 @@ public class PhpStringUtil {
         return path.substring(pos, endIndex);
     }
 
-    private static char getPathSeparatorChar(String path) {
+    public static char getPathSeparatorChar(String path) {
         if (path.lastIndexOf('/') > 0) {
             return '/';
         }
