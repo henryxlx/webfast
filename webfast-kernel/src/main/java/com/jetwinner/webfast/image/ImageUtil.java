@@ -45,6 +45,16 @@ public abstract class ImageUtil {
         return new ImageSize(w, h);
     }
 
+    private static String getImageFormatByExtension(String fileExtension) {
+        if (fileExtension != null) {
+            fileExtension = fileExtension.toLowerCase();
+        }
+        if ("png".equals(fileExtension)) {
+            return "PNG";
+        }
+        return "JPEG";
+    }
+
     /**
      * 根据要求的坐标截取图片
      *
@@ -55,7 +65,8 @@ public abstract class ImageUtil {
      * @param width
      * @param height
      */
-    public static void cropPartImage(String sourceFullPath, String imageFullPath, String imageExtName, int x, int y, int width, int height)
+    public static void cropPartImage(String sourceFullPath, String imageFullPath, String imageFileExtension,
+                                     int x, int y, int width, int height)
             throws RuntimeException {
 
         Image img = null;
@@ -92,13 +103,13 @@ public abstract class ImageUtil {
             g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(img, 0, 0, null);
             g.dispose();
-            ImageIO.write(tag, "JPEG", new File(imageFullPath));
+            ImageIO.write(tag, getImageFormatByExtension(imageFileExtension), new File(imageFullPath));
         } catch (Exception e) {
             throw new RuntimeException("process image error, src=" + imageFullPath, e);
         }
     }
 
-    public static void resizeImage(String sourceFullPath, String imageFullPath,
+    public static void resizeImage(String sourceFullPath, String imageFullPath, String imageFileExtension,
                                    int newWidth, float quality) throws Exception {
 
         File originalFile = new File(sourceFullPath);
@@ -151,7 +162,7 @@ public abstract class ImageUtil {
         FileOutputStream out = new FileOutputStream(resizedFile);
 
         // Encodes image as a JPEG data stream
-        ImageIO.write(bufferedImage, "jpg", out);
+        ImageIO.write(bufferedImage, getImageFormatByExtension(imageFileExtension), out);
     }
 
     /**
@@ -161,8 +172,10 @@ public abstract class ImageUtil {
      * @param maxEdgeLength 边长
      * @return
      */
-    public static boolean resizeImage2(String sourceFullPath, String imageFullPath, String imageExtName, int maxEdgeLength)
+    public static boolean resizeImage2(String sourceFullPath, String imageFullPath,
+                                       String imageFileExtension, int maxEdgeLength)
             throws Exception {
+
         File file = new File(sourceFullPath);
         if (!file.exists()) {
             return false;
@@ -196,13 +209,13 @@ public abstract class ImageUtil {
         }
         FileOutputStream out = null;
         try {
-            BufferedImage tag = new BufferedImage((int) width, (int) height,
+            BufferedImage tag = new BufferedImage(width, height,
                     BufferedImage.TYPE_INT_RGB);
             tag.getGraphics().drawImage(
                     img.getScaledInstance(width, height, Image.SCALE_SMOOTH),
                     0, 0, null);
             out = new FileOutputStream(imageFullPath);
-            ImageIO.write(tag, "JPEG", out);
+            ImageIO.write(tag, getImageFormatByExtension(imageFileExtension), out);
         } catch (Exception e) {
             throw new RuntimeException("resize image error, img=" + imageFullPath, e);
         } finally {
