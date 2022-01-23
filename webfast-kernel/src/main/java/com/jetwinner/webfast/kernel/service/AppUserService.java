@@ -38,4 +38,6 @@ public interface AppUserService extends BaseAppUserService {
     void lockUser(Integer id);
 
     void unlockUser(Integer id);
+
+    boolean changeAvatar(Integer id, String filePath, Map<String, Object> options);
 }

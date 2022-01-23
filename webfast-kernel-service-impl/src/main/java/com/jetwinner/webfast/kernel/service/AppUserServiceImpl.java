@@ -7,14 +7,19 @@ import com.jetwinner.security.UserHasRoleAndPermission;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.ArrayUtil;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.FastDirectoryUtil;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
+import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelRole;
+import com.jetwinner.webfast.kernel.model.AppPathInfo;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +38,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final AppRoleDao roleDao;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
+    private final FastAppConst appConst;
     private final UserAccessControlService userAccessControlService;
 
     public AppUserServiceImpl(AppUserDao userDao,
@@ -40,13 +46,14 @@ public class AppUserServiceImpl implements AppUserService {
                               AppRoleDao roleDao,
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService,
-                              UserAccessControlService userAccessControlService) {
+                              FastAppConst appConst, UserAccessControlService userAccessControlService) {
 
         this.userDao = userDao;
         this.userProfileDao = userProfileDao;
         this.roleDao = roleDao;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
+        this.appConst = appConst;
         this.userAccessControlService = userAccessControlService;
     }
 
@@ -225,5 +232,65 @@ public class AppUserServiceImpl implements AppUserService {
         userDao.updateMap(new ParamMap().add("id", id).add("locked", 0).toMap());
 
         // logService.info("user", "unlock", String.format("解禁用户{%s}(#{%d})", user.getUsername(), user.getId()));
+    }
+
+    @Override
+    public boolean changeAvatar(Integer userId, String filePath, Map<String, Object> options) {
+        AppUser user = getUser(userId);
+        if (user == null) {
+            throw new RuntimeGoingException("用户不存在，头像更新失败！");
+        }
+
+        ParamMap paramMap = new ParamMap().add("id", userId);
+
+        AppPathInfo pathInfo = new AppPathInfo(filePath, "!");
+
+        String cropImageFilePath = String.format("%s/%s_crop.%s",
+                pathInfo.getDirname(), pathInfo.getFilename(), pathInfo.getExtension());
+        int x = (int)ValueParser.parseFloat(options.get("x"));
+        int y = (int)ValueParser.parseFloat(options.get("y"));
+        int width = (int)ValueParser.parseFloat(options.get("width"));
+        int height = (int)ValueParser.parseFloat(options.get("height"));
+        ImageUtil.cropPartImage(filePath, cropImageFilePath, pathInfo.getExtension(), x, y, width, height);
+
+        Calendar now = Calendar.getInstance();
+        String userUploadPath = String.format("user/%d/%02d-%02d", now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH) + 1, now.get(Calendar.DAY_OF_MONTH));
+        String userUploadRealDir = appConst.getUploadPublicDirectory() + "/" + userUploadPath;
+        if (FastDirectoryUtil.dirNotExists(userUploadRealDir)) {
+            FastDirectoryUtil.makeDir(userUploadRealDir);
+        }
+        String largeFilePath = String.format("%s/%s_large.%s",
+                userUploadRealDir, pathInfo.getFilename(), pathInfo.getExtension());
+        try {
+            ImageUtil.resizeImage(cropImageFilePath, largeFilePath, pathInfo.getExtension(), 200, 0.9f);
+        } catch (Exception e) {
+            throw new RuntimeGoingException("Resize large user image error: " + e.getMessage());
+        }
+        paramMap.add("largeAvatar", String.format("public://%s/%s_large.%s",
+                userUploadPath, pathInfo.getFilename(), pathInfo.getExtension()));
+
+
+        String mediumFilePath = String.format("%s/%s_medium.%s",
+                userUploadRealDir, pathInfo.getFilename(), pathInfo.getExtension());
+        try {
+            ImageUtil.resizeImage(cropImageFilePath, mediumFilePath, pathInfo.getExtension(), 120, 0.9f);
+        } catch (Exception e) {
+            throw new RuntimeGoingException("Resize medium user image error: " + e.getMessage());
+        }
+        paramMap.add("mediumAvatar", String.format("public://%s/%s_medium.%s",
+                userUploadPath, pathInfo.getFilename(), pathInfo.getExtension()));
+
+        String smallFilePath = String.format("%s/%s_small.%s",
+                userUploadRealDir, pathInfo.getFilename(), pathInfo.getExtension());
+        try {
+            ImageUtil.resizeImage(cropImageFilePath, smallFilePath, pathInfo.getExtension(),48, 0.9f);
+        } catch (Exception e) {
+            throw new RuntimeGoingException("Resize small user image error: " + e.getMessage());
+        }
+        paramMap.add("smallAvatar", String.format("public://%s/%s_medium.%s",
+                userUploadPath, pathInfo.getFilename(), pathInfo.getExtension()));
+
+        return userDao.updateMap(paramMap.toMap()) > 0;
     }
 }
