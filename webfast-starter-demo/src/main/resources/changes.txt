@@ -3,6 +3,12 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.3.4: @2022-01-23
+* 继续完善后台用户管理用户头像上传的代码，修复代码提交中的变更错误
+* WebExtPack新增getFilePath和getFileUrl方法，同时优化实现getDefaultPath方法，在FreeMarker页面添加相应的调用函数file_path和file_url
+* 使用配置方式在FreeMarkerViewContextWebConfigurer自定义规则访问外部静态资源（覆盖addResourceHandlers方法）
+* 完成后台用户管理用户头像剪裁功能
+
 0.3.3: @2022-01-22
 * 完成后台用户管理修改用户头像上传图像功能
 * 添加PHP字符串相关处理的工具类PHPStringUtil
