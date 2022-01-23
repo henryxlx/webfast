@@ -288,7 +288,7 @@ public class AppUserServiceImpl implements AppUserService {
         } catch (Exception e) {
             throw new RuntimeGoingException("Resize small user image error: " + e.getMessage());
         }
-        paramMap.add("smallAvatar", String.format("public://%s/%s_medium.%s",
+        paramMap.add("smallAvatar", String.format("public://%s/%s_small.%s",
                 userUploadPath, pathInfo.getFilename(), pathInfo.getExtension()));
 
         return userDao.updateMap(paramMap.toMap()) > 0;
