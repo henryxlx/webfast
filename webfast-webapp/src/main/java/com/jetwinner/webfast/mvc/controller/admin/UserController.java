@@ -212,7 +212,7 @@ public class UserController {
 
     private void avatar2(Integer id, String filename, ModelAndView mav) throws Exception {
         if (!userAccessControlService.hasRole("ROLE_SUPER_ADMIN")) {
-            throw new RuntimeGoingException("Change user avatar need ROLE_SUPER_ADMIN role.");
+            throw new RuntimeGoingException("Need ROLE_SUPER_ADMIN role to change user avatar.");
         }
 
         String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
@@ -221,6 +221,22 @@ public class UserController {
         mav.addObject("naturalSize", imageSize);
         mav.addObject("scaledSize", new ImageSize(270, 270));
         mav.addObject("pictureUrl", "tmp/"  + filename);
+    }
+
+    @PostMapping("/admin/user/{id}/avatar/crop")
+    @ResponseBody
+    public Boolean avatarCropAction(@PathVariable Integer id, HttpServletRequest request) {
+        if (!userAccessControlService.hasRole("ROLE_SUPER_ADMIN")) {
+            throw new RuntimeGoingException("Need ROLE_SUPER_ADMIN role to crop user avatar.");
+        }
+
+        Map<String, Object> options = ParamMap.toPostDataMap(request);
+        String filename = request.getParameter("filename");
+        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/" + filename;
+        userService.changeAvatar(id, pictureFilePath, options);
+
+        // return "redirect:/admin/user";
+        return Boolean.TRUE;
     }
 
     @GetMapping("/admin/user/{id}/change-password")
