@@ -1,16 +1,13 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.spring.YmlPropertySourceFactory;
-import com.jetwinner.webfast.kernel.AppUser;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author xulixin
@@ -20,20 +17,20 @@ import java.util.Set;
 @ConfigurationProperties(prefix = "data")
 public class TestAppUserServiceWithYmlFile {
 
-    private List<AppUser> users = new ArrayList<>();
+    private List<BaseAppUser> users = new ArrayList<>();
 
-    public List<AppUser> getUsers() {
+    public List<BaseAppUser> getUsers() {
         return users;
     }
 
-    public void setUsers(List<AppUser> users) {
+    public void setUsers(List<BaseAppUser> users) {
         this.users = users;
     }
 
-    public AppUser getByUsername(String username) {
-        AppUser appUser = new AppUser();
+    public BaseAppUser getByUsername(String username) {
+        BaseAppUser appUser = new BaseAppUser();
         if (users != null) {
-            for (AppUser user : users) {
+            for (BaseAppUser user : users) {
                 if (username.equals(user.getUsername())) {
                     appUser.setUsername(user.getUsername());
                     appUser.setPassword(user.getPassword());
