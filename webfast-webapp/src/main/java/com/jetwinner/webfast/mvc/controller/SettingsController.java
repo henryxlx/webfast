@@ -1,7 +1,11 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xulixin
@@ -18,7 +22,8 @@ public class SettingsController {
     }
 
     @RequestMapping("/avatar")
-    public String avatarPage() {
+    public String avatarPage(HttpServletRequest request, Model model) {
+        model.addAttribute("user", BaseControllerHelper.getCurrentUser(request));
         return VIEW_PATH + "/avatar";
     }
 
