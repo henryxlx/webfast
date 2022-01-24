@@ -1,7 +1,10 @@
 package com.jetwinner.webfast.mvc;
 
 import com.jetwinner.util.ArrayUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author xulixin
@@ -34,5 +37,10 @@ public class BaseControllerHelper {
 
     public static ModelAndView createMessageResponse(String type, String message) {
         return createMessageResponse(type, message, "", 0, null);
+    }
+
+    public static AppUser getCurrentUser(HttpServletRequest request) {
+        AppUser appUser = (AppUser) request.getAttribute(AppUser.MODEL_VAR_NAME);
+        return appUser == null ? new AppUser() : appUser;
     }
 }
