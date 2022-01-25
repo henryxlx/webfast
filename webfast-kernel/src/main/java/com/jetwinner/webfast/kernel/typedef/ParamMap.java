@@ -34,6 +34,10 @@ public class ParamMap {
         return set;
     }
 
+    public static Map<String, Object> toNewHashMap(int size) {
+        return new HashMap<>(size);
+    }
+
     public static Map<String, Object> toPostDataMap(HttpServletRequest request, String... excludeKeys) {
         Set<String> excludeParameterNames = getExcludeParameterNames(excludeKeys);
         Map<String, Object> map = new HashMap<>(request.getParameterMap().size());
