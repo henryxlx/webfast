@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <select id="keywordType" name="keywordType" class="form-control">
-                <@select_options dict['userKeyWordTypes']!{} RequestParameters['keywordType']! />
+                <@select_options dict['userKeyWordType']!{} RequestParameters['keywordType']! />
             </select>
         </div>
 
