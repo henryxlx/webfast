@@ -1,7 +1,10 @@
 package com.jetwinner.webfast.mvc.controller;
 
 import com.jetwinner.security.UserAccessControlService;
+import com.jetwinner.servlet.RequestIpAddressUtil;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,10 +21,12 @@ public class LoginController {
 
     private static final String TARGET_PATH_KEY = "_target_path";
 
-    private UserAccessControlService userAccessControlService;
+    private final UserAccessControlService userAccessControlService;
+    private final AppLogService logService;
 
-    public LoginController(UserAccessControlService userAccessControlService) {
+    public LoginController(UserAccessControlService userAccessControlService, AppLogService logService) {
         this.userAccessControlService = userAccessControlService;
+        this.logService = logService;
     }
 
     @GetMapping("/login")
@@ -39,6 +44,9 @@ public class LoginController {
 
         try {
             userAccessControlService.doLoginCheck(username, password);
+            AppUser user = (AppUser) userAccessControlService.getCurrentUser();
+            user.setLoginIp(RequestIpAddressUtil.getClientIp(request));
+            logService.info("user", "login_success", "登录成功", user);
             if (EasyStringUtil.isBlank(targetPath)) {
                 String savedUrlBeforeLogin = userAccessControlService.getSavedUrlBeforeLogin(request);
                 targetPath = EasyStringUtil.isNotBlank(savedUrlBeforeLogin) ? savedUrlBeforeLogin : "/";
