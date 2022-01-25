@@ -50,8 +50,8 @@
     </thead>
     <tbody>
     <#list logRecords! as logRecord>
-    {% set user = users[logRecord.userId]|default(null) %}
-    {% include 'TopxiaAdminBundle:LoginRecord:table-tr.html.twig' with {logRecord:logRecord} %}
+    <#assign user = users['' + logRecord.userId] />
+    <#include '/admin/login-record/table-tr.ftl' />
     </#list>
     </tbody>
 </table>
