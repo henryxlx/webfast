@@ -7,10 +7,7 @@ import com.jetwinner.webfast.dao.support.query.part.FromAttribute;
 import com.jetwinner.webfast.dao.support.query.part.JoinAttribute;
 import com.jetwinner.webfast.dao.support.query.part.SqlPart;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  *
@@ -597,7 +594,7 @@ public abstract class AbstractQueryBuilder {
     }
 
     private List<Object> arrayUnshift(List<Object> list, Object[] args) {
-        List<Object> newList = Arrays.asList(args);
+        List<Object> newList = new ArrayList<>(Arrays.asList(args));
         if (list != null && list.size() > 0) {
             newList.addAll(list);
         }
