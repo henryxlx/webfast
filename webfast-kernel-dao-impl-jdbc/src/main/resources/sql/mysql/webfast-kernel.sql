@@ -93,6 +93,24 @@ CREATE TABLE `app_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面内容表';
 
 -- ----------------------------
+-- Table structure for `app_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_log`;
+CREATE TABLE `app_log` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统日志ID',
+  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作人ID',
+  `module` varchar(32) NOT NULL COMMENT '日志所属模块',
+  `action` varchar(32) NOT NULL COMMENT '日志所属操作类型',
+  `message` text NOT NULL COMMENT '日志内容',
+  `data` text COMMENT '日志数据',
+  `ip` varchar(255) NOT NULL COMMENT '日志记录IP',
+  `createdTime` bigint unsigned NOT NULL COMMENT '日志发生时间',
+  `level` char(10) NOT NULL COMMENT '日志等级',
+  PRIMARY KEY (`id`),
+  KEY `userId` (`userId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统服务日志表';
+
+-- ----------------------------
 -- Table structure for `app_navigation`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_navigation`;
