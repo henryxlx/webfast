@@ -15,6 +15,7 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -107,5 +108,27 @@ public class LoginRecordController {
         } else {
             conditions.remove("level");
         }
+    }
+
+    @GetMapping("/admin/login-record/{id}/details")
+    public String showUserLoginRecordPage(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        AppUser user = userService.getUser(id);
+
+        Map<String, Object> conditions = new ParamMap().add("userId", user.getId()).toMap();
+        Paginator paginator = new Paginator(request,
+                logDao.searchCount(conditions), 8);
+
+        List<Map<String, Object>> loginRecords = logDao.searchList(conditions,
+                OrderBy.builder().addDesc("createdTime"),
+                paginator.getOffsetCount(),
+                paginator.getPerPageCount()
+        );
+
+        loginRecords.forEach(log -> log.put("ip", ConvertIpToolkit.convertIp(String.valueOf(log.get("ip")))));
+        model.addAttribute("user", user);
+        model.addAttribute("loginRecords", loginRecords);
+        model.addAttribute("loginRecordPaginator", paginator);
+
+        return "/admin/login-record/details";
     }
 }
