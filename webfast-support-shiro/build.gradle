@@ -1,5 +1,4 @@
 dependencies {
     implementation("org.apache.shiro:shiro-spring-boot-web-starter:${jarVersion['shiro']}")
     implementation project(':webfast-common')
-    implementation project(':webfast-kernel')
 }
