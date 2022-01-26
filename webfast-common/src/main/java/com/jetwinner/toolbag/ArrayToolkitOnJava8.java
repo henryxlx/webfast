@@ -26,7 +26,7 @@ public final class ArrayToolkitOnJava8 {
     }
 
     public static <T> Set<Object> column(List<T> list, Function<T, Object> mapper) {
-        Assert.notNull(list, "ArrayToolkitJava8Util::column parameter list must not be null.");
+        Assert.notNull(list, "ArrayToolkitOnJava8::column parameter list must not be null.");
         return list.stream().map(mapper).collect(Collectors.toSet());
     }
 }
