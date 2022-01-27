@@ -42,4 +42,6 @@ public interface AppUserService extends BaseAppUserService {
     boolean changeAvatar(Integer id, String filePath, Map<String, Object> options);
 
     void waveUserCounter(Integer userId, String name, int number);
+
+    void clearUserCounter(Integer userId, String name);
 }

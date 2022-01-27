@@ -31,4 +31,6 @@ public interface AppUserDao {
     int updateMap(Map<String, Object> mapUser);
 
     int waveCounterById(Integer userId, String name, int number);
+
+    int clearCounterById(Integer userId, String name);
 }

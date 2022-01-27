@@ -298,4 +298,9 @@ public class AppUserServiceImpl implements AppUserService {
     public void waveUserCounter(Integer userId, String name, int number) {
         userDao.waveCounterById(userId, name, number);
     }
+
+    @Override
+    public void clearUserCounter(Integer userId, String name) {
+        userDao.clearCounterById(userId, name);
+    }
 }

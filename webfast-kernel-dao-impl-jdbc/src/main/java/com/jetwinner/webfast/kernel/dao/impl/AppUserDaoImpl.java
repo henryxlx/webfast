@@ -100,6 +100,16 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
         return getJdbcTemplate().update(sql, number, userId);
     }
 
+    @Override
+    public int clearCounterById(Integer userId, String fieldName) {
+        String sql = String.format("UPDATE %s SET %s = 0 WHERE id = ? LIMIT 1", TABLE_NAME, fieldName);
+        if (!EasyStringUtil.inArray(fieldName, "newMessageNum", "newNotificationNum")) {
+            throw new BadSqlGrammarException("UPDATE user message or notification number: ", sql,
+                    new SQLException("counter name error"));
+        }
+        return getJdbcTemplate().update(sql, userId);
+    }
+
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
 
         if (conditions.containsKey("roles")) {
