@@ -3,6 +3,7 @@ package com.jetwinner.webfast.dao.support;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
@@ -10,10 +11,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author xulixin
@@ -105,6 +103,11 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
 
         String sql = SqlStatementComposer.getUpdateSql(tableName, map, primaryKeyName);
         return getNamedParameterJdbcTemplate().update(sql, map);
+    }
+
+    public <T> T queryForObject(String sql, RowMapper<T> rowMapper, Object... args) {
+        List<T> results = getJdbcTemplate().query(sql, rowMapper, args);
+        return results.stream().findFirst().orElse(null);
     }
 
     private int deleteByPrimaryKey(String tableName, String primaryKeyName, Object pkValue) {
