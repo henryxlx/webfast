@@ -293,4 +293,9 @@ public class AppUserServiceImpl implements AppUserService {
 
         return userDao.updateMap(paramMap.toMap()) > 0;
     }
+
+    @Override
+    public void waveUserCounter(Integer userId, String name, int number) {
+        userDao.waveCounterById(userId, name, number);
+    }
 }

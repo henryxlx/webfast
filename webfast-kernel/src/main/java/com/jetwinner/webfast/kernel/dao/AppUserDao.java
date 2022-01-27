@@ -29,4 +29,6 @@ public interface AppUserDao {
     int countForEmail(String email);
 
     int updateMap(Map<String, Object> mapUser);
+
+    int waveCounterById(Integer userId, String name, int number);
 }

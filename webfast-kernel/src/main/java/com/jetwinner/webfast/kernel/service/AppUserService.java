@@ -40,4 +40,6 @@ public interface AppUserService extends BaseAppUserService {
     void unlockUser(Integer id);
 
     boolean changeAvatar(Integer id, String filePath, Map<String, Object> options);
+
+    void waveUserCounter(Integer userId, String name, int number);
 }

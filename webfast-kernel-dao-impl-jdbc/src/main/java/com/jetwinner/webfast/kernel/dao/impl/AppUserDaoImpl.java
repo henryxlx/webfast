@@ -1,14 +1,17 @@
 package com.jetwinner.webfast.kernel.dao.impl;
 
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +87,17 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
     @Override
     public int updateMap(Map<String, Object> mapUser) {
         return updateMap(TABLE_NAME, mapUser, "id");
+    }
+
+    @Override
+    public int waveCounterById(Integer userId, String fieldName, int number) {
+        String sql = String.format("UPDATE %s SET %s = %s + ? WHERE id = ? LIMIT 1",
+                TABLE_NAME, fieldName, fieldName);
+        if (!EasyStringUtil.inArray(fieldName, "newMessageNum", "newNotificationNum")) {
+            throw new BadSqlGrammarException("UPDATE user message or notification number: ", sql,
+                    new SQLException("counter name error"));
+        }
+        return getJdbcTemplate().update(sql, number, userId);
     }
 
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
