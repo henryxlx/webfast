@@ -13,10 +13,9 @@
             </div>
 
             <ul class="media-list conversation-list">
-                <#if conversations??>
-                    <#list conversations as conversation>
-                {% set fromUser = users[conversation.fromId] %}
-                <li class="media" data-url="{{ path('message_conversation_show', {conversationId:conversation.id })}}">
+                <#list conversations! as conversation>
+                <#assign fromUser = users[conversation.fromId] />
+                <li class="media" data-url="/message/conversation/${conversation.id}">
                     {{ web_macro.user_avatar(fromUser, 'pull-left media-object') }}
                     <div class="media-body">
                         <h4 class="media-heading">
@@ -35,16 +34,15 @@
                             <span class="pull-left">{{ conversation.latestMessageTime|smart_time }}</span>
                             <span class="pull-right">共${conversation.messageNum}条</span>
                             <div class="actions pull-right">
-                                <a class="delete-conversation-btn text-muted" href="javascript:" data-url="${ctx}/message/conversation/delete/${conversation.id}">删除</a>
+                                <a class="delete-conversation-btn text-muted" href="javascript:" data-url="${ctx}/message/conversation/${conversation.id}/delete">删除</a>
                                 <span class="text-muted mhm">|</span>
                             </div>
                         </div>
                     </div>
                 </li>
-                    </#list>
                 <#else>
                 <li class="empty">暂无私信</li>
-                </#if>
+                </#list>
             </ul>
 
             <@web_macro.paginator paginator!/>
