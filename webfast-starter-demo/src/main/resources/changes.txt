@@ -3,6 +3,10 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.3.7: @2022-01-27
+* 完成后台管理用户登录日志细节查看功能
+* 前台网站消息查看功能与发消息页面与控制功能处理
+
 0.3.6: @2022-01-26
 * Arrays.asList(args)导致的异常java.lang.UnsupportedOperationException: null 使用List.add()报错
   https://www.cnblogs.com/xupeixuan/p/15844571.html
@@ -11,7 +15,8 @@ TODO list
 * 快捷时间处理工具类FastTimeUtil，将日期格式字符串转换为时间长整数方法DateStrToLong
 
 0.3.5: @2022-01-25
-* 添加用户日志数据表app_log，* 添加用户日志服务AppLogService与数据访问接口AppLogDao与实现类AppLogServiceImpl和AppLogDaoImpl
+* 添加用户日志数据表app_log，
+* 添加用户日志服务AppLogService与数据访问接口AppLogDao与实现类AppLogServiceImpl和AppLogDaoImpl
 * 用户登录成功后记录应用程序日志
 
 0.3.4: @2022-01-23
