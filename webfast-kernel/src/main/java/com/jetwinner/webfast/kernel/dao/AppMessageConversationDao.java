@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.dao;
 
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,9 +10,17 @@ import java.util.Map;
  */
 public interface AppMessageConversationDao {
 
-    void updateConversation(Integer id, Map<String, Object> entityMap);
+    AppModelMessageConversation getConversation(Integer id);
 
-    AppModelMessageConversation addConversation(Map<String, Object> entityMap);
+    Integer getConversationCountByToId(Integer userId);
+
+    List<AppModelMessageConversation> findConversationsByToId(Integer toUserId, int start, int limit);
 
     AppModelMessageConversation getConversationByFromIdAndToId(Integer fromId, Integer toId);
+
+    int updateConversation(Integer id, Map<String, Object> fields);
+
+    AppModelMessageConversation addConversation(Map<String, Object> fields);
+
+    int deleteConversation(Integer id);
 }

@@ -1,8 +1,11 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AppMessageService {
 
@@ -13,4 +16,9 @@ public interface AppMessageService {
     void clearUserNewMessageCounter(Integer userId);
 
     void sendMessage(Integer fromUserId, Integer toUserId, Object content);
+
+    int searchMessagesCount(Map<String, Object> conditions);
+
+    List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+                                         int start, int limit);
 }

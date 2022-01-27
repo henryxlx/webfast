@@ -4,13 +4,13 @@ import com.jetwinner.toolbag.HtmlToolkit;
 import com.jetwinner.webfast.kernel.dao.AppMessageConversationDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageRelationDao;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -39,17 +39,17 @@ public class AppMessageServiceImpl implements AppMessageService {
 
     @Override
     public int getUserConversationCount(Integer userId) {
-        return 0;
+        return conversationDao.getConversationCountByToId(userId);
     }
 
     @Override
     public List<AppModelMessageConversation> findUserConversations(Integer userId, int start, int limit) {
-        return new ArrayList<>(0);
+        return conversationDao.findConversationsByToId(userId, start, limit);
     }
 
     @Override
     public void clearUserNewMessageCounter(Integer userId) {
-
+        userService.clearUserCounter(userId, "newMessageNum");
     }
 
     @Override
@@ -64,6 +64,18 @@ public class AppMessageServiceImpl implements AppMessageService {
         userService.waveUserCounter(toUserId, "newMessageNum", 1);
     }
 
+    @Override
+    public int searchMessagesCount(Map<String, Object> conditions) {
+        return messageDao.searchMessagesCount(conditions);
+    }
+
+    @Override
+    public List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+                                                int start, int limit) {
+
+        return messageDao.searchMessages(conditions, orderByBuilder, start, limit);
+    }
+
     private AppModelMessage addMessage(Integer fromId, Integer toId, Object content) {
         Map<String, Object> message = new ParamMap()
                 .add("fromId", fromId)
@@ -71,7 +83,8 @@ public class AppMessageServiceImpl implements AppMessageService {
                 .add("content", HtmlToolkit.purifyHtml(String.valueOf(content)))
                 .add("createdTime", System.currentTimeMillis())
                 .toMap();
-        return messageDao.addMessage(message);
+        int id = messageDao.addMessage(message);
+        return messageDao.getMessage(id);
     }
 
     private void prepareConversationAndRelationForSender(AppModelMessage message, Integer toId, Integer fromId) {
