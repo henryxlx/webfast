@@ -21,4 +21,16 @@ public interface AppMessageService {
 
     List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                          int start, int limit);
+
+    AppModelMessageConversation getConversation(Integer conversationId);
+
+    int deleteConversationMessage(Integer conversationId, Integer messageId);
+
+    int getConversationMessageCount(Integer conversationId);
+
+    int deleteConversation(Integer conversationId);
+
+    int  markConversationRead(Integer conversationId);
+
+    List<AppModelMessage> findConversationMessages(Integer conversationId, int start, int limit);
 }

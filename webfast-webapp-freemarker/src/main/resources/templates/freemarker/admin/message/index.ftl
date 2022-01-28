@@ -43,32 +43,34 @@
         </tr>
         </thead>
         <tbody>
-        <#if messages??>
-        {% for message in messages %}
-        <tr class="message-tr" id="message-table-tr-{{message.id}}">
-            <td><input value="{{message.id}}" type="checkbox" data-role="batch-item" >
-                {{ admin_macro.user_link(users[message.fromId]) }}
+        <#list messages as message>
+        <tr class="message-tr" id="message-table-tr-${message.id}">
+            <td><input value="${message.id}" type="checkbox" data-role="batch-item" >
+                <@admin_macro.user_link users['' + message.fromId] />
             </td>
 
-            <td>{{ admin_macro.user_link(users[message.toId]) }} </td>
+            <td><@admin_macro.user_link users['' + message.toId] /> </td>
             <td>
                 <div class="short-long-text">
-                    <div class="short-text text-sm text-muted">{{ message.content|plain_text(60) }} <span class="trigger">(展开)</span></div>
-                    <div class="long-text">{{ message.content }} <span class="trigger">(收起)</span></div>
+                    <#assign contentLength = message.content?length - 1 />
+                    <#if contentLength gt 60>
+                        <#assign contentLength = 60 />
+                    </#if>
+                    <div class="short-text text-sm text-muted">${message.content[0..contentLength]} <span class="trigger">(展开)</span></div>
+                    <div class="long-text">${message.content} <span class="trigger">(收起)</span></div>
                 </div>
             </td>
-            <td>{{ message.createdTime|date('Y-n-d H:i')}}</td>
+            <td>${message.createdTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}</td>
         </tr>
-        {% endfor %}
         <#else>
         <tr><td colspan="20"><div class="empty">暂无私信记录</div></td></tr>
-        </#if>
+        </#list>
 
         </tbody>
     </table>
     <div>
         <label class="checkbox-inline"><input type="checkbox" data-role="batch-select"> 全选</label>
-        <button class="btn btn-default btn-sm mlm" data-role="batch-delete"  data-name="私信" data-url="{{ path('admin_message_delete_messages') }}">删除</button>
+        <button class="btn btn-default btn-sm mlm" data-role="batch-delete"  data-name="私信" data-url="${ctx}/admin/message/delete-many">删除</button>
     </div>
 
 </div>

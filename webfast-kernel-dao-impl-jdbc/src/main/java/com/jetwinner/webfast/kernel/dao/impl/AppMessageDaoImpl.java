@@ -25,7 +25,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
     @Override
     public AppModelMessage getMessage(int id) {
         String sql = String.format("SELECT * FROM %s WHERE id = ? LIMIT 1", TABLE_NAME);
-        return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<>(), id);
+        return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<>(AppModelMessage.class), id);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
 
     @Override
     public int addMessage(Map<String, Object> fields) {
-        return insertReturnKey(TABLE_NAME, fields).intValue();
+        return insertMapReturnKey(TABLE_NAME, fields).intValue();
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
 import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.security.UserHasRoleAndPermission;
+import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.ArrayUtil;
 import com.jetwinner.util.EasyStringUtil;
@@ -13,6 +14,7 @@ import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
+import com.jetwinner.webfast.kernel.dao.AppFriendDao;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
@@ -36,6 +38,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final AppUserDao userDao;
     private final AppUserProfileDao userProfileDao;
     private final AppRoleDao roleDao;
+    private final AppFriendDao friendDao;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
     private final FastAppConst appConst;
@@ -44,13 +47,16 @@ public class AppUserServiceImpl implements AppUserService {
     public AppUserServiceImpl(AppUserDao userDao,
                               AppUserProfileDao userProfileDao,
                               AppRoleDao roleDao,
+                              AppFriendDao friendDao,
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService,
-                              FastAppConst appConst, UserAccessControlService userAccessControlService) {
+                              FastAppConst appConst,
+                              UserAccessControlService userAccessControlService) {
 
         this.userDao = userDao;
         this.userProfileDao = userProfileDao;
         this.roleDao = roleDao;
+        this.friendDao = friendDao;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
         this.appConst = appConst;
@@ -302,5 +308,23 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public void clearUserCounter(Integer userId, String name) {
         userDao.clearCounterById(userId, name);
+    }
+
+    @Override
+    public boolean isUsernameAvailable(String username) {
+        if (EasyStringUtil.isBlank(username)) {
+            return false;
+        }
+        AppUser user = userDao.getByUsername(username);
+        return null == user ? false : true;
+    }
+
+    @Override
+    public Set<Object> filterFollowingIds(Integer userId, Set<Object> followingUserIds) {
+        if (EasyStringUtil.isNotBlank(followingUserIds)) {
+            return new HashSet<>(0);
+        }
+        List<Map<String, Object>> friends = friendDao.getFriendsByFromIdAndToIds(userId, followingUserIds);
+        return ArrayToolkit.column(friends, "toId");
     }
 }

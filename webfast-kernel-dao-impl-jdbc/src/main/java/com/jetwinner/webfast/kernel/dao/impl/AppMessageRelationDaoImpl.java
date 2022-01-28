@@ -19,7 +19,7 @@ public class AppMessageRelationDaoImpl extends FastJdbcDaoSupport implements App
 
     @Override
     public int addRelation(Map<String, Object> fields) {
-        return insertReturnKey(TABLE_NAME, fields).intValue();
+        return insertMapReturnKey(TABLE_NAME, fields).intValue();
     }
 
     @Override

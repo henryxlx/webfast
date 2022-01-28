@@ -1,7 +1,5 @@
 package com.jetwinner.webfast.kernel.model;
 
-import java.util.Date;
-
 /**
  *
  * @author x230-think-joomla
@@ -14,10 +12,10 @@ public class AppModelMessageConversation {
     private Integer toId;
     private Integer messageNum;
     private Integer latestMessageUserId;
-    private Date latestMessageTime;
+    private Long latestMessageTime;
     private String latestMessageContent;
     private Integer unreadNum;
-    private Date createdTime;
+    private Long createdTime;
 
     public Integer getId() {
         return id;
@@ -59,11 +57,11 @@ public class AppModelMessageConversation {
         this.latestMessageUserId = latestMessageUserId;
     }
 
-    public Date getLatestMessageTime() {
+    public Long getLatestMessageTime() {
         return latestMessageTime;
     }
 
-    public void setLatestMessageTime(Date latestMessageTime) {
+    public void setLatestMessageTime(Long latestMessageTime) {
         this.latestMessageTime = latestMessageTime;
     }
 
@@ -83,11 +81,11 @@ public class AppModelMessageConversation {
         this.unreadNum = unreadNum;
     }
 
-    public Date getCreatedTime() {
+    public Long getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(Long createdTime) {
         this.createdTime = createdTime;
     }
 }

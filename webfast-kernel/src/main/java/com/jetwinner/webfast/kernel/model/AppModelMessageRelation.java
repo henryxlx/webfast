@@ -8,7 +8,7 @@ public class AppModelMessageRelation {
     private Integer id;
     private Integer conversationId;
     private Integer messageId;
-    private Integer isRead;
+    private String isRead;
 
     public Integer getId() {
         return id;
@@ -34,11 +34,11 @@ public class AppModelMessageRelation {
         this.messageId = messageId;
     }
 
-    public Integer getIsRead() {
+    public String getIsRead() {
         return isRead;
     }
 
-    public void setIsRead(Integer isRead) {
+    public void setIsRead(String isRead) {
         this.isRead = isRead;
     }
 }

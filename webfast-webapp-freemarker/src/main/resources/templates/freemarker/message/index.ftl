@@ -14,16 +14,20 @@
 
             <ul class="media-list conversation-list">
                 <#list conversations! as conversation>
-                <#assign fromUser = users[conversation.fromId] />
-                <li class="media" data-url="/message/conversation/${conversation.id}">
-                    {{ web_macro.user_avatar(fromUser, 'pull-left media-object') }}
+                <#assign fromUser = users['' + conversation.fromId] />
+                <li class="media" data-url="${ctx}/message/conversation/${conversation.id}">
+                    <@web_macro.user_avatar fromUser 'pull-left media-object' />
                     <div class="media-body">
                         <h4 class="media-heading">
                             <#if conversation.latestMessageUserId == appUser.id >
                             发给
                             </#if>
-                            {{ web_macro.user_link(fromUser) }}:
-                            {{conversation.latestMessageContent|plain_text(40)}}
+                            <@web_macro.user_link fromUser />:
+                            <#assign plainTextLength = conversation.latestMessageContent?length - 1 />
+                            <#if plainTextLength gt 40>
+                                <#assign plainTextLength = 40/>
+                            </#if>
+                            ${conversation.latestMessageContent[0..plainTextLength]}
 
                             <#if conversation.unreadNum gt 0>
                             <span class="text-warning">(${conversation.unreadNum}条未读)</span>
@@ -31,7 +35,7 @@
                         </h4>
 
                         <div class="conversation-footer clearfix">
-                            <span class="pull-left">{{ conversation.latestMessageTime|smart_time }}</span>
+                            <span class="pull-left">${conversation.latestMessageTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}</span>
                             <span class="pull-right">共${conversation.messageNum}条</span>
                             <div class="actions pull-right">
                                 <a class="delete-conversation-btn text-muted" href="javascript:" data-url="${ctx}/message/conversation/${conversation.id}/delete">删除</a>

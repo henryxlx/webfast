@@ -1,7 +1,5 @@
 package com.jetwinner.webfast.kernel.model;
 
-import java.util.Date;
-
 /**
  *
  * @author x230-think-joomla
@@ -13,7 +11,7 @@ public class AppModelMessage {
     private Integer fromId;
     private Integer toId;
     private String content;
-    private Date createdTime;
+    private Long createdTime;
 
     public Integer getId() {
         return id;
@@ -47,11 +45,11 @@ public class AppModelMessage {
         this.content = content;
     }
 
-    public Date getCreatedTime() {
+    public Long getCreatedTime() {
         return createdTime;
     }
 
-    public void setCreatedTime(Date createdTime) {
+    public void setCreatedTime(Long createdTime) {
         this.createdTime = createdTime;
     }
 

@@ -25,7 +25,7 @@ public class AppMessageConversationDaoImpl extends FastJdbcDaoSupport implements
 
     @Override
     public Integer getConversationCountByToId(Integer userId) {
-        String sql = String.format("SELECT COUNT(*) FROM %s WHERE  toId = ?", TABLE_NAME);
+        String sql = String.format("SELECT COUNT(*) FROM %s WHERE toId = ?", TABLE_NAME);
         return getJdbcTemplate().queryForObject(sql, Integer.class, userId);
     }
 
@@ -50,7 +50,7 @@ public class AppMessageConversationDaoImpl extends FastJdbcDaoSupport implements
 
     @Override
     public AppModelMessageConversation addConversation(Map<String, Object> fields) {
-        int id = insertReturnKey(TABLE_NAME, fields).intValue();
+        int id = insertMapReturnKey(TABLE_NAME, fields).intValue();
         return getConversation(id);
     }
 

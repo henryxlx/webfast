@@ -44,4 +44,8 @@ public interface AppUserService extends BaseAppUserService {
     void waveUserCounter(Integer userId, String name, int number);
 
     void clearUserCounter(Integer userId, String name);
+
+    boolean isUsernameAvailable(String username);
+
+    Set<Object> filterFollowingIds(Integer userId, Set<Object> followingUserIds);
 }

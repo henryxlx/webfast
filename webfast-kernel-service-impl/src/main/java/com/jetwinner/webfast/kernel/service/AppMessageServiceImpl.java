@@ -8,18 +8,22 @@ import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
+import com.jetwinner.webfast.kernel.model.AppModelMessageRelation;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
  */
 @Service
 public class AppMessageServiceImpl implements AppMessageService {
+
+    private static final String RELATION_ISREAD_ON = "1";
+    private static final String RELATION_ISREAD_OFF = "0";
 
     private final AppUserService userService;
     private final AppMessageDao messageDao;
@@ -97,21 +101,21 @@ public class AppMessageServiceImpl implements AppMessageService {
                     .add("latestMessageTime", message.getCreatedTime()).toMap());
         } else {
             Map<String, Object> fields = new ParamMap()
-                    .add("fromId", toId)
-                    .add("toId", fromId)
+                    .add("fromId", fromId)
+                    .add("toId", toId)
                     .add("messageNum", 1)
                     .add("latestMessageUserId", message.getFromId())
                     .add("latestMessageContent", message.getContent())
                     .add("latestMessageTime", message.getCreatedTime())
                     .add("unreadNum", 0)
-                    .add("createdTime", new Date()).toMap();
+                    .add("createdTime", System.currentTimeMillis()).toMap();
             conversation = conversationDao.addConversation(fields);
         }
 
         Map<String, Object> relation = new ParamMap()
                 .add("conversationId", conversation.getId())
                 .add("messageId", message.getId())
-                .add("isRead", 0).toMap();
+                .add("isRead", "0").toMap();
         relationDao.addRelation(relation);
     }
 
@@ -133,13 +137,93 @@ public class AppMessageServiceImpl implements AppMessageService {
                     .add("latestMessageContent", message.getContent())
                     .add("latestMessageTime", message.getCreatedTime())
                     .add("unreadNum", 1)
-                    .add("createdTime", new Date()).toMap();
+                    .add("createdTime", System.currentTimeMillis()).toMap();
             conversation = conversationDao.addConversation(fields);
         }
         Map<String, Object> relation = new ParamMap()
                 .add("conversationId", conversation.getId())
                 .add("messageId", message.getId())
-                .add("isRead", 0).toMap();
+                .add("isRead", "0").toMap();
         relationDao.addRelation(relation);
+    }
+
+    @Override
+    public AppModelMessageConversation getConversation(Integer conversationId) {
+        return conversationDao.getConversation(conversationId);
+    }
+
+    @Override
+    public int deleteConversationMessage(Integer conversationId, Integer messageId) {
+        AppModelMessageRelation relation = relationDao.getRelationByConversationIdAndMessageId(conversationId, messageId);
+        AppModelMessageConversation conversation = conversationDao.getConversation(conversationId);
+
+        if (RELATION_ISREAD_OFF.equals(relation.getIsRead())) {
+            safelyUpdateConversationMessageNum(conversation);
+            safelyUpdateConversationUnreadNum(conversation);
+        } else {
+            safelyUpdateConversationMessageNum(conversation);
+        }
+
+        int nums = relationDao.deleteConversationMessage(conversationId, messageId);
+        int relationCount = relationDao.getRelationCountByConversationId(conversationId);
+        if (relationCount == 0) {
+            conversationDao.deleteConversation(conversationId);
+        }
+        return nums;
+    }
+
+    @Override
+    public int getConversationMessageCount(Integer conversationId) {
+        return relationDao.getRelationCountByConversationId(conversationId);
+    }
+
+    @Override
+    public int deleteConversation(Integer conversationId) {
+        relationDao.deleteRelationByConversationId(conversationId);
+        return conversationDao.deleteConversation(conversationId);
+    }
+
+    private void safelyUpdateConversationMessageNum(AppModelMessageConversation conversation) {
+        if (conversation.getMessageNum() <= 0) {
+            conversationDao.updateConversation(conversation.getId(),
+                    new ParamMap().add("messageNum", 0).toMap());
+        } else {
+            conversationDao.updateConversation(conversation.getId(),
+                    new ParamMap().add("messageNum", conversation.getMessageNum() - 1).toMap());
+        }
+    }
+
+    private void safelyUpdateConversationUnreadNum(AppModelMessageConversation conversation) {
+        if (conversation.getMessageNum() <= 0) {
+            conversationDao.updateConversation(conversation.getId(),
+                    new ParamMap().add("unreadNum", 0).toMap());
+        } else {
+            conversationDao.updateConversation(conversation.getId(),
+                    new ParamMap().add("unreadNum", conversation.getUnreadNum() - 1).toMap());
+        }
+    }
+
+    @Override
+    public int  markConversationRead(Integer conversationId) {
+        AppModelMessageConversation conversation = conversationDao.getConversation(conversationId);
+        if (conversation == null) {
+            throw new RuntimeGoingException(String.format("私信会话#%d不存在。", conversationId));
+        }
+        int updatedConversation = conversationDao.updateConversation(conversation.getId(), new ParamMap().add("unreadNum", 0).toMap());
+        relationDao.updateRelationIsReadByConversationId(conversationId, new ParamMap().add("isRead", "1").toMap());
+        return updatedConversation;
+    }
+
+    @Override
+    public List<AppModelMessage> findConversationMessages(Integer conversationId, int start, int limit) {
+        List<AppModelMessageRelation> relations = relationDao.findRelationsByConversationId(conversationId, start, limit);
+        List<AppModelMessage> messages = messageDao.findMessagesByIds(
+                relations.stream().map(AppModelMessageRelation::getMessageId).collect(Collectors.toList()));
+        sortMessages(messages);
+        return messages;
+    }
+
+    private void sortMessages(List<AppModelMessage> messages) {
+        messages.sort((a, b) -> Long.compare(b.getCreatedTime(), a.getCreatedTime()));
     }
 }
