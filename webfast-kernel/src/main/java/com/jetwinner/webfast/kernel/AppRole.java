@@ -1,9 +1,9 @@
-package com.jetwinner.webfast.kernel.model;
+package com.jetwinner.webfast.kernel;
 
 /**
  * @author xulixin
  */
-public class AppModelRole {
+public class AppRole {
 
     private Integer id;
     private String label;

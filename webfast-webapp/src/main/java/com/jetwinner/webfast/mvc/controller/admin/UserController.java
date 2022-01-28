@@ -6,12 +6,12 @@ import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.image.ImageSize;
 import com.jetwinner.webfast.image.ImageUtil;
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -156,8 +156,8 @@ public class UserController {
     @GetMapping("/admin/user/{id}/roles")
     public String rolePage(@PathVariable Integer id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        List<AppModelRole> list = roleService.listAllRole();
-        Map<String, String> rolesMap = list.stream().collect(Collectors.toMap(AppModelRole::getRoleName, AppModelRole::getLabel));
+        List<AppRole> list = roleService.listAllRole();
+        Map<String, String> rolesMap = list.stream().collect(Collectors.toMap(AppRole::getRoleName, AppRole::getLabel));
         model.addAttribute("rolesMap", rolesMap);
         return "/admin/user/roles-modal";
     }

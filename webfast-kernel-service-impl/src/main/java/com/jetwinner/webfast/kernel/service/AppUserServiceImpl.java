@@ -12,6 +12,7 @@ import com.jetwinner.util.FastDirectoryUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.image.ImageUtil;
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.dao.AppFriendDao;
@@ -20,7 +21,6 @@ import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
@@ -101,7 +101,7 @@ public class AppUserServiceImpl implements AppUserService {
         if (!userPermissions.isEmpty()) {
             permissions.addAll(userPermissions);
         }
-        List<AppModelRole> roles = roleDao.listAll().stream()
+        List<AppRole> roles = roleDao.listAll().stream()
                 .filter(r -> userRoles.contains(r.getRoleName())).collect(Collectors.toList());
         roles.forEach(role -> {
             Set<String> rolePermissions = strToSet(role.getPermissionData());

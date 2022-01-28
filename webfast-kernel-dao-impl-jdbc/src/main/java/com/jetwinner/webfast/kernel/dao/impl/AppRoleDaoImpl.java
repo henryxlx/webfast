@@ -2,9 +2,9 @@ package com.jetwinner.webfast.kernel.dao.impl;
 
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -20,8 +20,8 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     private static final String TABLE_NAME = "app_role";
 
     @Override
-    public List<AppModelRole> listAll() {
-        return getJdbcTemplate().query("SELECT * FROM " + TABLE_NAME, new BeanPropertyRowMapper<>(AppModelRole.class));
+    public List<AppRole> listAll() {
+        return getJdbcTemplate().query("SELECT * FROM " + TABLE_NAME, new BeanPropertyRowMapper<>(AppRole.class));
     }
 
     @Override
@@ -32,14 +32,14 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     }
 
     @Override
-    public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
+    public List<AppRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")
                 .orderBy(orderByBuilder)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions,
-                new BeanPropertyRowMapper<>(AppModelRole.class));
+                new BeanPropertyRowMapper<>(AppRole.class));
     }
 
     @Override
@@ -63,9 +63,9 @@ public class AppRoleDaoImpl extends FastJdbcDaoSupport implements AppRoleDao {
     }
 
     @Override
-    public AppModelRole getById(Integer id) {
+    public AppRole getById(Integer id) {
         return getJdbcTemplate().query("SELECT * FROM app_role WHERE id = ?",
-                        new BeanPropertyRowMapper<>(AppModelRole.class), id)
+                        new BeanPropertyRowMapper<>(AppRole.class), id)
                 .stream().findFirst().orElse(null);
     }
 

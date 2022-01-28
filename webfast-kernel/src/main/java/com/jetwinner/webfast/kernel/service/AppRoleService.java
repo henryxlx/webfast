@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 
 import java.util.List;
 import java.util.Map;
@@ -11,11 +11,11 @@ import java.util.Map;
  */
 public interface AppRoleService {
 
-    List<AppModelRole> listAllRole();
+    List<AppRole> listAllRole();
 
     int searchRolesCount(Map<String, Object> conditions);
 
-    List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
+    List<AppRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit);
 
     void addRole(Map<String, Object> mapRole);
 
@@ -23,7 +23,7 @@ public interface AppRoleService {
 
     int deleteRoleById(Integer id);
 
-    AppModelRole getRoleById(Integer id);
+    AppRole getRoleById(Integer id);
 
     Map<String, Object> getRoleMapById(Integer id);
 

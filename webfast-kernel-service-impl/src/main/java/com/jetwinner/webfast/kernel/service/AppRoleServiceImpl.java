@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
-    public List<AppModelRole> listAllRole() {
+    public List<AppRole> listAllRole() {
         return roleDao.listAll();
     }
 
@@ -35,7 +35,7 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
-    public List<AppModelRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
+    public List<AppRole> searchRoles(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
         return roleDao.searchRoles(conditions, orderByBuilder, start, limit);
     }
 
@@ -63,7 +63,7 @@ public class AppRoleServiceImpl implements AppRoleService {
     }
 
     @Override
-    public AppModelRole getRoleById(Integer id) {
+    public AppRole getRoleById(Integer id) {
         return roleDao.getById(id);
     }
 

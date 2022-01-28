@@ -4,11 +4,11 @@ import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
-import com.jetwinner.webfast.kernel.model.AppModelRole;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -50,12 +50,12 @@ public class RoleController {
         }
         Paginator paginator = new Paginator(request, roleService.searchRolesCount(conditions), 30);
 
-        List<AppModelRole> roles = roleService.searchRoles(conditions, OrderBy.builder().addDesc("createdTime"),
+        List<AppRole> roles = roleService.searchRoles(conditions, OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
 
-        Set<Object> userIds = ArrayToolkitOnJava8.column(roles, AppModelRole::getCreatedUserId);
+        Set<Object> userIds = ArrayToolkitOnJava8.column(roles, AppRole::getCreatedUserId);
         model.addAttribute("users", userService.findUsersByIds(userIds));
         model.addAttribute("roles", roles);
         model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);
