@@ -39,14 +39,14 @@ CREATE TABLE `app_block_history` (
 -- ----------------------------
 DROP TABLE IF EXISTS `app_category`;
 CREATE TABLE `app_category` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类ID',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类ID',
   `code` varchar(64) NOT NULL DEFAULT '' COMMENT '分类编码',
   `name` varchar(255) NOT NULL COMMENT '分类名称',
   `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
   `path` varchar(255) NOT NULL DEFAULT '' COMMENT '分类完整路径',
   `weight` int(11) NOT NULL DEFAULT '0' COMMENT '分类权重',
-  `groupId` int(10) unsigned NOT NULL COMMENT '分类组ID',
-  `parentId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父分类ID',
+  `groupId` int(11) unsigned NOT NULL COMMENT '分类组ID',
+  `parentId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父分类ID',
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uri` (`code`)
@@ -69,7 +69,7 @@ CREATE TABLE `app_category_group` (
 -- ----------------------------
 DROP TABLE IF EXISTS `app_content`;
 CREATE TABLE `app_content` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容ID',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容ID',
   `title` varchar(255) NOT NULL COMMENT '内容标题',
   `editor` enum('richeditor','none') NOT NULL DEFAULT 'richeditor' COMMENT '编辑器选择类型字段',
   `type` varchar(255) NOT NULL COMMENT '内容类型',
@@ -79,13 +79,13 @@ CREATE TABLE `app_content` (
   `picture` varchar(255) NOT NULL DEFAULT '' COMMENT '内容头图',
   `template` varchar(255) NOT NULL DEFAULT '' COMMENT '内容模板',
   `status` enum('published','unpublished','trash') NOT NULL COMMENT '内容状态',
-  `categoryId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容分类ID',
+  `categoryId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '内容分类ID',
   `tagIds` tinytext COMMENT '内容标签ID',
-  `hits` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '内容点击量',
-  `featured` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '是否头条',
+  `hits` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '内容点击量',
+  `featured` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '是否头条',
   `promoted` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否推荐',
   `sticky` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否置顶',
-  `userId` int(10) unsigned NOT NULL COMMENT '发布人ID',
+  `userId` int(11) unsigned NOT NULL COMMENT '发布人ID',
   `extraField` text COMMENT '扩展字段',
   `publishedTime` bigint NOT NULL DEFAULT '0' COMMENT '发布时间',
   `createdTime` bigint  NOT NULL COMMENT '创建时间',
@@ -93,12 +93,24 @@ CREATE TABLE `app_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面内容表';
 
 -- ----------------------------
+-- Table structure for `app_friend`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_friend`;
+CREATE TABLE `app_friend` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '关注ID',
+  `fromId` int(11) unsigned NOT NULL COMMENT '关注人ID',
+  `toId` int(11) unsigned NOT NULL COMMENT '被关注人ID',
+  `createdTime` int(11) unsigned NOT NULL COMMENT '关注时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注表';
+
+-- ----------------------------
 -- Table structure for `app_log`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_log`;
 CREATE TABLE `app_log` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统日志ID',
-  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '操作人ID',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统日志ID',
+  `userId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '操作人ID',
   `module` varchar(32) NOT NULL COMMENT '日志所属模块',
   `action` varchar(32) NOT NULL COMMENT '日志所属操作类型',
   `message` text NOT NULL COMMENT '日志内容',
@@ -111,6 +123,48 @@ CREATE TABLE `app_log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='系统服务日志表';
 
 -- ----------------------------
+-- Table structure for `app_message`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_message`;
+CREATE TABLE `app_message` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '私信Id',
+  `fromId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发信人Id',
+  `toId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '收信人Id',
+  `content` text NOT NULL COMMENT '私信内容',
+  `createdTime` bigint unsigned NOT NULL DEFAULT '0' COMMENT '私信发送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_message_conversation`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_message_conversation`;
+CREATE TABLE `app_message_conversation` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '会话Id',
+  `fromId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '发信人Id',
+  `toId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '收信人Id',
+  `messageNum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '此对话的信息条数',
+  `latestMessageUserId` int(11) unsigned DEFAULT NULL COMMENT '最后发信人ID',
+  `latestMessageTime` bigint unsigned NOT NULL COMMENT '最后发信时间',
+  `latestMessageContent` text NOT NULL COMMENT '最后发信内容',
+  `unreadNum` int(11) unsigned NOT NULL COMMENT '未读数量',
+  `createdTime` bigint unsigned NOT NULL COMMENT '会话创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_message_relation`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_message_relation`;
+CREATE TABLE `app_message_relation` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '消息关联ID',
+  `conversationId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关联的会话ID',
+  `messageId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '关联的消息ID',
+  `isRead` enum('0','1') NOT NULL DEFAULT '0' COMMENT '是否已读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for `app_navigation`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_navigation`;
@@ -119,7 +173,7 @@ CREATE TABLE `app_navigation` (
   `name` varchar(255) NOT NULL COMMENT '导航名称',
   `url` varchar(300) NOT NULL COMMENT '链接地址',
   `sequence` tinyint(4) unsigned NOT NULL COMMENT '显示顺序',
-  `parentId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '父导航ID',
+  `parentId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父导航ID',
   `type` varchar(30) NOT NULL COMMENT '类型',
   `isOpen` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认1，为开启',
   `isNewWin` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认为1,另开窗口',
@@ -133,10 +187,10 @@ CREATE TABLE `app_navigation` (
 -- ----------------------------
 DROP TABLE IF EXISTS `app_permission`;
 CREATE TABLE `app_permission` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(32) NOT NULL COMMENT '角色文字标签',
   `permissionKey` varchar(32) NOT NULL COMMENT '角色名称',
-  `createdUserId` int(10) unsigned NOT NULL COMMENT '创建用户ID',
+  `createdUserId` int(11) unsigned NOT NULL COMMENT '创建用户ID',
   `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatedTime` bigint NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -152,11 +206,11 @@ INSERT INTO `app_permission` VALUES ('1', '访问后端管理', 'ACCESS_BACKEND'
 -- ----------------------------
 DROP TABLE IF EXISTS `app_role`;
 CREATE TABLE `app_role` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `label` varchar(32) NOT NULL COMMENT '角色文字标签',
   `roleName` varchar(32) NOT NULL COMMENT '角色名称',
   `permissionData` text COMMENT '角色权限配置',
-  `createdUserId` int(10) unsigned NOT NULL COMMENT '创建用户ID',
+  `createdUserId` int(11) unsigned NOT NULL COMMENT '创建用户ID',
   `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '创建时间',
   `updatedTime` bigint NOT NULL DEFAULT '0' COMMENT '更新时间',
   PRIMARY KEY (`id`)
@@ -175,7 +229,7 @@ INSERT INTO `app_role` VALUES ('4', '教师', 'ROLE_TEACHER', '', '1', '15157193
 -- ----------------------------
 DROP TABLE IF EXISTS `app_setting`;
 CREATE TABLE `app_setting` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统设置ID',
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '系统设置ID',
   `name` varchar(64) NOT NULL DEFAULT '' COMMENT '系统设置名',
   `value` longblob COMMENT '系统设置值',
   PRIMARY KEY (`id`),
@@ -216,7 +270,7 @@ CREATE TABLE `app_user` (
   `promoted` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为推荐',
   `promotedTime` bigint NOT NULL DEFAULT '0' COMMENT '推荐时间',
   `locked` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否被禁止',
-  `lockDeadline` int(10) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
+  `lockDeadline` int(11) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
   `consecutivePasswordErrorTimes` int(11) NOT NULL DEFAULT '0' COMMENT '帐号密码错误次数',
   `lastPasswordFailTime` bigint NOT NULL DEFAULT '0',
   `loginTime` bigint NOT NULL DEFAULT '0' COMMENT '最后登录时间',
@@ -224,8 +278,8 @@ CREATE TABLE `app_user` (
   `loginSessionId` varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录会话ID',
   `approvalTime` bigint NOT NULL DEFAULT '0' COMMENT '实名认证时间',
   `approvalStatus` enum('unapprove','approving','approved','approve_fail') NOT NULL DEFAULT 'unapprove' COMMENT '实名认证状态',
-  `newMessageNum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
-  `newNotificationNum` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
+  `newMessageNum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
+  `newNotificationNum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
   `createdIp` varchar(64) NOT NULL DEFAULT '' COMMENT '注册IP',
   `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '注册时间',
   PRIMARY KEY (`id`),
@@ -244,7 +298,7 @@ INSERT INTO `app_user` VALUES ('2', 'test@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CF
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_profile`;
 CREATE TABLE `app_user_profile` (
-  `id` int(10) unsigned NOT NULL COMMENT '用户ID',
+  `id` int(11) unsigned NOT NULL COMMENT '用户ID',
   `truename` varchar(255) NOT NULL DEFAULT '' COMMENT '真实姓名',
   `idcard` varchar(24) NOT NULL DEFAULT '' COMMENT '身份证号码',
   `gender` enum('male','female','secret') NOT NULL DEFAULT 'secret' COMMENT '性别',
