@@ -1,3 +1,17 @@
+<#macro user_avatar user class>
+    <a class="user-link user-avatar-link ${class!}" href="${ctx}/user/${user.id}">
+        <img src="${webExtPack.getDefaultPath('avatar', user.smallAvatar, '', false)}">
+    </a>
+</#macro>
+
+<#macro user_link user class='N/A'>
+    <#if user??>
+        <a <#if class != 'N/A'>class="${class}"</#if> href="${ctx}/user/${user.id}">${user.username}</a>
+    <#else>
+        <span class="text-muted">用户已删除</span>
+    </#if>
+</#macro>
+
 <#macro flash_messages>
     <#list Session.flashbag! as type, flashMessages>
         <#list flashMessages! as flashMessage>
