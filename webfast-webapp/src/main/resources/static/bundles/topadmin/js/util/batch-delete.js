@@ -27,7 +27,8 @@ define(function(require, exports, module) {
 
             Notify.info('正在删除' + name + '，请稍等。', 60);
 
-            $.post($btn.data('url'), {ids:ids}, function(){
+            $.ajaxSetup({ contentType: "application/json; charset=utf-8" });
+            $.post($btn.data('url'), JSON.stringify(ids), function(){
             	window.location.reload();
             });
 
