@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.toolbag.HtmlToolkit;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.dao.AppMessageConversationDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageRelationDao;
@@ -221,6 +222,29 @@ public class AppMessageServiceImpl implements AppMessageService {
                 relations.stream().map(AppModelMessageRelation::getMessageId).collect(Collectors.toList()));
         sortMessages(messages);
         return messages;
+    }
+
+    @Override
+    public boolean deleteMessagesByIds(String[] ids) {
+        if (ids == null || ids.length == 0) {
+            throw new RuntimeGoingException("Please select message item !");
+        }
+        for(String id : ids) {
+            int messageId = ValueParser.parseInt(id);
+            AppModelMessage message = messageDao.getMessage(messageId);
+            AppModelMessageConversation conversation =
+                    conversationDao.getConversationByFromIdAndToId(message.getFromId(), message.getToId());
+            if(conversation != null){
+                deleteConversationMessage(conversation.getId(), message.getId());
+            }
+
+            conversation = conversationDao.getConversationByFromIdAndToId(message.getToId(), message.getFromId());
+            if(conversation != null){
+                deleteConversationMessage(conversation.getId(), message.getId());
+            }
+            messageDao.deleteMessage(messageId);
+        }
+        return true;
     }
 
     private void sortMessages(List<AppModelMessage> messages) {

@@ -21,4 +21,6 @@ public interface AppMessageDao {
     int addMessage(Map<String, Object> fields);
 
     List<AppModelMessage> findMessagesByIds(List<Integer> ids);
+
+    void deleteMessage(Integer id);
 }

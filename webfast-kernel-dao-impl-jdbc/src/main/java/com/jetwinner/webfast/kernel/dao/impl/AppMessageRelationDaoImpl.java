@@ -43,7 +43,7 @@ public class AppMessageRelationDaoImpl extends FastJdbcDaoSupport implements App
     @Override
     public AppModelMessageRelation getRelationByConversationIdAndMessageId(Integer conversationId, Integer messageId) {
         String sql = String.format("SELECT * FROM %s WHERE conversationId = ? AND messageId = ?", TABLE_NAME);
-        return getJdbcTemplate().queryForObject(sql, new BeanPropertyRowMapper<>(), conversationId, messageId);
+        return queryForObject(sql, new BeanPropertyRowMapper<>(AppModelMessageRelation.class), conversationId, messageId);
     }
 
     @Override
@@ -55,6 +55,6 @@ public class AppMessageRelationDaoImpl extends FastJdbcDaoSupport implements App
     public List<AppModelMessageRelation> findRelationsByConversationId(Integer conversationId, int start, int limit) {
         String sql = String.format("SELECT * FROM %s WHERE conversationId = ? ORDER BY messageId DESC LIMIT %d, %d",
                 TABLE_NAME, start, limit);
-        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(), conversationId);
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppModelMessageRelation.class), conversationId);
     }
 }

@@ -73,6 +73,11 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
         return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppModelMessage.class), ids.toArray());
     }
 
+    @Override
+    public void deleteMessage(Integer id) {
+        getJdbcTemplate().update("DELETE FROM app_message WHERE id = ?", id);
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
         return new DynamicQueryBuilder(conditions)
                 .from(TABLE_NAME)

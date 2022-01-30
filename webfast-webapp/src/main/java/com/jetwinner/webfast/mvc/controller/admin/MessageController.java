@@ -12,6 +12,9 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -58,6 +61,17 @@ public class MessageController {
         model.addAttribute("messages", messages);
         model.addAttribute("paginator", paginator);
         return "/admin/message/index";
+    }
+
+    @PostMapping("/admin/message/delete-many")
+    @ResponseBody
+    public Map<String, Object> deleteManyMessagesAction(@RequestBody String[] ids) {
+        boolean result = messageService.deleteMessagesByIds(ids);
+        if(result){
+            return new ParamMap().add("status", "success").toMap();
+        } else {
+            return new ParamMap().add("status", "failed").toMap();
+        }
     }
 
     private Map<String, Object> convertConditions(Map<String, Object> conditions) {
