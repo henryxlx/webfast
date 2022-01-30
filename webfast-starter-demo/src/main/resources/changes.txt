@@ -3,6 +3,16 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.3.9: @2022-01-30
+* 完成消息处理后端删除功能
+* JQuery的Ajax方式POST提交$post需要在执行之前设置请求类型，否则SpringMVC不能识别
+  $.ajaxSetup({ contentType: "application/json; charset=utf-8" });
+  另外JavaScript的JSON提交必须将JavaScript对象转换成JSON字符串的方式，比如：
+  ids = [1, 2, 3];
+  $.post(url, JSON.stringify(ids), callback);
+  对应在SpringMVC的Controller方法参数中使用@requestBody注解
+  public Boolean deleteManyMessagesAction(@RequestBody String[] ids) {...}
+
 0.3.8: @2022-01-28
 * 消息处理的服务与数据访问功能重新实现，后台管理端私信管理功能实现
 
