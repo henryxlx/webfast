@@ -294,6 +294,20 @@ INSERT INTO `app_user` VALUES ('1', 'super@hotmail.com', '', 'FxnzDXLOO8yqOqg64R
 INSERT INTO `app_user` VALUES ('2', 'test@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=', 'FYMMdLVItihBsvfsp+ImFg==', 'test', '', '', 'default', '', '', '', '0', '1', '|ROLE_USER|', '', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723000');
 
 -- ----------------------------
+-- Table structure for `app_user_field`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user_field`;
+CREATE TABLE `app_user_field` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `fieldName` varchar(100) NOT NULL DEFAULT '',
+  `title` varchar(1024) NOT NULL DEFAULT '',
+  `seq` int(11) unsigned NOT NULL,
+  `enabled` int(11) unsigned NOT NULL DEFAULT '0',
+  `createdTime` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for `app_user_profile`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_profile`;
