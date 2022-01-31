@@ -33,7 +33,7 @@ public class FlashBag {
     }
 
     public FlashBag() {
-        this.storageKey = "_sf2_flashes";
+        this.storageKey = DEFAULT_SESSION_KEY;
     }
 
     public Map<String, List<String>> toMap() {
@@ -66,6 +66,12 @@ public class FlashBag {
 
     public Map<String, List<String>> peekAll() {
         return this.flashes;
+    }
+
+    public Map<String, List<String>> all() {
+        Map<String, List<String>> retMap = peekAll();
+        this.flashes = new HashMap<>(0);
+        return retMap;
     }
 
     public void set(String type, String messages) {
