@@ -24,7 +24,7 @@
             <label class="col-md-2 control-label" >昵称</label>
             <div class="col-md-7 controls">
                 <div class="control-text">
-                    ${appUser.nickname!'佚名'} <#if setting('user_partner.nickname_enabled')??> <a href="${ctx}/setting/nickname">修改</a> </#if></div>
+                    ${appUser.username!'佚名'} <#if setting('user_partner.username_enabled')??> <a href="${ctx}/setting/username">修改</a> </#if></div>
             </div>
         </div>
 
@@ -85,7 +85,7 @@
             <label for="profile_mobile" class="col-md-2 control-label">手机号码</label>
             <div class="col-md-7 controls">
                 <div class="control-text">
-                    {{ blur_phone_number(user.verifiedMobile|default('')) }}
+                    ${blur_phone_number(user.verifiedMobile!'')}
                     <small class="text-success">(已绑定)</small>
                 </div>
             </div>
@@ -187,7 +187,7 @@
 
         <#if fields??>
             <hr>
-            {% for field in fields %}
+            <#list fields as field>
             {% if field.type=="text" %}
             <div class="form-group">
                 <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
@@ -229,7 +229,7 @@
                 </div>
             </div>
             {% endif %}
-            {% endfor %}
+            </#list>
         </#if>
 
         <div class="row">
