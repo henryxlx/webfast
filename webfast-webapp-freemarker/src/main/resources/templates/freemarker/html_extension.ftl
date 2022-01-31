@@ -73,3 +73,13 @@
 <#function convertIP ipAddress>
     <#return webExtPack.getConvertIp(ipAddress) />
 </#function>
+
+<#function blur_phone_number phoneNum>
+    <#local len = phoneNum?length />
+    <#if len lt 8><#return phoneNum/></#if>
+    <#local head = phoneNum[0..3] />
+    <#local endPos = len - 1/>
+    <#local startPos = endPos - 3 />
+    <#local tail = phoneNum[startPos..endPos] />
+    <#return head + '****' + tail />
+</#function>
