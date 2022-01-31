@@ -13,11 +13,13 @@
 </#macro>
 
 <#macro flash_messages>
-    <#list Session.flashbag! as type, flashMessages>
-        <#list flashMessages! as flashMessage>
-            <div class="alert alert-${type!}">${flashMessage!}</div>
+    <#if Session.flashbag??>
+        <#list Session.flashbag.all()! as type, flashMessages>
+            <#list flashMessages! as flashMessage>
+                <div class="alert alert-${type!}">${flashMessage!}</div>
+            </#list>
         </#list>
-    </#list>
+    </#if>
 </#macro>
 
 <#macro bytesToSize bytes>
