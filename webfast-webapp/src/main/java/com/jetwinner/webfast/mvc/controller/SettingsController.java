@@ -41,13 +41,17 @@ public class SettingsController {
 
         if ("POST".equals(request.getMethod())) {
             Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), profile);
-            if (!(StringUtils.hasLength(user.getVerifiedMobile()) &&
-                    EasyStringUtil.isNotBlank(profile.get("mobile")))) {
+            if (mapForUpdate != null && mapForUpdate.size() > 0) {
+                if (!(StringUtils.hasLength(user.getVerifiedMobile()) &&
+                        EasyStringUtil.isNotBlank(profile.get("mobile")))) {
 
-                userService.updateUserProfile(user.getId(), mapForUpdate);
-                FlashMessageUtil.setFlashMessage("success", "基础信息保存成功。", request.getSession());
+                    userService.updateUserProfile(user.getId(), mapForUpdate);
+                    FlashMessageUtil.setFlashMessage("success", "基础信息保存成功。", request.getSession());
+                } else {
+                    FlashMessageUtil.setFlashMessage("danger", "不能修改已绑定的手机。", request.getSession());
+                }
             } else {
-                FlashMessageUtil.setFlashMessage("danger", "不能修改已绑定的手机。", request.getSession());
+                FlashMessageUtil.setFlashMessage("danger", "没有可更新的数据。", request.getSession());
             }
             return "redirect:/settings";
         }
