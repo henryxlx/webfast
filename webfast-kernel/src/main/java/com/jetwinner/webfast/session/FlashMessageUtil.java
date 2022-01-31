@@ -12,7 +12,13 @@ public final class FlashMessageUtil {
     }
 
     private static FlashBag getFlashBag(HttpSession session) {
-        return (FlashBag) session.getAttribute(FlashBag.DEFAULT_SESSION_KEY);
+        String flashBagKey = "flashbag";
+        FlashBag flashBag = (FlashBag) session.getAttribute(flashBagKey);
+        if (flashBag == null) {
+            flashBag = new FlashBag();
+            session.setAttribute(flashBagKey, flashBag);
+        }
+        return flashBag;
     }
     public static void setFlashMessage(String level, String message, HttpSession session) {
         getFlashBag(session).add(level, message);
