@@ -27,6 +27,13 @@ public class UserController implements BlockRenderController {
         return "/user/user-home";
     }
 
+    @RequestMapping("/user/{id}/{pageNav}")
+    public String userHomeTagPage(@PathVariable Integer id, @PathVariable String pageNav, Model model) {
+        model.addAttribute("pageNav", pageNav);
+        model.addAttribute("user", userService.getUser(id));
+        return "/user/user-home";
+    }
+
     @GetMapping("/user/headerBlock")
     @BlockRenderMethod
     public String showHeaderBlock() {
