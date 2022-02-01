@@ -1,6 +1,5 @@
 package com.jetwinner.webfast.kernel;
 
-import com.jetwinner.servlet.RequestContextPathUtil;
 import org.springframework.web.bind.ServletRequestUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -69,7 +68,7 @@ public class Paginator {
 
     public void setBaseUrl(HttpServletRequest request) {
         StringBuilder template = new StringBuilder();
-        template.append(RequestContextPathUtil.createBaseUrl(request));
+        template.append(request.getRequestURL());
 
         boolean firstPlace = true;
         Enumeration<String> paramKeys = request.getParameterNames();
@@ -171,8 +170,14 @@ public class Paginator {
      * return array an array of elements from start to end, inclusive.
      */
     private int[] range(int start, int end) {
+        if (end >= start) {
+            end++;
+        } else {
+            int t = end;
+            end = start + 1;
+            start = t;
+        }
         int[] array = new int[end - start];
-        end++;
         for (int i = 0, k = start; k < end; i++, k++) {
             array[i] = k;
         }
