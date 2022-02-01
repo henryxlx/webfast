@@ -51,12 +51,12 @@
                             </p>
                         <#elseif  appUser.approvalStatus == 'unapprove'>
                             <p class="text-warning" >
-                                您尚未实名认证，<strong><a href="${ctx}/setting/approval-submit">点此认证</a>。
+                                您尚未实名认证，<strong><a href="${ctx}/settings/approval/submit">点此认证</a>。
                                 </strong>
                             </p>
                         <#elseif appUser.approvalStatus == 'approve_fail'>
                             <p class="text-danger" >
-                                实名认证审核尚未通过，请参照通知中的信息，修改后重新<strong><a href="${ctx}/setting/approval-submit">认证。</a>
+                                实名认证审核尚未通过，请参照通知中的信息，修改后重新<strong><a href="${ctx}/settings/approval/submit">认证。</a>
                                 </strong>
                             </p>
                         </#if>

@@ -93,6 +93,26 @@ public class SettingsController {
         return VIEW_PATH + "/profile";
     }
 
+    @GetMapping("/approval/submit")
+    public String approvalSubmitPage() {
+        return "settings/approval";
+    }
+
+    @PostMapping("/approval/submit")
+    public ModelAndView approvalSubmitAction() {
+//        AppUser user = AppUser.getCurrentUser(request);
+//        String faceImg = $request->files->get('faceImg');
+//        String backImg = $request->files->get('backImg');
+//        if (!FileToolkit.isImageFile(backImg) || !FileToolkit.isImageFile(faceImg)) {
+//            return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, bmp,gif, png格式的文件。");
+//        }
+
+        String directory = appConst.getUploadPrivateDirectory() + "/approval";
+//        userService.applyUserApproval(user.getId(), ParamMap.toPostDataMap(request), faceImg, backImg, directory);
+//        FlashMessageUtil.setFlashMessage("success", "实名认证提交成功！", request);
+        return new ModelAndView("redirect:/settings");
+    }
+
     @GetMapping("/avatar")
     public String avatarPage(HttpServletRequest request, Model model) {
         AppUser user = AppUser.getCurrentUser(request);
