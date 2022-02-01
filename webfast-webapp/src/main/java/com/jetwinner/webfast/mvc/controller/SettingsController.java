@@ -1,7 +1,11 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.image.ImageSize;
+import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -10,9 +14,16 @@ import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +38,15 @@ public class SettingsController {
 
     private final AppUserService userService;
     private final AppUserFieldService userFieldService;
+    private final FastAppConst appConst;
 
-    public SettingsController(AppUserService userService, AppUserFieldService userFieldService) {
+    public SettingsController(AppUserService userService,
+                              AppUserFieldService userFieldService,
+                              FastAppConst appConst) {
+
         this.userService = userService;
         this.userFieldService = userFieldService;
+        this.appConst = appConst;
     }
 
     @RequestMapping("")
@@ -77,10 +93,69 @@ public class SettingsController {
         return VIEW_PATH + "/profile";
     }
 
-    @RequestMapping("/avatar")
+    @GetMapping("/avatar")
     public String avatarPage(HttpServletRequest request, Model model) {
-        model.addAttribute("user", BaseControllerHelper.getCurrentUser(request));
+        AppUser user = AppUser.getCurrentUser(request);
+//        boolean hasPartnerAuth = authService.hasPartnerAuth();
+//        model.addAttribute("partnerAvatar", hasPartnerAuth ? authService.getPartnerAvatar(user.getId(), "big") : null);
+        model.addAttribute("user", userService.getUser(user.getId()));
+        model.addAttribute("fromCourse", request.getParameter("fromCourse"));
         return VIEW_PATH + "/avatar";
+    }
+
+    @PostMapping("/avatar")
+    public ModelAndView avatarAction(@RequestParam(value = "avatar", required = false) MultipartFile file,
+                             HttpServletRequest request, Model model) {
+
+        AppUser user = AppUser.getCurrentUser(request);
+        if (file == null) {
+            return BaseControllerHelper.createMessageResponse("error", "没有可供上传的文件，请选择文件。");
+        }
+        if (!FileToolkit.isImageFile(file.getOriginalFilename())) {
+            return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, gif, png格式的文件。");
+        }
+
+        String filenamePrefix = String.format("user_%d_", user.getId());
+        String hash = FileToolkit.hashFilename(filenamePrefix);
+        String ext = FileToolkit.getFileExtension(file.getOriginalFilename());
+        String filename = filenamePrefix + hash + "!"  + ext;
+
+        String directory = appConst.getUploadPublicDirectory() + "/tmp/";
+        try {
+            file.transferTo(new File(directory + filename));
+        } catch (IOException e) {
+            return BaseControllerHelper.createMessageResponse("error", "图片上传失败，请检查上传目录或文件是否存在。");
+        }
+
+        ModelAndView mav = new ModelAndView("redirect:/settings/avatar-crop");
+        mav.addObject("filename", filename);
+        return mav;
+    }
+
+    @GetMapping("/avatar-crop")
+    public ModelAndView avatarCropPage(String filename) {
+        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
+        ImageSize imageSize = null;
+        try {
+            imageSize = ImageUtil.getNaturalSize(new File(pictureFilePath));
+        } catch (Exception e) {
+            return BaseControllerHelper.createMessageResponse("error", "该文件为非图片格式文件，请重新上传。");
+        }
+
+        ModelAndView mav = new ModelAndView(VIEW_PATH + "/avatar-crop");
+        mav.addObject("naturalSize", imageSize);
+        mav.addObject("scaledSize", new ImageSize(270, 270));
+        mav.addObject("pictureUrl", "tmp/"  + filename);
+        return mav;
+    }
+
+    @PostMapping("/avatar-crop")
+    public String avatarCropAction(HttpServletRequest request, String filename) {
+        AppUser user = AppUser.getCurrentUser(request);
+        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
+        Map<String, Object> options = ParamMap.toPostDataMap(request);
+        userService.changeAvatar(user.getId(), pictureFilePath, options);
+        return "redirect:/settings/avatar";
     }
 
     @RequestMapping("/security")
