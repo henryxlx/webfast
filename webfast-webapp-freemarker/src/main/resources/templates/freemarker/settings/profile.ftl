@@ -36,28 +36,33 @@
             </div>
         </div>
 
-        <div class="help-block approval">
-            <#if appUser.approvalStatus??>
-            <#if appUser.approvalStatus == 'approving'>
-            <p class="text-primary" >
-                正在实名认证中，管理员会尽快答复您。
-            </p>
-            <#elseif  appUser.approvalStatus == 'approved'>
-            <p class="text-success" >
-                恭喜您，已通过实名认证！
-            </p>
-            <#elseif  appUser.approvalStatus == 'unapprove'>
-            <p class="text-warning" >
-                您尚未实名认证，<strong><a href="${ctx}/setting/approval-submit">点此认证</a>。
-                </strong>
-            </p>
-            <#elseif appUser.approvalStatus == 'approve_fail'>
-            <p class="text-danger" >
-                实名认证审核尚未通过，请参照通知中的信息，修改后重新<strong><a href="${ctx}/setting/approval-submit">认证。</a>
-                </strong>
-            </p>
-            </#if>
-            </#if>
+        <div class="form-group">
+            <label class="col-md-2 control-label" >&nbsp;</label>
+            <div class="col-md-7 controls">
+                <div class="help-block approval">
+                    <#if appUser.approvalStatus??>
+                        <#if appUser.approvalStatus == 'approving'>
+                            <p class="text-primary" >
+                                正在实名认证中，管理员会尽快答复您。
+                            </p>
+                        <#elseif  appUser.approvalStatus == 'approved'>
+                            <p class="text-success" >
+                                恭喜您，已通过实名认证！
+                            </p>
+                        <#elseif  appUser.approvalStatus == 'unapprove'>
+                            <p class="text-warning" >
+                                您尚未实名认证，<strong><a href="${ctx}/setting/approval-submit">点此认证</a>。
+                                </strong>
+                            </p>
+                        <#elseif appUser.approvalStatus == 'approve_fail'>
+                            <p class="text-danger" >
+                                实名认证审核尚未通过，请参照通知中的信息，修改后重新<strong><a href="${ctx}/setting/approval-submit">认证。</a>
+                                </strong>
+                            </p>
+                        </#if>
+                    </#if>
+                </div>
+            </div>
         </div>
 
         <div class="form-group">
