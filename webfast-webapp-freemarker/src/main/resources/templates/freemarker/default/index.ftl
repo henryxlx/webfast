@@ -115,7 +115,7 @@
             <div class="es-box news">
                 <div class="es-box-heading">
                     <h2>最新资讯</h2>
-                    <a class="pull-right" href="${ctx}/article/show">更多&gt;</a>
+                    <a class="pull-right" href="${ctx}/article">更多&gt;</a>
                 </div>
                 <div class="es-box-body">
                     <ul class="row">
