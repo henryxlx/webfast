@@ -14,18 +14,18 @@ define(function(require, exports, module) {
         });
 
         validator.addItem({
-            element: '[name="form[currentPassword]"]',
+            element: '[name="currentPassword"]',
             required: true
         });
 
         validator.addItem({
-            element: '[name="form[newPassword]"]',
+            element: '[name="newPassword"]',
             required: true,
             rule: 'minlength{min:5} maxlength{max:20}'
         });
 
         validator.addItem({
-            element: '[name="form[confirmPassword]"]',
+            element: '[name="confirmPassword"]',
             required: true,
             rule: 'confirmation{target:#form_newPassword}'
         });
