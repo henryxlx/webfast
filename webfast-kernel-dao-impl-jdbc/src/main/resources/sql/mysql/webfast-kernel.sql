@@ -294,6 +294,24 @@ INSERT INTO `app_user` VALUES ('1', 'super@hotmail.com', '', 'FxnzDXLOO8yqOqg64R
 INSERT INTO `app_user` VALUES ('2', 'test@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CFboVaOGdEs8Pzt5Sf1HM=', 'FYMMdLVItihBsvfsp+ImFg==', 'test', '', '', 'default', '', '', '', '0', '1', '|ROLE_USER|', '', '0', '0', '0', '0', '0', '0', '0', '', '', '0', 'unapprove', '0', '0', '::1', '1635668723000');
 
 -- ----------------------------
+-- Table structure for `app_user_approval`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user_approval`;
+CREATE TABLE `app_user_approval` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户认证ID',
+  `userId` int(11) NOT NULL COMMENT '用户ID',
+  `idcard` varchar(24) NOT NULL DEFAULT '' COMMENT '身份证号',
+  `faceImg` varchar(500) NOT NULL DEFAULT '' COMMENT '认证正面图',
+  `backImg` varchar(500) NOT NULL DEFAULT '' COMMENT '认证背面图',
+  `truename` varchar(255) DEFAULT NULL COMMENT '真实姓名',
+  `note` text COMMENT '认证信息',
+  `status` enum('unapprove','approving','approved','approve_fail') NOT NULL COMMENT '是否通过：1是 0否',
+  `operatorId` int(11) unsigned DEFAULT NULL COMMENT '审核人',
+  `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '申请时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户认证表';
+
+-- ----------------------------
 -- Table structure for `app_user_field`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_field`;
