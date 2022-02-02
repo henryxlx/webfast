@@ -11,8 +11,8 @@
         "customadminbundle":"${ctx}/bundles/customadmin/js"};
 
     app.crontab = '${ctx}/common/crontab';
-    <#assign crontabNextExecutedTime = setting('crontab_next_executed_time')!0/>
-    <#if crontabNextExecutedTime gt 0>
+    <#assign crontabNextExecutedTime = setting('crontab_next_executed_time', '0')/>
+    <#if crontabNextExecutedTime?number gt 0>
     <#if crontabNextExecutedTime?date lt .now?date>
     app.scheduleCrontab = '${ctx}/common/crontab';
     </#if>
