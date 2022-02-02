@@ -92,7 +92,16 @@ public abstract class BaseWebExtensionPack {
     public String getSetting(String name) {
         return getSetting(name, null);
     }
-    public String getSetting(String name, Object defaultValue) {
-        return defaultValue == null ? null : String.valueOf(defaultValue);
+    public String getSetting(String name, String defaultValue) {
+        String result = defaultValue != null ? defaultValue : null;
+        String[] names = name.split(".");
+        if (names != null && names.length > 1) {
+            Map<String, Object> settingMap = settingService.get(names[0]);
+            if (settingMap != null) {
+                Object val = settingMap.get(names[1]);
+                result = val != null ? val.toString() : result;
+            }
+        }
+        return result;
     }
 }
