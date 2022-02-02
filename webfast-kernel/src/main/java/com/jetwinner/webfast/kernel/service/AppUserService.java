@@ -48,4 +48,7 @@ public interface AppUserService extends BaseAppUserService {
     boolean isUsernameAvailable(String username);
 
     Set<Object> filterFollowingIds(Integer userId, Set<Object> followingUserIds);
+
+    void applyUserApproval(Integer userId, Map<String, Object> approvalMap,
+                           String faceImgPath, String backImgPath, String directory);
 }

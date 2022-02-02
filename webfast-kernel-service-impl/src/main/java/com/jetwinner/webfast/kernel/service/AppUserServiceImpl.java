@@ -327,4 +327,21 @@ public class AppUserServiceImpl implements AppUserService {
         List<Map<String, Object>> friends = friendDao.getFriendsByFromIdAndToIds(userId, followingUserIds);
         return ArrayToolkit.column(friends, "toId");
     }
+
+    @Override
+    public void applyUserApproval(Integer userId, Map<String, Object> approvalMap,
+                                  String faceImgPath, String backImgPath, String directory) {
+
+        approvalMap.put("userId", userId);
+        approvalMap.put("faceImg", new AppPathInfo(faceImgPath).getDirname());
+        approvalMap.put("backImg", new AppPathInfo(backImgPath).getDirname());
+        approvalMap.put("status", "approving");
+        approvalMap.put("createdTime", System.currentTimeMillis());
+
+        userDao.updateMap(new ParamMap()
+                        .add("approvalStatus", "approving")
+                        .add("approvalTime", System.currentTimeMillis()).add("id", userId).toMap());
+
+        // userApprovalDao.addApproval(approvalMap);
+    }
 }

@@ -6,6 +6,7 @@ import com.jetwinner.webfast.image.ImageSize;
 import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -99,17 +101,35 @@ public class SettingsController {
     }
 
     @PostMapping("/approval/submit")
-    public ModelAndView approvalSubmitAction() {
-//        AppUser user = AppUser.getCurrentUser(request);
-//        String faceImg = $request->files->get('faceImg');
-//        String backImg = $request->files->get('backImg');
-//        if (!FileToolkit.isImageFile(backImg) || !FileToolkit.isImageFile(faceImg)) {
-//            return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, bmp,gif, png格式的文件。");
-//        }
+    public ModelAndView approvalSubmitAction(HttpServletRequest request) {
+        AppUser user = AppUser.getCurrentUser(request);
+        Map<String, Object> formData = ParamMap.toPostDataMap(request);
+        MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) request;
+        MultipartFile faceImgFile = multipartReq.getFile("faceImg");
+        MultipartFile backImgFile = multipartReq.getFile("backImg");
+        String faceImg = faceImgFile.getOriginalFilename();
+        String backImg = backImgFile.getOriginalFilename();
+        if (!FileToolkit.isImageFile(backImg) || !FileToolkit.isImageFile(faceImg)) {
+            return BaseControllerHelper.createMessageResponse("error", "上传图片格式错误，请上传jpg, bmp,gif, png格式的文件。");
+        }
+
+        AppUser toAppUser = userService.getUser(user.getId());
+        if (toAppUser == null) {
+            throw new RuntimeGoingException(String.format("用户#%d不存在！", user.getId()));
+        }
 
         String directory = appConst.getUploadPrivateDirectory() + "/approval";
-//        userService.applyUserApproval(user.getId(), ParamMap.toPostDataMap(request), faceImg, backImg, directory);
-//        FlashMessageUtil.setFlashMessage("success", "实名认证提交成功！", request);
+        long now = System.currentTimeMillis();
+        String faceImgPath = "userFaceImg" + user.getId() + now + "." + FileToolkit.getFileExtension(faceImg);
+        String backImgPath = "userbackImg" + user.getId() + now + "." + FileToolkit.getFileExtension(backImg);
+        try {
+            faceImgFile.transferTo(new File(directory + "/" + faceImgPath));
+            backImgFile.transferTo(new File(directory + "/" + backImgPath));
+        } catch (IOException e) {
+            BaseControllerHelper.createMessageResponse("error", "上传图片位置错误：" + e.getMessage());
+        }
+        userService.applyUserApproval(user.getId(), formData, faceImgPath, backImgPath, directory);
+        FlashMessageUtil.setFlashMessage("success", "实名认证提交成功！", request.getSession());
         return new ModelAndView("redirect:/settings");
     }
 
@@ -181,6 +201,15 @@ public class SettingsController {
     @RequestMapping("/security")
     public String securityPage() {
         return VIEW_PATH + "/security";
+    }
+
+    @GetMapping("/password")
+    public String passwordAction(HttpServletRequest request) {
+        AppUser user = AppUser.getCurrentUser(request);
+        if (EasyStringUtil.isBlank(user.getSetup())) {
+            return "redirect:/settings/setup";
+        }
+        return "settings/password";
     }
 
     @RequestMapping("/email")
