@@ -14,6 +14,6 @@ public class AppNotificationDaoImpl extends FastJdbcDaoSupport implements AppNot
 
     @Override
     public void addNotification(Map<String, Object> notification) {
-        insert("app_notification", notification);
+        insertMap("app_notification", notification);
     }
 }
