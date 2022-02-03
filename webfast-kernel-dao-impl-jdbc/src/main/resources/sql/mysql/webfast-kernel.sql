@@ -183,6 +183,20 @@ CREATE TABLE `app_navigation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站导航表';
 
 -- ----------------------------
+-- Table structure for `app_notification`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_notification`;
+CREATE TABLE `app_notification` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '通知ID',
+  `userId` int(10) unsigned NOT NULL COMMENT '被通知的用户ID',
+  `type` varchar(64) NOT NULL DEFAULT 'default' COMMENT '通知类型',
+  `content` text COMMENT '通知内容',
+  `createdTime` int(10) unsigned NOT NULL COMMENT '通知时间',
+  `isRead` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否已读',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户通知表';
+
+-- ----------------------------
 -- Table structure for `app_permission`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_permission`;
