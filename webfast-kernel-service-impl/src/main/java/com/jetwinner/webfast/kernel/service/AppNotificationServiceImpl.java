@@ -3,6 +3,7 @@ package com.jetwinner.webfast.kernel.service;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.dao.AppNotificationDao;
+import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,11 @@ import java.util.Map;
 public class AppNotificationServiceImpl implements AppNotificationService {
 
     private final AppNotificationDao notificationDao;
-    private final AppUserService userService;
+    private final AppUserDao userDao;
 
-    public AppNotificationServiceImpl(AppNotificationDao notificationDao, AppUserService userService) {
+    public AppNotificationServiceImpl(AppNotificationDao notificationDao, AppUserDao userDao) {
         this.notificationDao = notificationDao;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Override
@@ -31,6 +32,6 @@ public class AppNotificationServiceImpl implements AppNotificationService {
         notification.put("createdTime", System.currentTimeMillis());
         notification.put("isRead", 0);
         notificationDao.addNotification(notification);
-        userService.waveUserCounter(userId, "newNotificationNum", 1);
+        userDao.waveCounterById(userId, "newNotificationNum", 1);
     }
 }
