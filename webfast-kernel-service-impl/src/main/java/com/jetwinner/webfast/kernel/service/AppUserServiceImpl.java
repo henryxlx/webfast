@@ -15,10 +15,7 @@ import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
-import com.jetwinner.webfast.kernel.dao.AppFriendDao;
-import com.jetwinner.webfast.kernel.dao.AppRoleDao;
-import com.jetwinner.webfast.kernel.dao.AppUserDao;
-import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
+import com.jetwinner.webfast.kernel.dao.*;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
@@ -36,27 +33,33 @@ import java.util.stream.Collectors;
 public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserDao userDao;
+    private final AppUserApprovalDao userApprovalDao;
     private final AppUserProfileDao userProfileDao;
     private final AppRoleDao roleDao;
     private final AppFriendDao friendDao;
+    private final AppNotificationService notificationService;
     private final DataSourceConfig dataSourceConfig;
     private final RbacService rbacService;
     private final FastAppConst appConst;
     private final UserAccessControlService userAccessControlService;
 
     public AppUserServiceImpl(AppUserDao userDao,
+                              AppUserApprovalDao userApprovalDao,
                               AppUserProfileDao userProfileDao,
                               AppRoleDao roleDao,
                               AppFriendDao friendDao,
+                              AppNotificationService notificationService,
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService,
                               FastAppConst appConst,
                               UserAccessControlService userAccessControlService) {
 
         this.userDao = userDao;
+        this.userApprovalDao = userApprovalDao;
         this.userProfileDao = userProfileDao;
         this.roleDao = roleDao;
         this.friendDao = friendDao;
+        this.notificationService = notificationService;
         this.dataSourceConfig = dataSourceConfig;
         this.rbacService = rbacService;
         this.appConst = appConst;
@@ -342,6 +345,67 @@ public class AppUserServiceImpl implements AppUserService {
                         .add("approvalStatus", "approving")
                         .add("approvalTime", System.currentTimeMillis()).add("id", userId).toMap());
 
-        // userApprovalDao.addApproval(approvalMap);
+        userApprovalDao.addApproval(approvalMap);
+    }
+
+    @Override
+    public List<Map<String, Object>> findUserApprovalsByUserIds(Set<Object> userIds) {
+        return userApprovalDao.findApprovalsByUserIds(userIds);
+    }
+
+    @Override
+    public List<Map<String, Object>> findUserProfilesByIds(Set<Object> ids) {
+        return userProfileDao.findProfilesByIds(ids);
+    }
+
+    @Override
+    public Map<String, Object> getLastestApprovalByUserIdAndStatus(Integer userId, String status) {
+        return userApprovalDao.getLastestApprovalByUserIdAndStatus(userId, status);
+    }
+
+    @Override
+    public void passApproval(Integer userId, String note, AppUser currentUser) {
+        AppUser user = userDao.getUser(userId);
+        if (user == null) {
+            throw new RuntimeGoingException(String.format("用户#%d不存在！", userId));
+        }
+
+        userDao.updateMap(new ParamMap()
+                .add("id", user.getId())
+                .add("approvalStatus", "approved")
+                .add("approvalTime", System.currentTimeMillis()).toMap());
+
+        Map<String, Object> lastestApproval = userApprovalDao.getLastestApprovalByUserIdAndStatus(user.getId(), "approving");
+
+        userProfileDao.updateProfile(new ParamMap()
+                .add("id", userId)
+                .add("truename", lastestApproval.get("truename"))
+                .add("idcard", lastestApproval.get("idcard")).toMap());
+
+//        logService.info("user", "approved", String.format("用户%s实名认证成功，操作人:%s !", user.getUsername(), currentUser.getUsername()));
+        String message = "您的个人实名认证，审核已经通过！" + (note != null ? "(" + note + ")" : "");
+        notificationService.notify(user.getId(), "default", message);
+    }
+
+    @Override
+    public void rejectApproval(Integer userId, String note, AppUser currentUser) {
+        AppUser user = userDao.getUser(userId);
+        if (user == null) {
+            throw new RuntimeGoingException(String.format("用户#%d不存在！", userId));
+        }
+
+        userDao.updateMap(new ParamMap()
+                .add("id", user.getId())
+                .add("approvalStatus", "approve_fail")
+                .add("approvalTime", System.currentTimeMillis()).toMap());
+
+        userApprovalDao.addApproval(new ParamMap()
+                        .add("userId", user.getId()).add("note", note)
+                        .add("status", "approve_fail").add("operatorId", currentUser.getId()).toMap());
+
+        // logService.info("user", "approval_fail", String.format("用户%s实名认证失败，操作人:%s !", user.getUsername(), currentUser.getUsername()));
+
+        String message = "您的个人实名认证，审核未通过！" + (note != null ? "(" + note + ")" : "");
+        notificationService.notify(user.getId(), "default", message);
     }
 }

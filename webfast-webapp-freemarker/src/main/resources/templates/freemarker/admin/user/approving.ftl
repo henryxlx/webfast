@@ -22,23 +22,23 @@
     </tr>
     </thead>
     <tbody>
-    {% for user in users %}
-    <tr id="user-table-tr-{{ user.id }}">
-        <td>{{user.id }}</td>
-        <td><strong>{{ admin_macro.user_link(user) }}</strong></td>
-        <td> {{approvals[user.id].truename}}</td>
-        <td> {{approvals[user.id].idcard}}</td>
-        <td>{{user.email }}</td>
-        <td>{{user.approvalTime | date('Y-m-d H:i')}}</td>
+    <#list users as user>
+    <tr id="user-table-tr-${user.id}">
+        <td>${user.id}</td>
+        <td><strong><@admin_macro.user_link user/></strong></td>
+        <td> ${approvals[user.id?c].truename}</td>
+        <td> ${approvals[user.id?c].idcard}</td>
+        <td>${user.email}</td>
+        <td>${user.approvalTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}</td>
         <td>
-            <a href="#modal" data-toggle="modal" data-url="{{ path('admin_approval_approve', {id:user.id}) }}" class="btn btn-default btn-sm">审核</a>
+            <a href="#modal" data-toggle="modal" data-url="${ctx}/admin/approval/${user.id}/approve" class="btn btn-default btn-sm">审核</a>
         </td>
     </tr>
-    {% endfor %}
+    </#list>
     </tbody>
 </table>
 
-{{ web_macro.paginator(paginator) }}
+<@web_macro.paginator paginator />
 <#else>
 <div class="empty">暂无需要审核中的实名认证用户</div>
 </#if>

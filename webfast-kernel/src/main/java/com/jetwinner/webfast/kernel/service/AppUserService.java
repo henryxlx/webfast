@@ -51,4 +51,14 @@ public interface AppUserService extends BaseAppUserService {
 
     void applyUserApproval(Integer userId, Map<String, Object> approvalMap,
                            String faceImgPath, String backImgPath, String directory);
+
+    List<Map<String, Object>> findUserApprovalsByUserIds(Set<Object> userIds);
+
+    List<Map<String, Object>> findUserProfilesByIds(Set<Object> ids);
+
+    Map<String, Object> getLastestApprovalByUserIdAndStatus(Integer userId, String status);
+
+    void passApproval(Integer userId, String note, AppUser currentUser);
+
+    void rejectApproval(Integer userId, String note, AppUser currentUser);
 }
