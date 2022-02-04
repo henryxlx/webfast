@@ -77,10 +77,12 @@ public class UserApprovalController {
     public Map<String, Object> approveAction(@PathVariable Integer id, HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
         Map<String, Object> data = ParamMap.toPostDataMap(request);
+        Object objForNote = data.get("note");
+        String note = objForNote == null ? null : String.valueOf(objForNote);
         if ("success".equals(data.get("form_status"))) {
-            userService.passApproval(id, String.valueOf(data.get("note")), user);
+            userService.passApproval(id, note, user);
         } else if ("fail".equals(data.get("form_status"))) {
-            userService.rejectApproval(id, String.valueOf(data.get("note")), user);
+            userService.rejectApproval(id, note, user);
         }
         return new ParamMap().add("status", "ok").toMap();
     }
