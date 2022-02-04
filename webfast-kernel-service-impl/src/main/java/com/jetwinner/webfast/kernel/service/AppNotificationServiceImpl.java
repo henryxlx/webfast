@@ -7,6 +7,7 @@ import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,5 +34,20 @@ public class AppNotificationServiceImpl implements AppNotificationService {
         notification.put("isRead", 0);
         notificationDao.addNotification(notification);
         userDao.waveCounterById(userId, "newNotificationNum", 1);
+    }
+
+    @Override
+    public int getUserNotificationCount(Integer userId) {
+        return notificationDao.getNotificationCountByUserId(userId);
+    }
+
+    @Override
+    public List<Map<String, Object>> findUserNotifications(Integer userId, Integer start, Integer limit) {
+        return notificationDao.findNotificationsByUserId(userId, start, limit);
+    }
+
+    @Override
+    public void clearUserNewNotificationCounter(Integer userId) {
+        userDao.clearCounterById(userId, "newNotificationNum");
     }
 }

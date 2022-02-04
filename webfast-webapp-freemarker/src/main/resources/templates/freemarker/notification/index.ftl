@@ -11,13 +11,11 @@
             </div>
 
             <ul class="media-list notification-list">
-                <#if notifications??>
-                    <#list notification as notification>
-                {% include 'TopxiaWebBundle:Notification:item-' ~ notification.type ~ '.html.twig' %}
-                    </#list>
+                <#list notifications! as notification>
+                    <#include "/notification/item-${notification.type}.ftl" />
                 <#else>
                 <li class="empty">暂无通知</li>
-                </#if>
+                </#list>
             </ul>
 
             <@web_macro.paginator paginator!/>
