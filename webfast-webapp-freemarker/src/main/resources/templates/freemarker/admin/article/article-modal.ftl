@@ -50,7 +50,7 @@
 			<div class="form-group">
 	      <label for="article-tagIds"　class="control-label">TAG标签</label>
 			  <div class="controls">
-				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="{{ tagNames|default([])|join(',') }}" data-match-url="{{ path('tag_match') }}">
+				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="${tagNames![]?join(',')}" data-match-url="${ctx}//tag/match_jsonp">
 				  	<div class="help-block" style="display:none;"></div>
 			  </div>
 			</div>
@@ -59,8 +59,8 @@
 				<label for="richeditor-body-field" class="control-label">正文</label>
 				<div class="controls">
 					<textarea class="form-control" id="richeditor-body-field" rows="16" name="body"
-					  data-image-upload-url="{{ path('editor_upload', {token:upload_token('default')}) }}"
-					  data-flash-upload-url="{{ path('editor_upload', {token:upload_token('default', 'flash')}) }}"
+					  data-image-upload-url="${ctx}/editor/upload?token=upload_token('default')"
+					  data-flash-upload-url="${ctx}/editor/upload?token=upload_token('default', 'flash')"
 					 >${(article.body)!}</textarea>
 				</div>
 			</div>
@@ -73,13 +73,13 @@
 
 				<div class="panel-body">
 				  <label class="checkbox-inline">
-						<input type="checkbox" name="sticky" value="1" {% if field_value(article, 'sticky') %} checked="checked" {% endif %}> 置顶
+						<input type="checkbox" name="sticky" value="1" <#if (article.sticky)??> checked="checked" </#if>> 置顶
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="featured" value="1" {% if field_value(article, 'featured') %} checked="checked" {% endif %}> 头条  
+						<input type="checkbox" name="featured" value="1" <#if (article.featured)??> checked="checked" </#if>> 头条
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="promoted" value="1" {% if field_value(article, 'promoted') %} checked="checked" {% endif %}> 推荐  
+						<input type="checkbox" name="promoted" value="1" <#if (article.promoted)??> checked="checked" </#if>> 推荐
 					</label>
 					<a class="glyphicon glyphicon-question-sign text-muted pull-right" id="article-property-tips" data-toggle="tooltip" data-placement="bottom" href="javascript:" title="">
 					</a>
@@ -99,14 +99,14 @@
 				  <div class="form-group">
 				    <label for="article-source-field">来源名称</label>
 				    <div class="controls">
-				      <input class="form-control" id="article-source-field" type="text" name="source" value="{{ field_value(article, 'source') }}">
+				      <input class="form-control" id="article-source-field" type="text" name="source" value="${(article.source)!}">
 				    </div>
 				  </div>
 
 				  <div class="form-group">
 			      <label for="article-sourceUrl-field">来源地址</label>
 				    <div class="controls">
-				      <input class="form-control" id="article-sourceUrl-field" type="text" name="sourceUrl" value="{{ field_value(article, 'sourceUrl') }}">
+				      <input class="form-control" id="article-sourceUrl-field" type="text" name="sourceUrl" value="${(article.sourceUrl)!}">
 				    </div>
 				  </div>
 
@@ -122,10 +122,10 @@
 					  </#if>
 				   </div>
 				   <br>
-					<a href="#modal" data-toggle="modal" data-url="{{path('admin_article_show_upload')}}" class="btn btn-default">上传</a>
-					<a id="article_thumb_remove"  class="btn btn-default" data-url="{{ path('admin_article_thumb_remove',{id:article.id|default(0)}) }}" {% if not article.thumb|default(null) %}style="display:none;" {% endif %}>删除</a>
-					<input type="hidden" name="thumb" value="{{article.thumb |default()}}" id="article-thumb">
-					<input type="hidden" name="originalThumb" value="{{article.originalThumb |default()}}" id="article-originalThumb">
+					<a href="#modal" data-toggle="modal" data-url="${ctx}/admin/article/show/upload" class="btn btn-default">上传</a>
+					<a id="article_thumb_remove"  class="btn btn-default" data-url="${ctx}/admin/article/thumb/{article.id}/remove" <#if !(article.thumb)??>style="display:none;" </#if>>删除</a>
+					<input type="hidden" name="thumb" value="${(article.thumb)!}" id="article-thumb">
+					<input type="hidden" name="originalThumb" value="${(article.originalThumb)!}" id="article-originalThumb">
 					<p class="help-block">请上传png, gif, jpg格式的图片文件。</p>
 				</div>
 			</div>
@@ -135,7 +135,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<div class="controls">
-							<input class="form-control" type="text" name="publishedTime" value=" {{ field_value(article, 'publishedTime', app.request.server.get('REQUEST_TIME'))|date('Y-m-d H:i:s') }}">
+							<input class="form-control" type="text" name="publishedTime" value="${(article.publishedTime)!.now?string('yyyy-MM-dd HH:mm:ss')}">
 							<div class="help-block">内容条目默认按发布时间的倒序显示</div>
 						</div>
 					</div>
