@@ -1,6 +1,53 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
+-- Table structure for `app_article`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_article`;
+CREATE TABLE `app_article` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文章ID',
+  `title` varchar(255) NOT NULL COMMENT '文章标题',
+  `categoryId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '栏目',
+  `tagIds` tinytext COMMENT 'tag标签',
+  `source` varchar(1024) DEFAULT '' COMMENT '来源',
+  `sourceUrl` varchar(1024) DEFAULT '' COMMENT '来源URL',
+  `publishedTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '发布时间',
+  `body` text COMMENT '正文',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图',
+  `originalThumb` varchar(255) NOT NULL DEFAULT '' COMMENT '缩略图原图',
+  `picture` varchar(255) NOT NULL DEFAULT '' COMMENT '文章头图，文章编辑／添加时，自动取正文的第１张图',
+  `status` enum('published','unpublished','trash') NOT NULL DEFAULT 'unpublished' COMMENT '状态',
+  `hits` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '点击量',
+  `featured` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否头条',
+  `promoted` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '推荐',
+  `sticky` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否置顶',
+  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '文章发布人的ID',
+  `createdTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `updatedTime` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Table structure for `app_article_category`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_article_category`;
+CREATE TABLE `app_article_category` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL COMMENT '栏目名称',
+  `code` varchar(64) NOT NULL COMMENT 'URL目录名称',
+  `weight` int(11) NOT NULL DEFAULT '0',
+  `publishArticle` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否允许发布文章',
+  `seoTitle` varchar(1024) NOT NULL DEFAULT '' COMMENT '栏目标题',
+  `seoKeyword` varchar(1024) NOT NULL DEFAULT '' COMMENT 'SEO 关键字',
+  `seoDesc` varchar(1024) NOT NULL DEFAULT '' COMMENT '栏目描述（SEO）',
+  `published` tinyint(3) unsigned NOT NULL DEFAULT '1' COMMENT '是否启用（1：启用 0：停用)',
+  `parentId` int(10) unsigned NOT NULL DEFAULT '0',
+  `createdTime` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
 -- Table structure for `app_block`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_block`;
