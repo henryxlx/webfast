@@ -38,6 +38,28 @@ public class ParamMap {
         return new HashMap<>(size);
     }
 
+    public static Map<String, Object> toFilterPostDataMap(HttpServletRequest request, String... includeNames) {
+        if (includeNames == null || includeNames.length < 1) {
+            return toPostDataMap(request);
+        }
+        Map<String, Object> map = new HashMap<>(includeNames.length);
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements()) {
+            String key = parameterNames.nextElement();
+            boolean containsName = false;
+            for (String name : includeNames) {
+                if (key.equals(name)) {
+                    containsName = true;
+                    break;
+                }
+            }
+            if (containsName) {
+                map.put(key, request.getParameter(key));
+            }
+        }
+        return map;
+    }
+
     public static Map<String, Object> toPostDataMap(HttpServletRequest request, String... excludeKeys) {
         Set<String> excludeParameterNames = getExcludeParameterNames(excludeKeys);
         Map<String, Object> map = new HashMap<>(request.getParameterMap().size());
