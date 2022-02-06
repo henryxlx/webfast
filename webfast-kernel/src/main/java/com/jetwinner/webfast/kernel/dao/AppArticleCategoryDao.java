@@ -15,4 +15,5 @@ public interface AppArticleCategoryDao {
 
     List<Map<String, Object>> findAllCategories();
 
+    Map<String, Object> addCategory(Map<String, Object> category);
 }

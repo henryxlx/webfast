@@ -14,4 +14,6 @@ public interface AppArticleCategoryService {
     List<Map<String, Object>> getCategoryTree();
 
     Set<Object> findCategoryChildrenIds(Object categoryId);
+
+    void createCategory(Map<String, Object> formData);
 }

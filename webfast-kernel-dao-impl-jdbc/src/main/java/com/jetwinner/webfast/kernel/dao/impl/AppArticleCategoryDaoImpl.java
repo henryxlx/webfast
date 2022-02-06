@@ -36,4 +36,10 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
     public List<Map<String, Object>> findAllCategories() {
         return getJdbcTemplate().queryForList("SELECT * FROM app_article_category ORDER BY weight ASC");
     }
+
+    @Override
+    public Map<String, Object> addCategory(Map<String, Object> category) {
+        Number key = insertMapReturnKey("app_article_category", category);
+        return getCategory(key.intValue());
+    }
 }

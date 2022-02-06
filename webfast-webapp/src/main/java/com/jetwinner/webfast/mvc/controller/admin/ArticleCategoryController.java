@@ -5,8 +5,10 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,5 +45,14 @@ public class ArticleCategoryController {
 
         model.addAttribute("categoryTree", categoryService.getCategoryTree());
         return "/admin/article/category/modal";
+    }
+
+    @PostMapping("/admin/article/category/create")
+    public String createAction(@RequestParam Map<String, Object> formData, Model model) {
+        categoryService.createCategory(formData);
+        List<Map<String, Object>> categories = categoryService.getCategoryTree();
+        model.addAttribute("categories", categories);
+        model.addAttribute("categoryTree", categories);
+        return "/admin/article/category/tbody";
     }
 }

@@ -1,11 +1,15 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.toolbag.ArrayToolkit;
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.dao.AppArticleCategoryDao;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * @author xulixin
@@ -95,5 +99,52 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         }
 
         return childrenIds;
+    }
+
+    @Override
+    public void createCategory(Map<String, Object> formData) {
+        Map<String, Object> category = ArrayToolkit.part(formData, "name", "code", "weight",
+                "parentId", "publishArticle","seoTitle","seoKeyword","seoDesc","published");
+
+        if (!ArrayToolkit.required(formData, "name", "code", "weight", "parentId")) {
+            throw new RuntimeGoingException("缺少必要参数，，添加栏目失败");
+        }
+
+        filterCategoryFields(category);
+
+        category.put("createdTime", System.currentTimeMillis());
+
+        category = categoryDao.addCategory(category);
+
+        // logService.info("category", "create", String.format("添加栏目 %s(#%s)", category.get("name"), category.get("id")), category);
+    }
+
+    private void filterCategoryFields(Map<String, Object> fields) {
+
+        ArrayToolkit.filter(fields, new ParamMap()
+                .add("name", "")
+                .add("code", "")
+                .add("weight", 0)
+                .add("publishArticle", "")
+                .add("seoTitle", "")
+                .add("seoDesc", "")
+                .add("published", 1)
+                .add("parentId", 0).toMap());
+
+        if (EasyStringUtil.isBlank(fields.get("name"))) {
+            throw new RuntimeGoingException("名称不能为空，保存栏目失败");
+        }
+
+        if (EasyStringUtil.isBlank(fields.get("code"))) {
+            throw new RuntimeGoingException("编码不能为空，保存栏目失败");
+        } else {
+            String code = String.valueOf(fields.get("code"));
+            if (!Pattern.matches("/^[a-zA-Z0-9_]+$/i", code)) {
+                throw new RuntimeGoingException("编码({$fields['code']})含有非法字符，保存栏目失败");
+            }
+            if (EasyStringUtil.isNumeric(code)) {
+                throw new RuntimeGoingException("编码({$fields['code']})不能全为数字，保存栏目失败");
+            }
+        }
     }
 }
