@@ -16,4 +16,6 @@ public interface AppArticleCategoryService {
     Set<Object> findCategoryChildrenIds(Object categoryId);
 
     void createCategory(Map<String, Object> formData);
+
+    boolean isCategoryCodeAvaliable(String code, String exclude);
 }

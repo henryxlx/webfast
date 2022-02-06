@@ -39,7 +39,7 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         return categoryDao.findAllCategories();
     }
 
-    private void makeCategoryTree(List<Map<String, Object>> tree, Map<Integer, List<Map<String, Object>>> categories,
+    private void makeCategoryTree(List<Map<String, Object>> tree, Map<Object, List<Map<String, Object>>> categories,
                                   int parentId, int depth) {
 
         if (categories.get(parentId) instanceof List) {
@@ -53,20 +53,23 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         }
     }
 
-    private Map<Integer, List<Map<String, Object>>> prepare(List<Map<String, Object>> categories) {
-        Map<Integer, List<Map<String, Object>>> prepared = new HashMap<>();
-        for (Map<String, Object> category : categories) {
-            if (prepared.get(category.get("parentId")) == null) {
-                prepared.put(ValueParser.createInteger(category.get("parentId")), new ArrayList<>());
+    private Map<Object, List<Map<String, Object>>> prepare(List<Map<String, Object>> categories) {
+        int size = categories != null ? categories.size() : 0;
+        Map<Object, List<Map<String, Object>>> prepared = new HashMap<>(size);
+        if (size > 0) {
+            for (Map<String, Object> category : categories) {
+                if (prepared.get(category.get("parentId")) == null) {
+                    prepared.put(category.get("parentId"), new ArrayList<>());
+                }
+                prepared.get(category.get("parentId")).add(category);
             }
-            prepared.get(category.get("parentId")).add(category);
         }
         return prepared;
     }
 
     @Override
     public List<Map<String, Object>> getCategoryTree() {
-        Map<Integer, List<Map<String, Object>>> categories = prepare(findAllCategories());
+        Map<Object, List<Map<String, Object>>> categories = prepare(findAllCategories());
         List<Map<String, Object>> tree = new ArrayList<>();
         makeCategoryTree(tree, categories, 0, 0);
         return tree;
@@ -119,6 +122,20 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         // logService.info("category", "create", String.format("添加栏目 %s(#%s)", category.get("name"), category.get("id")), category);
     }
 
+    @Override
+    public boolean isCategoryCodeAvaliable(String code, String exclude) {
+        if (EasyStringUtil.isBlank(code)) {
+            return false;
+        }
+
+        if (EasyStringUtil.equals(code, exclude)) {
+            return true;
+        }
+
+        Map<String, Object> category = categoryDao.findCategoryByCode(code);
+        return category != null ? false : true;
+    }
+
     private void filterCategoryFields(Map<String, Object> fields) {
 
         ArrayToolkit.filter(fields, new ParamMap()
@@ -139,11 +156,11 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
             throw new RuntimeGoingException("编码不能为空，保存栏目失败");
         } else {
             String code = String.valueOf(fields.get("code"));
-            if (!Pattern.matches("/^[a-zA-Z0-9_]+$/i", code)) {
-                throw new RuntimeGoingException("编码({$fields['code']})含有非法字符，保存栏目失败");
+            if (!Pattern.matches("^[a-zA-Z0-9_]+$", code)) {
+                throw new RuntimeGoingException(String.format("编码(%s)含有非法字符，保存栏目失败", code));
             }
             if (EasyStringUtil.isNumeric(code)) {
-                throw new RuntimeGoingException("编码({$fields['code']})不能全为数字，保存栏目失败");
+                throw new RuntimeGoingException(String.format("编码(%s)不能全为数字，保存栏目失败", code));
             }
         }
     }

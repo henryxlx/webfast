@@ -42,4 +42,10 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
         Number key = insertMapReturnKey("app_article_category", category);
         return getCategory(key.intValue());
     }
+
+    @Override
+    public Map<String, Object> findCategoryByCode(String code) {
+        return getJdbcTemplate().queryForList("SELECT * FROM app_article_category WHERE code = ? LIMIT 1", code)
+                .stream().findFirst().orElse(null);
+    }
 }

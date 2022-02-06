@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Map;
@@ -54,5 +55,27 @@ public class ArticleCategoryController {
         model.addAttribute("categories", categories);
         model.addAttribute("categoryTree", categories);
         return "/admin/article/category/tbody";
+    }
+
+    @GetMapping("/admin/article/category/checkcode")
+    @ResponseBody
+    public Map<String, Object> checkCodeAction(String value, String exclude) {
+        String code = value;
+        boolean avaliable = categoryService.isCategoryCodeAvaliable(code, exclude);
+        return avaliable ? new ParamMap().add("success", Boolean.TRUE).add("message", "").toMap() :
+                new ParamMap().add("success", Boolean.FALSE).add("message", "编码已被占用，请换一个。").toMap();
+    }
+
+    @GetMapping("/admin/article/category/checkparentid")
+    @ResponseBody
+    public Map<String, Object> checkParentIdAction(Integer value, Integer currentId) {
+        int selectedParentId = value;
+        ParamMap response;
+        if(currentId == selectedParentId && selectedParentId != 0){
+            response = new ParamMap().add("success", Boolean.FALSE).add("message", "不能选择自己作为父栏目");
+        } else {
+            response = new ParamMap().add("success", Boolean.TRUE).add("message", "");
+        }
+        return response.toMap();
     }
 }
