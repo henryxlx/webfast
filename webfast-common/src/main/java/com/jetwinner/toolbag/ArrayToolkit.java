@@ -1,6 +1,7 @@
 package com.jetwinner.toolbag;
 
 import com.jetwinner.util.EasyStringUtil;
+import org.springframework.util.Assert;
 
 import java.util.*;
 
@@ -29,6 +30,23 @@ public final class ArrayToolkit {
         return columnValues;
     }
 
+    public static void filter(Map<String, Object> map, Map<String, Object> specialValues) {
+        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            String key = entry.getKey();
+            Object val = entry.getValue();
+            if (!specialValues.containsKey(key) || val == null) {
+                it.remove();
+            }
+        }
+        specialValues.forEach((k, v) -> {
+            if (!map.containsKey(k)) {
+                map.put(k, v);
+            }
+        });
+    }
+
     public static Map<String, Object> filterRequestMap(Map<String, String[]> parameterMap, String... parameterNames) {
         int len = parameterNames != null ? parameterNames.length : 0;
         Map<String, Object> map = new HashMap<>(len);
@@ -43,5 +61,31 @@ public final class ArrayToolkit {
             }
         }
         return map;
+    }
+
+    public static Map<String, Object> part(Map<String, Object> map, String... keys) {
+        Assert.notNull(map, "ArrayToolkit::part parameter map must not be null.");
+        int size = keys != null ? keys.length : 0;
+        Map<String, Object> newMap = new HashMap<>(map.size());
+        if (size > 0) {
+            for (String key : keys) {
+                if (map.containsKey(key)) {
+                    newMap.put(key, map.get(key));
+                }
+            }
+        }
+        return newMap;
+    }
+
+    public static boolean required(Map<String, Object> map, String... keys) {
+        if (keys == null && keys.length < 1) {
+            return false;
+        }
+        for (String key : keys) {
+            if (!map.containsKey(key)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
