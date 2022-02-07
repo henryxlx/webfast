@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 @Service
 public class AppArticleCategoryServiceImpl implements AppArticleCategoryService {
 
-    private AppArticleCategoryDao categoryDao;
+    private final AppArticleCategoryDao categoryDao;
 
     public AppArticleCategoryServiceImpl(AppArticleCategoryDao categoryDao) {
         this.categoryDao = categoryDao;
@@ -39,11 +39,12 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         return categoryDao.findAllCategories();
     }
 
-    private void makeCategoryTree(List<Map<String, Object>> tree, Map<Object, List<Map<String, Object>>> categories,
+    private void makeCategoryTree(List<Map<String, Object>> tree, Map<String, List<Map<String, Object>>> categories,
                                   int parentId, int depth) {
 
-        if (categories.get(parentId) instanceof List) {
-            for (Map<String, Object> category : categories.get(parentId)) {
+        String strParentId = String.valueOf(parentId);
+        if (categories.get(strParentId) != null) {
+            for (Map<String, Object> category : categories.get(strParentId)) {
                 depth++;
                 category.put("depth", depth);
                 tree.add(category);
@@ -53,15 +54,13 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         }
     }
 
-    private Map<Object, List<Map<String, Object>>> prepare(List<Map<String, Object>> categories) {
+    private Map<String, List<Map<String, Object>>> prepare(List<Map<String, Object>> categories) {
         int size = categories != null ? categories.size() : 0;
-        Map<Object, List<Map<String, Object>>> prepared = new HashMap<>(size);
+        Map<String, List<Map<String, Object>>> prepared = new HashMap<>(size);
         if (size > 0) {
             for (Map<String, Object> category : categories) {
-                if (prepared.get(category.get("parentId")) == null) {
-                    prepared.put(category.get("parentId"), new ArrayList<>());
-                }
-                prepared.get(category.get("parentId")).add(category);
+                prepared.computeIfAbsent(String.valueOf(category.get("parentId")), k -> new ArrayList<>())
+                        .add(category);
             }
         }
         return prepared;
@@ -69,7 +68,7 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
 
     @Override
     public List<Map<String, Object>> getCategoryTree() {
-        Map<Object, List<Map<String, Object>>> categories = prepare(findAllCategories());
+        Map<String, List<Map<String, Object>>> categories = prepare(findAllCategories());
         List<Map<String, Object>> tree = new ArrayList<>();
         makeCategoryTree(tree, categories, 0, 0);
         return tree;
@@ -133,7 +132,12 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         }
 
         Map<String, Object> category = categoryDao.findCategoryByCode(code);
-        return category != null ? false : true;
+        return category == null;
+    }
+
+    @Override
+    public Map<String, Object> getCategoryByCode(String code) {
+        return categoryDao.findCategoryByCode(code);
     }
 
     private void filterCategoryFields(Map<String, Object> fields) {

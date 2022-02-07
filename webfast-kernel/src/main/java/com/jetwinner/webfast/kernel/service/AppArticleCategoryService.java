@@ -18,4 +18,6 @@ public interface AppArticleCategoryService {
     void createCategory(Map<String, Object> formData);
 
     boolean isCategoryCodeAvaliable(String code, String exclude);
+
+    Map<String, Object> getCategoryByCode(String code);
 }
