@@ -25,7 +25,8 @@ public class ArticleCategoryController {
     }
 
     @GetMapping("/admin/article/category")
-    public String indexAction() {
+    public String indexAction(Model model) {
+        model.addAttribute("categories", categoryService.getCategoryTree());
         return "/admin/article/category/index";
     }
 
