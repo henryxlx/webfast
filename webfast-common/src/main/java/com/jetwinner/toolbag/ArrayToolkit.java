@@ -88,4 +88,8 @@ public final class ArrayToolkit {
         }
         return true;
     }
+
+    public static boolean isArray(Object obj) {
+        return obj != null? obj.getClass().isArray() : false;
+    }
 }
