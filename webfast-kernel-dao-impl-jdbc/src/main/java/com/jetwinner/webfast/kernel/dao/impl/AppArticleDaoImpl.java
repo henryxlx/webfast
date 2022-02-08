@@ -8,6 +8,7 @@ import com.jetwinner.webfast.kernel.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,6 +35,13 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
                 .setMaxResults(limit);
 
         return getNamedParameterJdbcTemplate().queryForList(builder.getSQL(), conditions);
+    }
+
+    @Override
+    public Map<String, Object> addArticle(Map<String, Object> article) {
+        Number key = insertMapReturnKey("app_article", article);
+        return getJdbcTemplate().queryForList("SELECT * FROM app_article WHERE id = ?", key.intValue())
+                .stream().findFirst().orElse(new HashMap<>(0));
     }
 
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> map) {

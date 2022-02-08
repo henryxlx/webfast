@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.service.AppArticleCategoryService;
 import com.jetwinner.webfast.kernel.service.AppArticleService;
@@ -12,6 +13,7 @@ import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -72,6 +74,14 @@ public class ArticleController {
         model.addAttribute("category",
                 new ParamMap().add("id", 0).add("parentId", 0).toMap());
         return "/admin/article/article-modal";
+    }
+
+    @PostMapping("/admin/article/create")
+    public String createAction(HttpServletRequest request) {
+        Map<String, Object> article = ParamMap.toPostDataMap(request);
+        article.put("tags", String.join(",", request.getParameterValues("tags")));
+        articleService.createArticle(article, AppUser.getCurrentUser(request));
+        return "redirect:/admin/article";
     }
 
     @RequestMapping("/admin/article/setting")

@@ -14,4 +14,6 @@ public interface AppArticleDao {
 
     List<Map<String, Object>> searchArticles(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                              Integer start, Integer limit);
+
+    Map<String, Object> addArticle(Map<String, Object> article);
 }
