@@ -33,7 +33,7 @@
             <@select_options dict['articleStatus']!{}, RequestParameters['status']!, '--发布状态--' />
         </select>
     </div>
-    <button class="btn btn-primary pull-right" type="submit">搜索</button>
+    <button class="btn btn-primary" type="submit">搜索</button>
 </form>
 
 <div id="aticle-table-container">
