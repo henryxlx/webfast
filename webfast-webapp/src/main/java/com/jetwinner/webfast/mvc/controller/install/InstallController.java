@@ -297,6 +297,7 @@ public class InstallController {
         setupService.initMailerSetting(params.get("sitename"));
         setupService.initStorageSetting();
         setupService.initTag();
+        setupService.initCategory();
         setupService.initFile();
         setupService.initPages(user);
         setupService.initNavigations();
