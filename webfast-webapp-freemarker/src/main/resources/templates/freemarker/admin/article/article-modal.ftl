@@ -50,7 +50,7 @@
 			<div class="form-group">
 	      <label for="article-tagIds"　class="control-label">TAG标签</label>
 			  <div class="controls">
-				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="${tagNames![]?join(',')}" data-match-url="${ctx}//tag/match_jsonp">
+				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="${tagNames![]?join(',')}" data-match-url="${ctx}/tag/match_jsonp">
 				  	<div class="help-block" style="display:none;"></div>
 			  </div>
 			</div>
