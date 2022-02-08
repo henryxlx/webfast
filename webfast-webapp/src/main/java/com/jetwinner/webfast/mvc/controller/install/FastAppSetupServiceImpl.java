@@ -150,6 +150,35 @@ public class FastAppSetupServiceImpl {
     }
 
     public void initFile() {
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "默认文件组")
+                .add("code", "default")
+                .add("public", 1).toMap());
+
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "缩略图")
+                .add("code", "thumb")
+                .add("public", 1).toMap());
+
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "课程")
+                .add("code", "course")
+                .add("public", 1).toMap());
+
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "用户")
+                .add("code", "user")
+                .add("public", 1).toMap());
+
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "课程私有文件")
+                .add("code", "course_private")
+                .add("public", 0).toMap());
+
+        fileService.addFileGroup(new ParamMap()
+                .add("name", "资讯")
+                .add("code", "article")
+                .add("public", 1).toMap());
     }
 
     public void initPages(BaseAppUser user) {
