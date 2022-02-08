@@ -23,4 +23,14 @@ public class AppCategoryServiceImpl implements AppCategoryService {
     public Map<String, Map<String, Object>> findCategoriesByIds(Set<Object> categoryIds) {
         return ArrayToolkit.index(categoryDao.findByIds(categoryIds), "id");
     }
+
+    @Override
+    public Map<String, Object> addGroup(Map<String, Object> groupMap) {
+        return null;
+    }
+
+    @Override
+    public void createCategory(Map<String, Object> categoryMap) {
+
+    }
 }

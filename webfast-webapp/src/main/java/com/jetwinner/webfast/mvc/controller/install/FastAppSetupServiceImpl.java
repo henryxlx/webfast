@@ -135,6 +135,20 @@ public class FastAppSetupServiceImpl {
         }
     }
 
+    public void initCategory() {
+        Map<String, Object> group = categoryService.addGroup(new ParamMap()
+                .add("name", "课程分类")
+                .add("code", "course")
+                .add("depth", 2).toMap());
+
+        categoryService.createCategory(new ParamMap()
+                .add("name", "默认分类")
+                .add("code", "default")
+                .add("weight", 100)
+                .add("groupId", group.get("id"))
+                .add("parentId", 0).toMap());
+    }
+
     public void initFile() {
     }
 
