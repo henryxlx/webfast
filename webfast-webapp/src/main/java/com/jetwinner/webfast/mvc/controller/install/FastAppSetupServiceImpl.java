@@ -22,13 +22,19 @@ public class FastAppSetupServiceImpl {
     private final AppNavigationService navigationService;
     private final AppContentService contentService;
     private final AppBlockService blockService;
+    private final AppTagService tagService;
+    private final AppCategoryService categoryService;
+    private final AppFileService fileService;
 
     public FastAppSetupServiceImpl(AppUserService userService,
                                    UserAccessControlService userAccessControlService,
                                    AppSettingService settingService,
                                    AppNavigationService navigationService,
                                    AppContentService contentService,
-                                   AppBlockService blockService) {
+                                   AppBlockService blockService,
+                                   AppTagService tagService,
+                                   AppCategoryService categoryService,
+                                   AppFileService fileService) {
 
         this.userService = userService;
         this.userAccessControlService = userAccessControlService;
@@ -36,6 +42,9 @@ public class FastAppSetupServiceImpl {
         this.navigationService = navigationService;
         this.contentService = contentService;
         this.blockService = blockService;
+        this.tagService = tagService;
+        this.categoryService = categoryService;
+        this.fileService = fileService;
     }
 
     public void initAdmin(Map<String, String> params) {
@@ -117,6 +126,13 @@ public class FastAppSetupServiceImpl {
                 .add("cloud_bucket", "");
 
         settingService.set("storage", defaultSetting.toMap());
+    }
+
+    public void initTag() {
+        Map<String, Object> defaultTag = tagService.getTagByName("默认标签");
+        if (defaultTag == null || defaultTag.size() == 0) {
+            tagService.addTag(new ParamMap().add("name", "默认标签").toMap());
+        }
     }
 
     public void initFile() {

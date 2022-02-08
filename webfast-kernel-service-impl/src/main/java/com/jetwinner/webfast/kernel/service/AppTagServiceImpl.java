@@ -22,4 +22,14 @@ public class AppTagServiceImpl implements AppTagService {
     public List<Map<String, Object>> findTagsByNames(String[] names) {
         return tagDao.findTagsByNames(names);
     }
+
+    @Override
+    public Map<String, Object> getTagByName(String name) {
+        return null;
+    }
+
+    @Override
+    public void addTag(Map<String, Object> fields) {
+
+    }
 }

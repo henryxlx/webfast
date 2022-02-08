@@ -9,4 +9,8 @@ import java.util.Map;
 public interface AppTagService {
 
     List<Map<String, Object>> findTagsByNames(String[] names);
+
+    Map<String, Object> getTagByName(String name);
+
+    void addTag(Map<String, Object> fields);
 }
