@@ -140,6 +140,34 @@ CREATE TABLE `app_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面内容表';
 
 -- ----------------------------
+-- Table structure for `app_file`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_file`;
+CREATE TABLE `app_file` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '上传文件ID',
+  `groupId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传文件组ID',
+  `userId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '上传人ID',
+  `uri` varchar(255) NOT NULL COMMENT '文件URI',
+  `mime` varchar(255) NOT NULL COMMENT '文件MIME',
+  `size` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '文件大小',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '文件状态',
+  `createdTime` bigint unsigned NOT NULL DEFAULT '0' COMMENT '文件上传时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='上传文件情况表';
+
+-- ----------------------------
+-- Table structure for `app_file_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_file_group`;
+CREATE TABLE `app_file_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '上传文件组ID',
+  `name` varchar(255) NOT NULL COMMENT '上传文件组名称',
+  `code` varchar(255) NOT NULL COMMENT '上传文件组编码',
+  `public` tinyint(4) NOT NULL DEFAULT '1' COMMENT '文件组文件是否公开',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='上传文件分组表';
+
+-- ----------------------------
 -- Table structure for `app_friend`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_friend`;
