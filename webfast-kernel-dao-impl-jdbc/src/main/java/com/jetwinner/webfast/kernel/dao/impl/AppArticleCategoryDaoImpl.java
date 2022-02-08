@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.dao.impl;
 
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppArticleCategoryDao;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
  */
 @Repository
 public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements AppArticleCategoryDao {
+
+    private static final String TABLE_NAME = "app_article_category";
 
     @Override
     public Map<String, Object> getCategory(Object id) {
@@ -39,7 +42,7 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
 
     @Override
     public Map<String, Object> addCategory(Map<String, Object> category) {
-        Number key = insertMapReturnKey("app_article_category", category);
+        Number key = insertMapReturnKey(TABLE_NAME, category);
         return getCategory(key.intValue());
     }
 
@@ -47,5 +50,23 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
     public Map<String, Object> findCategoryByCode(String code) {
         return getJdbcTemplate().queryForList("SELECT * FROM app_article_category WHERE code = ? LIMIT 1", code)
                 .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public void updateCategory(Integer id, Map<String, Object> fields) {
+        fields.put("id", id);
+        updateMap(TABLE_NAME, fields, "id");
+    }
+
+    @Override
+    public int findCategoriesCountByParentId(Integer parentId) {
+        return getJdbcTemplate().queryForObject("SELECT COUNT(*) FROM app_article_category WHERE  parentId = ?",
+                Integer.class, parentId);
+    }
+
+    @Override
+    public void deleteByIds(Set<Object> ids) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource().addValue("ids", ids);
+        getNamedParameterJdbcTemplate().update("DELETE FROM app_article_category WHERE id in (:ids)", parameters);
     }
 }

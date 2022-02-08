@@ -18,4 +18,10 @@ public interface AppArticleCategoryDao {
     Map<String, Object> addCategory(Map<String, Object> category);
 
     Map<String, Object> findCategoryByCode(String code);
+
+    void updateCategory(Integer id, Map<String, Object> fields);
+
+    int findCategoriesCountByParentId(Integer parentId);
+
+    void deleteByIds(Set<Object> ids);
 }

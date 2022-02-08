@@ -23,6 +23,7 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         this.categoryDao = categoryDao;
     }
 
+    @Override
     public Map<String, Object> getCategory(Object id) {
         if (id == null) {
             return null;
@@ -138,6 +139,42 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
     @Override
     public Map<String, Object> getCategoryByCode(String code) {
         return categoryDao.findCategoryByCode(code);
+    }
+
+    @Override
+    public void updateCategory(Integer id, Map<String, Object> updatedMap) {
+        Map<String, Object> category = getCategory(id);
+        if (category == null) {
+            throw new RuntimeGoingException(String.format("栏目(%d)不存在，更新栏目失败！", id));
+        }
+
+        Map<String, Object> fields = ArrayToolkit.part(updatedMap, "name", "code", "weight",
+                "parentId", "publishArticle", "seoTitle", "seoKeyword", "seoDesc", "published");
+        if (fields == null || fields.isEmpty()) {
+            throw new RuntimeGoingException("参数不正确，更新栏目失败！");
+        }
+
+        filterCategoryFields(fields);
+        // logService.info("category", "update", String.format("编辑栏目 %s(#%d)", fields.get("name"), id), fields);
+        categoryDao.updateCategory(id, fields);
+    }
+
+    @Override
+    public int findCategoriesCountByParentId(Integer parentId) {
+        return categoryDao.findCategoriesCountByParentId(parentId);
+    }
+
+    @Override
+    public void deleteCategory(Integer id) {
+        Map<String, Object> category = getCategory(id);
+        if (category == null) {
+            throw new RuntimeGoingException("资讯栏目不存在！");
+        }
+
+        Set<Object> ids = findCategoryChildrenIds(id);
+        ids.add(id);
+        categoryDao.deleteByIds(ids);
+        // logService.info("category", "delete", String.format("删除栏目%s(#%d)", category.get("name"), id));
     }
 
     private void filterCategoryFields(Map<String, Object> fields) {
