@@ -191,15 +191,25 @@ public abstract class EasyStringUtil {
         return !equals(src, dest);
     }
 
+    public static String[] explode(String delimiter, Object obj) {
+        return explode(delimiter, obj, 0);
+    }
+
+    public static String[] explode(String delimiter, Object obj, int limit) {
+        String str = obj != null ? String.valueOf(obj) : "";
+        return str.split(delimiter, limit);
+    }
+
     /**
      * 可变参数数组中是否包含指定字符串
-     * @param str 验证字符串
+     *
+     * @param str   验证字符串
      * @param array 字符串组
      * @return 包含返回true
      */
     public static boolean inArray(String str, String... array) {
-        if (str != null && array != null){
-            for (String s : array){
+        if (str != null && array != null) {
+            for (String s : array) {
                 if (str.equals(s)){
                     return true;
                 }
