@@ -308,6 +308,18 @@ INSERT INTO `app_setting` VALUES ('5', 'theme', 0x613A313A7B733A333A22757269223B
 INSERT INTO `app_setting` VALUES ('6', 'article', 0x613A323A7B733A343A226E616D65223B733A31323A22E8B584E8AEAFE9A291E98193223B733A383A22706167654E756D73223B693A32303B7D);
 
 -- ----------------------------
+-- Table structure for `app_tag`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_tag`;
+CREATE TABLE `app_tag` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '标签ID',
+  `name` varchar(64) NOT NULL COMMENT '标签名称',
+  `createdTime` bigint unsigned NOT NULL COMMENT '标签创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='应用标签表';
+
+-- ----------------------------
 -- Table structure for `app_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user`;
