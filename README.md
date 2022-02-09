@@ -21,10 +21,9 @@ webfast
 
 #### 后端技术
 
-| 技术                 | 说明                | 官网                                                 |
-| -------------------- | ------------------- | ---------------------------------------------------- |
-| SpringBoot           | 容器+MVC框架        | https://spring.io/projects/spring-boot               |
-| Shiro                | 认证和授权框架      | https://shiro.apache.org/                             |
-| Druid                | 数据库连接池        | https://github.com/alibaba/druid                     |
-| Jenkins              | 自动化部署工具      | https://github.com/jenkinsci/jenkins                 |
+| 技术                 | 版本                | 说明                | 官网                                                 |
+| -------------------- | -------------------| ------------------- | ---------------------------------------------------- |
+| SpringBoot           | 2.2.13             | 容器+MVC框架        | https://spring.io/projects/spring-boot               |
+| Shiro                | 1.7.0              | 认证和授权框架      | https://shiro.apache.org/                             |
+| Druid                | 1.2.8              | 数据库连接池        | https://github.com/alibaba/druid                     |
 
