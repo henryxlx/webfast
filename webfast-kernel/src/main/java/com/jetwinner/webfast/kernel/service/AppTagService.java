@@ -13,4 +13,6 @@ public interface AppTagService {
     Map<String, Object> getTagByName(String name);
 
     void addTag(Map<String, Object> fields);
+
+    List<Map<String, Object>> getTagByLikeName(String partOfName);
 }
