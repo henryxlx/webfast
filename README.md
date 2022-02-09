@@ -5,6 +5,7 @@ SpringBoot与FreeMarker技术建立WebApp基础功能快速开发平台
 
 #### 源代码结构
 
+``` lua
 webfast
 ├── webfast-common -- 工具类及通用代码
 ├── webfast-kernel-dao-impl-jdbc -- 核心模块定义的DAO接口的Spring-JDBC实现
@@ -14,6 +15,7 @@ webfast
 ├── webfast-support-shiro -- Shiro封装公用模块
 ├── webfast-webapp-freemarker -- 应用视图FreeMarker代码初始化及页面实现
 └── webfast-webapp -- SpringMVC的Controller实现Web的控制逻辑
+```
 
 ### 技术选型
 
