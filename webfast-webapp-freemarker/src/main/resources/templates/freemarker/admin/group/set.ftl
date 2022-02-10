@@ -16,7 +16,7 @@
     <label >首页显示小组信息</label>
   </div>
   <div class="controls col-md-7 radios">
-    <@radios 'group_show' {'1':'显示', '0':'不显示'} "setting('group').group_show|default(1)" />
+    <@radios 'group_show' {'1':'显示', '0':'不显示'} setting('group.group_show', '1') />
     <div class="help-block">此功能开关只针对默认主题、默认主题B、清秋主题。</div>
   </div>
 </div>
@@ -26,7 +26,7 @@
     <label >最热话题的时间范围</label>
   </div>
   <div class="controls col-md-7 radios">
-    <@radios 'threadTime_range'  {'1':'天', '7':'周','14':'两周','30':'月'} "setting('group').threadTime_range|default('7')" />
+    <@radios 'threadTime_range'  {'1':'天', '7':'周','14':'两周','30':'月'} setting('group.threadTime_range', '7') />
     <div class="help-block"></div>
   </div>
 </div>
