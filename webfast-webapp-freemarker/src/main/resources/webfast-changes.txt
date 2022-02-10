@@ -3,8 +3,18 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.4.9: @2022-02-09
+* 应用程序数据库增加应用程序标签表app_tag，上传文件情况表app_file和上传文件分组表app_file_group
+* 完成后台资讯管理添加资讯保存功能，添加新资讯获取应用程序标签请求的实现
+* 加入README.md和LICENSE文件
+
 0.4.8: @2022-02-08
 * 完成后台资讯栏目创建后保存、编辑栏目与保存和删除栏目
+* SpringBoot的配置文件application.properties重新设置，
+  spring.profiles.active使用多个依赖配置文件（后缀缩写名为freemarker,web-base），
+  实际文件名为application-freemarker.properties, application-web-base.properties，
+  这些配置文件位于其它依赖包jar文件中的classes搜索路径（开发路径为src/main/resources）。
+  将custom类别的参数（特别是custom.app.version的配置）保存在application.properties文件中
 
 0.4.7: @2022-02-07
 * 完成后台资讯栏目管理浏览页面内容显示，网站前台分类页面内容显示
