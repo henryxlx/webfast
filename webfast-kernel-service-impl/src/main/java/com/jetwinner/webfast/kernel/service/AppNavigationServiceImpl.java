@@ -56,7 +56,14 @@ public class AppNavigationServiceImpl implements AppNavigationService {
         return tree;
     }
 
-    private void makeNavigationTreeList(List<AppModelNavigation> tree, Map<Integer, List<AppModelNavigation>> navigations, int parentId) {
+    @Override
+    public List<AppModelNavigation> findNavigationsByType(String type, int start, int limit) {
+        return navigationDao.findAllByType(type, start, limit);
+    }
+
+    private void makeNavigationTreeList(List<AppModelNavigation> tree,
+                                        Map<Integer, List<AppModelNavigation>> navigations, int parentId) {
+
         List<AppModelNavigation> subNavs = navigations.get(parentId);
         if (subNavs != null) {
             for (AppModelNavigation nav : subNavs) {

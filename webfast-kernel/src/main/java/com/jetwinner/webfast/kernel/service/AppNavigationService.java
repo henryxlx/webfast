@@ -1,5 +1,8 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.model.AppModelNavigation;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,5 +12,7 @@ public interface AppNavigationService {
 
     void createNavigation(Map<String, Object> model);
 
-    Object getNavigationsListByType(String type);
+    List<AppModelNavigation> getNavigationsListByType(String type);
+
+    List<AppModelNavigation> findNavigationsByType(String type, int start, int limit);
 }
