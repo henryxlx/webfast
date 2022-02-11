@@ -6,7 +6,7 @@
         <span class="glyphicon glyphicon-resize-vertical"></span>
         </#if>
         <#if navigation.parentId gt 0><span class="indentation">&nbsp;&nbsp;&nbsp;&nbsp; └─</span></#if>
-        <a href="${navigation.url!navigation_url!}" target="_blank"> ${navigation.name} </a>
+        <a href="${ctx}/${navigation.url!navigation_url!}" target="_blank"> ${navigation.name} </a>
     </td>
     <td>
         <#if navigation.isNewWin == 0>否<#else>是</#if>

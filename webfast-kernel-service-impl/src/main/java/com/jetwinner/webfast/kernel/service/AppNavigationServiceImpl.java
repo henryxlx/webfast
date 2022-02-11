@@ -61,6 +61,26 @@ public class AppNavigationServiceImpl implements AppNavigationService {
         return navigationDao.findAllByType(type, start, limit);
     }
 
+    @Override
+    public int deleteNavigation(Integer id) {
+        return navigationDao.deleteById(id) + navigationDao.deleteByParentId(id);
+    }
+
+    @Override
+    public AppModelNavigation getNavigationById(Integer id) {
+        return navigationDao.getById(id);
+    }
+
+    @Override
+    public int updateNavigation(Integer id, Map<String, Object> fields) {
+        fields.put("id", id);
+        fields.put("updateTime", System.currentTimeMillis());
+
+        // logService.info("info", "navigation_update", String.format("编辑导航#%d", id), fields);
+
+        return navigationDao.updateNavigation(fields);
+    }
+
     private void makeNavigationTreeList(List<AppModelNavigation> tree,
                                         Map<Integer, List<AppModelNavigation>> navigations, int parentId) {
 

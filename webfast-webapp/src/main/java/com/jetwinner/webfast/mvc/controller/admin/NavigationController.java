@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.model.AppModelNavigation;
 import com.jetwinner.webfast.kernel.service.AppNavigationService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,10 @@ public class NavigationController {
         navigation.put("isNewWin", 0);
         navigation.put("isOpen", 1);
         navigation.put("type", request.getParameter("type"));
-        navigation.put("parentId", ServletRequestUtils.getIntParameter(request, "parentId", 0));
+        Integer parentId = ServletRequestUtils.getIntParameter(request, "parentId", 0);
+        navigation.put("parentId", parentId);
         model.addAttribute("navigation", navigation);
+        model.addAttribute("parentNavigation", navigationService.getNavigationById(parentId));
         return "/admin/navigation/navigation-modal";
     }
 
@@ -50,5 +53,32 @@ public class NavigationController {
         Map<String, Object> navigation = ParamMap.toPostDataMap(request);
         navigationService.createNavigation(navigation);
         return "success";
+    }
+
+    @RequestMapping("/admin/navigation/{id}/delete")
+    @ResponseBody
+    public Map<String, Object> deleteAction(@PathVariable Integer id) {
+        int result = navigationService.deleteNavigation(id);
+        if(result > 0){
+            return new ParamMap().add("status", "ok").toMap();
+        } else {
+            return new ParamMap().add("status", "error").toMap();
+        }
+    }
+
+    @GetMapping("/admin/navigation/{id}/update")
+    public String updatePage(@PathVariable Integer id, Model model) {
+        AppModelNavigation navigation = navigationService.getNavigationById(id);
+        model.addAttribute("navigation", navigation);
+        model.addAttribute("parentNavigation",
+                navigationService.getNavigationById(navigation.getParentId()));
+        return "/admin/navigation/navigation-modal";
+    }
+
+    @PostMapping("/admin/navigation/{id}/update")
+    @ResponseBody
+    public String updateAction(@PathVariable Integer id, HttpServletRequest request) {
+        int result = navigationService.updateNavigation(id, ParamMap.toPostDataMap(request));
+        return result > 0 ? "success" : "failure";
     }
 }

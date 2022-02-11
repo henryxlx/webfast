@@ -15,4 +15,10 @@ public interface AppNavigationService {
     List<AppModelNavigation> getNavigationsListByType(String type);
 
     List<AppModelNavigation> findNavigationsByType(String type, int start, int limit);
+
+    int deleteNavigation(Integer id);
+
+    AppModelNavigation getNavigationById(Integer id);
+
+    int updateNavigation(Integer id, Map<String, Object> fields);
 }

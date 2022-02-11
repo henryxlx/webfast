@@ -36,4 +36,25 @@ public class AppNavigationDaoImpl extends FastJdbcDaoSupport implements AppNavig
         return getJdbcTemplate().query("SELECT * FROM app_navigation WHERE type = ? ORDER BY sequence ASC LIMIT ?, ?",
                 new BeanPropertyRowMapper<>(AppModelNavigation.class), type, start, limit);
     }
+
+    @Override
+    public int deleteById(Integer id) {
+        return getJdbcTemplate().update("DELETE FROM app_navigation WHERE id = ?", id);
+    }
+
+    @Override
+    public int deleteByParentId(Integer parentId) {
+        return getJdbcTemplate().update("DELETE FROM app_navigation WHERE parentId = ?", parentId);
+    }
+
+    @Override
+    public AppModelNavigation getById(Integer id) {
+        return getJdbcTemplate().query("SELECT * FROM app_navigation WHERE id = ? LIMIT 1",
+                new BeanPropertyRowMapper<>(AppModelNavigation.class), id).stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public int updateNavigation(Map<String, Object> fields) {
+        return updateMap("app_navigation", fields, "id");
+    }
 }
