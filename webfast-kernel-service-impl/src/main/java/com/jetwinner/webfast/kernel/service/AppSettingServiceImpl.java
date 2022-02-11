@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.kernel.service;
 
 import com.jetwinner.webfast.kernel.dao.AppSettingDao;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class AppSettingServiceImpl implements AppSettingService {
     }
 
     @Override
+    @CacheEvict(value = "settingCache", key = "#name")
     public void set(String name, Map<String, Object> mapForValue) {
         settingDao.updateSetting(name, mapForValue);
     }
