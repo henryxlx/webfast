@@ -86,19 +86,19 @@ public class ArticleController {
 
     @RequestMapping("/admin/article/setting")
     public String settingPage(HttpServletRequest request, Model model) {
-        Map<String, Object> articleSetting = settingService.get("article");
+        Map<String, Object> settingMapSaved = settingService.get("article");
 
-        Map<String, Object> defaultMap = new ParamMap()
+        Map<String, Object> articleSetting = new ParamMap()
                 .add("name", "资讯频道").add("pageNums", 20).toMap();
+        articleSetting.putAll(settingMapSaved);
 
-        defaultMap.putAll(articleSetting);
         if ("POST".equals(request.getMethod())) {
             articleSetting = ParamMap.toFilterPostDataMap(request, "name", "pageNums");
             settingService.set("article", articleSetting);
             // logService.info("article", "update_settings", "更新资讯频道设置", articleSetting);
             FlashMessageUtil.setFlashMessage("success", "资讯频道设置已保存！", request.getSession());
         }
-        model.addAttribute("articleSetting", defaultMap);
+        model.addAttribute("articleSetting", articleSetting);
         return "/admin/article/setting";
     }
 }
