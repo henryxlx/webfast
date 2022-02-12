@@ -60,8 +60,9 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <#if setting('site.logo')??>
-                        <a class="navbar-brand-logo" href="${ctx}/"><img src="${ctx}/${setting('site.logo')}"></a>
+                    <#assign siteLogo = setting('site.logo')!'' />
+                    <#if siteLogo != ''>
+                        <a class="navbar-brand-logo" href="${ctx}/"><img src="${ctx}/siteLogo"></a>
                     <#else>
                         <a class="navbar-brand" href="${ctx}/index">${setting('site.name', 'WebFast')}</a>
                     </#if>
