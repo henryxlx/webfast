@@ -30,13 +30,13 @@ public class AppLogDaoImpl extends FastJdbcDaoSupport implements AppLogDao {
 
     @Override
     public List<Map<String, Object>> searchList(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
-                                                Integer offset, Integer limit) {
+                                                Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createLogQueryBuilder(conditions)
                 .select("*")
                 .from("app_log")
                 .orderBy(orderByBuilder)
-                .setFirstResult(offset)
+                .setFirstResult(start)
                 .setMaxResults(limit);
 
         return getNamedParameterJdbcTemplate().queryForList(builder.getSQL(), conditions);

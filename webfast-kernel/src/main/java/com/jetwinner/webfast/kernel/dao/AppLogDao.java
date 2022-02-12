@@ -15,5 +15,5 @@ public interface AppLogDao {
     int searchCount(Map<String, Object> conditions);
 
     List<Map<String, Object>> searchList(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
-                                         Integer offset, Integer limit);
+                                         Integer start, Integer limit);
 }
