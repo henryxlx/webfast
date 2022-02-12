@@ -71,7 +71,6 @@
                     <ul class="nav navbar-nav">
                     </ul>
                     <@renderController path='/default/topNavigation'/>
-                    <#include '/default/top-navigation.ftl'>
 
                     <ul class="nav navbar-nav navbar-right">
                         <#if appUser??>

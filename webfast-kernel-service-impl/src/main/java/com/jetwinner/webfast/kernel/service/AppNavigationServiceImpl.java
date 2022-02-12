@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -79,6 +81,32 @@ public class AppNavigationServiceImpl implements AppNavigationService {
         // logService.info("info", "navigation_update", String.format("编辑导航#%d", id), fields);
 
         return navigationDao.updateNavigation(fields);
+    }
+
+    @Override
+    public List<AppModelNavigation> getNavigationsTreeByType(String type) {
+        int count = countNavigationsByType(type);
+        List<AppModelNavigation> navigationList = findNavigationsByType(type, 0, count);
+        Map<Integer, AppModelNavigation> map = navigationList.stream()
+                .collect(Collectors.toMap(AppModelNavigation::getId, Function.identity()));
+
+        List<AppModelNavigation> rootList = new ArrayList<>();
+        for (AppModelNavigation nav : navigationList) {
+            if (nav.getParentId() > 0) {
+                if (map.get(nav.getParentId()).getChildren() == null) {
+                    map.get(nav.getParentId()).setChildren(new ArrayList<>());
+                }
+
+                if (nav.getIsOpen() > 0) {
+                    map.get(nav.getParentId()).getChildren().add(map.get(nav.getId()));
+                    map.remove(nav.getId());
+                }
+            } else {
+                rootList.add(map.get(nav.getId()));
+            }
+
+        }
+        return rootList;
     }
 
     private void makeNavigationTreeList(List<AppModelNavigation> tree,

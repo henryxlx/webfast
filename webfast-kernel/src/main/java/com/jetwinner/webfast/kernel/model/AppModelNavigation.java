@@ -1,10 +1,23 @@
 package com.jetwinner.webfast.kernel.model;
 
+import java.util.List;
+
 /**
  * @author xulixin
  */
 public class AppModelNavigation {
 
+    private List<AppModelNavigation> children;
+
+    public List<AppModelNavigation> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<AppModelNavigation> children) {
+        this.children = children;
+    }
+
+    // --------------------------------------------------------------------------------------------------------
     private Integer id;
     private String name;
     private String url;
