@@ -33,6 +33,14 @@ public class DefaultController implements BlockRenderController {
     public String topNavigationAction(String siteNav, Model model) {
         model.addAttribute("siteNav", siteNav);
         model.addAttribute("navigations", navigationService.getNavigationsTreeByType("top"));
-        return "/default/top-navigation.ftl";
+        return "/default/top-navigation";
+    }
+
+    @RequestMapping("/default/footNavigation")
+    @BlockRenderMethod
+    public String footNavigationAction(Model model) {
+        model.addAttribute("navigations",
+                navigationService.findNavigationsByType("foot", 0, 100));
+        return "/default/foot-navigation";
     }
 }

@@ -140,7 +140,7 @@
 
     <div class="site-footer container clearfix">
 
-        <#include '/default/foot-navigation.ftl'>
+        <@renderController path='/default/footNavigation' />
 
         <div class="text-gray" data-role="default-foot-bar">
             <#include '/powered-by.ftl'>
