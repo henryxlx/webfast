@@ -46,7 +46,7 @@ public class LoginController {
             userAccessControlService.doLoginCheck(username, password);
             AppUser user = (AppUser) userAccessControlService.getCurrentUser();
             user.setLoginIp(RequestIpAddressUtil.getClientIp(request));
-            logService.info("user", "login_success", "登录成功", user);
+            logService.info(user, "user", "login_success", "登录成功");
             if (EasyStringUtil.isBlank(targetPath)) {
                 String savedUrlBeforeLogin = userAccessControlService.getSavedUrlBeforeLogin(request);
                 targetPath = EasyStringUtil.isNotBlank(savedUrlBeforeLogin) ? savedUrlBeforeLogin : "/";

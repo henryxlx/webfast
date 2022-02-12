@@ -24,73 +24,43 @@ public class AppLogServiceImpl implements AppLogService {
     }
 
     @Override
-    public void info(String module, String action, String message) {
-        Object user = accessControlService.getCurrentUser();
-        if (user != null && user instanceof AppUser) {
-            info(module, action, message, (AppUser) user, null);
-        } else {
-            info(module, action, message, null, null);
-        }
+    public void info(AppUser currentUser, String module, String action, String message) {
+        info(currentUser, module, action, message, null);
     }
 
     @Override
-    public void info(String module, String action, String message, AppUser currentUser) {
-        info(module, action, message, currentUser, null);
+    public void info(AppUser currentUser, String module, String action, String message, Map<String, Object> data) {
+        addLog(currentUser, "info", module, action, message, data);
     }
 
     @Override
-    public void info(String module, String action, String message, AppUser currentUser, Map<String, Object> data) {
-        addLog("info", module, action, message, currentUser, data);
+    public void warning(AppUser currentUser, String module, String action, String message) {
+        warning(currentUser, module, action, message, null);
     }
 
     @Override
-    public void warning(String module, String action, String message) {
-        Object user = accessControlService.getCurrentUser();
-        if (user != null && user instanceof AppUser) {
-            warning(module, action, message, (AppUser) user, null);
-        } else {
-            warning(module, action, message, null, null);
-        }
+    public void warning(AppUser currentUser, String module, String action, String message, Map<String, Object> data) {
+        addLog(currentUser, "warning", module, action, message, data);
     }
 
     @Override
-    public void warning(String module, String action, String message, AppUser currentUser) {
-        warning(module, action, message, currentUser, null);
+    public void error(AppUser currentUser, String module, String action, String message) {
+        error(currentUser, module, action, message, null);
     }
 
     @Override
-    public void warning(String module, String action, String message, AppUser currentUser, Map<String, Object> data) {
-        addLog("warning", module, action, message, currentUser, data);
+    public void error(AppUser currentUser, String module, String action, String message, Map<String, Object> data) {
+        addLog(currentUser, "error", module, action, message, data);
     }
 
-    @Override
-    public void error(String module, String action, String message) {
-        Object user = accessControlService.getCurrentUser();
-        if (user != null && user instanceof AppUser) {
-            error(module, action, message, (AppUser) user, null);
-        } else {
-            error(module, action, message, null, null);
-        }
-    }
-
-    @Override
-    public void error(String module, String action, String message, AppUser currentUser) {
-        error(module, action, message, currentUser, null);
-    }
-
-    @Override
-    public void error(String module, String action, String message, AppUser currentUser, Map<String, Object> data) {
-        addLog("error", module, action, message, currentUser, data);
-    }
-
-    private void addLog(String level, String module, String action, String message,
-                        AppUser currentUser, Map<String, Object> data) {
+    private void addLog(AppUser currentUser, String level, String module, String action, String message,
+                        Map<String, Object> data) {
 
         Map<String, Object> logModel = new ParamMap().add("module", module)
                 .add("action", action).add("message", message)
                 .add("data", data == null ? "" : JsonUtil.objectToString(data))
-                .add("userId", currentUser != null ? currentUser.getId(): "lost")
-                .add("ip", currentUser != null ? currentUser.getLoginIp(): "")
+                .add("userId", currentUser != null ? currentUser.getId() : "lost")
+                .add("ip", currentUser != null ? currentUser.getLoginIp() : "")
                 .add("createdTime", System.currentTimeMillis())
                 .add("level", level)
                 .toMap();

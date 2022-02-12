@@ -9,21 +9,15 @@ import java.util.Map;
  */
 public interface AppLogService {
 
-    public void info(String module, String action, String message);
+    void info(AppUser currentUser, String module, String action, String message);
 
-    void info(String module, String action, String message, AppUser currentUser);
+    void info(AppUser currentUser, String module, String action, String message, Map<String, Object> data);
 
-    public void info(String module, String action, String message, AppUser currentUser, Map<String, Object> data);
+    void warning(AppUser currentUser, String module, String action, String message);
 
-    void warning(String module, String action, String message);
+    void warning(AppUser currentUser, String module, String action, String message, Map<String, Object> data);
 
-    void warning(String module, String action, String message, AppUser currentUser);
+    void error(AppUser currentUser, String module, String action, String message);
 
-    void warning(String module, String action, String message, AppUser currentUser, Map<String, Object> data);
-
-    void error(String module, String action, String message);
-
-    void error(String module, String action, String message, AppUser currentUser);
-
-    void error(String module, String action, String message, AppUser currentUser, Map<String, Object> data);
+    void error(AppUser currentUser, String module, String action, String message, Map<String, Object> data);
 }
