@@ -14,7 +14,7 @@
 
   <div class="form-group">
     <select class="form-control" name="level">
-        <@select_options dict['logLevel']!{} RequestParameters['level']! '--所有等级--' />
+        <@select_options dict['logLevel']!{} RequestParameters['level']!'' '--所有等级--' />
     </select>
   </div>
 

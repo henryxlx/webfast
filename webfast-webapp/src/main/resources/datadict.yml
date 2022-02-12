@@ -23,6 +23,14 @@ data:
       last_week: 上周
       this_month: 本月
       last_month: 上月
+    logLevel:
+      info: 提示
+      warning: 警告
+      error: 错误
+    logLevelHtml:
+      info: <span>提示</span>
+      warning: <span class="text-warning">警告</span>
+      error: <span class="text-danger">错误</span>
     permission:
       ACCESS_BACKEND: 访问后端
     userKeyWordType:
