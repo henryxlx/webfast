@@ -203,7 +203,7 @@ TODO list
 0.1.4: @2021-12-30
 * 网站内容类型ContentType交给Spring容器管理，可动态添加自定义类型
 * FreeMarker页面扩展新定义获取数据字典条目文件的函数data_text
-* 数据字典添加新的类型contentStatus4html，注意不能使用冒号
+* 数据字典添加新的类型contentStatusHtml，注意不能使用冒号
 * 实现分页的处理类Paginator
 * 简化数据表动态查询支持类DynamicQueryBuilder及相关处理辅助类
 

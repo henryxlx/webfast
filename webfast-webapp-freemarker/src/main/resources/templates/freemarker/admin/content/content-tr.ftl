@@ -9,7 +9,7 @@
         </#if>
     </td>
     <td>${dict_text('contentType', content.type)}</td>
-    <td>${dict_text('contentStatus4html', content.status)}</td>
+    <td>${dict_text('contentStatusHtml', content.status)}</td>
     <td>
         ${content.publishedTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}<br />
         ${(user.username)!}
