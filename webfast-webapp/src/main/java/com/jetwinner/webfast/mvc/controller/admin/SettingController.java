@@ -5,7 +5,6 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,9 +56,27 @@ public class SettingController {
         return "redirect:/admin/setting/mailer";
     }
 
-    @GetMapping("/admin/setting/mailer")
-    public String mailerPage(Model model) {
-        model.addAttribute("mailer", settingService.get("mailer"));
+    @RequestMapping("/admin/setting/mailer")
+    public String mailerPage(HttpServletRequest request, Model model) {
+        Map<String, Object> mailerMapFromSaved = settingService.get("mailer");
+        Map<String, Object> mailer = new ParamMap()
+                .add("enabled", 0)
+                .add("host", "")
+                .add("port", "")
+                .add("username", "")
+                .add("password", "")
+                .add("from", "")
+                .add("name", "").toMap();
+        mailer.putAll(mailerMapFromSaved);
+
+        if ("POST".equals(request.getMethod())) {
+            mailer = ParamMap.toPostDataMap(request);
+            settingService.set("mailer", mailer);
+            // logService.info("system", "update_settings", "更新邮件服务器设置", mailer);
+            FlashMessageUtil.setFlashMessage("success", "电子邮件设置已保存！", request.getSession());
+        }
+
+        model.addAttribute("mailer", mailer);
         return "/admin/system/mailer";
     }
 }
