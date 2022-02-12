@@ -65,7 +65,7 @@
                 <label for="favicon">浏览器图标</label>
             </div>
             <div class="col-md-8 controls">
-                <div id="site-favicon-container"><#if (site.favicon)??><img src="{{ asset(site.favicon) }}"></#if></div>
+                <div id="site-favicon-container"><#if (site.favicon)??><img src="${ctx}/${site.favicon!'assets/img/favicon.ico'}"></#if></div>
                 <button class="btn btn-default" id="site-favicon-upload" type="button" data-url="${ctx}/admin/setting/favicon/upload">上传</button>
                 <button class="btn btn-default" id="site-favicon-remove" type="button" data-url="${ctx}/admin/setting/favicon/remove" <#if !(site.favicon)??>style="display:none;"</#if>>删除</button>
                 <p class="help-block">请上传ico格式的图标文件。</p>

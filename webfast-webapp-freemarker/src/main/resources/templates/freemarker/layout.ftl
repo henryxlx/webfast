@@ -16,9 +16,8 @@
     <meta name="description" content="${metaDescription!}" />
     <meta content="${csrf_token('site')}" name="csrf-token" />
     ${setting('login_bind.verify_code', '')}
-    <#if setting('site.favicon')??>
-        <link href="${setting('site.favicon')}" rel="shortcut icon" />
-    </#if>
+    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
+
     <#if blockStylesheets??>
         <@blockStylesheets/>
     <#else>

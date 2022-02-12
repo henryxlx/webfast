@@ -11,9 +11,7 @@
     <meta content="${csrf_token('site')}" name="csrf-token" />
     <#assign blockTitleParent>${setting('copyright.owned', 'WebFast')}管理后台</#assign>
     <title><#if blockTitle??><@blockTitle/><#else>${blockTitleParent!}</#if></title>
-    <#if setting('site.favicon')??>
-    <link href="${ctx}/${setting('site.favicon')}" rel="shortcut icon" />
-    </#if>
+    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
     <link href="${ctx}/assets/libs/gallery2/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet" />
     <link href="${ctx}/assets/css/common.css" rel="stylesheet" />
     <link href="${ctx}/bundles/topadmin/css/admin.css" rel="stylesheet" />
