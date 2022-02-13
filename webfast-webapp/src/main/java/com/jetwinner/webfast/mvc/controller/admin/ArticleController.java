@@ -93,7 +93,7 @@ public class ArticleController {
         articleSetting.putAll(settingMapSaved);
 
         if ("POST".equals(request.getMethod())) {
-            articleSetting = ParamMap.toFilterPostDataMap(request, "name", "pageNums");
+            articleSetting = ParamMap.toCustomFormDataMap(request, "name", "pageNums");
             settingService.set("article", articleSetting);
             // logService.info("article", "update_settings", "更新资讯频道设置", articleSetting);
             FlashMessageUtil.setFlashMessage("success", "资讯频道设置已保存！", request.getSession());

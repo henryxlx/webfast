@@ -34,7 +34,7 @@ public class ParamMap {
         return set;
     }
 
-    public static Map<String, Object> toFilterPostDataMap(HttpServletRequest request, String... includeNames) {
+    public static Map<String, Object> toCustomFormDataMap(HttpServletRequest request, String... includeNames) {
         if (includeNames == null || includeNames.length < 1) {
             return toPostDataMap(request);
         }

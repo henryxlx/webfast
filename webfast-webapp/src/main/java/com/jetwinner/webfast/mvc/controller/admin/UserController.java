@@ -77,7 +77,7 @@ public class UserController {
 
     @PostMapping("/admin/user/create")
     public String createUserAction(HttpServletRequest request) {
-        Map<String, Object> formData = ParamMap.toFilterPostDataMap(request,
+        Map<String, Object> formData = ParamMap.toCustomFormDataMap(request,
                 "email", "username", "password");
         formData.put("createdIp", RequestIpAddressUtil.getClientIp(request));
         AppUser user = userService.register(formData);
