@@ -4,9 +4,9 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.dao.AppNotificationDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
-import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +26,7 @@ public class AppNotificationServiceImpl implements AppNotificationService {
 
     @Override
     public void notify(Integer userId, String type, String... content) {
-        Map<String, Object> notification = ParamMap.toNewHashMap(5);
+        Map<String, Object> notification = new HashMap<>(5);
         notification.put("userId", userId);
         notification.put("type", EasyStringUtil.isBlank(type) ? "default" : type);
         notification.put("content", JsonUtil.objectToString(content));

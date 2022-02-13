@@ -37,7 +37,7 @@ public class LoginRecordController {
     @GetMapping("/admin/login-record")
     public String indexPage(HttpServletRequest request, Model model) {
         Map<String, Object> conditions = ParamMap.toConditionMap(request);
-        Map<String, Object> userConditions = ParamMap.toNewHashMap(2);
+        Map<String, Object> userConditions = new HashMap<>(2);
         if (EasyStringUtil.isNotBlank(conditions.get("keywordType"))) {
             userConditions.put("keywordType", conditions.get("keywordType"));
         }
