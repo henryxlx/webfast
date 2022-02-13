@@ -45,7 +45,7 @@ public class UserApprovalController {
                 .add("keyword", "")
                 .add("approvalStatus", "approving").toMap();
 
-        ParamMap.mergeConditionMap(conditions, fields);
+        conditions.putAll(fields);
 
         Paginator paginator = new Paginator(request, userService.searchUserCount(conditions), 20);
 
@@ -97,7 +97,7 @@ public class UserApprovalController {
                 .add("keyword", "")
                 .add("approvalStatus", "approved").toMap();
 
-        ParamMap.mergeConditionMap(conditions, fields);
+        conditions.putAll(fields);
 
         Paginator paginator = new Paginator(request, userService.searchUserCount(conditions), 20);
 
