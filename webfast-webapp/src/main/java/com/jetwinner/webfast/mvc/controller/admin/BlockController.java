@@ -91,7 +91,7 @@ public class BlockController {
     public Map<String, Object> updateAction(@PathVariable String blockId, HttpServletRequest request) {
         Map<String, Object> block = EasyStringUtil.isNumeric(blockId) ?
                 blockService.getBlock(blockId) : blockService.getBlockByCode(blockId);
-        Map<String, Object> fields = ParamMap.toPostDataMap(request);
+        Map<String, Object> fields = ParamMap.toFormDataMap(request);
         if ("template".equals(block.get("mode"))) {
             String template = String.valueOf(block.get("template"));
             // template = str_replace(array("(( "," ))","((  ","  )"),array("((","))","((","))"),$template);

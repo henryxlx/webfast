@@ -46,7 +46,7 @@ public class SettingController {
         siteMap.putAll(siteMapFromSaved);
 
         if ("POST".equals(request.getMethod())) {
-            siteMap = ParamMap.toPostDataMap(request);
+            siteMap = ParamMap.toFormDataMap(request);
             settingService.set("site", siteMap);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新站点设置", siteMap);
@@ -75,7 +75,7 @@ public class SettingController {
         mailer.putAll(mailerMapFromSaved);
 
         if ("POST".equals(request.getMethod())) {
-            mailer = ParamMap.toPostDataMap(request);
+            mailer = ParamMap.toFormDataMap(request);
             settingService.set("mailer", mailer);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新邮件服务器设置", mailer);

@@ -51,7 +51,7 @@ public class NavigationController {
     @PostMapping("/admin/navigation/create")
     @ResponseBody
     public String createAction(HttpServletRequest request) {
-        Map<String, Object> navigation = ParamMap.toPostDataMap(request);
+        Map<String, Object> navigation = ParamMap.toFormDataMap(request);
         navigationService.createNavigation(AppUser.getCurrentUser(request), navigation);
         return "success";
     }
@@ -80,7 +80,7 @@ public class NavigationController {
     @ResponseBody
     public String updateAction(@PathVariable Integer id, HttpServletRequest request) {
         int result = navigationService.updateNavigation(AppUser.getCurrentUser(request),
-                id, ParamMap.toPostDataMap(request));
+                id, ParamMap.toFormDataMap(request));
         return result > 0 ? "success" : "failure";
     }
 }

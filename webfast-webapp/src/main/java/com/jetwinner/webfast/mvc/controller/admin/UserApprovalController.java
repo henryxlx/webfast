@@ -76,7 +76,7 @@ public class UserApprovalController {
     @ResponseBody
     public Map<String, Object> approveAction(@PathVariable Integer id, HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
-        Map<String, Object> data = ParamMap.toPostDataMap(request);
+        Map<String, Object> data = ParamMap.toFormDataMap(request);
         Object objForNote = data.get("note");
         String note = objForNote == null ? null : String.valueOf(objForNote);
         if ("success".equals(data.get("form_status"))) {

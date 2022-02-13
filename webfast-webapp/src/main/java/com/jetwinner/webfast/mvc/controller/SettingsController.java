@@ -103,7 +103,7 @@ public class SettingsController {
     @PostMapping("/approval/submit")
     public ModelAndView approvalSubmitAction(HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
-        Map<String, Object> formData = ParamMap.toPostDataMap(request);
+        Map<String, Object> formData = ParamMap.toFormDataMap(request);
         MultipartHttpServletRequest multipartReq = (MultipartHttpServletRequest) request;
         MultipartFile faceImgFile = multipartReq.getFile("faceImg");
         MultipartFile backImgFile = multipartReq.getFile("backImg");
@@ -193,7 +193,7 @@ public class SettingsController {
     public String avatarCropAction(HttpServletRequest request, String filename) {
         AppUser user = AppUser.getCurrentUser(request);
         String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
-        Map<String, Object> options = ParamMap.toPostDataMap(request);
+        Map<String, Object> options = ParamMap.toFormDataMap(request);
         userService.changeAvatar(user.getId(), pictureFilePath, options);
         return "redirect:/settings/avatar";
     }

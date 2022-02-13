@@ -36,7 +36,7 @@ public class ParamMap {
 
     public static Map<String, Object> toCustomFormDataMap(HttpServletRequest request, String... includeNames) {
         if (includeNames == null || includeNames.length < 1) {
-            return toPostDataMap(request);
+            return toFormDataMap(request);
         }
         Map<String, Object> map = new HashMap<>(includeNames.length);
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -56,7 +56,7 @@ public class ParamMap {
         return map;
     }
 
-    public static Map<String, Object> toPostDataMap(HttpServletRequest request, String... excludeKeys) {
+    public static Map<String, Object> toFormDataMap(HttpServletRequest request, String... excludeKeys) {
         Set<String> excludeParameterNames = getExcludeParameterNames(excludeKeys);
         Map<String, Object> map = new HashMap<>(request.getParameterMap().size());
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -66,7 +66,7 @@ public class ParamMap {
                 continue;
             }
             String value = request.getParameter(key);
-            if (EasyStringUtil.isBlank(value)) {
+            if (value == null) {
                 continue;
             }
             map.put(key, value);

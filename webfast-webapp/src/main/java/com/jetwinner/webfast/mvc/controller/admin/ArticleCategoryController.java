@@ -93,7 +93,7 @@ public class ArticleCategoryController {
         if (category == null) {
             throw new RuntimeGoingException("资讯栏目不存在！");
         }
-        categoryService.updateCategory(id, ParamMap.toPostDataMap(request));
+        categoryService.updateCategory(id, ParamMap.toFormDataMap(request));
         return renderTbody(model);
     }
 

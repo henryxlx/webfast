@@ -78,7 +78,7 @@ public class ArticleController {
 
     @PostMapping("/admin/article/create")
     public String createAction(HttpServletRequest request) {
-        Map<String, Object> article = ParamMap.toPostDataMap(request);
+        Map<String, Object> article = ParamMap.toFormDataMap(request);
         article.put("tags", String.join(",", request.getParameterValues("tags")));
         articleService.createArticle(article, AppUser.getCurrentUser(request));
         return "redirect:/admin/article";

@@ -142,7 +142,7 @@ public class UserController {
         Map<String, Object> profile = userService.getUserProfile(id);
         profile.put("title", user.getTitle());
 
-        Map<String, Object> profileMap = ParamMap.toPostDataMap(request);
+        Map<String, Object> profileMap = ParamMap.toFormDataMap(request);
         profileMap.put("title", user.getTitle());
         if (!(EasyStringUtil.isNotBlank(user.getVerifiedMobile()) &&
                 EasyStringUtil.isNotBlank(profile.get("mobile")))) {
@@ -237,7 +237,7 @@ public class UserController {
             throw new RuntimeGoingException("Need ROLE_SUPER_ADMIN role to crop user avatar.");
         }
 
-        Map<String, Object> options = ParamMap.toPostDataMap(request);
+        Map<String, Object> options = ParamMap.toFormDataMap(request);
         String filename = request.getParameter("filename");
         String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/" + filename;
         userService.changeAvatar(id, pictureFilePath, options);
