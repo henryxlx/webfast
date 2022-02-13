@@ -100,9 +100,8 @@ public class AppLogServiceImpl implements AppLogService {
     }
 
     private void prepareSearchConditions(Map<String, Object> conditions) {
-        String username = String.valueOf(conditions.get("username"));
-        if (EasyStringUtil.isNotBlank(username)) {
-            AppUser existsUser = userService.getUserByUsername(username);
+        if (EasyStringUtil.isNotBlank(conditions.get("username"))) {
+            AppUser existsUser = userService.getUserByUsername(String.valueOf(conditions.get("username")));
             Integer userId = existsUser != null ? existsUser.getId() : -1;
             conditions.put("userId", userId);
             conditions.remove("username");
