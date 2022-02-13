@@ -35,7 +35,7 @@
   </div>
 
   <div class="form-group">
-    <input type="text" id="nickname" name="nickname" value="${RequestParameters['nickname']!}" class="form-control" placeholder="用户昵称" style="width:120px;">
+    <input type="text" id="username" name="username" value="${RequestParameters['nickname']!}" class="form-control" placeholder="用户昵称" style="width:120px;">
   </div>
 
   <button class="btn btn-primary">搜索</button>
@@ -50,30 +50,30 @@
       <th width="20%">时间/IP</th>
     </tr>   
     <#list logs! as log>
-      {% set user = users[log.userId]|default(null) %}
+      <#assign user = users[log.userId]! />
       <tr>
         <td>
-          {% if user %}
-            {{ admin_macro.user_link(user) }}
-          {% else %}
+          <#if user??>
+            <@admin_macro.user_link user />
+          <#else>
             --
-          {% endif %}
+          </#if>
         <td>
           <div style="word-break: break-all;word-wrap: break-word;">
-            {{ log.message }}
-            {% if log.data %}
+            ${log.message}
+            <#if log.data??>
               <a href="javascript:;" class="text-sm text-warning show-data">查看数据</a>
               <a href="javascript:;" class="text-sm text-warning hide-data" style="display:none;">隐藏数据</a>
-              <div class="data" style="display:none;">{{ log.data|json_encode }}</div>
-            {% endif %}
+              <div class="data" style="display:none;">${log.data}</div>
+            </#if>
           </div>
-          <span class="text-muted text-sm">{{ log.module }}.{{ log.action }}</span>
+          <span class="text-muted text-sm">${log.module}.${log.action}</span>
         </td>
-        <td>{{ dict('logLevel:html')[log.level]|raw }}</td>
+        <td>${dict('logLevelHtml')}${log.level}</td>
         <td>
-          <span class="">{{ log.createdTime|date("Y-m-d H:i:s") }}</span>
+          <span class="">${log.createdTime?number_to_datetime?string("yyyy-MM-dd HH:mm:ss")}</span>
           <br />
-          <a  class="text-muted text-sm" href="http://www.baidu.com/s?wd={{ log.ip }}" target="_blank">{{ log.ip }}</a>
+          <a  class="text-muted text-sm" href="http://www.baidu.com/s?wd=${log.ip}" target="_blank">${log.ip}</a>
         </td>
       </tr>
     <#else>
