@@ -70,7 +70,7 @@ public class ParamMap {
     public static Map<String, Object> toUpdateDataMap(HttpServletRequest request, Map<String, Object> oldMap) {
         int size = oldMap != null ? oldMap.size() : 0;
         Map<String, Object> map = new HashMap<>(size);
-        Set<String> keys = oldMap.keySet();
+        Set<String> keys = size > 0 ? oldMap.keySet() : new HashSet<>(0);
         keys.forEach(key -> {
             String value = request.getParameter(key);
             if (value != null && !value.equals(oldMap.get(key))) {
