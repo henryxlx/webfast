@@ -24,6 +24,10 @@ public class ParamMap {
         return this.map;
     }
 
+    public static Map<String, Object> toNewHashMap(int size) {
+        return new HashMap<>(size);
+    }
+
     private static final String[] EXCLUDE_PARAMETER_NAME_ARRAY = {"_csrf_token"};
 
     private static Set<String> getExcludeParameterNames(String... array) {
@@ -32,10 +36,6 @@ public class ParamMap {
             Collections.addAll(set, array);
         }
         return set;
-    }
-
-    public static Map<String, Object> toNewHashMap(int size) {
-        return new HashMap<>(size);
     }
 
     public static Map<String, Object> toFilterPostDataMap(HttpServletRequest request, String... includeNames) {
@@ -78,6 +78,25 @@ public class ParamMap {
         return map;
     }
 
+    public static Map<String, Object> toUpdateDataMap(Map<String, String[]> parameterMap, Map<String, Object> oldMap) {
+        Map<String, Object> map = new HashMap<>(0);
+        if (parameterMap != null) {
+            for (String key : parameterMap.keySet()) {
+                if (!oldMap.containsKey(key)) {
+                    continue;
+                }
+                String[] values = parameterMap.get(key);
+                if (EasyStringUtil.isNotBlank(values[0])) {
+                    Object oldValue = oldMap.get(key);
+                    if (!values[0].equals(oldValue)) {
+                        map.put(key, values[0]);
+                    }
+                }
+            }
+        }
+        return map;
+    }
+
     public static Map<String, Object> toConditionMap(HttpServletRequest request) {
         Enumeration<String> parameterNames = request.getParameterNames();
         List<String> keyList = Collections.list(parameterNames);
@@ -103,24 +122,6 @@ public class ParamMap {
         return toMap;
     }
 
-    public static Map<String, Object> mergeConditionMap(Map<String, Object> fields) {
-        return mergeConditionMap(null, fields);
-    }
-
-    public static Map<String, Object> mergeConditionMap(Map<String, Object> conditions, Map<String, Object> fields) {
-        if (conditions == null) {
-            conditions = new HashMap<>(fields == null ? 0 : fields.size());
-        }
-        if (fields != null) {
-            for (Map.Entry<String, Object> entry : fields.entrySet()) {
-                if (EasyStringUtil.isNotBlank(entry.getValue())) {
-                    conditions.put(entry.getKey(), entry.getValue());
-                }
-            }
-        }
-        return conditions;
-    }
-
     public static Map<String, Object> filterConditionMap(Map<String, Object> conditions, String... includeKeys) {
         Map<String, Object> map = new HashMap<>(includeKeys != null ? includeKeys.length : 0);
         if (includeKeys != null) {
@@ -128,25 +129,6 @@ public class ParamMap {
                 Object value = conditions.get(key);
                 if (EasyStringUtil.isNotBlank(value)) {
                     map.put(key, value);
-                }
-            }
-        }
-        return map;
-    }
-
-    public static Map<String, Object> toUpdateDataMap(Map<String, String[]> parameterMap, Map<String, Object> oldMap) {
-        Map<String, Object> map = new HashMap<>(0);
-        if (parameterMap != null) {
-            for (String key : parameterMap.keySet()) {
-                if (!oldMap.containsKey(key)) {
-                    continue;
-                }
-                String[] values = parameterMap.get(key);
-                if (EasyStringUtil.isNotBlank(values[0])) {
-                    Object oldValue = oldMap.get(key);
-                    if (!values[0].equals(oldValue)) {
-                        map.put(key, values[0]);
-                    }
                 }
             }
         }
