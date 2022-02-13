@@ -56,7 +56,7 @@ public abstract class ArrayUtil {
         return INDEX_NOT_FOUND;
     }
 
-    public static boolean inArray(String strToFind, String... array) {
-        return indexOf(array, strToFind) != INDEX_NOT_FOUND;
+    public static boolean inArray(Object objectToFind, String... array) {
+        return indexOf(array, objectToFind) != INDEX_NOT_FOUND;
     }
 }
