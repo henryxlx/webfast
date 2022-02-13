@@ -35,7 +35,7 @@
   </div>
 
   <div class="form-group">
-    <input type="text" id="username" name="username" value="${RequestParameters['nickname']!}" class="form-control" placeholder="用户昵称" style="width:120px;">
+    <input type="text" id="username" name="username" value="${RequestParameters['username']!}" class="form-control" placeholder="用户名称" style="width:120px;">
   </div>
 
   <button class="btn btn-primary">搜索</button>
@@ -50,7 +50,7 @@
       <th width="20%">时间/IP</th>
     </tr>   
     <#list logs! as log>
-      <#assign user = users[log.userId]! />
+      <#assign user = users['' + log.userId]! />
       <tr>
         <td>
           <#if user??>
@@ -69,7 +69,7 @@
           </div>
           <span class="text-muted text-sm">${log.module}.${log.action}</span>
         </td>
-        <td>${dict('logLevelHtml')}${log.level}</td>
+        <td>${dict['logLevelHtml'][log.level]}</td>
         <td>
           <span class="">${log.createdTime?number_to_datetime?string("yyyy-MM-dd HH:mm:ss")}</span>
           <br />
