@@ -12,6 +12,7 @@ import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -41,16 +42,18 @@ public class UserController {
     private final AppRoleService roleService;
     private final UserAccessControlService userAccessControlService;
     private final FastAppConst appConst;
+    private final AppLogService logService;
 
     public UserController(AppUserService userService,
                           AppRoleService roleService,
                           UserAccessControlService userAccessControlService,
-                          FastAppConst appConst) {
+                          FastAppConst appConst, AppLogService logService) {
 
         this.userService = userService;
         this.roleService = roleService;
         this.userAccessControlService = userAccessControlService;
         this.appConst = appConst;
+        this.logService = logService;
     }
 
     @RequestMapping("/admin/user")
@@ -85,7 +88,8 @@ public class UserController {
             userService.changeUserRoles(user.getId(), "ROLE_TEACHER", "ROLE_USER");
         }
 
-        // logService.info("user", "add", String.format("管理员添加新用户 {%s} (%d)", user.getUsername(), user.getId()));
+        logService.info(AppUser.getCurrentUser(request), "user", "add",
+                String.format("管理员添加新用户 {%s} (%d)", user.getUsername(), user.getId()));
 
         return "redirect:/admin/user";
     }
@@ -145,7 +149,8 @@ public class UserController {
                 EasyStringUtil.isNotBlank(profile.get("mobile")))) {
 
             userService.updateUserProfile(user.getId(), profileMap);
-            // logService.info("user", "edit", String.format("管理员编辑用户资料 {%s} (#%d)", user.getUsername(), user.getId()), profile);
+            logService.info(AppUser.getCurrentUser(request), "user", "edit",
+                    String.format("管理员编辑用户资料 {%s} (#%d)", user.getUsername(), user.getId()), profile);
         } else {
             FlashMessageUtil.setFlashMessage("danger", "用户已绑定的手机不能修改。", request.getSession());
         }
