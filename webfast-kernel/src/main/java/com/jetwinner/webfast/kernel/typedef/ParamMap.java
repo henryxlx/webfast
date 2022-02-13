@@ -24,10 +24,6 @@ public class ParamMap {
         return this.map;
     }
 
-    public static Map<String, Object> toNewHashMap(int size) {
-        return new HashMap<>(size);
-    }
-
     private static final String[] EXCLUDE_PARAMETER_NAME_ARRAY = {"_csrf_token"};
 
     private static Set<String> getExcludeParameterNames(String... array) {
@@ -97,42 +93,28 @@ public class ParamMap {
         return map;
     }
 
-    public static Map<String, Object> toConditionMap(HttpServletRequest request) {
+    private static boolean containKey(String key, String[] array) {
+        if (array == null) {
+            return true;
+        }
+        for (String str : array) {
+            if (str.equals(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static Map<String, Object> toConditionMap(HttpServletRequest request, String... includeKeys) {
         Enumeration<String> parameterNames = request.getParameterNames();
         List<String> keyList = Collections.list(parameterNames);
         Map<String, Object> map = new HashMap<>(keyList.size());
-        for (String key : keyList) {
+        keyList.forEach(key -> {
             String value = request.getParameter(key);
-            if (EasyStringUtil.isNotBlank(value)) {
+            if (containKey(key, includeKeys) && EasyStringUtil.isNotBlank(value)) {
                 map.put(key, value);
             }
-        }
+        });
         return map;
     }
-
-    public static Map<String, Object> toConditionMap(Map<String, String[]> sourceMap) {
-        Map<String, Object> toMap = new HashMap<>(sourceMap != null ? sourceMap.size() : 0);
-        if (sourceMap != null) {
-            sourceMap.forEach((k, v) -> {
-                if (v != null && v.length > 0 && EasyStringUtil.isNotBlank(v[0])) {
-                    toMap.put(k, v[0]);
-                }
-            });
-        }
-        return toMap;
-    }
-
-    public static Map<String, Object> filterConditionMap(Map<String, Object> conditions, String... includeKeys) {
-        Map<String, Object> map = new HashMap<>(includeKeys != null ? includeKeys.length : 0);
-        if (includeKeys != null) {
-            for (String key : includeKeys) {
-                Object value = conditions.get(key);
-                if (EasyStringUtil.isNotBlank(value)) {
-                    map.put(key, value);
-                }
-            }
-        }
-        return map;
-    }
-
 }

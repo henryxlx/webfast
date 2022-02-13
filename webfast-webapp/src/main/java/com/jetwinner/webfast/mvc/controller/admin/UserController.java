@@ -77,11 +77,10 @@ public class UserController {
 
     @PostMapping("/admin/user/create")
     public String createUserAction(HttpServletRequest request) {
-        Map<String, Object> formData = ParamMap.toPostDataMap(request);
-        Map<String, Object> userData = ParamMap.filterConditionMap(formData,
+        Map<String, Object> formData = ParamMap.toFilterPostDataMap(request,
                 "email", "username", "password");
-        userData.put("createdIp", RequestIpAddressUtil.getClientIp(request));
-        AppUser user = userService.register(userData);
+        formData.put("createdIp", RequestIpAddressUtil.getClientIp(request));
+        AppUser user = userService.register(formData);
         request.getSession().setAttribute("register_email", user.getEmail());
 
         if (EasyStringUtil.isNotBlank(formData.get("roles"))) {
