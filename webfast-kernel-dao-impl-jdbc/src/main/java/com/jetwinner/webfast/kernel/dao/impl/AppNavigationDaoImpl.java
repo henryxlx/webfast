@@ -16,8 +16,8 @@ import java.util.Map;
 public class AppNavigationDaoImpl extends FastJdbcDaoSupport implements AppNavigationDao {
 
     @Override
-    public void insert(Map<String, Object> model) {
-        insertMap("app_navigation", model);
+    public int insert(Map<String, Object> model) {
+        return insertMap("app_navigation", model);
     }
 
     @Override

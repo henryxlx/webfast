@@ -29,7 +29,10 @@ public class AppNavigationServiceImpl implements AppNavigationService {
         model.put("createdTime", now);
         model.put("updateTime", now);
         model.put("sequence", navigationDao.getNavigationsCountByType(model.get("type").toString()) + 1);
-        navigationDao.insert(model);
+        int nums = navigationDao.insert(model);
+        if (nums > 0) {
+            // logService.info("info", "navigation_create", "创建导航" + model.get("name"));
+        }
     }
 
     public int countNavigationsByType(String type) {
@@ -77,10 +80,11 @@ public class AppNavigationServiceImpl implements AppNavigationService {
     public int updateNavigation(Integer id, Map<String, Object> fields) {
         fields.put("id", id);
         fields.put("updateTime", System.currentTimeMillis());
-
-        // logService.info("info", "navigation_update", String.format("编辑导航#%d", id), fields);
-
-        return navigationDao.updateNavigation(fields);
+        int nums = navigationDao.updateNavigation(fields);
+        if (nums > 0) {
+            // logService.info("info", "navigation_update", "编辑导航#" + id, fields);
+        }
+        return nums;
     }
 
     @Override

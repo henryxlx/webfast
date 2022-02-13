@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public interface AppNavigationDao {
 
-    void insert(Map<String, Object> model);
+    int insert(Map<String, Object> model);
 
     Integer getNavigationsCountByType(String type);
 
