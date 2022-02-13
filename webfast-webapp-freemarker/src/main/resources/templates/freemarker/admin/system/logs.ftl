@@ -61,7 +61,7 @@
         <td>
           <div style="word-break: break-all;word-wrap: break-word;">
             ${log.message}
-            <#if log.data??>
+            <#if log.data?? && log.data != ''>
               <a href="javascript:;" class="text-sm text-warning show-data">查看数据</a>
               <a href="javascript:;" class="text-sm text-warning hide-data" style="display:none;">隐藏数据</a>
               <div class="data" style="display:none;">${log.data}</div>
