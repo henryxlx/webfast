@@ -299,7 +299,7 @@ public class InstallController {
         setupService.initTag();
         setupService.initFile();
         setupService.initPages(user);
-        setupService.initNavigations();
+        setupService.initNavigations(user);
         setupService.initBlocks(user);
         setupService.initThemes();
         setupService.initLockFile();

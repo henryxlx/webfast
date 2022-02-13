@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.install;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -201,7 +202,11 @@ public class FastAppSetupServiceImpl {
         contentService.createContent(paramMap.toMap(), user);
     }
 
-    public void initNavigations() {
+    public void initNavigations(BaseAppUser user) {
+        AppUser currentUser = new AppUser();
+        currentUser.setId(user.getId());
+        currentUser.setUsername(user.getUsername());
+        currentUser.setLoginIp("::");
         ParamMap paramMap = new ParamMap()
                 .add("name", "师资力量")
                 .add("url", "teacher")
@@ -209,7 +214,7 @@ public class FastAppSetupServiceImpl {
                 .add("isNewWin", 0)
                 .add("isOpen", 1)
                 .add("type", "top");
-        navigationService.createNavigation(paramMap.toMap());
+        navigationService.createNavigation(currentUser, paramMap.toMap());
 
         paramMap.add("name", "常见问题")
                 .add("url", "page/questions")
@@ -217,7 +222,7 @@ public class FastAppSetupServiceImpl {
                 .add("isNewWin", 0)
                 .add("isOpen", 1)
                 .add("type", "top");
-        navigationService.createNavigation(paramMap.toMap());
+        navigationService.createNavigation(currentUser, paramMap.toMap());
 
         paramMap.add("name", "关于我们")
                 .add("url", "page/aboutus")
@@ -225,7 +230,7 @@ public class FastAppSetupServiceImpl {
                 .add("isNewWin", 0)
                 .add("isOpen", 1)
                 .add("type", "top");
-        navigationService.createNavigation(paramMap.toMap());
+        navigationService.createNavigation(currentUser, paramMap.toMap());
     }
 
     public void initBlocks(BaseAppUser user) {
