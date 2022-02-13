@@ -60,9 +60,4 @@ public class SystemDefaultSettingController {
         return "/admin/system/optimize";
     }
 
-    @RequestMapping("/admin/logs")
-    public String logsPage() {
-        return "/admin/system/logs";
-    }
-
 }

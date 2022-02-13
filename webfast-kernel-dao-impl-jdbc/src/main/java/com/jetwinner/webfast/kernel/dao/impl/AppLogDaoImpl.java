@@ -21,7 +21,7 @@ public class AppLogDaoImpl extends FastJdbcDaoSupport implements AppLogDao {
     }
 
     @Override
-    public int searchCount(Map<String, Object> conditions) {
+    public int searchLogCount(Map<String, Object> conditions) {
         DynamicQueryBuilder builder = createLogQueryBuilder(conditions)
                 .select("count(`id`) AS count")
                 .from("app_log");
@@ -29,7 +29,7 @@ public class AppLogDaoImpl extends FastJdbcDaoSupport implements AppLogDao {
     }
 
     @Override
-    public List<Map<String, Object>> searchList(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<Map<String, Object>> searchLogs(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                                 Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createLogQueryBuilder(conditions)

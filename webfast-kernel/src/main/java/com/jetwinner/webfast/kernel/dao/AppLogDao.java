@@ -12,8 +12,8 @@ public interface AppLogDao {
 
     void insertMap(Map<String, Object> logModel);
 
-    int searchCount(Map<String, Object> conditions);
+    int searchLogCount(Map<String, Object> conditions);
 
-    List<Map<String, Object>> searchList(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    List<Map<String, Object>> searchLogs(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
                                          Integer start, Integer limit);
 }

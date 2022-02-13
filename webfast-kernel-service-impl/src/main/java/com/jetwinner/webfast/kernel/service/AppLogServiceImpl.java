@@ -1,12 +1,16 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.security.UserAccessControlService;
+import com.jetwinner.util.ArrayUtil;
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppLogDao;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,12 +19,12 @@ import java.util.Map;
 @Service
 public class AppLogServiceImpl implements AppLogService {
 
-    private final UserAccessControlService accessControlService;
     private final AppLogDao logDao;
+    private final AppUserService userService;
 
-    public AppLogServiceImpl(UserAccessControlService accessControlService, AppLogDao logDao) {
-        this.accessControlService = accessControlService;
+    public AppLogServiceImpl(AppLogDao logDao, AppUserService userService) {
         this.logDao = logDao;
+        this.userService = userService;
     }
 
     @Override
@@ -65,5 +69,58 @@ public class AppLogServiceImpl implements AppLogService {
                 .add("level", level)
                 .toMap();
         logDao.insertMap(logModel);
+    }
+
+    @Override
+    public int searchLogCount(Map<String, Object> conditions) {
+        prepareSearchConditions(conditions);
+        return logDao.searchLogCount(conditions);
+    }
+
+    @Override
+    public List<Map<String, Object>> searchLogs(Map<String, Object> conditions, String sort, Integer start, Integer limit) {
+        prepareSearchConditions(conditions);
+
+        OrderByBuilder orderByBuilder;
+        switch (sort) {
+            case "created":
+                orderByBuilder = new OrderByBuilder().addDesc("createdTime");
+                break;
+            case "createdByAsc":
+                orderByBuilder = new OrderByBuilder().add("createdTime");
+                break;
+
+            default:
+                throw new RuntimeGoingException("参数sort不正确。");
+        }
+
+        List<Map<String, Object>> logs = logDao.searchLogs(conditions, orderByBuilder, start, limit);
+
+        return logs;
+    }
+
+    private void prepareSearchConditions(Map<String, Object> conditions) {
+        String username = String.valueOf(conditions.get("username"));
+        if (EasyStringUtil.isNotBlank(username)) {
+            AppUser existsUser = userService.getUserByUsername(username);
+            Integer userId = existsUser != null ? existsUser.getId() : -1;
+            conditions.put("userId", userId);
+            conditions.remove("username");
+        }
+
+        if (EasyStringUtil.isNotBlank(conditions.get("startDateTime")) &&
+                EasyStringUtil.isNotBlank(conditions.get("endDateTime"))) {
+            // do nothing.
+        } else {
+            conditions.remove("startDateTime");
+            conditions.remove("endDateTime");
+        }
+
+        if (EasyStringUtil.isNotBlank(conditions.get("level")) &&
+                ArrayUtil.inArray(conditions.get("level"), "info", "warning", "error")) {
+            // do nothing.
+        } else {
+            conditions.remove("level");
+        }
     }
 }

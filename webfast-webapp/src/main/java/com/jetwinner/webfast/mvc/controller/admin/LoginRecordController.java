@@ -65,10 +65,10 @@ public class LoginRecordController {
 
         prepareSearchConditions(conditions);
         Paginator paginator = new Paginator(request,
-                logDao.searchCount(conditions),
+                logDao.searchLogCount(conditions),
                 20);
 
-        List<Map<String, Object>> logRecords = logDao.searchList(
+        List<Map<String, Object>> logRecords = logDao.searchLogs(
                 conditions,
                 OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
@@ -116,9 +116,9 @@ public class LoginRecordController {
 
         Map<String, Object> conditions = new ParamMap().add("userId", user.getId()).toMap();
         Paginator paginator = new Paginator(request,
-                logDao.searchCount(conditions), 8);
+                logDao.searchLogCount(conditions), 8);
 
-        List<Map<String, Object>> loginRecords = logDao.searchList(conditions,
+        List<Map<String, Object>> loginRecords = logDao.searchLogs(conditions,
                 OrderBy.builder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
