@@ -118,7 +118,7 @@ public class RoleController {
     @PostMapping("/admin/role/{id}/update")
     public String updateRoleAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
         Map<String, Object> mapRole = roleService.getRoleMapById(id);
-        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), mapRole);
+        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request, mapRole);
         if (MapUtil.isNotEmpty(mapForUpdate)) {
             mapForUpdate.put("id", id);
             boolean updateOk = roleService.updateRoleMap(mapForUpdate);

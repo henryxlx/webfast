@@ -58,7 +58,7 @@ public class SettingsController {
         profile.put("title", user.getTitle());
 
         if ("POST".equals(request.getMethod())) {
-            Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), profile);
+            Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request, profile);
             if (mapForUpdate != null && mapForUpdate.size() > 0) {
                 if (!(StringUtils.hasLength(user.getVerifiedMobile()) &&
                         EasyStringUtil.isNotBlank(profile.get("mobile")))) {

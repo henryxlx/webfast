@@ -80,7 +80,7 @@ public class PermissionController {
     @PostMapping("/admin/permission/{id}/update")
     public String updatePermissionAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
         Map<String, Object> mapPermission = permissionDao.get(id);
-        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request.getParameterMap(), mapPermission);
+        Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request, mapPermission);
         if (MapUtil.isNotEmpty(mapForUpdate)) {
             mapForUpdate.put("id", id);
             int num = permissionDao.update(mapForUpdate);

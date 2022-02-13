@@ -39,19 +39,12 @@ public class ParamMap {
             return toFormDataMap(request);
         }
         Map<String, Object> map = new HashMap<>(includeNames.length);
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String key = parameterNames.nextElement();
-            boolean containsName = false;
-            for (String name : includeNames) {
-                if (key.equals(name)) {
-                    containsName = true;
-                    break;
-                }
+        for (String key : includeNames) {
+            String value = request.getParameter(key);
+            if (value == null) {
+                continue;
             }
-            if (containsName) {
-                map.put(key, request.getParameter(key));
-            }
+            map.put(key, request.getParameter(key));
         }
         return map;
     }
@@ -74,22 +67,16 @@ public class ParamMap {
         return map;
     }
 
-    public static Map<String, Object> toUpdateDataMap(Map<String, String[]> parameterMap, Map<String, Object> oldMap) {
-        Map<String, Object> map = new HashMap<>(0);
-        if (parameterMap != null) {
-            for (String key : parameterMap.keySet()) {
-                if (!oldMap.containsKey(key)) {
-                    continue;
-                }
-                String[] values = parameterMap.get(key);
-                if (EasyStringUtil.isNotBlank(values[0])) {
-                    Object oldValue = oldMap.get(key);
-                    if (!values[0].equals(oldValue)) {
-                        map.put(key, values[0]);
-                    }
-                }
+    public static Map<String, Object> toUpdateDataMap(HttpServletRequest request, Map<String, Object> oldMap) {
+        int size = oldMap != null ? oldMap.size() : 0;
+        Map<String, Object> map = new HashMap<>(size);
+        Set<String> keys = oldMap.keySet();
+        keys.forEach(key -> {
+            String value = request.getParameter(key);
+            if (value != null && !value.equals(oldMap.get(key))) {
+                map.put(key, value);
             }
-        }
+        });
         return map;
     }
 
