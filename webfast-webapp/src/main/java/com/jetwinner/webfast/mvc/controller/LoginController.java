@@ -55,6 +55,9 @@ public class LoginController {
             if (targetPath.contains(contextPath)) {
                 targetPath = targetPath.replace(contextPath, "");
             }
+            if (targetPath.contains("/login")) {
+                targetPath = "/";
+            }
             return "redirect:" + targetPath;
         } catch (Exception e) {
             model.addAttribute("errorMessage", e.getMessage());
