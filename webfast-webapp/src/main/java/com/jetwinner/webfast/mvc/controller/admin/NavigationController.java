@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.util.MapUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.model.AppModelNavigation;
 import com.jetwinner.webfast.kernel.service.AppNavigationService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -51,7 +52,7 @@ public class NavigationController {
     @ResponseBody
     public String createAction(HttpServletRequest request) {
         Map<String, Object> navigation = ParamMap.toPostDataMap(request);
-        navigationService.createNavigation(navigation);
+        navigationService.createNavigation(AppUser.getCurrentUser(request), navigation);
         return "success";
     }
 
@@ -78,7 +79,8 @@ public class NavigationController {
     @PostMapping("/admin/navigation/{id}/update")
     @ResponseBody
     public String updateAction(@PathVariable Integer id, HttpServletRequest request) {
-        int result = navigationService.updateNavigation(id, ParamMap.toPostDataMap(request));
+        int result = navigationService.updateNavigation(AppUser.getCurrentUser(request),
+                id, ParamMap.toPostDataMap(request));
         return result > 0 ? "success" : "failure";
     }
 }

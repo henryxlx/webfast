@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppNavigationDao;
 import com.jetwinner.webfast.kernel.model.AppModelNavigation;
 import org.springframework.stereotype.Service;
@@ -18,20 +19,22 @@ import java.util.stream.Collectors;
 public class AppNavigationServiceImpl implements AppNavigationService {
 
     private final AppNavigationDao navigationDao;
+    private final AppLogServiceImpl logService;
 
-    public AppNavigationServiceImpl(AppNavigationDao navigationDao) {
+    public AppNavigationServiceImpl(AppNavigationDao navigationDao, AppLogServiceImpl logService) {
         this.navigationDao = navigationDao;
+        this.logService = logService;
     }
 
     @Override
-    public void createNavigation(Map<String, Object> model) {
+    public void createNavigation(AppUser currentUser, Map<String, Object> model) {
         long now = System.currentTimeMillis();
         model.put("createdTime", now);
         model.put("updateTime", now);
         model.put("sequence", navigationDao.getNavigationsCountByType(model.get("type").toString()) + 1);
         int nums = navigationDao.insert(model);
         if (nums > 0) {
-            // logService.info("info", "navigation_create", "创建导航" + model.get("name"));
+            logService.info(currentUser, "info", "navigation_create", "创建导航" + model.get("name"));
         }
     }
 
@@ -77,12 +80,12 @@ public class AppNavigationServiceImpl implements AppNavigationService {
     }
 
     @Override
-    public int updateNavigation(Integer id, Map<String, Object> fields) {
+    public int updateNavigation(AppUser currentUser, Integer id, Map<String, Object> fields) {
         fields.put("id", id);
         fields.put("updateTime", System.currentTimeMillis());
         int nums = navigationDao.updateNavigation(fields);
         if (nums > 0) {
-            // logService.info("info", "navigation_update", "编辑导航#" + id, fields);
+            logService.info(currentUser, "info", "navigation_update", "编辑导航#" + id, fields);
         }
         return nums;
     }
