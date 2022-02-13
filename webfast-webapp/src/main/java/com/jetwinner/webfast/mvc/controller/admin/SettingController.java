@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.session.FlashMessageUtil;
@@ -17,9 +19,11 @@ import java.util.Map;
 public class SettingController {
 
     private final AppSettingService settingService;
+    private final AppLogService logService;
 
-    public SettingController(AppSettingService settingService) {
+    public SettingController(AppSettingService settingService, AppLogService logService) {
         this.settingService = settingService;
+        this.logService = logService;
     }
 
     @RequestMapping("/admin/setting/site")
@@ -44,7 +48,8 @@ public class SettingController {
         if ("POST".equals(request.getMethod())) {
             siteMap = ParamMap.toPostDataMap(request);
             settingService.set("site", siteMap);
-            // logService.info(AppUser.getCurrentUser(request), "system", "update_settings", "更新站点设置", siteMap);
+            logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
+                    "更新站点设置", siteMap);
             FlashMessageUtil.setFlashMessage("success", "站点信息设置已保存！", request.getSession());
         }
         model.addAttribute("site", siteMap);
@@ -72,7 +77,8 @@ public class SettingController {
         if ("POST".equals(request.getMethod())) {
             mailer = ParamMap.toPostDataMap(request);
             settingService.set("mailer", mailer);
-            // logService.info("system", "update_settings", "更新邮件服务器设置", mailer);
+            logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
+                    "更新邮件服务器设置", mailer);
             FlashMessageUtil.setFlashMessage("success", "电子邮件设置已保存！", request.getSession());
         }
 
