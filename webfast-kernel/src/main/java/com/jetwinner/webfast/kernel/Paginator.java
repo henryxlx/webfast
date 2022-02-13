@@ -33,7 +33,7 @@ public class Paginator {
         this.setPerPageCount(perPage);
 
         int page = ServletRequestUtils.getIntParameter(request, pageKey, 0);
-        int maxPage = total / perPage;
+        int maxPage = Math.round(1.0f * total / perPage);
         if (maxPage < 1) {
             maxPage = 1;
         }
@@ -107,7 +107,7 @@ public class Paginator {
     }
 
     public Integer getLastPage() {
-        return this.itemCount / this.perPageCount;
+        return Math.round(1.0f * this.itemCount / this.perPageCount);
     }
 
     public Integer getPreviousPage() {
