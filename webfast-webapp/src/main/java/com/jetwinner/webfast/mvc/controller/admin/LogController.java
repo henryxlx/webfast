@@ -31,7 +31,7 @@ public class LogController {
     public String indexPage(HttpServletRequest request, Model model) {
         Map<String, Object> fields = ParamMap.toConditionMap(request);
         Map<String, Object> conditions = ParamMap.filterConditionMap(fields,
-                "startDateTime", "endDateTime", "username", "level");
+                "startDateTime", "endDateTime", "username", "level", "module", "action");
 
         Paginator paginator = new Paginator(request,
                 logService.searchLogCount(conditions), 30);
