@@ -57,6 +57,8 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             return;
         }
 
+        addObject(ViewReferenceKeyEnum.MenuHolder.getName(),
+                viewRef.menuHolder(), request, mav);
         addObject(ViewReferenceKeyEnum.AppConst.getName(),
                 viewRef.appConst(), request, mav);
         addObject(ViewReferenceKeyEnum.RequestContextPath.getName(),
