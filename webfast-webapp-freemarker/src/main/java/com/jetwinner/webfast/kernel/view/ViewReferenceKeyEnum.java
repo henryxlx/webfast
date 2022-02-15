@@ -7,8 +7,10 @@ public enum ViewReferenceKeyEnum {
 
     AppConst("appConst"),
     DataHolder("dictHolder"),
+    MenuHolder("menuHolder"),
     RequestContextPath("ctx"),
     UserAcl("userAcl");
+
 
     private String name;
 
