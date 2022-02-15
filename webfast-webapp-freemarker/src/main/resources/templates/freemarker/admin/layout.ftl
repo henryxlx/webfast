@@ -38,7 +38,8 @@
 
             <ul class="nav navbar-nav">
                 <#if userAcl.hasRole('ROLE_ADMIN')>
-                    <#if adminMenus??>
+                    <#if menuHolder.adminTop??>
+                        <#assign adminMenus = menuHolder.adminTop />
                     <#else>
                         <#assign adminMenus = [
                         {'key':'user', 'title':'用户'},
