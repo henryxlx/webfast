@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
-import java.util.Arrays;
 import java.util.Properties;
 
 /**
@@ -29,31 +28,32 @@ public class FastAppDataHolderConfigurer {
 
     @Bean
     public FastDataDictHolder dataDictHolder() {
-        Properties properties = new Properties(0);
-        try {
-            String dictPaths = "webfast-datadict.yml, " + appDataDictYmlPath;
-            String[] ymlFilePaths = dictPaths.split(",");
-            ClassPathResource[] resources = Arrays.stream(ymlFilePaths).map(ClassPathResource::new).toArray(ClassPathResource[]::new);
-            YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-            yaml.setResources(resources);
-            properties = yaml.getObject();
-        } catch (Exception e) {
-            log.warn("WebFast data dict yml file not found. " +  e.getMessage());
+        Properties properties = new Properties();
+        String dictPaths = "webfast-datadict.yml, " + appDataDictYmlPath;
+        String[] ymlFilePaths = dictPaths.split(",");
+        for (String ymlFilePath : ymlFilePaths) {
+            properties.putAll(getPropertiesFromYml(ymlFilePath.trim(), "WebFast data dict yml file not found. "));
         }
         MapConfigurationPropertySource source = new MapConfigurationPropertySource(properties);
         return new Binder(source).bind("data", FastDataDictHolder.class).orElse(new FastDataDictHolder());
     }
 
-    @Bean
-    public FastMenuHolder menuHolder() {
+    private Properties getPropertiesFromYml(String ymlFilePath, String logWarningHint) {
         Properties properties = new Properties(0);
         try {
             YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
-            yaml.setResources(new ClassPathResource(appMenuYmlPath));
+            yaml.setResources(new ClassPathResource(ymlFilePath));
             properties = yaml.getObject();
         } catch (Exception e) {
-            log.warn("WebFast admin menu yml file not found. " +  e.getMessage());
+            log.warn(logWarningHint +  e.getMessage());
         }
+        return properties;
+    }
+
+    @Bean
+    public FastMenuHolder menuHolder() {
+        Properties properties = getPropertiesFromYml(appMenuYmlPath,
+                "WebFast menu yml file not found. ");
         MapConfigurationPropertySource source = new MapConfigurationPropertySource(properties);
         return new Binder(source).bind("menu", FastMenuHolder.class).orElse(new FastMenuHolder());
     }
