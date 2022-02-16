@@ -4,7 +4,7 @@ import com.jetwinner.toolbag.ConvertIpToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.util.ValueParser;
-import com.jetwinner.webfast.kernel.DataDictHolder;
+import com.jetwinner.webfast.kernel.FastDataDictHolder;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +18,11 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public static final String MODEL_VAR_NAME = "webExtPack";
 
-    private final DataDictHolder dataDictHolder;
+    private final FastDataDictHolder dataDictHolder;
 
     public WebExtensionPack(HttpServletRequest request,
                             ApplicationContext appContext,
-                            DataDictHolder dataDictHolder) {
+                            FastDataDictHolder dataDictHolder) {
 
         super(request, appContext);
         this.dataDictHolder = dataDictHolder;

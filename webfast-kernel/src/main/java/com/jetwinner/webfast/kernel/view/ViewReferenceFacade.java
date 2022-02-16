@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.kernel.view;
 
 import com.jetwinner.security.UserAccessControlService;
-import com.jetwinner.webfast.kernel.DataDictHolder;
 import com.jetwinner.webfast.kernel.FastAppConst;
-import com.jetwinner.webfast.mvc.MenuHolder;
+import com.jetwinner.webfast.kernel.FastDataDictHolder;
+import com.jetwinner.webfast.kernel.FastMenuHolder;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -13,11 +13,11 @@ public interface ViewReferenceFacade {
 
     FastAppConst appConst();
 
-    DataDictHolder dictHolder();
+    FastDataDictHolder dictHolder();
 
     UserAccessControlService userAcl();
 
-    MenuHolder menuHolder();
+    FastMenuHolder menuHolder();
 
     ApplicationContext appContext();
 }

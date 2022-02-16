@@ -1,9 +1,9 @@
 package com.jetwinner.webfast.kernel.view;
 
 import com.jetwinner.security.UserAccessControlService;
-import com.jetwinner.webfast.kernel.DataDictHolder;
 import com.jetwinner.webfast.kernel.FastAppConst;
-import com.jetwinner.webfast.mvc.MenuHolder;
+import com.jetwinner.webfast.kernel.FastDataDictHolder;
+import com.jetwinner.webfast.kernel.FastMenuHolder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +14,15 @@ import org.springframework.stereotype.Component;
 public class ViewReferenceFacadeImpl implements ViewReferenceFacade {
 
     private final FastAppConst appConst;
-    private final DataDictHolder dataDictHolder;
+    private final FastDataDictHolder dataDictHolder;
     private final UserAccessControlService userAccessControlService;
-    private final MenuHolder menuHolder;
+    private final FastMenuHolder menuHolder;
     private final ApplicationContext applicationContext;
 
     public ViewReferenceFacadeImpl(FastAppConst appConst,
-                                   DataDictHolder dataDictHolder,
+                                   FastDataDictHolder dataDictHolder,
                                    UserAccessControlService userAccessControlService,
-                                   MenuHolder menuHolder,
+                                   FastMenuHolder menuHolder,
                                    ApplicationContext applicationContext) {
 
         this.appConst = appConst;
@@ -38,7 +38,7 @@ public class ViewReferenceFacadeImpl implements ViewReferenceFacade {
     }
 
     @Override
-    public DataDictHolder dictHolder() {
+    public FastDataDictHolder dictHolder() {
         return this.dataDictHolder;
     }
 
@@ -48,7 +48,7 @@ public class ViewReferenceFacadeImpl implements ViewReferenceFacade {
     }
 
     @Override
-    public MenuHolder menuHolder() {
+    public FastMenuHolder menuHolder() {
         return this.menuHolder;
     }
 
