@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.5.5: @2022-02-16
+* 修改应用程序配置参数，外部存储路径重新定义为d:/webfast/master/appdata
+* Gradle项目配置任务processResources将项目属性version添加到application.properties配置文件中
+* 添加用于保存外部配置菜单信息的持有类FastMenuHolder
+* 添加用于保存外部配置数据字典信息的持有类FastDataDictHolder，替换原来的DataDictHolder
+* 数据字典的配置文件datadict.yml重命名为webfast-datadict.yml
+
 0.5.4: @2022-02-15
 * 后台顶部菜单可根据外部YML文件进行自定义配置
 
