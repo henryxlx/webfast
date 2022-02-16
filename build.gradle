@@ -60,7 +60,7 @@ subprojects {
     }
 
     processResources {
-        filesMatching('application-dev.properties') {
+        filesMatching('application.properties') {
             expand(project.properties)
         }
     }
