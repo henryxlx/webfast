@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import static org.junit.Assert.assertTrue;
 
+@Deprecated
 public class SpringBootBinderTest {
 
     @Test

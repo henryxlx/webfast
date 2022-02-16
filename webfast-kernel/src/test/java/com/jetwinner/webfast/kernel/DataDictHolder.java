@@ -12,6 +12,7 @@ import java.util.Map;
 /**
  * @author xulixin
  */
+@Deprecated
 @Component
 @PropertySource(value = {"classpath:datadict.yml"}, factory = YmlPropertySourceFactory.class)
 @ConfigurationProperties(prefix = "data")

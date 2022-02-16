@@ -15,6 +15,7 @@ import java.util.Properties;
 /**
  * @author xulixin
  */
+@Deprecated
 @Configuration
 public class MenuConfigurer {
 

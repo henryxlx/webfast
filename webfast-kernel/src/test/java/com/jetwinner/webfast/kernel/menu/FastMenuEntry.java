@@ -3,6 +3,7 @@ package com.jetwinner.webfast.kernel.menu;
 /**
  * @author xulixin
  */
+@Deprecated
 public class FastMenuEntry {
 
     private String key;

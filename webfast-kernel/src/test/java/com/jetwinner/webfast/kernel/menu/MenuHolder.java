@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * @author xulixin
  */
+@Deprecated
 public class MenuHolder {
 
     private List<FastMenuEntry> adminTop;
