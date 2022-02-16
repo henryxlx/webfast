@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.mvc;
+package com.jetwinner.webfast.kernel.menu;
 
 import org.junit.Test;
 import org.springframework.beans.MutablePropertyValues;
