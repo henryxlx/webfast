@@ -1,0 +1,42 @@
+data:
+  dict:
+    contentStatus:
+      published: 已发布
+      unpublished: 未发布
+      trash: 回收站
+    contentType:
+      article: 文章
+      activity: 活动
+      page: 页面
+    courseStatus:
+      draft: 未发布
+      published: 已发布
+      closed: 已关闭
+    contentStatusHtml:
+      published: <span class="text-success">已发布</span>
+      unpublished: <span class="text-muted">未发布</span>
+      trash: <span class="text-warning">回收站</span>
+    dateType:
+      today: 今日
+      yesterday: 昨日
+      this_week: 本周
+      last_week: 上周
+      this_month: 本月
+      last_month: 上月
+    logLevel:
+      info: 提示
+      warning: 警告
+      error: 错误
+    logLevelHtml:
+      info: <span>提示</span>
+      warning: <span class="text-warning">警告</span>
+      error: <span class="text-danger">错误</span>
+    permission:
+      ACCESS_BACKEND: 访问后端
+    userKeyWordType:
+      username: 用户名
+      email: 邮件地址
+      loginIp: 登录IP
+    userRole:
+      ROLE_ADMIN: 管理员
+      ROLE_SUPER_ADMIN: 超级管理员
