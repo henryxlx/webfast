@@ -17,7 +17,7 @@
         <li <#if pageNav! == 'following'>class="active"</#if>><a href="${ctx}/user/${(user.id)!}/following">关注/粉丝</a></li>
 
         <#if setting('classroom.enabled')??>
-        <#if (user.roles)?? && user.roles?seq_contains('ROLE_TEACHER')>
+        <#if (user.roles)?? && user.roles?contains('ROLE_TEACHER')>
         <li <#if pageNav! == 'teaching'>class="active"</#if>><a href="${ctx}/user/${(user.id)!}/teaching/classrooms">在教${setting('classroom.name', '班级')}</a></li>
         </#if>
 
