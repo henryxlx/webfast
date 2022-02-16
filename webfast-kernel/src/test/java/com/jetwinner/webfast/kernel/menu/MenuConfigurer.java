@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.mvc;
+package com.jetwinner.webfast.kernel.menu;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
