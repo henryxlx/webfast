@@ -2,7 +2,6 @@ dependencies {
     implementation project(':webfast-common')
     implementation project(':webfast-kernel')
     implementation project(':webfast-kernel-dao-impl-jdbc')
-    implementation project(':webfast-kernel-service-impl')
     implementation project(':webfast-support-shiro')
     implementation project(':webfast-webapp')
     implementation project(':webfast-webapp-freemarker')
