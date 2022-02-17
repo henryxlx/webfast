@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.RbacService;
@@ -19,6 +19,8 @@ import com.jetwinner.webfast.kernel.dao.*;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
+import com.jetwinner.webfast.kernel.service.AppNotificationService;
+import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 

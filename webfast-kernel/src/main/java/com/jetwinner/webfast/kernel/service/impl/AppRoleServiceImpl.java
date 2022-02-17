@@ -1,9 +1,10 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.dao.AppRoleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 

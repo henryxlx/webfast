@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
@@ -8,6 +8,9 @@ import com.jetwinner.webfast.kernel.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.AppArticleCategoryService;
+import com.jetwinner.webfast.kernel.service.AppArticleService;
+import com.jetwinner.webfast.kernel.service.AppTagService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

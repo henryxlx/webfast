@@ -1,5 +1,6 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
+import com.jetwinner.webfast.kernel.service.AppFileService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

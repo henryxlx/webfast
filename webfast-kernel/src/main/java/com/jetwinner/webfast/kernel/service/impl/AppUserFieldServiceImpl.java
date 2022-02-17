@@ -1,6 +1,7 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.webfast.kernel.dao.AppUserFieldDao;
+import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

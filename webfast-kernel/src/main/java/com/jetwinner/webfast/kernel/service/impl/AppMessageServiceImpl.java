@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.toolbag.HtmlToolkit;
 import com.jetwinner.util.ValueParser;
@@ -10,6 +10,8 @@ import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 import com.jetwinner.webfast.kernel.model.AppModelMessageRelation;
+import com.jetwinner.webfast.kernel.service.AppMessageService;
+import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 

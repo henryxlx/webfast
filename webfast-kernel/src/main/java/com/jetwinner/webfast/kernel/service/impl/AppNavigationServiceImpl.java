@@ -1,8 +1,9 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppNavigationDao;
 import com.jetwinner.webfast.kernel.model.AppModelNavigation;
+import com.jetwinner.webfast.kernel.service.AppNavigationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

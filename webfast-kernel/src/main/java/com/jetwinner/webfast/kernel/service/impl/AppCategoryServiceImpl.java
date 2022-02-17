@@ -1,7 +1,8 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.webfast.kernel.dao.AppCategoryDao;
+import com.jetwinner.webfast.kernel.service.AppCategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

@@ -1,9 +1,10 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.dao.AppNotificationDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
+import com.jetwinner.webfast.kernel.service.AppNotificationService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

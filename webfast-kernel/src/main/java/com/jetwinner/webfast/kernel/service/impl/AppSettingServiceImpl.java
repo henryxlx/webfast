@@ -1,6 +1,7 @@
-package com.jetwinner.webfast.kernel.service;
+package com.jetwinner.webfast.kernel.service.impl;
 
 import com.jetwinner.webfast.kernel.dao.AppSettingDao;
+import com.jetwinner.webfast.kernel.service.AppSettingService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
