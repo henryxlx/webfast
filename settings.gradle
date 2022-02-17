@@ -4,7 +4,9 @@ include 'webfast-common',
         'webfast-kernel-dao-impl-jdbc',
         'webfast-kernel-webmvc',
         'webfast-kernel-webui-freemarker',
+        'webfast-kernel-webui-freemarker',
+        'webfast-module-content',
+        'webfast-module-content-dao-impl-jdbc',
+        'webfast-module-content-freemarker',
         'webfast-support-shiro',
-        'webfast-starter-demo',
-        'webfast-webapp',
-        'webfast-webapp-freemarker'
+        'webfast-starter-demo'
