@@ -9,7 +9,7 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="${csrf_token('site')}" name="csrf-token" />
-    <#assign blockTitleParent>${setting('copyright.owned', 'WebFast')}管理后台</#assign>
+    <#assign blockTitleParent>${setting('copyright.owned')!'WebFast'}管理后台</#assign>
     <title><#if blockTitle??><@blockTitle/><#else>${blockTitleParent!}</#if></title>
     <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
     <link href="${ctx}/assets/libs/gallery2/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet" />
@@ -32,7 +32,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="${ctx}/admin">${setting('copyright.owned', 'WebFast')}管理后台</a>
+            <a class="navbar-brand" href="${ctx}/admin">${setting('copyright.owned')!'WebFast'}管理后台</a>
         </div>
         <div class="navbar-collapse collapse">
 
