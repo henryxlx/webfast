@@ -144,7 +144,7 @@
         <div class="text-gray" data-role="default-foot-bar">
             <#include '/powered-by.ftl'>
             ${setting('site.analytics', '')}
-            <div class="pull-right"><#if setting('site.copyright')??>课程内容版权均归<a href="/">${setting('site.copyright')}</a>所有</#if>&nbsp;<#if setting('site.icp')??><a href="http://www.miibeian.gov.cn/" target="_blank">${setting('site.icp')}</a></#if></div>
+            <div class="pull-right"><#if setting('site.copyright')??>课程内容版权均归<a href="#">${setting('site.copyright')}</a>所有</#if>&nbsp;<#if setting('site.icp')??><a href="http://www.miibeian.gov.cn/" target="_blank">${setting('site.icp')}</a></#if></div>
 
             <div class="pull-right mhs"><a href="${ctx}/course/archive">课程存档</a></div>
         </div>
