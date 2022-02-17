@@ -102,6 +102,9 @@ public abstract class BaseWebExtensionPack {
                 result = val != null ? val.toString() : result;
             }
         }
+        if (result == null) {
+            result = appContext.getEnvironment().getProperty(name);
+        }
         return result;
     }
 }
