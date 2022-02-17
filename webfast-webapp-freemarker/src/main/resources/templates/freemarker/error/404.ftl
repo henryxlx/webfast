@@ -14,6 +14,7 @@
     <meta name="keywords" content=" " />
     <meta name="description" content=" " />
     <meta content="" name="csrf-token" />
+    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
 
     <link href="${ctx}/assets/libs/gallery2/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" media="screen" href="${ctx}/assets/css/common.css" />
