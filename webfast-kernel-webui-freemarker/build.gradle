@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':webfast-common')
+    implementation project(':webfast-kernel')
+    implementation project(':webfast-kernel-webmvc')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-freemarker')
+}
