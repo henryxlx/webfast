@@ -9,6 +9,7 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.service.AppCategoryService;
 import com.jetwinner.webfast.module.service.AppContentService;
 import com.jetwinner.webfast.module.service.AppTagService;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * @author xulixin
  */
+@Primary
 @Component
 public class WebFastAppSetupServiceImpl implements FastAppSetupService {
 
