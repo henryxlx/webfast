@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.mvc.controller;
 
-import com.jetwinner.webfast.kernel.service.AppTagService;
+import com.jetwinner.webfast.module.service.AppTagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;

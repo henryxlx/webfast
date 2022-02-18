@@ -3,7 +3,7 @@ package com.jetwinner.webfast.mvc.controller;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.service.AppContentService;
+import com.jetwinner.webfast.module.service.AppContentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;

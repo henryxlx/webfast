@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.service.AppArticleCategoryService;
+import com.jetwinner.webfast.module.service.AppArticleCategoryService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
