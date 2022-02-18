@@ -122,14 +122,6 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
     }
 
     @Override
-    public void initTag() {
-    }
-
-    @Override
-    public void initCategory() {
-    }
-
-    @Override
     public void initFile() {
         fileService.addFileGroup(new ParamMap()
                 .add("name", "默认文件组")
@@ -160,10 +152,6 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
                 .add("name", "资讯")
                 .add("code", "article")
                 .add("public", 1).toMap());
-    }
-
-    @Override
-    public void initPages(BaseAppUser user) {
     }
 
     @Override
@@ -215,18 +203,6 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
     @Override
     public void initThemes() {
         settingService.set("theme", new ParamMap().add("uri", "default").toMap());
-    }
-
-    @Override
-    public void initLockFile() {
-    }
-
-    @Override
-    public void initArticleSetting() {
-        ParamMap setting = new ParamMap()
-                .add("name", "资讯频道")
-                .add("pageNums", 20);
-        settingService.set("article", setting.toMap());
     }
 
     @Override
