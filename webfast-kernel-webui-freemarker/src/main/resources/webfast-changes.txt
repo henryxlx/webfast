@@ -3,6 +3,14 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.5.7: @2022-02-18
+* 新建安装程序服务接口FastAppSetupService，实现类FastAppSetupServiceImpl装程序服务接口的简单实现，只完成核心服务功能，其它初始化操作忽略，方法实现为空
+* 安装程序服务接口的完整实现重命名WebFastAppSetupService完成对接口的实现（添加覆盖注解）
+* 数据库脚本webfast-kernel.sql核心功能使用数据库只保留与核心功能相关的数据表
+* 添加非核心功能数据表webfast-module-content.sql，表名前缀统一为wfm
+* 应用程序外部存储路径由master改为demo4dev
+* 快速安装服务接口存在多个实现，使用@Primary注解设置WebFastAppSetupService为默认实现
+
 0.5.6: @2022-02-17
 * 模块webfast-kernel-service-impl中的服务实现类移到webfast-kernel模块中的c.j.w.kernel.service.impl包
 * 删除模块webfast-kernel-service-impl
