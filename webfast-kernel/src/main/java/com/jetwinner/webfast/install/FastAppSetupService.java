@@ -43,4 +43,8 @@ public interface FastAppSetupService {
     default void initArticleSetting() {
 
     }
+
+    default String getOtherSqlFilePath() {
+        return null;
+    }
 }

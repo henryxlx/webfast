@@ -279,4 +279,9 @@ public class WebFastAppSetupServiceImpl implements FastAppSetupService {
     public BaseAppUser getUserByUsername(String username) {
         return userService.getBaseAppUserByUsername(username);
     }
+
+    @Override
+    public String getOtherSqlFilePath() {
+        return "sql/mysql/webfast-module-content.sql";
+    }
 }

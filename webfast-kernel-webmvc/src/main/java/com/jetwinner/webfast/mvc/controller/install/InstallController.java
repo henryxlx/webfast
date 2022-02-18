@@ -208,6 +208,10 @@ public class InstallController {
             throws SQLException, IOException {
 
         List<String> sqlFiles = ListUtil.newArrayList("sql/mysql/webfast-kernel.sql");
+        String otherSqlFilePath = setupService.getOtherSqlFilePath();
+        if (EasyStringUtil.isNotBlank(otherSqlFilePath)) {
+            sqlFiles.add(otherSqlFilePath);
+        }
         parseMultipleClasspath(sqlFiles, customInstallSqlScriptClasspath);
         for (String sqlFile : sqlFiles) {
             runSqlFile(sqlFile, jdbcUrl, jdbcUsername, jdbcPassword);
