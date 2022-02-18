@@ -4,9 +4,10 @@ import com.jetwinner.platform.SystemInfoBean;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.*;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
+import com.jetwinner.webfast.install.FastAppSetupService;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
-import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
+import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -38,12 +39,12 @@ public class InstallController {
     private static final int STEP_4 = 4;
 
     private final InstallControllerRegisterService installControllerRegisterService;
-    private final FastAppSetupServiceImpl setupService;
+    private final FastAppSetupService setupService;
     private final DataSourceConfig dataSourceConfig;
     private final FastAppConst appConst;
 
     public InstallController(InstallControllerRegisterService installControllerRegisterService,
-                             FastAppSetupServiceImpl setupService,
+                             FastAppSetupService setupService,
                              DataSourceConfig dataSourceConfig,
                              FastAppConst appConst) {
 

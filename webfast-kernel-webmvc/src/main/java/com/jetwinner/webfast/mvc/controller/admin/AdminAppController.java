@@ -2,7 +2,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
-import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
+import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;

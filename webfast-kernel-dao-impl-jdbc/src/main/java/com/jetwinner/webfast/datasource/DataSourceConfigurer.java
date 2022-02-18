@@ -5,7 +5,7 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
+import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

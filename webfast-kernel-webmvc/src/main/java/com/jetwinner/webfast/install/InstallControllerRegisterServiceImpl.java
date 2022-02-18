@@ -1,6 +1,5 @@
-package com.jetwinner.webfast.mvc.controller.install;
+package com.jetwinner.webfast.install;
 
-import com.jetwinner.webfast.kernel.service.InstallControllerRegisterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
