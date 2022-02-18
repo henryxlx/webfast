@@ -16,23 +16,23 @@ import java.util.Map;
 @Component
 public class FastAppSetupServiceImpl implements FastAppSetupService {
 
-    private final AppUserService userService;
-    private final AppSettingService settingService;
-    private final AppNavigationService navigationService;
-    private final AppBlockService blockService;
-    private final AppFileService fileService;
+    protected final AppBlockService blockService;
+    protected final AppFileService fileService;
+    protected final AppNavigationService navigationService;
+    protected final AppSettingService settingService;
+    protected final AppUserService userService;
 
-    public FastAppSetupServiceImpl(AppUserService userService,
-                                   AppSettingService settingService,
+    public FastAppSetupServiceImpl(AppBlockService blockService,
+                                   AppFileService fileService,
                                    AppNavigationService navigationService,
-                                   AppBlockService blockService,
-                                   AppFileService fileService) {
+                                   AppSettingService settingService,
+                                   AppUserService userService) {
 
-        this.userService = userService;
-        this.settingService = settingService;
-        this.navigationService = navigationService;
         this.blockService = blockService;
         this.fileService = fileService;
+        this.navigationService = navigationService;
+        this.settingService = settingService;
+        this.userService = userService;
     }
 
     @Override
