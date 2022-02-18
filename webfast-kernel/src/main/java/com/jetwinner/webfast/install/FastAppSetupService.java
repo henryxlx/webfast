@@ -18,13 +18,17 @@ public interface FastAppSetupService {
 
     void initStorageSetting();
 
-    void initTag();
+    default void initTag() {};
 
-    void initCategory();
+    default void initCategory() {
+
+    }
 
     void initFile();
 
-    void initPages(BaseAppUser user);
+    default void initPages(BaseAppUser user) {
+
+    }
 
     void initNavigations(BaseAppUser user);
 
@@ -32,7 +36,11 @@ public interface FastAppSetupService {
 
     void initThemes();
 
-    void initLockFile();
+    default void initLockFile() {
 
-    void initArticleSetting();
+    }
+
+    default void initArticleSetting() {
+
+    }
 }
