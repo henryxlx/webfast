@@ -1,7 +1,7 @@
-package com.jetwinner.webfast.kernel.dao.impl;
+package com.jetwinner.webfast.module.dao.impl;
 
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
-import com.jetwinner.webfast.kernel.dao.AppArticleCategoryDao;
+import com.jetwinner.webfast.module.dao.AppArticleCategoryDao;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 

@@ -1,8 +1,8 @@
-package com.jetwinner.webfast.kernel.dao.impl;
+package com.jetwinner.webfast.module.dao.impl;
 
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
-import com.jetwinner.webfast.kernel.dao.AppContentDao;
+import com.jetwinner.webfast.module.dao.AppContentDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Repository;
 

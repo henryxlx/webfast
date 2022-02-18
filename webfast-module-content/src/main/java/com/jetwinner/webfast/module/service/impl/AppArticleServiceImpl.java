@@ -4,7 +4,7 @@ import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.dao.AppArticleDao;
+import com.jetwinner.webfast.module.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;

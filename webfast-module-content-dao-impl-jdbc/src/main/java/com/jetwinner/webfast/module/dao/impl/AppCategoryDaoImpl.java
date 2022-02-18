@@ -1,8 +1,8 @@
-package com.jetwinner.webfast.kernel.dao.impl;
+package com.jetwinner.webfast.module.dao.impl;
 
 import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
-import com.jetwinner.webfast.kernel.dao.AppCategoryDao;
+import com.jetwinner.webfast.module.dao.AppCategoryDao;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

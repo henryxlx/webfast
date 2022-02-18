@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.kernel.dao;
+package com.jetwinner.webfast.module.dao;
 
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 
