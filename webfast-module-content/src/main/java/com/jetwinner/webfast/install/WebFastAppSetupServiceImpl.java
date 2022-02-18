@@ -1,12 +1,14 @@
-package com.jetwinner.webfast.mvc.controller.install;
+package com.jetwinner.webfast.install;
 
 import com.jetwinner.security.BaseAppUser;
-import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.module.service.AppCategoryService;
+import com.jetwinner.webfast.module.service.AppContentService;
+import com.jetwinner.webfast.module.service.AppTagService;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -15,10 +17,9 @@ import java.util.Map;
  * @author xulixin
  */
 @Component
-public class FastAppSetupServiceImpl {
+public class WebFastAppSetupServiceImpl implements FastAppSetupService {
 
     private final AppUserService userService;
-    private final UserAccessControlService userAccessControlService;
     private final AppSettingService settingService;
     private final AppNavigationService navigationService;
     private final AppContentService contentService;
@@ -27,18 +28,16 @@ public class FastAppSetupServiceImpl {
     private final AppCategoryService categoryService;
     private final AppFileService fileService;
 
-    public FastAppSetupServiceImpl(AppUserService userService,
-                                   UserAccessControlService userAccessControlService,
-                                   AppSettingService settingService,
-                                   AppNavigationService navigationService,
-                                   AppContentService contentService,
-                                   AppBlockService blockService,
-                                   AppTagService tagService,
-                                   AppCategoryService categoryService,
-                                   AppFileService fileService) {
+    public WebFastAppSetupServiceImpl(AppUserService userService,
+                                      AppSettingService settingService,
+                                      AppNavigationService navigationService,
+                                      AppContentService contentService,
+                                      AppBlockService blockService,
+                                      AppTagService tagService,
+                                      AppCategoryService categoryService,
+                                      AppFileService fileService) {
 
         this.userService = userService;
-        this.userAccessControlService = userAccessControlService;
         this.settingService = settingService;
         this.navigationService = navigationService;
         this.contentService = contentService;
@@ -48,6 +47,7 @@ public class FastAppSetupServiceImpl {
         this.fileService = fileService;
     }
 
+    @Override
     public void initAdmin(Map<String, String> params) {
         Map<String, Object> user = MapUtil.newHashMap();
         user.putAll(params);
@@ -60,6 +60,7 @@ public class FastAppSetupServiceImpl {
         }
     }
 
+    @Override
     public void initSiteSettings(Map<String, String> params) {
         ParamMap defaultSetting = new ParamMap()
                 .add("name", params.get("sitename"))
@@ -77,6 +78,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("site", defaultSetting.toMap());
     }
 
+    @Override
     public void initRegisterSetting(Map<String, String> params) {
         String emailBody = "Hi, {{nickname}}" + "\n" +
                 "\n" +
@@ -106,6 +108,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("auth", defaultSetting.toMap());
     }
 
+    @Override
     public void initMailerSetting(String siteName) {
         ParamMap defaultSetting = new ParamMap()
                 .add("enabled", 0)
@@ -118,6 +121,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("mailer", defaultSetting.toMap());
     }
 
+    @Override
     public void initStorageSetting() {
         ParamMap defaultSetting = new ParamMap()
                 .add("upload_mode", "local")
@@ -129,6 +133,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("storage", defaultSetting.toMap());
     }
 
+    @Override
     public void initTag() {
         Map<String, Object> defaultTag = tagService.getTagByName("默认标签");
         if (defaultTag == null || defaultTag.size() == 0) {
@@ -136,6 +141,7 @@ public class FastAppSetupServiceImpl {
         }
     }
 
+    @Override
     public void initCategory() {
         Map<String, Object> group = categoryService.addGroup(new ParamMap()
                 .add("name", "课程分类")
@@ -150,6 +156,7 @@ public class FastAppSetupServiceImpl {
                 .add("parentId", 0).toMap());
     }
 
+    @Override
     public void initFile() {
         fileService.addFileGroup(new ParamMap()
                 .add("name", "默认文件组")
@@ -182,6 +189,7 @@ public class FastAppSetupServiceImpl {
                 .add("public", 1).toMap());
     }
 
+    @Override
     public void initPages(BaseAppUser user) {
         ParamMap paramMap = new ParamMap()
                 .add("title", "关于我们")
@@ -202,6 +210,7 @@ public class FastAppSetupServiceImpl {
         contentService.createContent(paramMap.toMap(), user);
     }
 
+    @Override
     public void initNavigations(BaseAppUser user) {
         AppUser currentUser = new AppUser();
         currentUser.setId(user.getId());
@@ -233,6 +242,7 @@ public class FastAppSetupServiceImpl {
         navigationService.createNavigation(currentUser, paramMap.toMap());
     }
 
+    @Override
     public void initBlocks(BaseAppUser user) {
         String content = "<a href=\"\"><img src=\"assets/img/placeholder/carousel-1200x256-1.png\" /></a>" +
                 "\n" +
@@ -246,13 +256,16 @@ public class FastAppSetupServiceImpl {
         blockService.updateContent(id, content);
     }
 
+    @Override
     public void initThemes() {
         settingService.set("theme", new ParamMap().add("uri", "default").toMap());
     }
 
+    @Override
     public void initLockFile() {
     }
 
+    @Override
     public void initArticleSetting() {
         ParamMap setting = new ParamMap()
                 .add("name", "资讯频道")
@@ -260,6 +273,7 @@ public class FastAppSetupServiceImpl {
         settingService.set("article", setting.toMap());
     }
 
+    @Override
     public BaseAppUser getUserByUsername(String username) {
         return userService.getBaseAppUserByUsername(username);
     }
