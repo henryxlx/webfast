@@ -15,7 +15,7 @@ import java.util.Map;
 @Repository
 public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentDao {
 
-    private static String TABLE_NAME = "app_content";
+    private static String TABLE_NAME = "wfm_content";
 
     @Override
     public void insert(Map<String, Object> model) {

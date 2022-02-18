@@ -17,11 +17,11 @@ import java.util.stream.Collectors;
 @Repository
 public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements AppArticleCategoryDao {
 
-    private static final String TABLE_NAME = "app_article_category";
+    private static final String TABLE_NAME = "wfm_article_category";
 
     @Override
     public Map<String, Object> getCategory(Object id) {
-        return getJdbcTemplate().queryForList("SELECT * FROM app_article_category WHERE id = ? LIMIT 1", id)
+        return getJdbcTemplate().queryForList("SELECT * FROM wfm_article_category WHERE id = ? LIMIT 1", id)
                 .stream().findFirst().orElse(null);
     }
 
@@ -31,13 +31,13 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
             return new ArrayList<>(0);
         }
         String marks = ids.stream().map(String::valueOf).collect(Collectors.joining(","));
-        String sql = String.format("SELECT * FROM app_article_category WHERE id IN (%s);", marks);
+        String sql = String.format("SELECT * FROM wfm_article_category WHERE id IN (%s);", marks);
         return getJdbcTemplate().queryForList(sql);
     }
 
     @Override
     public List<Map<String, Object>> findAllCategories() {
-        return getJdbcTemplate().queryForList("SELECT * FROM app_article_category ORDER BY weight ASC");
+        return getJdbcTemplate().queryForList("SELECT * FROM wfm_article_category ORDER BY weight ASC");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
 
     @Override
     public Map<String, Object> findCategoryByCode(String code) {
-        return getJdbcTemplate().queryForList("SELECT * FROM app_article_category WHERE code = ? LIMIT 1", code)
+        return getJdbcTemplate().queryForList("SELECT * FROM wfm_article_category WHERE code = ? LIMIT 1", code)
                 .stream().findFirst().orElse(null);
     }
 
@@ -60,13 +60,13 @@ public class AppArticleCategoryDaoImpl extends FastJdbcDaoSupport implements App
 
     @Override
     public int findCategoriesCountByParentId(Integer parentId) {
-        return getJdbcTemplate().queryForObject("SELECT COUNT(*) FROM app_article_category WHERE  parentId = ?",
+        return getJdbcTemplate().queryForObject("SELECT COUNT(*) FROM wfm_article_category WHERE  parentId = ?",
                 Integer.class, parentId);
     }
 
     @Override
     public void deleteByIds(Set<Object> ids) {
         MapSqlParameterSource parameters = new MapSqlParameterSource().addValue("ids", ids);
-        getNamedParameterJdbcTemplate().update("DELETE FROM app_article_category WHERE id in (:ids)", parameters);
+        getNamedParameterJdbcTemplate().update("DELETE FROM wfm_article_category WHERE id in (:ids)", parameters);
     }
 }

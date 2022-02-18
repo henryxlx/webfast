@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Repository
 public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategoryDao {
 
-    private static final String TABLE_NAME = "app_category";
+    private static final String TABLE_NAME = "wfm_category";
 
     @Override
     public List<Map<String, Object>> findByIds(Set<Object> ids) {
