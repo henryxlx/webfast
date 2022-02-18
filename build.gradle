@@ -87,9 +87,11 @@ Task copyJar = project.task("copyJar", type: Copy, dependsOn: subprojects.jar) {
     into project.file('dist')
 }
 
-Task copyJarToCourseWork = project.task("copyJarToCourseWork", type: Copy, dependsOn: subprojects.jar) {
+Task copyJarToQuickStart = project.task("copyJarToQuickStart", type: Copy, dependsOn: subprojects.jar) {
     from(subprojects.jar)
-    into project.file('../webfast2coursework/lib')
+    exclude('webfast-module*.jar')
+    exclude('webfast-starter-demo*.jar')
+    into project.file('../webfast2quickstart/lib')
 }
 
 Task taskForSourceZip = project.task("makeSourceZip", type: Zip) {
