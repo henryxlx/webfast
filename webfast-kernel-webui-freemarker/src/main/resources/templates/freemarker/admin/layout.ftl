@@ -44,7 +44,6 @@
                         <#assign adminMenus = [
                         {'key':'user', 'title':'用户'},
                         {'key':'content', 'title':'内容'},
-                        {'key':'group', 'title':'小组'},
                         {'key':'app', 'title':'应用'}] />
                     </#if>
                     <#list adminMenus! as menu>
