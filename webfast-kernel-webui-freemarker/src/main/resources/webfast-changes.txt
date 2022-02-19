@@ -3,6 +3,14 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.5.8: @2022-02-19
+* 快速安装服务接口添加获取补充安装sql文件路径的方法getOtherSqlFilePath，方便提供WebFast内容模块中的数据表脚本安装构建
+* WebFastAppSetupServiceImpl继承FastAppSetupServiceImpl
+* 后台管理顶部默认菜单删除小组菜单项
+* 添加后台标签管理控制器与页面
+* WebFast核心模块中的数据字典重命名为datadict.yml，其中的字典项只保留与核心功能有关的项目
+* WebFast数据字典持有类初始化重新实现，根据同名文件datadict.yml在路径中搜索发现不同模块下的多个数据字典文件，这种实现便于模块化定制与扩展
+
 0.5.7: @2022-02-18
 * 新建安装程序服务接口FastAppSetupService，实现类FastAppSetupServiceImpl装程序服务接口的简单实现，只完成核心服务功能，其它初始化操作忽略，方法实现为空
 * 安装程序服务接口的完整实现重命名WebFastAppSetupService完成对接口的实现（添加覆盖注解）
