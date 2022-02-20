@@ -19,7 +19,11 @@ public interface AppCategoryService {
 
     Set<Object> findCategoryChildrenIds(Object categoryId);
 
+    boolean isCategoryCodeAvaliable(String code, String exclude);
+
     Map<String, Object> addGroup(Map<String, Object> groupMap);
+
+    Object getGroup(Object groupId);
 
     Map<String, Object> getGroupByCode(String code);
 }

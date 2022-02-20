@@ -150,19 +150,6 @@ public class AppCategoryServiceImpl implements AppCategoryService {
         return categoryDao.findCategoriesByGroupId(group.get("id"));
     }
 
-    public boolean isCategoryCodeAvaliable(String code, String exclude) {
-        if (EasyStringUtil.isBlank(code)) {
-            return false;
-        }
-
-        if (Objects.equals(code, exclude)) {
-            return true;
-        }
-
-        Map<String, Object> category = categoryDao.findCategoryByCode(code);
-        return category != null && category.size() > 0 ? false : true;
-    }
-
     @Override
     public Set<Object> findCategoryChildrenIds(Object categoryId) {
         Map<String, Object> category = getCategory(categoryId);
@@ -191,6 +178,21 @@ public class AppCategoryServiceImpl implements AppCategoryService {
         return childrenIds;
     }
 
+
+    @Override
+    public boolean isCategoryCodeAvaliable(String code, String exclude) {
+        if (EasyStringUtil.isBlank(code)) {
+            return false;
+        }
+
+        if (Objects.equals(code, exclude)) {
+            return true;
+        }
+
+        Map<String, Object> category = categoryDao.findCategoryByCode(code);
+        return category != null && category.size() > 0 ? false : true;
+    }
+
     /*
      * Group
      */
@@ -200,6 +202,7 @@ public class AppCategoryServiceImpl implements AppCategoryService {
         return groupDao.addGroup(group);
     }
 
+    @Override
     public Map<String, Object> getGroup(Object id) {
         return groupDao.getGroup(id);
     }
