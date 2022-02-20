@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.5.9: @2022-02-20
+* FastJdbcDaoSupport添加生成空Map的方法toEmptyMap()，方便当返回Map类型为null时使用空Map情况
+* 模块webfast-module-content-dao-impl-jdbc中数据库.sql文件和模块中Dao类引用的数据表名称前缀wfm改为big_app
+* 完成后台分类管理的默认浏览页面Service和DAO实现与Controller调用
+
 0.5.8: @2022-02-19
 * 快速安装服务接口添加获取补充安装sql文件路径的方法getOtherSqlFilePath，方便提供WebFast内容模块中的数据表脚本安装构建
 * WebFastAppSetupServiceImpl继承FastAppSetupServiceImpl
