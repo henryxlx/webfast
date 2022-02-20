@@ -50,6 +50,10 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         containColumnBySet(mapForTable, getTableColumns(tableName));
     }
 
+    protected <K, V> Map<K, V> toEmptyMap() {
+        return new HashMap<>(0);
+    }
+
     protected <T> int insert(String tableName, T anyBean) {
         BeanPropertySqlParameterSource sqlParameterSource = new BeanPropertySqlParameterSource(anyBean);
         String sql = SqlStatementComposer.getInsertSql(tableName, sqlParameterSource.getParameterNames());
