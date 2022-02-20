@@ -7,6 +7,6 @@ include 'webfast-common',
         'webfast-kernel-webui-freemarker',
         'webfast-module-bigapp',
         'webfast-module-content-dao-impl-jdbc',
-        'webfast-module-content-freemarker',
+        'webfast-module-bigapp-freemarker',
         'webfast-support-shiro',
         'webfast-starter-demo'
