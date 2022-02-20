@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Repository
 public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategoryDao {
 
-    private static final String TABLE_NAME = "wfm_category";
+    private static final String TABLE_NAME = "big_app_category";
 
     @Override
     public List<Map<String, Object>> findByIds(Set<Object> ids) {
@@ -26,5 +26,16 @@ public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategor
         String marks = ids.stream().map(v -> "?").collect(Collectors.joining(","));
         String sql = String.format("SELECT * FROM %s WHERE id IN (%s)", TABLE_NAME, marks);
         return getJdbcTemplate().queryForList(sql, ids.toArray());
+    }
+
+    @Override
+    public List<Map<String, Object>> findCategoriesByGroupId(Object groupId) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_category WHERE groupId = ? ORDER BY weight ASC", groupId);
+    }
+
+    @Override
+    public Map<String, Object> getCategory(Object id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_category WHERE id = ? LIMIT 1", id)
+                .stream().findFirst().orElse(null);
     }
 }

@@ -10,4 +10,8 @@ import java.util.Set;
 public interface AppCategoryDao {
 
     List<Map<String, Object>> findByIds(Set<Object> ids);
+
+    List<Map<String, Object>> findCategoriesByGroupId(Object groupId);
+
+    Map<String, Object> getCategory(Object id);
 }
