@@ -39,8 +39,8 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
 
     @Override
     public Map<String, Object> addArticle(Map<String, Object> article) {
-        Number key = insertMapReturnKey("wfm_article", article);
-        return getJdbcTemplate().queryForList("SELECT * FROM wfm_article WHERE id = ?", key.intValue())
+        Number key = insertMapReturnKey("big_app_article", article);
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_article WHERE id = ?", key.intValue())
                 .stream().findFirst().orElse(new HashMap<>(0));
     }
 
@@ -66,7 +66,7 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
         }
 
         DynamicQueryBuilder builder = new DynamicQueryBuilder(conditions)
-                .from("wfm_article", "article")
+                .from("big_app_article", "article")
                 .andWhere("status = :status")
                 .andWhere("categoryId = :categoryId")
                 .andWhere("featured = :featured")

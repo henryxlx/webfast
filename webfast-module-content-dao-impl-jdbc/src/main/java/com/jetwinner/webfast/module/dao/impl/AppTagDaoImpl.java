@@ -19,25 +19,25 @@ public class AppTagDaoImpl extends FastJdbcDaoSupport implements AppTagDao {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("names", names);
         return getNamedParameterJdbcTemplate().queryForList(
-                "SELECT * FROM wfm_tag WHERE name IN (:names)", parameters);
+                "SELECT * FROM big_app_tag WHERE name IN (:names)", parameters);
     }
 
     @Override
     public Map<String, Object> addTag(Map<String, Object> tagMap) {
-        Number idNumber = insertMapReturnKey("wfm_tag", tagMap);
-        return getJdbcTemplate().queryForList("SELECT * FROM wfm_tag WHERE id = ?", idNumber.intValue())
+        Number idNumber = insertMapReturnKey("big_app_tag", tagMap);
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE id = ?", idNumber.intValue())
                 .stream().findFirst().orElse(null);
     }
 
     @Override
     public Map<String, Object> getTagByName(String name) {
-        return getJdbcTemplate().queryForList("SELECT * FROM wfm_tag WHERE name = ? LIMIT 1", name)
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE name = ? LIMIT 1", name)
                 .stream().findFirst().orElse(null);
     }
 
     @Override
     public List<Map<String, Object>> getTagByLikeName(String partOfName) {
         String name = "%" + partOfName + "%";
-        return getJdbcTemplate().queryForList("SELECT * FROM wfm_tag WHERE name LIKE ?", name);
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE name LIKE ?", name);
     }
 }

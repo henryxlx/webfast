@@ -1,10 +1,10 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `app_article`
+-- Table structure for `big_app_article`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_article`;
-CREATE TABLE `wfm_article` (
+DROP TABLE IF EXISTS `big_app_article`;
+CREATE TABLE `big_app_article` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '文章ID',
   `title` varchar(255) NOT NULL COMMENT '文章标题',
   `categoryId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '栏目',
@@ -28,10 +28,10 @@ CREATE TABLE `wfm_article` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `wfm_article_category`
+-- Table structure for `big_app_article_category`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_article_category`;
-CREATE TABLE `wfm_article_category` (
+DROP TABLE IF EXISTS `big_app_article_category`;
+CREATE TABLE `big_app_article_category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '栏目名称',
   `code` varchar(64) NOT NULL COMMENT 'URL目录名称',
@@ -48,10 +48,10 @@ CREATE TABLE `wfm_article_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Table structure for `wfm_category`
+-- Table structure for `big_app_category`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_category`;
-CREATE TABLE `wfm_category` (
+DROP TABLE IF EXISTS `big_app_category`;
+CREATE TABLE `big_app_category` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类ID',
   `code` varchar(64) NOT NULL DEFAULT '' COMMENT '分类编码',
   `name` varchar(255) NOT NULL COMMENT '分类名称',
@@ -66,10 +66,10 @@ CREATE TABLE `wfm_category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类表';
 
 -- ----------------------------
--- Table structure for `wfm_category_group`
+-- Table structure for `big_app_category_group`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_category_group`;
-CREATE TABLE `wfm_category_group` (
+DROP TABLE IF EXISTS `big_app_category_group`;
+CREATE TABLE `big_app_category_group` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '分类组ID',
   `code` varchar(64) NOT NULL COMMENT '分类组编码',
   `name` varchar(255) NOT NULL COMMENT '分类组名称',
@@ -78,10 +78,10 @@ CREATE TABLE `wfm_category_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='分类分组表';
 
 -- ----------------------------
--- Table structure for `wfm_content`
+-- Table structure for `big_app_content`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_content`;
-CREATE TABLE `wfm_content` (
+DROP TABLE IF EXISTS `big_app_content`;
+CREATE TABLE `big_app_content` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '内容ID',
   `title` varchar(255) NOT NULL COMMENT '内容标题',
   `editor` enum('richeditor','none') NOT NULL DEFAULT 'richeditor' COMMENT '编辑器选择类型字段',
@@ -106,10 +106,10 @@ CREATE TABLE `wfm_content` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面内容表';
 
 -- ----------------------------
--- Table structure for `wfm_tag`
+-- Table structure for `big_app_tag`
 -- ----------------------------
-DROP TABLE IF EXISTS `wfm_tag`;
-CREATE TABLE `wfm_tag` (
+DROP TABLE IF EXISTS `big_app_tag`;
+CREATE TABLE `big_app_tag` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '标签ID',
   `name` varchar(64) NOT NULL COMMENT '标签名称',
   `createdTime` bigint unsigned NOT NULL COMMENT '标签创建时间',
