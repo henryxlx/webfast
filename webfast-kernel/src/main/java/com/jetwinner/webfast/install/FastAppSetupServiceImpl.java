@@ -166,7 +166,8 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
                 .add("type", "top");
         navigationService.createNavigation(currentUser, paramMap.toMap());
 
-        paramMap.add("name", "常见问题")
+        paramMap = new ParamMap()
+                .add("name", "常见问题")
                 .add("url", "page/questions")
                 .add("sequence", 2)
                 .add("isNewWin", 0)
@@ -174,7 +175,8 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
                 .add("type", "top");
         navigationService.createNavigation(currentUser, paramMap.toMap());
 
-        paramMap.add("name", "关于我们")
+        paramMap = new ParamMap()
+                .add("name", "关于我们")
                 .add("url", "page/aboutus")
                 .add("sequence", 2)
                 .add("isNewWin", 0)

@@ -74,7 +74,8 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
                 .add("userId", 3);
         contentService.createContent(currentUser, paramMap.toMap());
 
-        paramMap.add("title", "常见问题")
+        paramMap = new ParamMap()
+                .add("title", "常见问题")
                 .add("type", "page")
                 .add("alias", "questions")
                 .add("body", "")
