@@ -2,6 +2,7 @@ package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.FastStringEqualUtil;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
@@ -78,7 +79,7 @@ public class AppCategoryServiceImpl implements AppCategoryService {
                     if (categoryParentId > 0) {
                         Map<String, Object> parentCategory = getCategory(categoryParentId);
                         if (parentCategory == null ||
-                                ValueParser.parseInt(parentCategory.get("groupId")) != categoryParentId) {
+                                FastStringEqualUtil.notEquals(parentCategory.get("groupId"), category.get("groupId"))) {
 
                             throw new RuntimeGoingException(String.format("父分类(ID:%s)不存在，保存分类失败",
                                     category.get("groupId")));
