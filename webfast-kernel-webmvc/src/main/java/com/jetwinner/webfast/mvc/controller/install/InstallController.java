@@ -301,12 +301,13 @@ public class InstallController {
         setupService.initRegisterSetting(params);
         setupService.initMailerSetting(params.get("sitename"));
         setupService.initStorageSetting();
-        setupService.initTag();
         setupService.initFile();
-        setupService.initPages(user);
         setupService.initNavigations(user);
         setupService.initBlocks(user);
         setupService.initThemes();
+        setupService.initCategory(user);
+        setupService.initPages(user);
+        setupService.initTag();
         setupService.initLockFile();
         setupService.initArticleSetting();
         mav.setViewName("redirect:/install/step4");
