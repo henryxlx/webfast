@@ -1,14 +1,15 @@
 package com.jetwinner.webfast.module.bigapp.service.impl;
 
-import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.module.bigapp.dao.AppContentDao;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.bigapp.service.AppContentService;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.content.type.BaseContentType;
 import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.module.bigapp.dao.AppContentDao;
+import com.jetwinner.webfast.module.bigapp.service.AppContentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,13 +22,15 @@ import java.util.Map;
 public class AppContentServiceImpl implements AppContentService {
 
     private final AppContentDao contentDao;
+    private final AppLogService logService;
 
-    public AppContentServiceImpl(AppContentDao contentDao) {
+    public AppContentServiceImpl(AppContentDao contentDao, AppLogService logService) {
         this.contentDao = contentDao;
+        this.logService = logService;
     }
 
     @Override
-    public void createContent(Map<String, Object> content, BaseAppUser currentUser) {
+    public void createContent(AppUser currentUser, Map<String, Object> content) {
         if (EasyStringUtil.isBlank(content.get("type"))) {
             throw new RuntimeGoingException("参数缺失，创建内容失败！");
         }
@@ -42,11 +45,14 @@ public class AppContentServiceImpl implements AppContentService {
         content.put("userId", currentUser.getId());
         content.put("createdTime", System.currentTimeMillis());
 
-
         if (content.get("publishedTime") == null) {
             content.put("publishedTime", content.get("createdTime"));
         }
         contentDao.insert(content);
+        if (content.containsKey("id")) {
+            logService.info(currentUser, "content", "create",
+                    String.format("创建内容《(%s)》(%s)", content.get("title"), content.get("id")));
+        }
     }
 
     @Override
@@ -67,15 +73,15 @@ public class AppContentServiceImpl implements AppContentService {
     }
 
     @Override
-    public void trashContent(Integer id) {
+    public void trashContent(AppUser currentUser, Integer id) {
         contentDao.updateContent(id, new ParamMap().add("status", "trash").toMap());
-        // logService.info("content", "trash", String.format("内容#{%d}移动到回收站", id));
+        logService.info(currentUser, "content", "trash", String.format("内容#{%d}移动到回收站", id));
     }
 
     @Override
-    public void publishContent(Integer id) {
+    public void publishContent(AppUser currentUser, Integer id) {
         contentDao.updateContent(id, new ParamMap().add("status", "published").toMap());
-        // logService.info('content', 'publish', String.format("内容#{%d}发布", id));
+        logService.info(currentUser, "content", "publish", String.format("内容#{%d}发布", id));
     }
 
     @Override

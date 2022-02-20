@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
@@ -80,15 +81,15 @@ public class ContentController {
 
     @PostMapping("/admin/content/{id}/trash")
     @ResponseBody
-    public Boolean trashAction(@PathVariable Integer id) {
-        contentService.trashContent(id);
+    public Boolean trashAction(@PathVariable Integer id, HttpServletRequest request) {
+        contentService.trashContent(AppUser.getCurrentUser(request), id);
         return Boolean.TRUE;
     }
 
     @RequestMapping("/admin/content/{id}/publish")
     @ResponseBody
-    public Boolean publishAction(@PathVariable Integer id) {
-        contentService.publishContent(id);
+    public Boolean publishAction(@PathVariable Integer id, HttpServletRequest request) {
+        contentService.publishContent(AppUser.getCurrentUser(request), id);
         return Boolean.TRUE;
     }
 }
