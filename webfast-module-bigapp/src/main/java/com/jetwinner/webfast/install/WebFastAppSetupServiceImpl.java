@@ -46,13 +46,13 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
     }
 
     @Override
-    public void initCategory() {
+    public void initCategory(BaseAppUser user) {
         Map<String, Object> group = categoryService.addGroup(new ParamMap()
                 .add("name", "课程分类")
                 .add("code", "course")
                 .add("depth", 2).toMap());
 
-        categoryService.createCategory(new ParamMap()
+        categoryService.createCategory(toCurrentUser(user), new ParamMap()
                 .add("name", "默认分类")
                 .add("code", "default")
                 .add("weight", 100)
