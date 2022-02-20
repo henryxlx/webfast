@@ -1,7 +1,7 @@
 rootProject.name = 'webfast'
 include 'webfast-common',
         'webfast-kernel',
-        'webfast-kernel-dao-impl-jdbc',
+        'webfast-kernel-dao-jdbc',
         'webfast-kernel-webmvc',
         'webfast-kernel-webui-freemarker',
         'webfast-kernel-webui-freemarker',
