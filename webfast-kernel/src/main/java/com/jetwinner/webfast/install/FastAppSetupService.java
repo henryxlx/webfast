@@ -26,6 +26,10 @@ public interface FastAppSetupService {
 
     void initFile();
 
+    default void initCategory(BaseAppUser user) {
+
+    }
+
     default void initPages(BaseAppUser user) {
 
     }
