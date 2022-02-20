@@ -1,16 +1,16 @@
-package com.jetwinner.webfast.module.service.impl;
+package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.module.dao.AppArticleDao;
+import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.service.AppArticleCategoryService;
-import com.jetwinner.webfast.module.service.AppArticleService;
-import com.jetwinner.webfast.module.service.AppTagService;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
+import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

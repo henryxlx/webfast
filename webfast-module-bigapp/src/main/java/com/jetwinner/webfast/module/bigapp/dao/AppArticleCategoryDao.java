@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.module.dao;
+package com.jetwinner.webfast.module.bigapp.dao;
 
 import java.util.List;
 import java.util.Map;

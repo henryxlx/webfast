@@ -1,10 +1,10 @@
-package com.jetwinner.webfast.module.service.impl;
+package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.module.dao.AppTagDao;
+import com.jetwinner.webfast.module.bigapp.dao.AppTagDao;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.service.AppTagService;
+import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

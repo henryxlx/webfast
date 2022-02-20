@@ -3,9 +3,9 @@ package com.jetwinner.webfast.install;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
-import com.jetwinner.webfast.module.service.AppCategoryService;
-import com.jetwinner.webfast.module.service.AppContentService;
-import com.jetwinner.webfast.module.service.AppTagService;
+import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppContentService;
+import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 

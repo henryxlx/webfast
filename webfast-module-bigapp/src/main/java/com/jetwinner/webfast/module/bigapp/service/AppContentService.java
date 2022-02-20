@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.module.service;
+package com.jetwinner.webfast.module.bigapp.service;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;

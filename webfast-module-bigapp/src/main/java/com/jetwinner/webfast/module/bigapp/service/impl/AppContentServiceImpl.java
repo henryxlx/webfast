@@ -1,11 +1,11 @@
-package com.jetwinner.webfast.module.service.impl;
+package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.module.dao.AppContentDao;
+import com.jetwinner.webfast.module.bigapp.dao.AppContentDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.service.AppContentService;
+import com.jetwinner.webfast.module.bigapp.service.AppContentService;
 import com.jetwinner.webfast.kernel.service.content.type.BaseContentType;
 import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;

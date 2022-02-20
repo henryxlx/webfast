@@ -1,11 +1,11 @@
-package com.jetwinner.webfast.module.service.impl;
+package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
-import com.jetwinner.webfast.module.dao.AppArticleCategoryDao;
+import com.jetwinner.webfast.module.bigapp.dao.AppArticleCategoryDao;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.service.AppArticleCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 

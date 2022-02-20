@@ -2,8 +2,8 @@ package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
-import com.jetwinner.webfast.module.service.AppCategoryService;
-import com.jetwinner.webfast.module.service.AppContentService;
+import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppContentService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.service.content.type.ContentTypeFactory;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;

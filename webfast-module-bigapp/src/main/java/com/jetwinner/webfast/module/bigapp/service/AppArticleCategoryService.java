@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.module.service;
+package com.jetwinner.webfast.module.bigapp.service;
 
 import java.util.List;
 import java.util.Map;
