@@ -5,7 +5,7 @@ dependencies {
     implementation project(':webfast-kernel-webmvc')
     implementation project(':webfast-kernel-webui-freemarker')
     implementation project(':webfast-module-bigapp')
-    implementation project(':webfast-module-content-dao-impl-jdbc')
+    implementation project(':webfast-module-bigapp-dao-jdbc')
     implementation project(':webfast-module-bigapp-freemarker')
     implementation project(':webfast-support-shiro')
     implementation("net.java.dev.jna:jna:${jarVersion['jna']}")
