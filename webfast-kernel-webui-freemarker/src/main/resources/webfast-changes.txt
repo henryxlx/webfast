@@ -3,6 +3,16 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.0: @2022-02-20
+* 项目模块名webfast-kernel-dao-impl-jdbc重命名为webfast-kernel-dao-jdbc
+* 项目模块webfast-module-content重命名为webfast-module-bigapp
+* 项目模块webfast-module-content-dao-impl-jdbc修改为webfast-module-bigapp-dao-jdbc
+* 项目模块webfast-module-content-freemarker重命名为webfast-module-bigapp-freemarker
+* 模块webfast-module-bigapp中的服务与接口类所在包调整为c.j.w.module.bigapp
+* 安装程序控制器添加分类初始化方法调用initCatgory()
+* 后台分类管理添加新的分类，添加子分类，编辑分类和删除分类功能完成
+* 新增任意对象转换为字符串清除前后的空格判断其值相等的快速字符串判等工具类FastStringEqualUtil
+
 0.5.9: @2022-02-20
 * FastJdbcDaoSupport添加生成空Map的方法toEmptyMap()，方便当返回Map类型为null时使用空Map情况
 * 模块webfast-module-content-dao-impl-jdbc中数据库.sql文件和模块中Dao类引用的数据表名称前缀wfm改为big_app
