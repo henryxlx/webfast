@@ -19,7 +19,10 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
 
     @Override
     public void insert(Map<String, Object> model) {
-        insertMap(TABLE_NAME, model);
+        int id = insertMapReturnKey(TABLE_NAME, model).intValue();
+        if (id > 0) {
+            model.put("id", id);
+        }
     }
 
     @Override
