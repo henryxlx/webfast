@@ -1,11 +1,13 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -82,6 +84,30 @@ public class CategoryController {
             response.add("success", Boolean.FALSE).add("message", "编码已被占用，请换一个。");
         }
         return response.toMap();
+    }
+
+    @RequestMapping("/admin/category/{id}/edit")
+    public String editAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        Map<String, Object> category = categoryService.getCategory(id);
+        if (category == null || category.isEmpty()) {
+            throw new RuntimeGoingException("Category not found!");
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            category = ParamMap.toFormDataMap(request);
+            categoryService.updateCategory(AppUser.getCurrentUser(request), id, category);
+            return renderTbody(category.get("groupId"), model);
+        }
+
+        model.addAttribute("category", category);
+        return "/admin/category/modal";
+    }
+
+    @RequestMapping("/admin/category/{id}/delete")
+    public String deleteAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        Map<String, Object> category = categoryService.getCategory(id);
+        categoryService.deleteCategory(AppUser.getCurrentUser(request), id);
+        return renderTbody(category.get("groupId"), model);
     }
 
 }

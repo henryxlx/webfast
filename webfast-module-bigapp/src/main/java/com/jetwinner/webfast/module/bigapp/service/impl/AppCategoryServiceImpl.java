@@ -106,13 +106,20 @@ public class AppCategoryServiceImpl implements AppCategoryService {
                 String.format("添加分类 %s(#%s)", category.get("name"), category.get("id")));
     }
 
+    @Override
+    public Map<String, Object> getCategory(Integer id) {
+        return id != null ? categoryDao.getCategory(id) : null;
+    }
+
     private Map<String, List<Map<String, Object>>> prepare(List<Map<String, Object>> categories) {
         Map<String, List<Map<String, Object>>> prepared = new HashMap<>();
         for (Map<String, Object> category : categories) {
             prepared.computeIfAbsent(String.valueOf(category.get("parentId")), k -> new ArrayList<>()).add(category);
         }
         return prepared;
-    };
+    }
+
+    ;
 
     @Override
     public List<Map<String, Object>> getCategoryTree(Object groupId) {
@@ -192,6 +199,46 @@ public class AppCategoryServiceImpl implements AppCategoryService {
 
         Map<String, Object> category = categoryDao.findCategoryByCode(code);
         return category != null && category.size() > 0 ? false : true;
+    }
+
+    @Override
+    public void updateCategory(AppUser currentUser, Integer id, Map<String, Object> fields) {
+        Map<String, Object> category = getCategory(id);
+        if (category == null || category.isEmpty()) {
+            throw new RuntimeGoingException(String.format("分类(#%d)不存在，更新分类失败！", id));
+        }
+
+        fields = ArrayToolkit.part(fields,
+                "description", "name", "code", "weight", "parentId", "icon");
+
+        if (fields == null || fields.isEmpty()) {
+            throw new RuntimeGoingException("参数不正确，更新分类失败！");
+        }
+
+        // filterCategoryFields里有个判断，需要用到这个$fields['groupId']
+        fields.put("groupId", category.get("groupId"));
+
+        filterCategoryFields(fields, category);
+
+        logService.info(currentUser, "category", "update",
+                String.format("编辑分类 %s(#%d)", fields.get("name"), id));
+
+        categoryDao.updateCategory(id, fields);
+    }
+
+    @Override
+    public void deleteCategory(AppUser currentUser, Integer id) {
+        Map<String, Object> category = getCategory(id);
+        if (category == null || category.isEmpty()) {
+            throw new RuntimeGoingException("Category not found!");
+        }
+
+        Set<Object> ids = findCategoryChildrenIds(id);
+        ids.add(id);
+        categoryDao.deleteByIds(ids);
+
+        logService.info(currentUser, "category", "delete",
+                String.format("删除分类 %s(#%d)", category.get("name"), id));
     }
 
     /*

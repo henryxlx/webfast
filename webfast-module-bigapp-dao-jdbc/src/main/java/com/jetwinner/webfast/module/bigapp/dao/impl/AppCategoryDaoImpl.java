@@ -3,6 +3,7 @@ package com.jetwinner.webfast.module.bigapp.dao.impl;
 import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.module.bigapp.dao.AppCategoryDao;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -49,5 +50,17 @@ public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategor
     public Map<String, Object> findCategoryByCode(String code) {
         return getJdbcTemplate().queryForList("SELECT * FROM big_app_category WHERE code = ? LIMIT 1", code)
                 .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public void updateCategory(Integer id, Map<String, Object> fields) {
+        fields.put("id", id);
+        updateMap(TABLE_NAME, fields, "id");
+    }
+
+    @Override
+    public void deleteByIds(Set<Object> ids) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource().addValue("ids", ids);
+        getNamedParameterJdbcTemplate().update("DELETE FROM big_app_category WHERE id in (:ids)", parameters);
     }
 }

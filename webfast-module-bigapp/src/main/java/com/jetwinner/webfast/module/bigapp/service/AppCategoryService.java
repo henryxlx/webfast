@@ -15,11 +15,17 @@ public interface AppCategoryService {
 
     void createCategory(AppUser currentUser, Map<String, Object> categoryMap);
 
+    Map<String, Object> getCategory(Integer id);
+
     List<Map<String, Object>> getCategoryTree(Object groupId);
 
     Set<Object> findCategoryChildrenIds(Object categoryId);
 
     boolean isCategoryCodeAvaliable(String code, String exclude);
+
+    void updateCategory(AppUser currentUser, Integer id, Map<String, Object> category);
+
+    void deleteCategory(AppUser currentUser, Integer id);
 
     Map<String, Object> addGroup(Map<String, Object> groupMap);
 
