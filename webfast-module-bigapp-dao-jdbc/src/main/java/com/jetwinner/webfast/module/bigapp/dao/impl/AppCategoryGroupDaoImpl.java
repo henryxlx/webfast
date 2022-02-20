@@ -24,4 +24,10 @@ public class AppCategoryGroupDaoImpl extends FastJdbcDaoSupport implements AppCa
                 .stream().findFirst().orElse(toEmptyMap());
     }
 
+    @Override
+    public Map<String, Object> addGroup(Map<String, Object> fields) {
+        Integer id = insertMapReturnKey("big_app_category_group", fields).intValue();
+        return getGroup(id);
+    }
+
 }

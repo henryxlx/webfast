@@ -38,4 +38,16 @@ public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategor
         return getJdbcTemplate().queryForList("SELECT * FROM big_app_category WHERE id = ? LIMIT 1", id)
                 .stream().findFirst().orElse(null);
     }
+
+    @Override
+    public Map<String, Object> addCategory(Map<String, Object> fields) {
+        int id = insertMapReturnKey(TABLE_NAME, fields).intValue();
+        return getCategory(id);
+    }
+
+    @Override
+    public Map<String, Object> findCategoryByCode(String code) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_category WHERE code = ? LIMIT 1", code)
+                .stream().findFirst().orElse(null);
+    }
 }

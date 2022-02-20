@@ -14,4 +14,8 @@ public interface AppCategoryDao {
     List<Map<String, Object>> findCategoriesByGroupId(Object groupId);
 
     Map<String, Object> getCategory(Object id);
+
+    Map<String, Object> addCategory(Map<String, Object> fields);
+
+    Map<String, Object> findCategoryByCode(String code);
 }
