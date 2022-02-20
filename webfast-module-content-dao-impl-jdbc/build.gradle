@@ -3,7 +3,7 @@ dependencies {
     implementation project(':webfast-common')
     implementation project(':webfast-kernel')
     implementation project(':webfast-kernel-dao-jdbc')
-    implementation project(':webfast-module-content')
+    implementation project(':webfast-module-bigapp')
     implementation('com.alibaba:druid-spring-boot-starter:1.2.8')
     implementation("mysql:mysql-connector-java:${jarVersion['mysql']}")
 }
