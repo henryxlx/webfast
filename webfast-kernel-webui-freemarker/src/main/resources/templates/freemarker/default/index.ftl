@@ -93,7 +93,7 @@
 
             <#if setting('course.live_course_enabled')??>
 
-            {% if recentLiveCourses %}
+            <#if recentLiveCourses??>
             <div class="es-box">
                 <div class="es-box-heading">
                     <h2>最新直播</h2>
@@ -102,10 +102,10 @@
                     {% endif %}
                 </div>
                 <div class="es-box-body">
-                    <@renderController path='TopxiaWebBundle:LiveCourse:coursesBlock' params={courses:recentLiveCourses, view: 'list'}/>
+                    <@renderController path='/liveCourse/coursesBlock' params={'courses':recentLiveCourses, view: 'list'}/>
                 </div>
             </div>
-            {% endif %}
+            </#if>
 
             </#if>
 
