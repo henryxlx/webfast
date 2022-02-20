@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.install;
 
 import com.jetwinner.security.BaseAppUser;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
@@ -62,6 +63,7 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
 
     @Override
     public void initPages(BaseAppUser user) {
+        AppUser currentUser = toCurrentUser(user);
         ParamMap paramMap = new ParamMap()
                 .add("title", "关于我们")
                 .add("type", "page")
@@ -70,7 +72,7 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
                 .add("template", "default")
                 .add("status", "published")
                 .add("userId", 3);
-        contentService.createContent(paramMap.toMap(), user);
+        contentService.createContent(currentUser, paramMap.toMap());
 
         paramMap.add("title", "常见问题")
                 .add("type", "page")
@@ -78,7 +80,7 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
                 .add("body", "")
                 .add("template", "default")
                 .add("status", "published");
-        contentService.createContent(paramMap.toMap(), user);
+        contentService.createContent(currentUser, paramMap.toMap());
     }
 
     @Override
