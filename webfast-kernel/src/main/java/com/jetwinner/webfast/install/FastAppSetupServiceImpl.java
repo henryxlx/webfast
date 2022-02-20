@@ -156,10 +156,7 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
 
     @Override
     public void initNavigations(BaseAppUser user) {
-        AppUser currentUser = new AppUser();
-        currentUser.setId(user.getId());
-        currentUser.setUsername(user.getUsername());
-        currentUser.setLoginIp("::");
+        AppUser currentUser = toCurrentUser(user);
         ParamMap paramMap = new ParamMap()
                 .add("name", "师资力量")
                 .add("url", "teacher")
@@ -184,6 +181,14 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
                 .add("isOpen", 1)
                 .add("type", "top");
         navigationService.createNavigation(currentUser, paramMap.toMap());
+    }
+
+    protected AppUser toCurrentUser(BaseAppUser user) {
+        AppUser currentUser = new AppUser();
+        currentUser.setId(user.getId());
+        currentUser.setUsername(user.getUsername());
+        currentUser.setLoginIp("::");
+        return currentUser;
     }
 
     @Override
