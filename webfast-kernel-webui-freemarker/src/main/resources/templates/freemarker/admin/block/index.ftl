@@ -1,7 +1,7 @@
 <#assign menu = 'admin_block'/>
 <#assign script_controller = 'block/list'/>
 
-<#include '/admin/content/layout.ftl'/>
+<#include layout!'/admin/content/layout.ftl' />
 <#macro blockTitle>编辑区管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>

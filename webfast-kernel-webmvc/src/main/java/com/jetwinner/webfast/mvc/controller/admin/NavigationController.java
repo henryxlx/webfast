@@ -5,6 +5,7 @@ import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.model.AppModelNavigation;
 import com.jetwinner.webfast.kernel.service.AppNavigationService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.ServletRequestUtils;
@@ -26,7 +27,8 @@ public class NavigationController {
     }
 
     @RequestMapping("/admin/navigation")
-    public String indexPage(@RequestParam(defaultValue = "top") String type, Model model) {
+    public String indexPage(@RequestParam(defaultValue = "top") String type, HttpServletRequest request, Model model) {
+        BaseControllerHelper.lookupAdminLayout(request, model);
         model.addAttribute("type", type);
         model.addAttribute("navigations", navigationService.getNavigationsListByType(type));
         return "/admin/navigation/index";

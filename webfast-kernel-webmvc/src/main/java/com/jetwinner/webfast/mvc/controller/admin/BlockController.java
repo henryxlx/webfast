@@ -9,6 +9,7 @@ import com.jetwinner.webfast.kernel.service.AppBlockService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.kernel.view.ViewRenderService;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,7 @@ public class BlockController {
 
     @RequestMapping("/admin/block")
     public String indexPage(HttpServletRequest request, Model model) {
+        BaseControllerHelper.lookupAdminLayout(request, model);
         Paginator paginator = new Paginator(request, blockService.searchBlockCount(), 20);
         model.addAttribute("blocks", blockService.searchBlocks(paginator.getOffsetCount(),
                 paginator.getPerPageCount()));

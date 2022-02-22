@@ -2,7 +2,7 @@
 <#assign menu = 'navigation'/>
 <#assign script_controller = 'navigation/page'/>
 
-<#include '/admin/content/layout.ftl'/>
+<#include layout!'/admin/content/layout.ftl' />
 <#macro blockTitle>导航管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
