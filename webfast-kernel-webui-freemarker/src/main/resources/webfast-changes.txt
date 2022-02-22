@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.1: @2022-02-21
+* BaseControllerHelper控制器辅助类添加方法lookupAdminLayout()，用于查找是否有可替代的后台模板
+* 导航与编辑区管理使用可替换模板方式，可方便调整页面显示布局
+* 导航与编辑区使用动态布局添加到后台应用菜单中，使用URL添加layout参数的方式layout=app，layout的值是后台布局所在的文件夹名
+
 0.6.0: @2022-02-20
 * 项目模块名webfast-kernel-dao-impl-jdbc重命名为webfast-kernel-dao-jdbc
 * 项目模块webfast-module-content重命名为webfast-module-bigapp
