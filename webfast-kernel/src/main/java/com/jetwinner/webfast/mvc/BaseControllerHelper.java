@@ -1,7 +1,9 @@
 package com.jetwinner.webfast.mvc;
 
 import com.jetwinner.util.ArrayUtil;
+import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,5 +44,12 @@ public class BaseControllerHelper {
     public static AppUser getCurrentUser(HttpServletRequest request) {
         AppUser appUser = (AppUser) request.getAttribute(AppUser.MODEL_VAR_NAME);
         return appUser == null ? new AppUser() : appUser;
+    }
+
+    public static void lookupAdminLayout(HttpServletRequest request, Model model) {
+        String layoutName = request.getParameter("layout");
+        if (EasyStringUtil.isNotBlank(layoutName)) {
+            model.addAttribute("layout", String.format("/admin/%s/layout.ftl", layoutName));
+        }
     }
 }
