@@ -6,6 +6,11 @@
 <div class="col-md-2">
     <#if blockSidebar??><@blockSidebar/><#else>
 
+    <div class="list-group">
+        <a href="${ctx}/admin/navigation?layout=app" class="list-group-item <#if menu! == 'navigation'>active</#if>">导航管理</a>
+        <a href="${ctx}/admin/block?layout=app" class="list-group-item <#if menu! == 'admin_block'>active</#if>">编辑区管理</a>
+    </div>
+
     <div class="panel panel-default">
         <div class="panel-heading">应用管理</div>
         <div class="list-group">
