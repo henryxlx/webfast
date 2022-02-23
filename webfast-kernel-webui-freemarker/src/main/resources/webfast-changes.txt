@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.2: @2022-02-23
+* 用户信息自我介绍输入域名称为aboutme与数据表的中列名必须相同
+* EasyStringUtil中repeat添加字符串的多态方法
+* 添加用于页面中分类下拉列表选项的分类选项构建方法buildCategoryChoices，页面的category_choices函数改为直接使用此方法注入数据
+* 标签服务TagService添加新的查询方法findTagsByIds
+* 后台标签管理浏览、添加、修改和删除功能完成
+
 0.6.1: @2022-02-21
 * BaseControllerHelper控制器辅助类添加方法lookupAdminLayout()，用于查找是否有可替代的后台模板
 * 导航与编辑区管理使用可替换模板方式，可方便调整页面显示布局
@@ -14,7 +21,7 @@ TODO list
 * 项目模块webfast-module-content-dao-impl-jdbc修改为webfast-module-bigapp-dao-jdbc
 * 项目模块webfast-module-content-freemarker重命名为webfast-module-bigapp-freemarker
 * 模块webfast-module-bigapp中的服务与接口类所在包调整为c.j.w.module.bigapp
-* 安装程序控制器添加分类初始化方法调用initCatgory()
+* 安装程序控制器添加分类初始化方法调用initCategory()
 * 后台分类管理添加新的分类，添加子分类，编辑分类和删除分类功能完成
 * 新增任意对象转换为字符串清除前后的空格判断其值相等的快速字符串判等工具类FastStringEqualUtil
 
