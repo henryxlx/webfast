@@ -307,7 +307,7 @@ public class InstallController {
         setupService.initThemes();
         setupService.initCategory(user);
         setupService.initPages(user);
-        setupService.initTag();
+        setupService.initTag(user);
         setupService.initLockFile();
         setupService.initArticleSetting();
         mav.setViewName("redirect:/install/step4");

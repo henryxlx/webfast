@@ -17,4 +17,14 @@ public interface AppTagDao {
     List<Map<String, Object>> getTagByLikeName(String partOfName);
 
     List<Map<String, Object>> findTagsByIds(String[] ids);
+
+    int findAllTagsCount();
+
+    List<Map<String, Object>> findAllTags(Integer start, Integer limit);
+
+    Map<String, Object> getTag(Integer id);
+
+    int updateTag(Integer id, Map<String, Object> fields);
+
+    int deleteTag(Integer id);
 }

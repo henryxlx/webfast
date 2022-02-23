@@ -18,7 +18,7 @@ public interface FastAppSetupService {
 
     void initStorageSetting();
 
-    default void initTag() {};
+    default void initTag(BaseAppUser user) {};
 
     default void initCategory() {
 

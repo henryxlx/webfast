@@ -39,10 +39,10 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
     }
 
     @Override
-    public void initTag() {
+    public void initTag(BaseAppUser user) {
         Map<String, Object> defaultTag = tagService.getTagByName("默认标签");
         if (defaultTag == null || defaultTag.size() == 0) {
-            tagService.addTag(new ParamMap().add("name", "默认标签").toMap());
+            tagService.addTag(toCurrentUser(user), new ParamMap().add("name", "默认标签").toMap());
         }
     }
 

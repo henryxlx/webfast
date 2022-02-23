@@ -54,4 +54,32 @@ public class AppTagDaoImpl extends FastJdbcDaoSupport implements AppTagDao {
         return getNamedParameterJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE id in (:ids)",
                         parameters);
     }
+
+    @Override
+    public int findAllTagsCount() {
+        return getJdbcTemplate().queryForObject("SELECT COUNT(*) FROM big_app_tag ", Integer.class);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllTags(Integer start, Integer limit) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag ORDER BY createdTime DESC LIMIT ?, ?",
+                start, limit);
+    }
+
+    @Override
+    public Map<String, Object> getTag(Integer id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE id = ? LIMIT 1", id)
+                .stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public int updateTag(Integer id, Map<String, Object> fields) {
+        fields.put("id", id);
+        return updateMap("big_app_tag", fields, "id");
+    }
+
+    @Override
+    public int deleteTag(Integer id) {
+        return getJdbcTemplate().update("DELETE FROM big_app_tag WHERE id = ?", id);
+    }
 }

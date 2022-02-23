@@ -7,7 +7,7 @@
 <#macro blockMain>
 
 <div class="page-header clearfix">
-    <button class="btn btn-success btn-sm pull-right" id="add-tag-btn" data-toggle="modal" data-target="#modal" data-url="{{ path('admin_tag_create') }}">新增标签</button>
+    <button class="btn btn-success btn-sm pull-right" id="add-tag-btn" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/tag/create">新增标签</button>
     <h1 class="pull-left">标签管理</h1>
 </div>
 
@@ -29,6 +29,5 @@
 </table>
 
 <@web_macro.paginator paginator!/>
-
 
 </#macro>
