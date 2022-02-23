@@ -534,6 +534,17 @@ public abstract class EasyStringUtil {
         return repeat(padChar, pads).concat(str);
     }
 
+    public static String repeat(String str, final int repeat) {
+        if (repeat <= 0) {
+            return EMPTY;
+        }
+        StringBuilder buf = new StringBuilder();
+        for (int i = repeat - 1; i >= 0; i--) {
+            buf.append(str);
+        }
+        return buf.toString();
+    }
+
     public static String repeat(final char ch, final int repeat) {
         if (repeat <= 0) {
             return EMPTY;
