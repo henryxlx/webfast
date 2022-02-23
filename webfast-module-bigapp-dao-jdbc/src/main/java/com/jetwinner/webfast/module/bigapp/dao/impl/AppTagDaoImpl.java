@@ -1,10 +1,13 @@
 package com.jetwinner.webfast.module.bigapp.dao.impl;
 
+import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.module.bigapp.dao.AppTagDao;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -39,5 +42,16 @@ public class AppTagDaoImpl extends FastJdbcDaoSupport implements AppTagDao {
     public List<Map<String, Object>> getTagByLikeName(String partOfName) {
         String name = "%" + partOfName + "%";
         return getJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE name LIKE ?", name);
+    }
+
+    @Override
+    public List<Map<String, Object>> findTagsByIds(String[] ids) {
+        if (ids == null || ids.length == 0) {
+            Collections.emptyList();
+        }
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", ListUtil.newArrayList(ids));
+        return getNamedParameterJdbcTemplate().queryForList("SELECT * FROM big_app_tag WHERE id in (:ids)",
+                        parameters);
     }
 }

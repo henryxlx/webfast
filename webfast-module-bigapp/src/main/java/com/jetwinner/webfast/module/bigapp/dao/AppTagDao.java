@@ -15,4 +15,6 @@ public interface AppTagDao {
     Map<String, Object> getTagByName(String name);
 
     List<Map<String, Object>> getTagByLikeName(String partOfName);
+
+    List<Map<String, Object>> findTagsByIds(String[] ids);
 }

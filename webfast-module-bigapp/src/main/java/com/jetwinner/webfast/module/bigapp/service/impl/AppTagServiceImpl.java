@@ -2,11 +2,13 @@ package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.module.bigapp.dao.AppTagDao;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +48,11 @@ public class AppTagServiceImpl implements AppTagService {
     @Override
     public List<Map<String, Object>> getTagByLikeName(String partOfName) {
         return tagDao.getTagByLikeName(partOfName);
+    }
+
+    @Override
+    public List<Map<String, Object>> findTagsByIds(String[] ids) {
+        return tagDao.findTagsByIds(ids);
     }
 
     private void filterTagFields(Map<String, Object> tag, String relatedTagName) {
