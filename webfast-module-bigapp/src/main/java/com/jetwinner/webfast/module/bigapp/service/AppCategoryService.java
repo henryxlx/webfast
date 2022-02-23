@@ -27,6 +27,10 @@ public interface AppCategoryService {
 
     void deleteCategory(AppUser currentUser, Integer id);
 
+    public Map<String, Object> buildCategoryChoices(String groupCode);
+
+    public Map<String, Object> buildCategoryChoices(String groupCode, String indent);
+
     Map<String, Object> addGroup(Map<String, Object> groupMap);
 
     Object getGroup(Object groupId);

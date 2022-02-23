@@ -241,6 +241,29 @@ public class AppCategoryServiceImpl implements AppCategoryService {
                 String.format("删除分类 %s(#%d)", category.get("name"), id));
     }
 
+    @Override
+    public Map<String, Object> buildCategoryChoices(String groupCode) {
+        return buildCategoryChoices(groupCode, "　");
+    }
+
+    @Override
+    public Map<String, Object> buildCategoryChoices(String groupCode, String indent) {
+        Map<String, Object> group = getGroupByCode(groupCode);
+        if (group == null || group.isEmpty()) {
+            return Collections.emptyMap();
+        }
+
+        List<Map<String, Object>> categories = getCategoryTree(group.get("id"));
+        Map<String, Object> choices = new HashMap<>(categories.size());
+        String strForIndent = indent == null ? "" : indent;
+        categories.forEach(e -> {
+            choices.put(String.valueOf(e.get("id")),
+                    EasyStringUtil.repeat(strForIndent,
+                            ValueParser.parseInt(e.get("depth")) - 1) + e.get("name"));
+        });
+        return choices;
+    }
+
     /*
      * Group
      */
