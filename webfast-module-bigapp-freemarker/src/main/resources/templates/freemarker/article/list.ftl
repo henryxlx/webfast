@@ -13,12 +13,14 @@
         <li class="media article-item clearfix">
           <div class="article-title text-muted">
             <div class="pull-left">
-              <#list categories! as category>
+              <#if categories??>
+              <#list categories?values as category>
                 <#if article.categoryId == category.id>
                   <span><a href="${ctx}/article/category/${category.code}">${category.name} </a>
                   </span>
                 </#if>
               </#list>
+              </#if>
             </div>
             <div class="published-time">${article.publishedTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}</div>
           </div>
@@ -29,7 +31,8 @@
           </#if>
           <div class="media-body">
             <h4 class="media-heading"><a href="${ctx}/article/${article.id}" >${article.title}</a></h4>
-            ${article.body?substring(0, 150)}
+            <#assign articlBodyLen = article.body?length />
+            ${article.body[0..*150]}
           </div>
         </li>
       </#list>
