@@ -8,13 +8,17 @@ import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
 import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.module.bigapp.service.AppTagService;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -25,14 +29,16 @@ public class ArticleController {
     private final AppArticleService articleService;
     private final AppArticleCategoryService categoryService;
     private final AppSettingService settingService;
+    private final AppTagService tagService;
 
     public ArticleController(AppArticleService articleService,
                              AppArticleCategoryService categoryService,
-                             AppSettingService settingService) {
+                             AppSettingService settingService, AppTagService tagService) {
 
         this.articleService = articleService;
         this.categoryService = categoryService;
         this.settingService = settingService;
+        this.tagService = tagService;
     }
 
     @RequestMapping("/article")
@@ -121,5 +127,57 @@ public class ArticleController {
             }
         }
         return categories;
+    }
+
+    @RequestMapping("/article/{id}")
+    public ModelAndView detailAction(@PathVariable Integer id) {
+        Map<String, Object> article = articleService.getArticle(id);
+        if (article.isEmpty()) {
+            throw new RuntimeGoingException("文章已删除或者未发布！");
+        }
+
+        if (!"published".equals(article.get("status"))) {
+            return BaseControllerHelper.createMessageResponse("error","文章不是发布状态，请查看！");
+        }
+
+        ModelAndView mav = new ModelAndView("/article/detail");
+        Map<String, Object> setting = settingService.get("article");
+        if (setting == null || setting.isEmpty()) {
+            setting = new ParamMap().add("name", "资讯频道").add("pageNums", 20).toMap();
+        }
+        mav.addObject("articleSetting", setting);
+
+        Map<String, Object> conditions = new ParamMap().add("status", "published").toMap();
+
+        Object currentArticleId = article.get("id");
+        mav.addObject("articlePrevious", articleService.getArticlePrevious(currentArticleId));
+        mav.addObject("articleNext", articleService.getArticleNext(currentArticleId));
+        mav.addObject("article", article);
+
+        mav.addObject("articleSetting", settingService.get("article"));
+        mav.addObject("categoryTree", categoryService.getCategoryTree());
+
+        String[] tagIds = new String[0];
+        if(article.get("tagIds") != null){
+            tagIds = String.valueOf(article.get("tagIds").toString()).split(",");
+        }
+        List<Map<String, Object>> tags = tagService.findTagsByIds(tagIds);
+        mav.addObject("tags", tags);
+
+        String seoKeyword = "";
+        if(tags != null){
+            Set<Object> seoKeywordSet = ArrayToolkit.column(tags, "name");
+            seoKeyword = seoKeywordSet.stream().map(String::valueOf).collect(Collectors.joining(", "));
+        }
+        mav.addObject("seoKeyword", seoKeyword);
+        mav.addObject("seoDesc", article.get("body"));
+
+        articleService.hitArticle(id);
+
+        Map<String, Object> category = categoryService.getCategory(article.get("categoryId"));
+        mav.addObject("categoryName", category.get("name"));
+        mav.addObject("categoryCode", category.get("code"));
+        mav.addObject("breadcrumbs", categoryService.findCategoryBreadcrumbs(category.get("id")));
+        return mav;
     }
 }

@@ -8,6 +8,7 @@ import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,35 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
     @Override
     public Map<String, Object> addArticle(Map<String, Object> article) {
         Number key = insertMapReturnKey("big_app_article", article);
-        return getJdbcTemplate().queryForList("SELECT * FROM big_app_article WHERE id = ?", key.intValue())
-                .stream().findFirst().orElse(new HashMap<>(0));
+        return getArticle(key.intValue());
+    }
+
+    @Override
+    public Map<String, Object> getArticle(Object id) {
+        return getJdbcTemplate().queryForList("SELECT * FROM big_app_article WHERE id = ?", id)
+                .stream().findFirst().orElse(Collections.emptyMap());
+    }
+
+    @Override
+    public Map<String, Object> getArticlePrevious(Object categoryId, Long createdTime) {
+        final String sql = "SELECT * FROM big_app_article WHERE `categoryId` = ? AND createdTime < ? ORDER BY `createdTime` DESC LIMIT 1";
+        return getJdbcTemplate().queryForList(sql, categoryId, createdTime)
+                .stream().findFirst().orElse(Collections.emptyMap());
+    }
+
+    @Override
+    public Map<String, Object> getArticleNext(Object categoryId, Long createdTime) {
+        final String sql = "SELECT * FROM big_app_article WHERE  `categoryId` = ? AND createdTime > ? ORDER BY `createdTime` ASC LIMIT 1";
+        return getJdbcTemplate().queryForList(sql, categoryId, createdTime)
+                .stream().findFirst().orElse(Collections.emptyMap());
+    }
+
+    @Override
+    public int waveArticle(Object id, int diff) {
+        final String sql = diff > 0 ?  "UPDATE big_app_article SET hits = hits + ? WHERE id = ? LIMIT 1" :
+                "UPDATE big_app_article SET hits = hits - ? WHERE id = ? LIMIT 1";
+        Integer hitValue = diff > 0 ? diff : -diff;
+        return getJdbcTemplate().update(sql, hitValue, id);
     }
 
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> map) {

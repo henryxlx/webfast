@@ -28,4 +28,6 @@ public interface AppArticleCategoryService {
     int findCategoriesCountByParentId(Integer parentId);
 
     void deleteCategory(Integer id);
+
+    Object findCategoryBreadcrumbs(Object id);
 }

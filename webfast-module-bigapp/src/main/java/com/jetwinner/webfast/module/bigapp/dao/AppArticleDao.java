@@ -16,4 +16,12 @@ public interface AppArticleDao {
                                              Integer start, Integer limit);
 
     Map<String, Object> addArticle(Map<String, Object> article);
+
+    Map<String, Object> getArticle(Object id);
+
+    Map<String, Object> getArticlePrevious(Object categoryId, Long createdTime);
+
+    Map<String, Object> getArticleNext(Object categoryId, Long createdTime);
+
+    int waveArticle(Object id, int diff);
 }

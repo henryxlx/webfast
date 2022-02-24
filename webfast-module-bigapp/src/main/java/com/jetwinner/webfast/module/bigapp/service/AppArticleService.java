@@ -16,4 +16,12 @@ public interface AppArticleService {
                                              Integer start, Integer limit);
 
     void createArticle(Map<String, Object> article, AppUser user);
+
+    Map<String, Object> getArticle(Object id);
+
+    Map<String, Object> getArticlePrevious(Object id);
+
+    Map<String, Object> getArticleNext(Object id);
+
+    void hitArticle(Object id);
 }

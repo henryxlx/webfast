@@ -4,6 +4,7 @@ import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
 import com.jetwinner.util.EasyDateUtil;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -66,6 +67,53 @@ public class AppArticleServiceImpl implements AppArticleService {
         // logService.info("article", "create", String.format("创建文章《(%s)》(%s)", article.get("title"), article.get("id")));
     }
 
+    @Override
+    public Map<String, Object> getArticle(Object id) {
+        return articleDao.getArticle(id);
+    }
+
+    @Override
+    public Map<String, Object> getArticlePrevious(Object id) {
+        Map<String, Object> article = getArticle(id);
+        if(article.isEmpty()){
+            throw new RuntimeGoingException("文章不存在，操作失败。");
+        }
+        Long createdTime = ValueParser.toLong(article.get("createdTime"));
+        Object categoryId = article.get("categoryId");
+        Map<String, Object> category = categoryService.getCategory(categoryId);
+        if(category == null || category.isEmpty()){
+            throw new RuntimeGoingException("文章分类不存在,操作失败！");
+        }
+
+        return articleDao.getArticlePrevious(categoryId, createdTime);
+    }
+
+    @Override
+    public Map<String, Object> getArticleNext(Object id) {
+        Map<String, Object> article = getArticle(id);
+        if(article.isEmpty()){
+            throw new RuntimeGoingException("文章不存在，操作失败。");
+        }
+        Long createdTime = ValueParser.toLong(article.get("createdTime"));
+        Object categoryId = article.get("categoryId");
+        Map<String, Object> category = categoryService.getCategory(categoryId);
+        if(category == null || category.isEmpty()){
+            throw new RuntimeGoingException("文章分类不存在,操作失败！");
+        }
+
+        return articleDao.getArticleNext(categoryId, createdTime);
+    }
+
+    @Override
+    public void hitArticle(Object id) {
+        Map<String, Object> checkArticle = getArticle(id);
+        if(checkArticle.isEmpty()){
+            throw new RuntimeGoingException("文章不存在，操作失败。");
+        }
+
+        articleDao.waveArticle(id, 1);
+    }
+
     private Map<String, Object> filterArticleFields(AppUser currentUser, Map<String, Object> fields, boolean updateMode) {
         Map<String, Object> article = new HashMap<>(fields.size());
 
@@ -108,7 +156,8 @@ public class AppArticleServiceImpl implements AppArticleService {
 
         if (EasyStringUtil.isNotBlank(conditions.get("includeChildren")) && conditions.containsKey("categoryId")) {
             Set<Object> childrenIds = categoryService.findCategoryChildrenIds(conditions.get("categoryId"));
-            conditions.put("categoryIds", childrenIds.add(conditions.get("categoryId")));
+            childrenIds.add(conditions.get("categoryId"));
+            conditions.put("categoryIds", childrenIds);
             conditions.remove("categoryId");
             conditions.remove("includeChildren");
         }

@@ -178,6 +178,30 @@ public class AppArticleCategoryServiceImpl implements AppArticleCategoryService 
         // logService.info("category", "delete", String.format("删除栏目%s(#%d)", category.get("name"), id));
     }
 
+    @Override
+    public Object findCategoryBreadcrumbs(Object id) {
+        List<Map<String, Object>> categoryTree = getCategoryTree();
+        Map<String, Map<String, Object>> indexedCategories = ArrayToolkit.index(categoryTree, "id");
+
+        List<Map<String, Object>> breadcrumbs = new ArrayList<>();
+        String categoryId = String.valueOf(id);
+        while (true) {
+            Map<String, Object> category = indexedCategories.get(categoryId);
+            if (category == null) {
+                break;
+            }
+            breadcrumbs.add(category);
+
+            if (category.get("parentId") == null) {
+                break;
+            }
+
+            categoryId = String.valueOf(category.get("parentId"));
+        }
+        Collections.reverse(breadcrumbs);
+        return breadcrumbs;
+    }
+
     private void filterCategoryFields(Map<String, Object> fields) {
 
         ArrayToolkit.filter(fields, new ParamMap()
