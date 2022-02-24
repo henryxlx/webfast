@@ -15,7 +15,7 @@
     <#if blockArticleHeader??><@blockArticleHeader/><#else>
       <div class="row">
         <div class="col-md-12">
-          <div class="page-header"><h1>${(articleSetting.name)!}</h1></div>
+          <div class="page-header"><h1>${(articleSetting.name)!'资讯频道'}</h1></div>
         </div>
       </div>
     </#if>
