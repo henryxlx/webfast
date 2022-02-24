@@ -66,8 +66,8 @@
     <#return (appConst.uploadMaxFilesize)! />
 </#function>
 
-<#function data key count=5>
-    <#return []/>
+<#function data key arguments = {'count': 5}>
+    <#return webExtPack.getDataTag(key, arguments)/>
 </#function>
 
 <#function convertIP ipAddress>
