@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.3: @2022-02-24
+* 后台资讯管理浏览行显示页面
+* 使用Spring的全局异常处理机制，使用注解@ControllerAdvice和@ExceptionHandler对RuntimeGoingException异常捕获处理
+* 简单日期转换工具类EasyDateUtil，只提供将对象转换为字符串后再按日期格式转换为时间整数的方法toLongTime()
+
 0.6.2: @2022-02-23
 * 用户信息自我介绍输入域名称为aboutme与数据表的中列名必须相同
 * EasyStringUtil中repeat添加字符串的多态方法
