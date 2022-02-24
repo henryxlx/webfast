@@ -42,7 +42,40 @@ public class ArticleController {
     }
 
     @RequestMapping("/article")
-    public String indexPage() {
+    public String indexPage(HttpServletRequest request, Model model) {
+        Map<String, Object> settingMap = settingService.get("article");
+        if (settingMap == null || settingMap.isEmpty()) {
+            settingMap = new ParamMap().add("name", "资讯频道").add("pageNums", 20).toMap();
+        }
+        model.addAttribute("articleSetting", settingMap);
+
+        model.addAttribute("categoryTree", categoryService.getCategoryTree());
+
+        Map<String, Object> conditions = new ParamMap().add("status", "published").toMap();
+        Paginator paginator = new Paginator(request,
+                articleService.searchArticlesCount(conditions),
+                ValueParser.parseInt(settingMap.get("pageNums"))
+        );
+        model.addAttribute("paginator", paginator);
+
+        List<Map<String, Object>> latestArticles = articleService.searchArticles(
+                conditions, "published",
+                paginator.getOffsetCount(),
+                paginator.getPerPageCount()
+        );
+
+        model.addAttribute("latestArticles", latestArticles);
+
+        model.addAttribute("categories",
+                categoryService.findCategoriesByIds(ArrayToolkit.column(latestArticles, "categoryId")));
+
+        Map<String, Object> featuredConditions = new ParamMap()
+                .add("status", "published")
+                .add("featured", 1)
+                .add("hasPicture", 1).toMap();
+        model.addAttribute("featuredArticles",
+                articleService.searchArticles(featuredConditions, "normal", 0, 5));
+
         return "/article/index";
     }
 
@@ -87,7 +120,7 @@ public class ArticleController {
         model.addAttribute("category", category);
         model.addAttribute("articles", articles);
         model.addAttribute("paginator", paginator);
-        model.addAttribute("setting", setting);
+        model.addAttribute("articleSetting", setting);
         return "/article/list";
     }
 
@@ -141,11 +174,11 @@ public class ArticleController {
         }
 
         ModelAndView mav = new ModelAndView("/article/detail");
-        Map<String, Object> setting = settingService.get("article");
-        if (setting == null || setting.isEmpty()) {
-            setting = new ParamMap().add("name", "资讯频道").add("pageNums", 20).toMap();
+        Map<String, Object> settingMap = settingService.get("article");
+        if (settingMap == null || settingMap.isEmpty()) {
+            settingMap = new ParamMap().add("name", "资讯频道").add("pageNums", 20).toMap();
         }
-        mav.addObject("articleSetting", setting);
+        mav.addObject("articleSetting", settingMap);
 
         Map<String, Object> conditions = new ParamMap().add("status", "published").toMap();
 
@@ -154,7 +187,6 @@ public class ArticleController {
         mav.addObject("articleNext", articleService.getArticleNext(currentArticleId));
         mav.addObject("article", article);
 
-        mav.addObject("articleSetting", settingService.get("article"));
         mav.addObject("categoryTree", categoryService.getCategoryTree());
 
         String[] tagIds = new String[0];

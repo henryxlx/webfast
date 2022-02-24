@@ -11,40 +11,42 @@
 </#if>
 
 <#if featuredArticles??>
-<div class="homepage-feature homepage-feature-slides mbl" data-cycle-overlay-template='{% verbatim %}{{title}}{% endverbatim %}'>
+<div class="homepage-feature homepage-feature-slides mbl" data-cycle-overlay-template='{{title}}'>
     <div class="cycle-overlay"></div>
-    {% for featuredArticle in featuredArticles %}
-    <a href="{{ path('article_detail', { id:featuredArticle.id }) }}" data-cycle-title="<a href='{{ path('article_detail', { id:featuredArticle.id }) }}'>{{ featuredArticle.title }}</a>" ><img src={{ featuredArticle.picture }} alt="{{ featuredArticle.title }}" style="max-height:400px;"></a>
-    {% endfor %}
+    <#list featuredArticles as featuredArticle>
+    <a href="${ctx}/article/${featuredArticle.id}" data-cycle-title="<a href='${ctx}/article/${featuredArticle.id}'>${featuredArticle.title}</a>" ><img src={{ featuredArticle.picture }} alt="{{ featuredArticle.title }}" style="max-height:400px;"></a>
+    </#list>
 </div>
 </#if>
 
 <#if latestArticles??>
 <ul class="article-wide-list">
-    {% for article in latestArticles %}
+    <#list latestArticles as article>
     <li class="media article-item clearfix">
         <div class="article-title text-muted">
             <div class="pull-left">
-                {% for category in categories %}
-                {% if article.categoryId == category.id %}
-                <span><a href="{{ path('article_category', { categoryCode:category.code }) }}">{{ category.name }} </a>
+                <#if categories??>
+                    <#list categories?values as category>
+                        <#if article.categoryId == category.id>
+                <span><a href="${ctx}/article/category/${category.code}">${category.name} </a>
                   </span>
-                {% endif %}
-                {% endfor %}
+                        </#if>
+                    </#list>
+                </#if>
             </div>
-            <div class="published-time">{{ article.publishedTime|date('Y-m-d H:i') }}</div>
+            <div class="published-time">${article.publishedTime?number_to_datetime?string('yyyy-MM-dd HH:mm')}</div>
         </div>
-        {% if article.thumb %}
-        <a class="pull-right article-picture-link hidden-xs" href="{{ path('article_detail', { id:article.id }) }}">
-            <img class="article-picture" src="{{ file_url(article.thumb) }}" alt="资讯缩略图">
+        <#if article.thumb??>
+        <a class="pull-right article-picture-link hidden-xs" href="${ctx}/article/${article.id}">
+            <img class="article-picture" src="{file_url(article.thumb)}" alt="资讯缩略图">
         </a>
-        {% endif %}
+        </#if>
         <div class="media-body">
-            <h4 class="media-heading"><a href="{{ path('article_detail', { id:article.id }) }}" >{{ article.title }}</a></h4>
-            {{ article.body|plain_text(150) }}
+            <h4 class="media-heading"><a href="${ctx}/article/${article.id}" >${article.title}</a></h4>
+            ${article.body[0..*150]}
         </div>
     </li>
-    {% endfor %}
+    </#list>
 </ul>
 <#else>
 <div class="empty tac text-muted mvl">还没有任何资讯</div>
