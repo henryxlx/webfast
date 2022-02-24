@@ -86,7 +86,7 @@
                     <a class="pull-right" href="${ctx}/course/explore">更多&gt;</a>
                 </div>
                 <div class="es-box-body">
-                    {{ _self.course_lists(data('LatestCourses',{ count:5 })) }}
+                    <@course_lists data('LatestCourses', {'count':5 }) />
                 </div>
             </div>
             </#if>
@@ -110,7 +110,7 @@
             </#if>
 
             <#-- 最新资讯 -->
-            <#assign articles = data('LatestArticles', 4)/>
+            <#assign articles = data('LatestArticles')/>
             <#if articles??>
             <div class="es-box news">
                 <div class="es-box-heading">
@@ -120,12 +120,10 @@
                 <div class="es-box-body">
                     <ul class="row">
                         <#list articles as article>
-                        {% if article %}
                         <li class="col-md-6">
-                            <em>{{ article.updatedTime|date('m-d H:i') }} </em>
-                            <a href="{{ path('article_detail', {id:article.id}) }}"> <span>[{{ article.category.name|default('未分类') }}]</span>{{ article.title }} </a>
+                            <em>${article.updatedTime?number_to_datetime?string('yyyy-MM-dd HH:mm')} </em>
+                            <a href="${ctx}/article/${article.id}"> <span>[${(article.category.name)!'未分类'}]</span>${article.title} </a>
                         </li>
-                        {% endif %}
                         </#list>
                     </ul>
                 </div>
@@ -175,11 +173,11 @@
             <@renderController path='/default/promotedTeacherBlock'/>
 
             <#-- 学员动态 -->
-            <#assign learns = data('PersonDynamic', 5)/>
+            <#assign learns = data('PersonDynamic')/>
             <#if learns??>
             <div class="es-box status-side">
                 <div class="es-box-heading">
-                    <h2>${setting('default.user_name', '学员')}动态</h2>
+                    <h2>${setting('default.user_name', '用户')}动态</h2>
                 </div>
                 <div class="es-box-body">
                     <ul class="media-list">
@@ -318,61 +316,61 @@
 </#macro>
 
 <#macro course_lists courses>
-{% set mode = mode|default('default') %}
+<#local mode = mode!'default' />
 <ul class="course-wide-list">
     <#list courses! as course>
     <li class="course-item clearfix">
         <a class="course-picture-link" href="${ctx}/course/show?id=${course.id}">
-            <img class="course-picture" src="{{ default_path('coursePicture', course.middlePicture, 'large') }}" alt="${course.title}">
+            <img class="course-picture" src="${default_path('coursePicture', course.middlePicture, 'large')}" alt="${course.title}">
         </a>
         <div class="course-body">
             <div class="course-price-info">
-                {% include "TopxiaWebBundle:Course:price-widget.html.twig" with {shows: ['price', 'discount']} %}
+<#--                {% include "/course/price-widget.ftl" with {shows: ['price', 'discount']} %}-->
             </div>
             <h4 class="course-title"><a href="${ctx}/course/show?id=${course.id}">${course.title}</a>
-                {% if course.serializeMode=='serialize' %}
+                <#if course.serializeMode=='serialize'>
                 <span class="label label-success ">更新中</span>
-                {% elseif course.serializeMode=='finished' %}
+                <#elseif course.serializeMode=='finished'>
                 <span class="label label-warning ">已完结</span>
-                {% endif %}
-                {% if course.type == 'live' %}
-                {% set lesson = course['lesson']|default(null) %}
-                {% if lesson and "now"|date("U") >= lesson.startTime and "now"|date("U") <= lesson.endTime %}
+                </#if>
+                <#if course.type == 'live'>
+                <#local lesson = course.lesson!/>
+                <#if lesson?? && .now >= lesson.startTime && .now <= lesson.endTime >
                 <span class="label label-warning series-mode-label">正在直播中</span>
-                {% else %}
+                <#else>
                 <span class="label label-success series-mode-label">直播</span>
-                {% endif %}
-                {% endif %}
+                </#if>
+                </#if>
             </h4>
 
-            {% if course.type == 'live' %}
-            {% set lesson = course.lesson|default(null) %}
-            {% if lesson %}
+            <#if course.type == 'live'>
+            <#local lesson = course.lesson!/>
+            <#if lesson??>
             <div class="live-course-lesson mbm">
-                <span class="text-success fsm mrm">{{ lesson.startTime|date('n月j日 H:i') }} ~ {{ lesson.endTime|date('H:i') }}</span>
-                <span class="text-muted fsm mrm">第{{ lesson.number }}课时</span>
+                <span class="text-success fsm mrm">${lesson.startTime?number_to_datetime?string('MM月dd日 HH:ss') }} ~ ${lesson.endTime?number_to_datetime?string('HH:ss')}</span>
+                <span class="text-muted fsm mrm">第${lesson.number}课时</span>
             </div>
-            {% endif %}
-            {% else %}
-            <div class="course-about ellipsis">{{ course.subtitle }}</div>
-            {% endif %}
+            </#if>
+            <#else>
+            <div class="course-about ellipsis">${course.subtitle}</div>
+            </#if>
 
             <div class="course-footer clearfix">
 
-                {% set teacher = course.teachers|first|default(null) %}
-                {% if teacher %}
+                <#local teacher = course.teachers[0]!/>
+                <#if teacher??>
                 <div class="teacher">
-                    <a href="{{ path('user_show', {id:teacher.id}) }}"><img src="{{ default_path('avatar', teacher.smallAvatar, '') }}" class="teacher-avatar"></a>
-                    <a class="teacher-nickname ellipsis" href="{{ path('user_show', {id:teacher.id}) }}">{{ teacher.nickname }}</a>
-                    <span class="teacher-title ellipsis">{{ teacher.title }}</span>
+                    <a href="${ctx}/user/${teacher.id}"><img src="${default_path('avatar', teacher.smallAvatar, '')}" class="teacher-avatar"></a>
+                    <a class="teacher-nickname ellipsis" href="${ctx}/user/${teacher.id}">${teacher.username}</a>
+                    <span class="teacher-title ellipsis">${teacher.title}</span>
                 </div>
-                {% endif %}
+                </#if>
                 <div class="course-metas">
-                    <span class="stars-{{ (course.rating)|number_format }}">&nbsp;</span>
-                    {% if setting('course.show_student_num_enabled', '1') == 1  %}
+                    <span class="stars-${(course.rating)!}">&nbsp;</span>
+                    <#if setting('course.show_student_num_enabled', '1') == '1'>
                     <span class="divider"></span>
-                    <span class="text-muted mrm mls"><strong>{{ course.studentNum }}</strong>{{setting('default.user_name', '学员')}}</span>
-                    {% endif %}
+                    <span class="text-muted mrm mls"><strong>${course.studentNum}</strong>${setting('default.user_name', '学员')}</span>
+                    </#if>
                 </div>
             </div>
         </div>
