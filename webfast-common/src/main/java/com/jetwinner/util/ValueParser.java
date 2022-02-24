@@ -104,4 +104,16 @@ public abstract class ValueParser {
         return createFloat(value == null ? null : value.toString());
     }
 
+    public static Long toLong(Object obj) {
+        if (obj instanceof Long) {
+            return (Long) obj;
+        }
+        Long value;
+        try {
+            value = Long.valueOf(obj == null ? "0" : String.valueOf(obj));
+        } catch (NumberFormatException e) {
+            value = 0L;
+        }
+        return value;
+    }
 }
