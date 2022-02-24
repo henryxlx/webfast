@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.freemarker.tag;
 
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.mvc.WebExtensionPack;
+import com.jetwinner.webfast.mvc.extension.WebExtensionPack;
 import com.jetwinner.webfast.mvc.block.BlockRenderControllerExecutor;
 import freemarker.core.Environment;
 import freemarker.core._DelayedFTLTypeDescription;

@@ -1,10 +1,8 @@
-package com.jetwinner.webfast.mvc;
+package com.jetwinner.webfast.mvc.extension;
 
 import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.PhpStringUtil;
-import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.kernel.service.AppSettingService;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +18,12 @@ public abstract class BaseWebExtensionPack {
 
     protected ApplicationContext appContext;
 
-    protected FastAppConst appConst;
-    protected AppSettingService settingService;
+    protected WebExtensionPackAppServiceDelegator delegator;
 
     public BaseWebExtensionPack(HttpServletRequest request, ApplicationContext appContext) {
         this.request = request;
         this.appContext = appContext;
-        this.appConst = appContext.getBean(FastAppConst.class);
-        this.settingService = appContext.getBean(AppSettingService.class);
+        this.delegator = appContext.getBean(WebExtensionPackAppServiceDelegator.class);
     }
 
     public HttpServletRequest getRequest() {
@@ -56,7 +52,7 @@ public abstract class BaseWebExtensionPack {
     }
 
     String getUploadPublicUrlPath() {
-        return appConst.getUploadPublicUrlPath();
+        return delegator.appConst.getUploadPublicUrlPath();
     }
 
     public Map<String, String> parseFileUri(String uri) {
@@ -82,11 +78,11 @@ public abstract class BaseWebExtensionPack {
     }
 
     protected String getUploadPrivateDirectory() {
-        return appConst.getUploadPrivateDirectory();
+        return delegator.appConst.getUploadPrivateDirectory();
     }
 
     protected String getUploadPublicDirectory(){
-        return appConst.getUploadPublicDirectory();
+        return delegator.appConst.getUploadPublicDirectory();
     }
 
     public String getSetting(String name) {
@@ -96,7 +92,7 @@ public abstract class BaseWebExtensionPack {
         String result = defaultValue != null ? defaultValue : null;
         String[] names = name.split("\\.");
         if (names != null && names.length > 1) {
-            Map<String, Object> settingMap = settingService.get(names[0]);
+            Map<String, Object> settingMap = delegator.settingService.get(names[0]);
             if (settingMap != null) {
                 Object val = settingMap.get(names[1]);
                 result = val != null ? val.toString() : result;

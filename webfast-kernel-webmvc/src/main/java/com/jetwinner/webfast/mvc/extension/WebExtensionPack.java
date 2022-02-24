@@ -1,13 +1,13 @@
-package com.jetwinner.webfast.mvc;
+package com.jetwinner.webfast.mvc.extension;
 
 import com.jetwinner.toolbag.ConvertIpToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.util.ValueParser;
-import com.jetwinner.webfast.kernel.FastDataDictHolder;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 
@@ -18,14 +18,10 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public static final String MODEL_VAR_NAME = "webExtPack";
 
-    private final FastDataDictHolder dataDictHolder;
-
     public WebExtensionPack(HttpServletRequest request,
-                            ApplicationContext appContext,
-                            FastDataDictHolder dataDictHolder) {
+                            ApplicationContext appContext) {
 
         super(request, appContext);
-        this.dataDictHolder = dataDictHolder;
     }
 
     /**
@@ -65,7 +61,7 @@ public class WebExtensionPack extends BaseWebExtensionPack {
      * @param absolute 默认值是false
      */
     public String getDefaultPath(String category, String uri, String size, boolean absolute) {
-        Map<String, Object> cdn = settingService.get("cdn");
+        Map<String, Object> cdn = delegator.settingService.get("cdn");
         String cdnUrl = EasyStringUtil.isBlank(cdn.get("enabled")) ? null :
                 PhpStringUtil.rtrim(String.valueOf(cdn.get("url")), " \\/");
 
@@ -74,7 +70,7 @@ public class WebExtensionPack extends BaseWebExtensionPack {
             String publicUrlPath = "assets/img/default/";
             url = getAssetUrl(publicUrlPath + size + category);
 
-            Map<String, Object> defaultSetting = settingService.get("default");
+            Map<String, Object> defaultSetting = delegator.settingService.get("default");
 
             String key = "default" + PhpStringUtil.ucfirst(category);
             String fileName = key + "FileName";
@@ -135,7 +131,7 @@ public class WebExtensionPack extends BaseWebExtensionPack {
     }
 
     public String getDictText(String type, String key) {
-        return dataDictHolder.text(type, key);
+        return delegator.dataDictHolder.text(type, key);
     }
 
     public String getConvertIp(String ipAddress) {
@@ -144,6 +140,10 @@ public class WebExtensionPack extends BaseWebExtensionPack {
             return "INNA".equals(location) ? "未知区域" : location;
         }
         return "";
+    }
+
+    public List<Map<String, Object>> getDataTag(String keyForDataFetcher, Map<String, Object> params) {
+        return delegator.dataFetcherHolder.get(keyForDataFetcher).getData(params);
     }
 
 }
