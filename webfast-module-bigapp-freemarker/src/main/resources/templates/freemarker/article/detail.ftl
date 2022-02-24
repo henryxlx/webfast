@@ -9,7 +9,7 @@
 <#macro blockArticleMain>
 
   <ul class="breadcrumb">
-      <li><a href="${ctx}/article/show">${articleSetting.name}</a></li>
+      <li><a href="${ctx}/article">${articleSetting.name}</a></li>
       <#list breadcrumbs! as breadcrumb>
         <li><a href="${ctx}/article/category/${breadcrumb.code}">${breadcrumb.name}</a></li>
       </#list>
@@ -46,14 +46,14 @@
   </#if>
   </p>
   <ul class="pager" style="margin-top:30px;">
-    <#if articlePrevious??>
-      <li class="previous"><a href="{{ path('article_detail',{id:articlePrevious.id}) }}">&larr; 上一篇</a></li>
+    <#if articlePrevious.id??>
+      <li class="previous"><a href="${ctx}/article/${articlePrevious.id}">&larr; 上一篇</a></li>
     <#else>
       <li class="previous disabled"><a href="javascript:;">&larr; 上一篇</a></li>
     </#if>
 
-    <#if articleNext??>
-      <li class="next"><a href="{{ path('article_detail',{id:articleNext.id}) }}"> 下一篇 &rarr;</a></li>
+    <#if articleNext.id??>
+      <li class="next"><a href="${ctx}/article/${articleNext.id}"> 下一篇 &rarr;</a></li>
     <#else>
       <li class="next disabled"><a href="javascript:;"> 下一篇 &rarr;</a></li>
     </#if>
