@@ -59,7 +59,7 @@
             <br/><br/>看起来是像出了点状况，请把该信息报告给管理员。我们会立即修复这个问题。真的非常抱歉！</div>
         <div class="actions">
             <a href="javascript:history.go(-1)"><< 后退</a>|&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="${ctx}/">返回首页</a>
+            <a href="${(request.contextPath)!''}/">返回首页</a>
         </div>
     </div>
 </div>
