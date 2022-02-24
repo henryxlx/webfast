@@ -52,9 +52,8 @@
         </thead>
         <tbody>
         <#list articles! as article>
-        {% set category = categories[article.categoryId]|default(null) %}
-        {% include 'TopxiaAdminBundle:Article:article-tr.html.twig' %}
-        {% endfor %}
+            <#assign category = categories[article.categoryId + '']! />
+            <#include '/admin/article/article-tr.ftl' />
         <#else>
         <tr><td colspan="20"><div class="empty">暂无页面记录</div></td></tr>
         </#list>
