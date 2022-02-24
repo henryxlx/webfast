@@ -1,6 +1,7 @@
 package com.jetwinner.webfast;
 
 import com.jetwinner.spring.SpringBootAppContextHandler;
+import com.jetwinner.webfast.kernel.datatag.annotations.FastDataTagScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableCaching
 @EnableTransactionManagement
+@FastDataTagScan
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class, DataSourceAutoConfiguration.class})
 public class FastDemoApplication extends SpringBootServletInitializer {
 
