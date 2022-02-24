@@ -3,6 +3,19 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.4: @2022-02-24
+* 添加快速数据访问注解@FastDataTag，该注解是类注解，主要用于将定义的注解类实例化后放入某个服务类中的缓存中集中访问，减少Spring中管理组件的数量
+* 数据访问注解扫描注解@FastDataTagScan，该注解主要是在主应用程序或配置类上使用
+* SpringBoot应用程序启动时进行自定义注解扫描和注册的类FastDataTagRegister
+* 自定义数据访问器的顶层抽象类BaseDataFetcher
+* DummyDataFetcher是NullObject模式，不进行任何操作的数据访问器，用于找不到合适的数据访问器的情况
+* 数据访问器持有类组件AppDataFetcherHolder，主要是对通过注解@FastDataTag获取的数据访问器对象进行缓存，减少Spring容器管理组件的数量
+* 添加最近资讯数据访问器对象LatestArticlesDataFetcher
+* 应用程序启动类添加@FastDataTagScan注解，设置自定义注解@FastDataTag搜索路径为当前应用所在包路径
+* 添加Web扩展包WebExtensionPack使用应用程序服务集中代理类WebExtensionAppServiceDelegator
+* Web应用扩展类使用代理访问应用提供的服务，并添加对数据访问器的支持，新增getDataTag()方法
+* FreeMarker页面扩展html_extension.ftl中函数data调用webExtPack中新定义的getDataTag方法
+
 0.6.3: @2022-02-24
 * 后台资讯管理浏览行显示页面
 * 使用Spring的全局异常处理机制，使用注解@ControllerAdvice和@ExceptionHandler对RuntimeGoingException异常捕获处理
