@@ -47,7 +47,7 @@ public class AppTagDaoImpl extends FastJdbcDaoSupport implements AppTagDao {
     @Override
     public List<Map<String, Object>> findTagsByIds(String[] ids) {
         if (ids == null || ids.length == 0) {
-            Collections.emptyList();
+            return Collections.emptyList();
         }
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("ids", ListUtil.newArrayList(ids));
