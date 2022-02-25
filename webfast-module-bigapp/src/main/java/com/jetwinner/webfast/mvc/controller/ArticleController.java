@@ -4,12 +4,14 @@ import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
-import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
 import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
+import com.jetwinner.webfast.mvc.block.BlockRenderController;
+import com.jetwinner.webfast.mvc.block.BlockRenderMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
  * @author xulixin
  */
 @Controller("webfastSiteArticleController")
-public class ArticleController {
+public class ArticleController implements BlockRenderController {
 
     private final AppArticleService articleService;
     private final AppArticleCategoryService categoryService;
@@ -211,5 +213,30 @@ public class ArticleController {
         mav.addObject("categoryCode", category.get("code"));
         mav.addObject("breadcrumbs", categoryService.findCategoryBreadcrumbs(category.get("id")));
         return mav;
+    }
+
+    @RequestMapping("/article/popularArticlesBlock")
+    @BlockRenderMethod
+    public String popularArticlesBlockAction(Model model) {
+        Map<String, Object> conditions = new ParamMap()
+                .add("type", "article")
+                .add("status", "published").toMap();
+        model.addAttribute("articles",
+                articleService.searchArticles(conditions, "popular", 0, 10));
+
+        return "/article/popular-articles-block";
+    }
+
+    @RequestMapping("/article/recommendArticlesBlock")
+    @BlockRenderMethod
+    public String recommendArticlesBlockAction(Model model) {
+        Map<String, Object> conditions = new ParamMap()
+                .add("type", "article")
+                .add("status", "published")
+                .add("promoted", 1).toMap();
+        model.addAttribute("articles",
+                articleService.searchArticles(conditions, "normal", 0, 10));
+
+        return "/article/recommend-articles-block";
     }
 }
