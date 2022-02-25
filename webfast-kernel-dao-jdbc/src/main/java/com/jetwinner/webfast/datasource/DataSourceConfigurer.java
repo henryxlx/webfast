@@ -4,6 +4,7 @@ import com.alibaba.druid.pool.DruidDataSource;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.StringEncoderUtil;
 import com.jetwinner.webfast.kernel.FastAppConst;
+import com.jetwinner.webfast.kernel.datatag.AppDataFetcherHolder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -94,8 +95,10 @@ public class DataSourceConfigurer implements DataSourceConfig {
                 (DefaultListableBeanFactory) applicationContext.getAutowireCapableBeanFactory();
         beanFactory.destroySingleton(DEFAULT_TRANSACTION_BEAN_NAME);
         beanFactory.destroySingleton(DEFAULT_DATA_SOURCE_BEAN_NAME);
+        beanFactory.destroySingleton(AppDataFetcherHolder.BEAN_NAME_IN_SPRING);
         DataSource dataSource = createDataSource();
         beanFactory.registerSingleton(DEFAULT_DATA_SOURCE_BEAN_NAME, dataSource);
         beanFactory.registerSingleton(DEFAULT_TRANSACTION_BEAN_NAME, new DataSourceTransactionManager(dataSource));
+        beanFactory.registerSingleton(AppDataFetcherHolder.BEAN_NAME_IN_SPRING, new AppDataFetcherHolder(applicationContext));
     }
 }
