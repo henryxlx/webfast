@@ -19,7 +19,7 @@
 	<a href="javascript:;" class="sticky-label" data-set-url="${ctx}/admin/article/${article.id}/property/set/sticky" data-cancel-url="${ctx}/admin/article/${article.id}/property/cancel/sticky"><#if article.sticky == 1><span class="label label-success"><#else><span class="label label-default"></#if>顶</span></a>
 	</td>
 
-	<td>${dict_text('articleStatus:html', article.status)}</td>
+	<td>${dict_text('articleStatusHtml', article.status)}</td>
 
 	<td>
 		<div class="btn-group">
