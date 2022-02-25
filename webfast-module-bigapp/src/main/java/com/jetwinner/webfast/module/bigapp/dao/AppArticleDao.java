@@ -26,4 +26,6 @@ public interface AppArticleDao {
     int waveArticle(Object id, int diff);
 
     int updateArticle(Integer id, Map<String, Object> fields);
+
+    int deleteArticle(Object id);
 }

@@ -14,10 +14,7 @@ import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -116,6 +113,58 @@ public class ArticleController {
         model.addAttribute("article", article);
 
         return "/admin/article/article-modal";
+    }
+
+    @RequestMapping("/admin/article/{id}/property/set/{property}")
+    @ResponseBody
+    public Boolean setArticlePropertyAction(@PathVariable Integer id, @PathVariable String property, HttpServletRequest request) {
+        articleService.setArticleProperty(AppUser.getCurrentUser(request), id, property);
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/admin/article/{id}/property/cancel/{property}")
+    @ResponseBody
+    public Boolean cancelArticlePropertyAction(@PathVariable Integer id, @PathVariable String property, HttpServletRequest request) {
+        articleService.cancelArticleProperty(AppUser.getCurrentUser(request), id, property);
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/admin/article/{id}/trash")
+    @ResponseBody
+    public Boolean trashAction(@PathVariable Integer id, HttpServletRequest request) {
+        articleService.trashArticle(AppUser.getCurrentUser(request), id);
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/admin/article/{id}/delete")
+    @ResponseBody
+    public Map<String, Object> deleteAction(HttpServletRequest request) {
+        String[] ids = request.getParameterValues("ids");
+        String id = request.getParameter("id");
+
+        if (id != null) {
+            ids = new String[]{id};
+        }
+        int result = articleService.deleteArticlesByIds(AppUser.getCurrentUser(request), ids);
+        if (result > 0) {
+            return new ParamMap().add("status", "success").toMap();
+        } else {
+            return new ParamMap().add("status", "failed").toMap();
+        }
+    }
+
+    @RequestMapping("/admin/article/{id}/publish")
+    @ResponseBody
+    public Boolean publishAction(@PathVariable Integer id, HttpServletRequest request) {
+        articleService.publishArticle(AppUser.getCurrentUser(request), id);
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/admin/article/{id}/unpublish")
+    @ResponseBody
+    public Boolean unpublishAction(@PathVariable Integer id, HttpServletRequest request) {
+        articleService.unpublishArticle(AppUser.getCurrentUser(request), id);
+        return Boolean.TRUE;
     }
 
     @RequestMapping("/admin/article/setting")

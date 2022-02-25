@@ -26,4 +26,16 @@ public interface AppArticleService {
     void hitArticle(Object id);
 
     void updateArticle(AppUser currentUser, Integer id, Map<String, Object> article);
+
+    int setArticleProperty(AppUser currentUser, Integer id, String propertyName);
+
+    int cancelArticleProperty(AppUser currentUser, Integer id, String propertyName);
+
+    int trashArticle(AppUser currentUser, Integer id);
+
+    int deleteArticlesByIds(AppUser currentUser, String[] ids);
+
+    int publishArticle(AppUser currentUser, Integer id);
+
+    int unpublishArticle(AppUser currentUser, Integer id);
 }

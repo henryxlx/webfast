@@ -7,6 +7,7 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.service.AppLogService;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
@@ -128,6 +129,94 @@ public class AppArticleServiceImpl implements AppArticleService {
             logService.info(currentUser, "Article", "update",
                     String.format("修改文章《(%s)》(%s)", article.get("title"), article.get("id")));
         }
+    }
+
+    @Override
+    public int setArticleProperty(AppUser currentUser, Integer id, String propertyName) {
+        Map<String, Object> article = getArticle(id);
+        if(EasyStringUtil.isBlank(propertyName) || !article.containsKey(propertyName)){
+            throw new RuntimeGoingException("属性{$property}不存在，更新失败！");
+        }
+
+        Map<String, Object> fields = new ParamMap().add(propertyName, 1).toMap();
+        int nums = articleDao.updateArticle(id, fields);
+        if (nums > 0) {
+            logService.info(currentUser, "setArticleProperty", "updateArticleProperty",
+                    String.format("文章#%d,%s=>%d", id, article.get(propertyName), 1));
+        }
+        return nums;
+    }
+
+    @Override
+    public int cancelArticleProperty(AppUser currentUser, Integer id, String propertyName) {
+        Map<String, Object> article = getArticle(id);
+        if(EasyStringUtil.isBlank(propertyName) || !article.containsKey(propertyName)){
+            throw new RuntimeGoingException("属性{$property}不存在，更新失败！");
+        }
+
+        Map<String, Object> fields = new ParamMap().add(propertyName, 0).toMap();
+        int nums = articleDao.updateArticle(id, fields);
+        if (nums > 0) {
+            logService.info(currentUser, "cancelArticleProperty", "updateArticleProperty",
+                    String.format("文章#%d,%s=>%d", id, article.get(propertyName), 1));
+        }
+        return nums;
+    }
+
+    @Override
+    public int trashArticle(AppUser currentUser, Integer id) {
+        Map<String, Object> checkArticle = getArticle(id);
+        if(checkArticle == null || checkArticle.isEmpty()){
+            throw new RuntimeGoingException("文章不存在，操作失败。");
+        }
+
+        int nums = articleDao.updateArticle(id, new ParamMap().add("status", "trash").toMap());
+        if (nums > 0) {
+            logService.info(currentUser, "Article", "trash", String.format("文章#%d移动到回收站", id));
+        }
+        return nums;
+    }
+
+    @Override
+    public int deleteArticlesByIds(AppUser currentUser, String[] ids) {
+        int nums = 0;
+        if (ids != null && ids.length > 0) {
+            for (String id : ids) {
+                nums += deleteArticle(currentUser, id);
+            }
+        }
+        return nums;
+    }
+
+    public int deleteArticle(AppUser currentUser, Object id) {
+        Map<String, Object> checkArticle = getArticle(id);
+        if(checkArticle == null || checkArticle.isEmpty()){
+            throw new RuntimeGoingException("文章不存在，操作失败。");
+        }
+
+        int nums = articleDao.deleteArticle(id);
+        if (nums > 0) {
+            logService.info(currentUser, "Article", "delete", String.format("文章#%s永久删除", id));
+        }
+        return nums;
+    }
+
+    @Override
+    public int publishArticle(AppUser currentUser, Integer id) {
+        int nums = articleDao.updateArticle(id, new ParamMap().add("status", "published").toMap());
+        if (nums > 0) {
+            logService.info(currentUser, "Article", "publish", String.format("文章#%d发布", id));
+        }
+        return nums;
+    }
+
+    @Override
+    public int unpublishArticle(AppUser currentUser, Integer id) {
+        int nums = articleDao.updateArticle(id, new ParamMap().add("status", "unpublished").toMap());
+        if (nums > 0) {
+            logService.info(currentUser, "Article", "unpublish", String.format("文章#%d未发布", id));
+        }
+        return nums;
     }
 
     private Map<String, Object> filterArticleFields(AppUser currentUser, Map<String, Object> fields, boolean updateMode) {

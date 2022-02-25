@@ -12,11 +12,11 @@
 	</td>
 	<td>${article.updatedTime?number_to_datetime?string('yyyy-MM-dd HH:mm')}</td>
 	<td>
-	<a href="javascript:;" class="featured-label" data-set-url="${ctx}/article/${article.id}/property/set/featured" data-cancel-url="${ctx}/article/${article.id}/property/cancel/featured"><#if article.featured == 1><span class="label label-success"><#else><span class="label label-default"></#if>头</span></a>
+	<a href="javascript:;" class="featured-label" data-set-url="${ctx}/admin/article/${article.id}/property/set/featured" data-cancel-url="${ctx}/admin/article/${article.id}/property/cancel/featured"><#if article.featured == 1><span class="label label-success"><#else><span class="label label-default"></#if>头</span></a>
 
-	<a href="javascript:;" class="promoted-label" data-set-url="${ctx}/article/${article.id}/property/set/promoted" data-cancel-url="${ctx}/article/${article.id}/property/cancel/promoted"><#if article.promoted == 1><span class="label label-success"><#else><span class="label label-default"></#if>荐</span></a>
+	<a href="javascript:;" class="promoted-label" data-set-url="${ctx}/admin/article/${article.id}/property/set/promoted" data-cancel-url="${ctx}/admin/article/${article.id}/property/cancel/promoted"><#if article.promoted == 1><span class="label label-success"><#else><span class="label label-default"></#if>荐</span></a>
 
-	<a href="javascript:;" class="sticky-label" data-set-url="${ctx}/article/${article.id}/property/set/sticky" data-cancel-url="${ctx}/article/${article.id}/property/cancel/sticky"><#if article.sticky == 1><span class="label label-success"><#else><span class="label label-default"></#if>顶</span></a>
+	<a href="javascript:;" class="sticky-label" data-set-url="${ctx}/admin/article/${article.id}/property/set/sticky" data-cancel-url="${ctx}/admin/article/${article.id}/property/cancel/sticky"><#if article.sticky == 1><span class="label label-success"><#else><span class="label label-default"></#if>顶</span></a>
 	</td>
 
 	<td>${dict_text('articleStatus:html', article.status)}</td>
