@@ -12,8 +12,10 @@ import java.util.Map;
 /**
  * @author xulixin
  */
-@Component
+@Component(AppDataFetcherHolder.BEAN_NAME_IN_SPRING)
 public class AppDataFetcherHolder {
+
+    public static final String BEAN_NAME_IN_SPRING = "appDataFetcherHolder";
 
     private static final Logger logger = LoggerFactory.getLogger(AppDataFetcherHolder.class);
 
