@@ -24,4 +24,6 @@ public interface AppArticleService {
     Map<String, Object> getArticleNext(Object id);
 
     void hitArticle(Object id);
+
+    void updateArticle(AppUser currentUser, Integer id, Map<String, Object> article);
 }

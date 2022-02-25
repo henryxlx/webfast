@@ -5,14 +5,17 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
-import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
-import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
+import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
+import com.jetwinner.webfast.module.bigapp.service.AppTagService;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -29,14 +32,17 @@ public class ArticleController {
 
     private final AppArticleService articleService;
     private final AppArticleCategoryService categoryService;
+    private final AppTagService tagService;
     private final AppSettingService settingService;
 
     public ArticleController(AppArticleService articleService,
                              AppArticleCategoryService categoryService,
+                             AppTagService tagService,
                              AppSettingService settingService) {
 
         this.articleService = articleService;
         this.categoryService = categoryService;
+        this.tagService = tagService;
         this.settingService = settingService;
     }
 
@@ -82,6 +88,34 @@ public class ArticleController {
         article.put("tags", String.join(",", request.getParameterValues("tags")));
         articleService.createArticle(AppUser.getCurrentUser(request), article);
         return "redirect:/admin/article";
+    }
+
+    @RequestMapping("/admin/article/{id}/edit")
+    public String editAction(@PathVariable Integer id, HttpServletRequest request, Model model) {
+        Map<String, Object> article = articleService.getArticle(id);
+        if (article.isEmpty()) {
+            throw new RuntimeGoingException("文章已删除或者未发布！");
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            Map<String, Object> formData = ParamMap.toFormDataMap(request);
+            articleService.updateArticle(AppUser.getCurrentUser(request), id, formData);
+            return "redirect:/admin/article";
+        }
+
+        String[] tagIds = new String[0];
+        if (article.get("tagIds") != null) {
+            tagIds = String.valueOf(article.get("tagIds")).split(",");
+        }
+        List<Map<String, Object>> tags = tagService.findTagsByIds(tagIds);
+        model.addAttribute("tagNames", ArrayToolkit.column(tags, "name"));
+
+        model.addAttribute("category", categoryService.getCategory(article.get("categoryId")));
+
+        model.addAttribute("categoryTree", categoryService.getCategoryTree());
+        model.addAttribute("article", article);
+
+        return "/admin/article/article-modal";
     }
 
     @RequestMapping("/admin/article/setting")

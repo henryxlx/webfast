@@ -24,4 +24,6 @@ public interface AppArticleDao {
     Map<String, Object> getArticleNext(Object categoryId, Long createdTime);
 
     int waveArticle(Object id, int diff);
+
+    int updateArticle(Integer id, Map<String, Object> fields);
 }

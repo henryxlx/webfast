@@ -118,6 +118,18 @@ public class AppArticleServiceImpl implements AppArticleService {
         articleDao.waveArticle(id, 1);
     }
 
+    @Override
+    public void updateArticle(AppUser currentUser, Integer id, Map<String, Object> article) {
+        article = filterArticleFields(currentUser, article, true);
+
+        int nums = articleDao.updateArticle(id, article);
+        if (nums > 0) {
+            article = getArticle(id);
+            logService.info(currentUser, "Article", "update",
+                    String.format("修改文章《(%s)》(%s)", article.get("title"), article.get("id")));
+        }
+    }
+
     private Map<String, Object> filterArticleFields(AppUser currentUser, Map<String, Object> fields, boolean updateMode) {
         Map<String, Object> article = new HashMap<>(fields.size());
 

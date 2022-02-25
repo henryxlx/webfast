@@ -72,6 +72,12 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
         return getJdbcTemplate().update(sql, hitValue, id);
     }
 
+    @Override
+    public int updateArticle(Integer id, Map<String, Object> fields) {
+        fields.put("id", id);
+        return updateMap("big_app_article", fields, "id");
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> map) {
         Map<String, Object> conditions = MapKitOnJava8.filterToNewMap(map);
 

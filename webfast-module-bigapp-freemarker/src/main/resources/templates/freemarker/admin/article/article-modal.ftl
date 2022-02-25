@@ -50,7 +50,7 @@
 			<div class="form-group">
 	      <label for="article-tagIds"　class="control-label">TAG标签</label>
 			  <div class="controls">
-				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="${tagNames![]?join(',')}" data-match-url="${ctx}/tag/match_jsonp">
+				  	<input type="form-control" id="article-tags" name="tags" required="required" class="width-full select2-offscreen" tabindex="-1" value="${tagNames!?join(',')}" data-match-url="${ctx}/tag/match_jsonp">
 				  	<div class="help-block" style="display:none;"></div>
 			  </div>
 			</div>
@@ -73,13 +73,13 @@
 
 				<div class="panel-body">
 				  <label class="checkbox-inline">
-						<input type="checkbox" name="sticky" value="1" <#if (article.sticky)??> checked="checked" </#if>> 置顶
+						<input type="checkbox" name="sticky" value="1" <#if (article.sticky)?? && article.sticky gt 0> checked="checked" </#if>> 置顶
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="featured" value="1" <#if (article.featured)??> checked="checked" </#if>> 头条
+						<input type="checkbox" name="featured" value="1" <#if (article.featured)?? && article.featured gt 0> checked="checked" </#if>> 头条
 					</label>
 					<label class="checkbox-inline">
-						<input type="checkbox" name="promoted" value="1" <#if (article.promoted)??> checked="checked" </#if>> 推荐
+						<input type="checkbox" name="promoted" value="1" <#if (article.promoted)?? && article.promoted gt 0> checked="checked" </#if>> 推荐
 					</label>
 					<a class="glyphicon glyphicon-question-sign text-muted pull-right" id="article-property-tips" data-toggle="tooltip" data-placement="bottom" href="javascript:" title="">
 					</a>
@@ -135,7 +135,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<div class="controls">
-							<input class="form-control" type="text" name="publishedTime" value="${(article.publishedTime)!.now?string('yyyy-MM-dd HH:mm:ss')}">
+							<input class="form-control" type="text" name="publishedTime" value="<#if (article.publishedTime)??>${article.publishedTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}<#else>${.now?string('yyyy-MM-dd HH:mm:ss')}</#if>">
 							<div class="help-block">内容条目默认按发布时间的倒序显示</div>
 						</div>
 					</div>
