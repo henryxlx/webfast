@@ -14,7 +14,7 @@
 <div class="homepage-feature homepage-feature-slides mbl" data-cycle-overlay-template='{{title}}'>
     <div class="cycle-overlay"></div>
     <#list featuredArticles as featuredArticle>
-    <a href="${ctx}/article/${featuredArticle.id}" data-cycle-title="<a href='${ctx}/article/${featuredArticle.id}'>${featuredArticle.title}</a>" ><img src={{ featuredArticle.picture }} alt="{{ featuredArticle.title }}" style="max-height:400px;"></a>
+    <a href="${ctx}/article/${featuredArticle.id}" data-cycle-title="<a href='${ctx}/article/${featuredArticle.id}'>${featuredArticle.title}</a>" ><img src=${featuredArticle.picture!} alt="${featuredArticle.title!}" style="max-height:400px;"></a>
     </#list>
 </div>
 </#if>
