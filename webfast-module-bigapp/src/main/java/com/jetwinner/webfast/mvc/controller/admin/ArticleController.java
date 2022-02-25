@@ -80,7 +80,7 @@ public class ArticleController {
     public String createAction(HttpServletRequest request) {
         Map<String, Object> article = ParamMap.toFormDataMap(request);
         article.put("tags", String.join(",", request.getParameterValues("tags")));
-        articleService.createArticle(article, AppUser.getCurrentUser(request));
+        articleService.createArticle(AppUser.getCurrentUser(request), article);
         return "redirect:/admin/article";
     }
 

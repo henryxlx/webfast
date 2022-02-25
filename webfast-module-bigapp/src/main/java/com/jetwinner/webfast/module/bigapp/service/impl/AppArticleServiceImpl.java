@@ -6,6 +6,7 @@ import com.jetwinner.util.EasyDateUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
@@ -31,14 +32,16 @@ public class AppArticleServiceImpl implements AppArticleService {
     private final AppArticleDao articleDao;
     private final AppArticleCategoryService categoryService;
     private final AppTagService tagService;
+    private final AppLogService logService;
 
     public AppArticleServiceImpl(AppArticleDao articleDao,
                                  AppArticleCategoryService categoryService,
-                                 AppTagService tagService) {
+                                 AppTagService tagService, AppLogService logService) {
 
         this.articleDao = articleDao;
         this.categoryService = categoryService;
         this.tagService = tagService;
+        this.logService = logService;
     }
 
     @Override
@@ -57,14 +60,15 @@ public class AppArticleServiceImpl implements AppArticleService {
     }
 
     @Override
-    public void createArticle(Map<String, Object> article, AppUser user) {
+    public void createArticle(AppUser currentUser, Map<String, Object> article) {
         if(article == null || article.size() == 0){
             throw new RuntimeGoingException("文章内容为空，创建文章失败！");
         }
 
-        article = filterArticleFields(user, article, false);
+        article = filterArticleFields(currentUser, article, false);
         article = articleDao.addArticle(article);
-        // logService.info("article", "create", String.format("创建文章《(%s)》(%s)", article.get("title"), article.get("id")));
+        logService.info(currentUser, "article", "create",
+                String.format("创建文章《(%s)》(%s)", article.get("title"), article.get("id")));
     }
 
     @Override

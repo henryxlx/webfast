@@ -15,7 +15,7 @@ public interface AppArticleService {
     List<Map<String, Object>> searchArticles(Map<String, Object> conditions, String sortName,
                                              Integer start, Integer limit);
 
-    void createArticle(Map<String, Object> article, AppUser user);
+    void createArticle(AppUser currentUser, Map<String, Object> article);
 
     Map<String, Object> getArticle(Object id);
 
