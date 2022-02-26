@@ -6,6 +6,7 @@ import com.jetwinner.webfast.module.bigapp.dao.AppContentDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -58,7 +59,7 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
     @Override
     public Map<String, Object> getContentByAlias(String alias) {
         String sql = String.format("SELECT * FROM %s WHERE alias = ? LIMIT 1", TABLE_NAME);
-        return getJdbcTemplate().queryForMap(sql, alias);
+        return getJdbcTemplate().queryForList(sql, alias).stream().findFirst().orElse(Collections.emptyMap());
     }
 
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> conditions) {
