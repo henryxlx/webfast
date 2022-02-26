@@ -1,10 +1,11 @@
 <ul class="nav navbar-nav">
     <#list navigations! as nav>
     <#if nav.isOpen gt 0>
-        <#if nav.children??><#assign subNavs = nav.children/></#if>
-    <li class="<#if subNavs??> dropdown </#if><#if siteNav?? && siteNav == nav.url>active </#if>">
-        <a href="${ctx}/<#if nav.url??>${nav.url!navigation_url!}<#else>javascript:;</#if>" class="<#if subNavs??> dropdown-toggle </#if>" <#if nav.isNewWin gt 0>target="_blank"</#if> <#if subNavs??> data-toggle="dropdown" </#if>>${nav.name} <#if subNavs??> <b class="caret"></b></#if></a>
-        <#if subNavs??>
+        <#assign subNavs = nav.children![]/>
+        <#assign subNavsNotEmpty = subNavs?size gt 0/>
+    <li class="<#if subNavsNotEmpty> dropdown </#if><#if siteNav?? && siteNav == nav.url>active </#if>">
+        <a href="${ctx}/<#if nav.url??>${nav.url!navigation_url!}<#else>javascript:;</#if>" class="<#if subNavsNotEmpty> dropdown-toggle </#if>" <#if nav.isNewWin gt 0>target="_blank"</#if> <#if subNavsNotEmpty> data-toggle="dropdown" </#if>>${nav.name} <#if subNavsNotEmpty> <b class="caret"></b></#if></a>
+        <#if subNavsNotEmpty>
         <ul class="dropdown-menu">
             <#list subNavs! as subNav>
             <#if subNav.isOpen gt 0>
