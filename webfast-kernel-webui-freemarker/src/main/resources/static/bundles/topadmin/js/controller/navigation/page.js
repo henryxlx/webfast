@@ -31,8 +31,9 @@ define(function(require, exports, module) {
                     var $tr = $(this);
                     $tbody.find('[data-parent-id=' + $tr.data('id') + ']').detach().insertAfter($tr);
                 });
+                $.ajaxSetup({ contentType: "application/json; charset=utf-8" });
                 var data = group.sortable("serialize").get();
-                $.post($tbody.data('updateSeqsUrl'), {data:data}, function(response){
+                $.post($tbody.data('updateSeqsUrl'), JSON.stringify(data), function(response){
                 });
             }
         });
