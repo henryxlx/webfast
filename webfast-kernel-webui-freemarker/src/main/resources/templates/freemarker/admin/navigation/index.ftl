@@ -30,7 +30,7 @@
     </tr>
     </thead>
 
-    <#include '/admin/navigation/tbody.html.ftl'/>
+    <#include '/admin/navigation/tbody.ftl'/>
 
 </table>
 
