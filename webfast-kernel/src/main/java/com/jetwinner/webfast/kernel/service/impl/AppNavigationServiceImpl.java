@@ -117,6 +117,11 @@ public class AppNavigationServiceImpl implements AppNavigationService {
         return rootList;
     }
 
+    @Override
+    public int updateNavigationsSequenceByIds(List<Object> ids) {
+        return navigationDao.updateSequenceByIds(ids);
+    }
+
     private void makeNavigationTreeList(List<AppModelNavigation> tree,
                                         Map<Integer, List<AppModelNavigation>> navigations, int parentId) {
 

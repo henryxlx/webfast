@@ -1,11 +1,15 @@
 package com.jetwinner.webfast.kernel.dao.impl;
 
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppNavigationDao;
 import com.jetwinner.webfast.kernel.model.AppModelNavigation;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -56,5 +60,28 @@ public class AppNavigationDaoImpl extends FastJdbcDaoSupport implements AppNavig
     @Override
     public int updateNavigation(Map<String, Object> fields) {
         return updateMap("app_navigation", fields, "id");
+    }
+
+    @Override
+    public int updateSequenceByIds(List<Object> ids) {
+        String SQL = "UPDATE app_navigation SET sequence = ? WHERE id = ?";
+        int[] updateCounts = getJdbcTemplate().batchUpdate(SQL, new BatchPreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setInt(1, i + 1);
+                ps.setInt(2, ValueParser.parseInt(ids.get(i)));
+            }
+
+            @Override
+            public int getBatchSize() {
+                return ids.size();
+            }
+        });
+        int nums = 0;
+        for (int count : updateCounts) {
+            nums += count;
+        }
+        return nums;
     }
 }

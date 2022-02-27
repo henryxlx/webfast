@@ -25,4 +25,6 @@ public interface AppNavigationDao {
     AppModelNavigation getById(Integer id);
 
     int updateNavigation(Map<String, Object> fields);
+
+    int updateSequenceByIds(List<Object> ids);
 }

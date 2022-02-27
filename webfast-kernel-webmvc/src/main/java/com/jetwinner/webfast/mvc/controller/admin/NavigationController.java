@@ -12,7 +12,9 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -84,5 +86,13 @@ public class NavigationController {
         int result = navigationService.updateNavigation(AppUser.getCurrentUser(request),
                 id, ParamMap.toFormDataMap(request));
         return result > 0 ? "success" : "failure";
+    }
+
+    @RequestMapping("/admin/navigation/seqs/update")
+    @ResponseBody
+    public Boolean updateSequencesAction(@RequestBody List<Map<String, Object>> data) {
+        List<Object> ids = data.stream().map(x -> x.get("id")).collect(Collectors.toList());
+        navigationService.updateNavigationsSequenceByIds(ids);
+        return Boolean.TRUE;
     }
 }

@@ -24,4 +24,6 @@ public interface AppNavigationService {
     int updateNavigation(AppUser currentUser, Integer id, Map<String, Object> fields);
 
     List<AppModelNavigation> getNavigationsTreeByType(String type);
+
+    int updateNavigationsSequenceByIds(List<Object> ids);
 }
