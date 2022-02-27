@@ -1,4 +1,4 @@
-<tbody data-update-seqs-url="${ctx}/admin/navigation/seqs-update">
+<tbody data-update-seqs-url="${ctx}/admin/navigation/seqs/update">
 <#list navigations! as navigation>
 <tr class="<#if navigation.parentId == 0> has-subItems <#else> child </#if>" id="navigations-tr-${navigation.id}" data-id="${navigation.id}" data-parent-id="${navigation.parentId}">
     <td style="vertical-align: middle;">
