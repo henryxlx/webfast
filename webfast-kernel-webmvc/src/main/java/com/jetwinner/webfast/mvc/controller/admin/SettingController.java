@@ -1,5 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
@@ -84,5 +86,67 @@ public class SettingController {
 
         model.addAttribute("mailer", mailer);
         return "/admin/system/mailer";
+    }
+
+    @RequestMapping("/admin/setting/auth")
+    public String authPage(HttpServletRequest request, Model model) {
+        Map<String, Object> auth = settingService.get("auth");
+
+        Map defaultMap = new ParamMap()
+                .add("register_mode", "closed")
+                .add("email_enabled", "closed")
+                .add("setting_time", -1)
+                .add("email_activation_title", "")
+                .add("email_activation_body", "")
+                .add("welcome_enabled", "closed")
+                .add("welcome_sender", "")
+                .add("welcome_methods", new String[0])
+                .add("welcome_title", "")
+                .add("welcome_body", "")
+                .add("user_terms", "closed")
+                .add("user_terms_body", "")
+                .add("registerFieldNameArray", new String[0])
+                .add("registerSort", new ParamMap().add("0", "email").add("1", "nickname").add("2", "password").toMap())
+                .add("captcha_enabled", 0)
+                .add("register_protective", "none").toMap();
+
+        if (EasyStringUtil.isNotBlank(auth.get("captcha_enabled"))) {
+            if (EasyStringUtil.isBlank(auth.get("register_protective"))) {
+                auth.put("register_protective", "low");
+            }
+
+        }
+
+        defaultMap.putAll(auth);
+        auth = defaultMap;
+        if ("POST".equals(request.getMethod())) {
+            if (EasyStringUtil.isNotBlank(auth.get("setting_time")) && ValueParser.parseInt(auth.get("setting_time")) > 0) {
+                Object firstSettingTime = auth.get("setting_time");
+                auth = ParamMap.toCustomFormDataMap(request, auth.keySet().toArray(new String[auth.keySet().size()]));
+                auth.put("setting_time", firstSettingTime);
+            } else {
+                auth = ParamMap.toUpdateDataMap(request, auth);
+                auth.put("setting_time", System.currentTimeMillis());
+            }
+
+            if (!auth.containsKey("welcome_methods")) {
+                auth.put("welcome_methods", new String[0]);
+            }
+
+            if ("none".equals(auth.get("register_protective"))) {
+                auth.put("captcha_enabled", 0);
+            } else {
+                auth.put("captcha_enabled", 1);
+            }
+
+            settingService.set("auth", auth);
+
+            logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
+                    "更新注册设置", auth);
+            FlashMessageUtil.setFlashMessage("success", "注册设置已保存！", request.getSession());
+        }
+
+        model.addAttribute("auth", auth);
+        return "/admin/system/auth";
     }
 }

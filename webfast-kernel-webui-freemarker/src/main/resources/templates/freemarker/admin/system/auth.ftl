@@ -108,11 +108,11 @@
             <label >邮箱验证登录</label>
         </div>
         <div class="controls col-md-8 radios">
-            <@radios 'email_enabled' {'opened':'开启', 'closed':'关闭'} 'auth.email_enabled' />
+            <@radios 'email_enabled' {'opened':'开启', 'closed':'关闭'} auth.email_enabled />
         </div>
     </div>
     <div class="help-block" style="margin-left:250px;margin-top:-15px;">开启后,邮箱未验证的用户将无法登录</div>
-    <input type="hidden" name="setting_time"  value="{{setting('auth.setting_time') }}" >
+    <input type="hidden" name="setting_time"  value="${setting('auth.setting_time')!}" >
 
     <fieldset>
         <legend>新用户激活邮件设置</legend>
@@ -153,41 +153,39 @@
                 <label for="email_activation_body">注册时需提供</label>
             </div>
             <div class="controls col-md-8 "  id="show-list">
-                <#list (auth.registerSort)! as sort>
-                {% if sort=='email' %}
+                <#list (auth.registerSort)!?values as sort>
+                <#if sort=='email'>
                 <button type="button" class="btn btn-default btn-xs">邮箱地址</button>
-                {% endif %}
-                {% if sort=='nickname' %}
+                </#if>
+                <#if sort=='nickname'>
                 <button type="button" class="btn btn-default btn-xs">昵称</button>
-                {% endif %}
-                {% if sort=='password' %}
+                </#if>
+                <#if sort=='password'>
                 <button type="button" class="btn btn-default btn-xs">密码</button>
-                {% endif %}
-                {% if sort=='truename' %}
+                </#if>
+                <#if sort=='truename'>
                 <button type="button" class="btn btn-default btn-xs">姓名</button>
-                {% endif %}
-                {% if sort=='idcard' %}
+                </#if>
+                <#if sort=='idcard'>
                 <button type="button" class="btn btn-default btn-xs">身份证号码</button>
-                {% endif %}
-                {% if sort=='mobile' %}
+                </#if>
+                <#if sort=='mobile'>
                 <button type="button" class="btn btn-default btn-xs">手机号码</button>
-                {% endif %}
-                {% if sort=='job' %}
+                </#if>
+                <#if sort=='job'>
                 <button type="button" class="btn btn-default btn-xs">职业</button>
-                {% endif %}
-                {% if sort=='gender' %}
+                </#if>
+                <#if sort=='gender'>
                 <button type="button" class="btn btn-default btn-xs">性别</button>
-                {% endif %}
-                {% if sort=='company' %}
+                </#if>
+                <#if sort=='company'>
                 <button type="button" class="btn btn-default btn-xs">公司</button>
-                {% endif %}
-                {% if  userFields %}
-                {% for field in userFields %}
-                {% if sort==field.fieldName %}
-                <button type="button" class="btn btn-default btn-xs">{{field.title}}</button>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
+                </#if>
+                <#list userFields! as field>
+                <#if sort==field.fieldName>
+                <button type="button" class="btn btn-default btn-xs">${field.title!}</button>
+                </#if>
+                </#list>
                 </#list>
                 <div class="pull-right "><a href="javascript:" id="show-list-btn">编辑 <span class="
   glyphicon glyphicon-chevron-down"></span></a></div>
@@ -198,68 +196,68 @@
                 <div class="form-group"><ul class="register-list sortable-list" data-role="list">
                         <#if (auth.registerFieldNameArray)??>
                         <#list (auth.registerFieldNameArray)! as sort>
-                        {% if sort=='email' %}
+                        <#if sort=='email'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
                             &nbsp;<input type="checkbox" checked=true onclick="return false" name="registerSort[]" value="email"></input><input type="hidden"  name="registerFieldNameArray[]" value="email"></input> 邮箱地址<span class="text-muted"> (系统必需，不可取消)</span>
                         </li>
 
-                        {% endif %}
-                        {% if sort=='nickname' %}
+                        </#if>
+                        <#if sort=='nickname'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
                             &nbsp;<input type="checkbox" checked=true onclick="return false" name="registerSort[]" value="nickname"></input><input type="hidden"  name="registerFieldNameArray[]" value="nickname"></input> 昵称<span class="text-muted"> (系统必需，不可取消)</span>
                         </li>
-                        {% endif %}
-                        {% if sort=='password' %}
+                        </#if>
+                        <#if sort=='password'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
                             &nbsp;<input type="checkbox" checked=true onclick="return false" name="registerSort[]" value="password"></input><input type="hidden"  name="registerFieldNameArray[]" value="password"></input><input type="hidden"  name="registerSort[]" value="confirmPassword"></input><input type="hidden"  name="registerFieldNameArray[]" value="confirmPassword"></input> 密码<span class="text-muted"> (系统必需，不可取消)</span>
                         </li>
-                        {% endif %}
-                        {% if sort=='truename' %}
+                        </#if>
+                        <#if sort=='truename'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox" {% for sort in auth.registerSort %}{% if sort=="truename"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="truename"></input><input type="hidden"  name="registerFieldNameArray[]" value="truename"></input> 姓名
+                            &nbsp;<input type="checkbox" <#list auth.registerSort!?values as sort><#if sort=="truename">checked=true</#if></#list> name="registerSort[]" value="truename"></input><input type="hidden"  name="registerFieldNameArray[]" value="truename"></input> 姓名
                         </li>
-                        {% endif %}
-                        {% if sort=='mobile' %}
+                        </#if>
+                        <#if sort=='mobile'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox" {% for sort in auth.registerSort %}{% if sort=="mobile"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="mobile"></input><input type="hidden"  name="registerFieldNameArray[]" value="mobile"></input> 手机号码<span class="text-muted"> (带格式校检)</span>
+                            &nbsp;<input type="checkbox" <#list auth.registerSort!?values as sort><#if sort=="mobile">checked=true</#if></#list> name="registerSort[]" value="mobile"></input><input type="hidden"  name="registerFieldNameArray[]" value="mobile"></input> 手机号码<span class="text-muted"> (带格式校检)</span>
                         </li>
-                        {% endif %}
-                        {% if sort=='idcard' %}
+                        </#if>
+                        <#if sort=='idcard'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox" {% for sort in auth.registerSort %}{% if sort=="idcard"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="idcard"></input><input type="hidden"  name="registerFieldNameArray[]" value="idcard"></input> 身份证号码<span class="text-muted"> (带格式校检)</span>
+                            &nbsp;<input type="checkbox" <#list auth.registerSort!?values as sort><#if sort=="idcard">checked=true</#if></#list> name="registerSort[]" value="idcard"></input><input type="hidden"  name="registerFieldNameArray[]" value="idcard"></input> 身份证号码<span class="text-muted"> (带格式校检)</span>
                         </li>
-                        {% endif %}
-                        {% if sort=='gender' %}
+                        </#if>
+                        <#if sort=='gender'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox" {% for sort in auth.registerSort %}{% if sort=="gender"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="gender"></input><input type="hidden"  name="registerFieldNameArray[]" value="gender"></input> 性别
+                            &nbsp;<input type="checkbox" <#list auth.registerSort!?values as sort><#if sort=="gender">checked=true</#if></#list> name="registerSort[]" value="gender"></input><input type="hidden"  name="registerFieldNameArray[]" value="gender"></input> 性别
                         </li>
-                        {% endif %}
-                        {% if sort=='job' %}
+                        </#if>
+                        <#if sort=='job'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox" {% for sort in auth.registerSort %}{% if sort=="job"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="job"></input><input type="hidden"  name="registerFieldNameArray[]" value="job"></input> 职业
+                            &nbsp;<input type="checkbox" <#list auth.registerSort!?values as sort><#if sort=="job">checked=true</#if></#list> name="registerSort[]" value="job"></input><input type="hidden"  name="registerFieldNameArray[]" value="job"></input> 职业
                         </li>
-                        {% endif %}
-                        {% if sort=='company' %}
+                        </#if>
+                        <#if sort=='company'>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox"  {% for sort in auth.registerSort %}{% if sort=="company"%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="company"></input><input type="hidden"  name="registerFieldNameArray[]" value="company"></input> 公司
+                            &nbsp;<input type="checkbox"  <#list auth.registerSort!?values as sort><#if sort=="company">checked=true</#if></#list> name="registerSort[]" value="company"></input><input type="hidden"  name="registerFieldNameArray[]" value="company"></input> 公司
                         </li>
-                        {% endif %}
+                        </#if>
                         <#list userFields! as field>
-                        {% if sort==field.fieldName %}
+                        <#if sort==field.fieldName>
                         <li class="list-group-item clearfix" data-role="item" >
                             <span class="glyphicon glyphicon-resize-vertical sort-handle"></span>
-                            &nbsp;<input type="checkbox"  {% for sort in auth.registerSort %}{% if sort==field.fieldName%}checked=true{% endif %}{% endfor %} name="registerSort[]" value="{{sort}}"></input><input type="hidden"  name="registerFieldNameArray[]" value="{{sort}}"></input> {{field.title}}
+                            &nbsp;<input type="checkbox"  <#list auth.registerSort!?values as sort><#if sort==field.fieldName>checked=true</#if></#list> name="registerSort[]" value="{{sort}}"></input><input type="hidden"  name="registerFieldNameArray[]" value="{{sort}}"></input> {{field.title}}
                         </li>
-                        {% endif %}
+                        </#if>
                         </#list>
                         </#list> <#-- list (auth.registerFieldNameArray)! as sort -->
                         <#else>
