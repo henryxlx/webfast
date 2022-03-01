@@ -107,7 +107,6 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
         DynamicQueryBuilder builder = new DynamicQueryBuilder(conditions)
                 .from("big_app_article", "article")
                 .andWhere("status = :status")
-                .andWhere("categoryId = :categoryId")
                 .andWhere("featured = :featured")
                 .andWhere("promoted = :promoted")
                 .andWhere("sticky = :sticky")
