@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -262,7 +263,7 @@ public class AppArticleServiceImpl implements AppArticleService {
         if (EasyStringUtil.isNotBlank(conditions.get("includeChildren")) && conditions.containsKey("categoryId")) {
             Set<Object> childrenIds = categoryService.findCategoryChildrenIds(conditions.get("categoryId"));
             childrenIds.add(conditions.get("categoryId"));
-            conditions.put("categoryIds", childrenIds);
+            conditions.put("categoryIds", childrenIds.stream().map(String::valueOf).collect(Collectors.joining(",")));
             conditions.remove("categoryId");
             conditions.remove("includeChildren");
         }
