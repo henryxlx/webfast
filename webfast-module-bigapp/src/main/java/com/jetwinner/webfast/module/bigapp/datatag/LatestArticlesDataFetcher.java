@@ -76,7 +76,7 @@ public class LatestArticlesDataFetcher extends BaseDataFetcher {
                 return;
             }
             final String categoryId = String.valueOf(e.get("categoryId"));
-            if (categoryId.equals(categories.get(categoryId).get("id"))) {
+            if (categories.get(categoryId) != null) {
                 e.put("category", categories.get(categoryId));
             }
         });
