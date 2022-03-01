@@ -86,9 +86,9 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
             return this;
         }
 
-        if (isInCondition(where)) {
+        /*if (isInCondition(where)) {
             return addWhereIn(where);
-        }
+        }*/
 
         super.andWhere(where);
         return this;
