@@ -201,6 +201,10 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public void updateUserProfile(Integer id, Map<String, Object> profile) {
+        if (EasyStringUtil.isNotBlank(profile.get("title"))) {
+            Map<String, Object> fields = new ParamMap().add("id", id).add("title", profile.get("title")).toMap();
+            userDao.updateMap(fields);
+        }
         userProfileDao.updateOrInsert(id, profile);
     }
 

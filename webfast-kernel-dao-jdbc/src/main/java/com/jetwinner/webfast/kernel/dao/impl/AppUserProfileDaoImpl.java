@@ -21,8 +21,11 @@ public class AppUserProfileDaoImpl extends FastJdbcDaoSupport implements AppUser
 
     @Override
     public void updateOrInsert(Integer id, Map<String, Object> profile) {
-        profile.put("id", id);
         verifyMapKeyForTableColumn(profile, TABLE_NAME);
+        if (profile.isEmpty()) {
+            return;
+        }
+        profile.put("id", id);
         List<Integer> list = getJdbcTemplate().queryForList(
                 "SELECT 1 FROM app_user_profile WHERE id = ? LIMIT 1", Integer.class, id);
 

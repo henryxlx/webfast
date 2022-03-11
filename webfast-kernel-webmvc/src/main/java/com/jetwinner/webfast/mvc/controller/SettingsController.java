@@ -55,6 +55,8 @@ public class SettingsController {
     public String profilePage(HttpServletRequest request, Model model) {
         AppUser user = AppUser.getCurrentUser(request);
         Map<String, Object> profile = userService.getUserProfile(user.getId());
+        user = userService.getUser(user.getId());
+        boolean userProfileIsEmpty = profile.isEmpty();
         profile.put("title", user.getTitle());
 
         if ("POST".equals(request.getMethod())) {
@@ -69,7 +71,13 @@ public class SettingsController {
                     FlashMessageUtil.setFlashMessage("danger", "不能修改已绑定的手机。", request.getSession());
                 }
             } else {
-                FlashMessageUtil.setFlashMessage("danger", "没有可更新的数据。", request.getSession());
+                if (userProfileIsEmpty) {
+                    Map<String, Object> userProfileMap = ParamMap.toCustomFormDataMap(request);
+                    userService.updateUserProfile(user.getId(), userProfileMap);
+                    FlashMessageUtil.setFlashMessage("success", "用户基础信息添加成功。", request.getSession());
+                } else {
+                    FlashMessageUtil.setFlashMessage("danger", "没有可更新的数据。", request.getSession());
+                }
             }
             return "redirect:/settings";
         }
