@@ -73,7 +73,9 @@ public class ParamMap {
         Set<String> keys = size > 0 ? oldMap.keySet() : new HashSet<>(0);
         keys.forEach(key -> {
             String value = request.getParameter(key);
-            if (value != null && !value.equals(oldMap.get(key))) {
+            Object objForOldValue = oldMap.get(key);
+            String oldValue = objForOldValue == null ? null : String.valueOf(objForOldValue);
+            if (value != null && !value.equals(oldValue)) {
                 map.put(key, value);
             }
         });
