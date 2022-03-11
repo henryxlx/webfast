@@ -31,7 +31,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label" for="profile_truename">姓名</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_truename" name="profile[truename]" class="form-control" data-widget-cid="widget-1" data-explain="" value="${(profile.truename)!}">
+                <input type="text" id="profile_truename" name="truename" class="form-control" data-widget-cid="widget-1" data-explain="" value="${(profile.truename)!}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -69,9 +69,9 @@
             <label class="col-md-2 control-label">性别</label>
             <div class="col-md-7 controls radios">
                 <div id="profile_gender">
-                    <input type="radio" id="profile_gender_0" name="profile[gender]" required="required" value="male" <#if (profile.gender)! == 'male'>checked="checked"</#if>>
+                    <input type="radio" id="profile_gender_0" name="gender" required="required" value="male" <#if (profile.gender)! == 'male'>checked="checked"</#if>>
                     <label for="profile_gender_0" class="required">男</label>
-                    <input type="radio" id="profile_gender_1" name="profile[gender]" required="required" value="female" <#if (profile.gender)! == 'female'>checked="checked"</#if>>
+                    <input type="radio" id="profile_gender_1" name="gender" required="required" value="female" <#if (profile.gender)! == 'female'>checked="checked"</#if>>
                     <label for="profile_gender_1" class="required">女</label>
                 </div>
             </div>
@@ -80,7 +80,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label" for="profile_idcard">身份证号</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_idcard" name="profile[idcard]" class="form-control" value="${(profile.idcard)!''}">
+                <input type="text" id="profile_idcard" name="idcard" class="form-control" value="${(profile.idcard)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -99,7 +99,7 @@
         <div class="form-group">
             <label for="profile_mobile" class="col-md-2 control-label">手机号码</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_mobile" name="profile[mobile]" class="form-control" data-widget-cid="widget-5" data-explain="" value="${(profile.mobile)!''}">
+                <input type="text" id="profile_mobile" name="mobile" class="form-control" data-widget-cid="widget-5" data-explain="" value="${(profile.mobile)!''}">
 
                 <div class="help-block" style="display:none"></div>
             </div>
@@ -118,7 +118,7 @@
         <div class="form-group form-forIam-group form-notStudent-group">
             <label class="col-md-2 control-label">公司</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_company" name="profile[company]" class="form-control" value="${(profile.company)!''}">
+                <input type="text" id="profile_company" name="company" class="form-control" value="${(profile.company)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -126,7 +126,7 @@
         <div class="form-group form-forIam-group form-notStudent-group">
             <label class="col-md-2 control-label">职业</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_job" name="profile[job]" class="form-control" value="${(profile.job)!''}">
+                <input type="text" id="profile_job" name="job" class="form-control" value="${(profile.job)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -134,7 +134,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">头衔</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_title" name="profile[title]" class="form-control" value="${(profile.title)!''}">
+                <input type="text" id="profile_title" name="title" class="form-control" value="${(profile.title)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -142,7 +142,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">个人签名</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_signature" name="profile[signature]" class="form-control" value="${(profile.signature)!''}">
+                <input type="text" id="profile_signature" name="signature" class="form-control" value="${(profile.signature)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -150,14 +150,14 @@
         <div class="form-group">
             <label class="col-md-2 control-label">自我介绍</label>
             <div class="col-md-7 controls">
-                <textarea name="profile[about]" rows="10" id="profile_about" class="form-control" data-image-upload-url="${ctx}/editor_upload?token=upload_token('user')">${(profile.about)!''}</textarea>
+                <textarea name="aboutme" rows="10" id="profile_about" class="form-control" data-image-upload-url="${ctx}/editor_upload?token=upload_token('user')">${(profile.aboutme)!''}</textarea>
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-md-2 control-label">个人主页</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_site" name="profile[site]" class="form-control" data-widget-cid="widget-4" data-explain="" value="${(profile.site)!''}">
+                <input type="text" id="profile_site" name="site" class="form-control" data-widget-cid="widget-4" data-explain="" value="${(profile.site)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -167,7 +167,7 @@
                 <label for="weibo">微博</label>
             </div>
             <div class="col-md-7 controls">
-                <input type="text" id="weibo" name="profile[weibo]" class="form-control" data-widget-cid="widget-3" data-explain="" value="${(profile.weibo)!''}">
+                <input type="text" id="weibo" name="weibo" class="form-control" data-widget-cid="widget-3" data-explain="" value="${(profile.weibo)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -175,7 +175,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">微信</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_weixin" name="profile[weixin]" class="form-control" value="${(profile.weixin)!''}">
+                <input type="text" id="profile_weixin" name="weixin" class="form-control" value="${(profile.weixin)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -183,7 +183,7 @@
         <div class="form-group">
             <label for="profile_qq" class="col-md-2 control-label">QQ</label>
             <div class="col-md-7 controls">
-                <input type="text" id="profile_qq" name="profile[qq]" class="form-control" data-widget-cid="widget-2" data-explain="" value="${(profile.qq)!''}">
+                <input type="text" id="profile_qq" name="qq" class="form-control" data-widget-cid="widget-2" data-explain="" value="${(profile.qq)!''}">
                 <div class="help-block" style="display:none;"></div>
             </div>
         </div>
@@ -193,47 +193,47 @@
         <#if fields??>
             <hr>
             <#list fields as field>
-            {% if field.type=="text" %}
+            <#if field.type=="text">
             <div class="form-group">
-                <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
+                <label for="${field.fieldName}" class="col-md-2 control-label">${field.title}</label>
                 <div class="col-md-7 controls">
-                    <textarea id="{{field.fieldName}}" name="profile[{{field.fieldName}}]" class="{{field.type}} form-control">{{ profile[field.fieldName]|default('') }}</textarea>
+                    <textarea id="${field.fieldName}" name="${field.fieldName}" class="${field.type} form-control">${profile[field.fieldName]!''}</textarea>
                     <div class="help-block" style="display:none;"></div>
                 </div>
             </div>
-            {% elseif field.type=="int" %}
+            <#elseif field.type=="int">
             <div class="form-group">
-                <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
+                <label for="${field.fieldName}" class="col-md-2 control-label">${field.title}</label>
                 <div class="col-md-7 controls">
-                    <input type="text" id="{{field.fieldName}}" placeholder="最大值为9位整数" name="profile[{{field.fieldName}}]" class="{{field.type}} form-control"  value="{{ profile[field.fieldName]|default('') }}">
+                    <input type="text" id="${field.fieldName}" placeholder="最大值为9位整数" name="${field.fieldName}" class="${field.type} form-control"  value="${profile[field.fieldName]!''}">
                     <div class="help-block" style="display:none;"></div>
                 </div>
             </div>
-            {% elseif field.type=="float" %}
+            <#elseif field.type=="float">
             <div class="form-group">
-                <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
+                <label for="${field.fieldName}" class="col-md-2 control-label">${field.title}</label>
                 <div class="col-md-7 controls">
-                    <input type="text" id="{{field.fieldName}}" placeholder="保留到2位小数" name="profile[{{field.fieldName}}]" class="{{field.type}} form-control"  value="{{ profile[field.fieldName]|default('') }}">
+                    <input type="text" id="${field.fieldName}" placeholder="保留到2位小数" name="${field.fieldName}" class="${field.type} form-control"  value="${profile[field.fieldName]!''}">
                     <div class="help-block" style="display:none;"></div>
                 </div>
             </div>
-            {% elseif field.type=="date" %}
+            <#elseif field.type=="date">
             <div class="form-group">
-                <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
+                <label for="${field.fieldName}" class="col-md-2 control-label">${field.title}</label>
                 <div class="col-md-7 controls">
-                    <input type="text" id="{{field.fieldName}}" name="profile[{{field.fieldName}}]" class="{{field.type}} form-control" value="{% if profile[field.fieldName] %}{{profile[field.fieldName]}}{% endif %}">
+                    <input type="text" id="${field.fieldName}" name="${field.fieldName}" class="${field.type} form-control" value="${profile[field.fieldName]!''}">
                     <div class="help-block" style="display:none;"></div>
                 </div>
             </div>
-            {% elseif field.type=="varchar" %}
+            <#elseif field.type=="varchar">
             <div class="form-group">
-                <label for="{{field.fieldName}}" class="col-md-2 control-label">{{field.title}}</label>
+                <label for="${field.fieldName}" class="col-md-2 control-label">${field.title}</label>
                 <div class="col-md-7 controls">
-                    <input type="text" id="{{field.fieldName}}" name="profile[{{field.fieldName}}]" class="form-control" value="{{ profile[field.fieldName]|default('') }}">
+                    <input type="text" id="${field.fieldName}" name="${field.fieldName}" class="form-control" value="${profile[field.fieldName]!''}">
                     <div class="help-block" style="display:none;"></div>
                 </div>
             </div>
-            {% endif %}
+            </#if>
             </#list>
         </#if>
 
