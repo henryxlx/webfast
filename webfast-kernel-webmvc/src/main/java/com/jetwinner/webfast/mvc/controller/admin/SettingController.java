@@ -92,7 +92,7 @@ public class SettingController {
     public String authPage(HttpServletRequest request, Model model) {
         Map<String, Object> auth = settingService.get("auth");
 
-        Map defaultMap = new ParamMap()
+        Map<String, Object> defaultMap = new ParamMap()
                 .add("register_mode", "closed")
                 .add("email_enabled", "closed")
                 .add("setting_time", -1)
