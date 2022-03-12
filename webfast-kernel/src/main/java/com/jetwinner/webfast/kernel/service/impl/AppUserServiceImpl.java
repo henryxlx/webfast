@@ -19,6 +19,7 @@ import com.jetwinner.webfast.kernel.dao.*;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppNotificationService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -44,6 +45,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final RbacService rbacService;
     private final FastAppConst appConst;
     private final UserAccessControlService userAccessControlService;
+    private final AppLogService logService;
 
     public AppUserServiceImpl(AppUserDao userDao,
                               AppUserApprovalDao userApprovalDao,
@@ -54,7 +56,8 @@ public class AppUserServiceImpl implements AppUserService {
                               DataSourceConfig dataSourceConfig,
                               RbacService rbacService,
                               FastAppConst appConst,
-                              UserAccessControlService userAccessControlService) {
+                              UserAccessControlService userAccessControlService,
+                              AppLogService logService) {
 
         this.userDao = userDao;
         this.userApprovalDao = userApprovalDao;
@@ -66,6 +69,7 @@ public class AppUserServiceImpl implements AppUserService {
         this.rbacService = rbacService;
         this.appConst = appConst;
         this.userAccessControlService = userAccessControlService;
+        this.logService = logService;
     }
 
     @PostConstruct
@@ -388,7 +392,9 @@ public class AppUserServiceImpl implements AppUserService {
                 .add("truename", lastestApproval.get("truename"))
                 .add("idcard", lastestApproval.get("idcard")).toMap());
 
-//        logService.info("user", "approved", String.format("用户%s实名认证成功，操作人:%s !", user.getUsername(), currentUser.getUsername()));
+        logService.info(currentUser, "user", "approved",
+                String.format("用户%s实名认证成功，操作人:%s !", user.getUsername(), currentUser.getUsername()));
+
         String message = "您的个人实名认证，审核已经通过！" + (note != null ? "(" + note + ")" : "");
         notificationService.notify(user.getId(), "default", message);
     }
@@ -406,10 +412,11 @@ public class AppUserServiceImpl implements AppUserService {
                 .add("approvalTime", System.currentTimeMillis()).toMap());
 
         userApprovalDao.addApproval(new ParamMap()
-                        .add("userId", user.getId()).add("note", note)
-                        .add("status", "approve_fail").add("operatorId", currentUser.getId()).toMap());
+                .add("userId", user.getId()).add("note", note)
+                .add("status", "approve_fail").add("operatorId", currentUser.getId()).toMap());
 
-        // logService.info("user", "approval_fail", String.format("用户%s实名认证失败，操作人:%s !", user.getUsername(), currentUser.getUsername()));
+        logService.info(currentUser, "user", "approval_fail",
+                String.format("用户%s实名认证失败，操作人:%s !", user.getUsername(), currentUser.getUsername()));
 
         String message = "您的个人实名认证，审核未通过！" + (note != null ? "(" + note + ")" : "");
         notificationService.notify(user.getId(), "default", message);
