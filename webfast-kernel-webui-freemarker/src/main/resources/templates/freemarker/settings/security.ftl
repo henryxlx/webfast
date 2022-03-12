@@ -61,34 +61,6 @@
 
 <div class="row">
     <div class="col-md-2 tar
-				<#if hasPayPassword!false == true>
-					text-success
-				<#else>
-					text-danger
-				</#if>
-			" style="font-size:20px">
-        <#if hasPayPassword!false == true>
-        <span class="glyphicon glyphicon-ok"></span>
-        <#else>
-        <span class="glyphicon glyphicon-warning-sign"></span>
-        </#if>
-    </div>
-
-    <span class="col-md-3 " style="margin-top: 5px;" >支付密码</span>
-
-    <span class="col-md-4 " style="margin-top: 5px;" >在网校进行消费行为时需要输入的密码</span>
-
-    <#if hasPayPassword!false == true>
-    <a href="{{ path('settings_reset_pay_password') }}" class="col-md-offset-1 btn btn-primary" style="margin-top: -3px;" >重置</a>
-    <#else>
-    <a href="{{ path('settings_pay_password') }}" class="col-md-offset-1 btn btn-primary" style="margin-top: -3px;" >设置</a>
-    </#if>
-
-</div>
-<hr>
-
-<div class="row">
-    <div class="col-md-2 tar
 				<#if hasFindPayPasswordQuestion!false == true>
 					text-success
 				<#else>
@@ -107,7 +79,7 @@
 
     <span class="col-md-4 " style="margin-top: 5px;" >通过设置并且验证安全问题，保护帐号密码安全。</span>
 
-    <a href="{{ path('settings_security_questions') }}" class="col-md-offset-1 btn btn-primary" style="margin-top: -3px;" >
+    <a href="${ctx}/settings/security_questions" class="col-md-offset-1 btn btn-primary" style="margin-top: -3px;" >
         <#if hasFindPayPasswordQuestion!false == true>
         查看
         <#else>
