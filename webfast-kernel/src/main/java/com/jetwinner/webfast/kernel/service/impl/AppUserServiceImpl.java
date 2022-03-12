@@ -395,7 +395,7 @@ public class AppUserServiceImpl implements AppUserService {
         logService.info(currentUser, "user", "approved",
                 String.format("用户%s实名认证成功，操作人:%s !", user.getUsername(), currentUser.getUsername()));
 
-        String message = "您的个人实名认证，审核已经通过！" + (note != null ? "(" + note + ")" : "");
+        String message = "您的个人实名认证，审核已经通过！" + (EasyStringUtil.isNotBlank(note) ? "(" + note + ")" : "");
         notificationService.notify(user.getId(), "default", message);
     }
 
