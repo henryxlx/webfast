@@ -8,9 +8,9 @@ define(function(require, exports, module) {
     exports.run = function() {
 
         // group: 'course'
-        var editor = CKEDITOR.replace('about', {
+        var editor = CKEDITOR.replace('aboutme', {
             toolbar: 'Simple',
-            filebrowserImageUploadUrl: $('#about').data('imageUploadUrl')
+            filebrowserImageUploadUrl: $('#aboutme').data('imageUploadUrl')
         });
 
         var $modal = $('#user-edit-form').parents('.modal');
