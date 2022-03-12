@@ -2,6 +2,7 @@ package com.jetwinner.webfast.install;
 
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
@@ -27,12 +28,13 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
                                       AppSettingService settingService,
                                       AppNavigationService navigationService,
                                       AppContentService contentService,
+                                      FastAppConst appConst,
                                       AppBlockService blockService,
                                       AppTagService tagService,
                                       AppCategoryService categoryService,
                                       AppFileService fileService) {
 
-        super(blockService, fileService, navigationService, settingService, userService);
+        super(appConst, blockService, fileService, navigationService, settingService, userService);
         this.contentService = contentService;
         this.tagService = tagService;
         this.categoryService = categoryService;

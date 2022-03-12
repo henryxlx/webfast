@@ -3,11 +3,13 @@ package com.jetwinner.webfast.install;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.*;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -16,18 +18,21 @@ import java.util.Map;
 @Component
 public class FastAppSetupServiceImpl implements FastAppSetupService {
 
+    protected final FastAppConst appConst;
     protected final AppBlockService blockService;
     protected final AppFileService fileService;
     protected final AppNavigationService navigationService;
     protected final AppSettingService settingService;
     protected final AppUserService userService;
 
-    public FastAppSetupServiceImpl(AppBlockService blockService,
+    public FastAppSetupServiceImpl(FastAppConst appConst,
+                                   AppBlockService blockService,
                                    AppFileService fileService,
                                    AppNavigationService navigationService,
                                    AppSettingService settingService,
                                    AppUserService userService) {
 
+        this.appConst = appConst;
         this.blockService = blockService;
         this.fileService = fileService;
         this.navigationService = navigationService;
@@ -152,6 +157,15 @@ public class FastAppSetupServiceImpl implements FastAppSetupService {
                 .add("name", "资讯")
                 .add("code", "article")
                 .add("public", 1).toMap());
+
+        File filePath = new File(appConst.getUploadPublicDirectory() + "/tmp");
+        if (!filePath.exists()) {
+            filePath.mkdir();
+        }
+        filePath = new File(appConst.getUploadPrivateDirectory());
+        if (!filePath.exists()) {
+            filePath.mkdir();
+        }
     }
 
     @Override
