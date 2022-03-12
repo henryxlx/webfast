@@ -172,7 +172,8 @@ public class SettingsController {
         try {
             file.transferTo(new File(directory + filename));
         } catch (IOException e) {
-            return BaseControllerHelper.createMessageResponse("error", "图片上传失败，请检查上传目录或文件是否存在。");
+            return BaseControllerHelper.createMessageResponse("error",
+                    String.format("图片上传失败，请检查上传目录(%s)或文件(%s)是否存在。", directory, filename));
         }
 
         ModelAndView mav = new ModelAndView("redirect:/settings/avatar-crop");
