@@ -16,7 +16,7 @@
       <label >邮件发送</label>
     </div>
     <div class="controls col-md-8 radios">
-      <@radios 'enabled' {'1':'开启', '0':'关闭'} 'mailer.enabled' />
+      <@radios 'enabled' {'1':'开启', '0':'关闭'} mailer.enabled! />
     </div>
   </div>
 
