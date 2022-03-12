@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.image.ImageSize;
@@ -40,14 +41,17 @@ public class SettingsController {
 
     private final AppUserService userService;
     private final AppUserFieldService userFieldService;
+    private final UserAccessControlService userAccessControlService;
     private final FastAppConst appConst;
 
     public SettingsController(AppUserService userService,
                               AppUserFieldService userFieldService,
+                              UserAccessControlService userAccessControlService,
                               FastAppConst appConst) {
 
         this.userService = userService;
         this.userFieldService = userFieldService;
+        this.userAccessControlService = userAccessControlService;
         this.appConst = appConst;
     }
 
@@ -219,6 +223,60 @@ public class SettingsController {
             return "redirect:/settings/setup";
         }
         return "settings/password";
+    }
+
+    private String securityQuestionsActionReturn(boolean hasSecurityQuestions,
+                                                 List<Map<String, Object>> userSecureQuestions, Model model) {
+
+        if (hasSecurityQuestions) {
+            model.addAttribute("question1", userSecureQuestions.get(0).get("securityQuestionCode"));
+            model.addAttribute("question2", userSecureQuestions.get(1).get("securityQuestionCode"));
+            model.addAttribute("question3", userSecureQuestions.get(2).get("securityQuestionCode"));
+        }
+        model.addAttribute("hasSecurityQuestions", hasSecurityQuestions);
+
+        return "/settings/security-questions";
+    }
+
+    @RequestMapping("/security_questions")
+    public String securityQuestionsAction(HttpServletRequest request, Model model) {
+        AppUser user = AppUser.getCurrentUser(request);
+        List<Map<String, Object>> userSecureQuestions = userService.getUserSecureQuestionsByUserId(user.getId());
+        boolean hasSecurityQuestions = userSecureQuestions != null && userSecureQuestions.size() > 0;
+
+        if ("POST" .equals(request.getMethod())) {
+            if (!userAccessControlService.checkPassword(user.getPassword(), request.getParameter("userLoginPassword"))) {
+                FlashMessageUtil.setFlashMessage("danger",
+                        "您的登陆密码错误，不能设置安全问题。", request.getSession());
+
+                return securityQuestionsActionReturn(hasSecurityQuestions, userSecureQuestions, model);
+            }
+
+            if (hasSecurityQuestions) {
+                throw new RuntimeGoingException("您已经设置过安全问题，不可再次修改。");
+            }
+
+            if (EasyStringUtil.equals(request.getParameter("question-1"), request.getParameter("question-2"))
+                    || EasyStringUtil.equals(request.getParameter("question-1"), request.getParameter("question-3"))
+                    || EasyStringUtil.equals(request.getParameter("question-2"), request.getParameter("question-3"))) {
+
+                throw new RuntimeGoingException("2个问题不能一样。");
+            }
+            Map<String, Object> fields = new ParamMap()
+                    .add("securityQuestion1", request.getParameter("question-1"))
+                    .add("securityAnswer1", request.getParameter("answer-1"))
+                    .add("securityQuestion2", request.getParameter("question-2"))
+                    .add("securityAnswer2", request.getParameter("answer-2"))
+                    .add("securityQuestion3", request.getParameter("question-3"))
+                    .add("securityAnswer3", request.getParameter("answer-3")).toMap();
+
+            userService.addUserSecureQuestionsWithUnHashedAnswers(user, fields);
+            FlashMessageUtil.setFlashMessage("success", "安全问题设置成功。", request.getSession());
+            hasSecurityQuestions = true;
+            userSecureQuestions = userService.getUserSecureQuestionsByUserId(user.getId());
+        }
+
+        return securityQuestionsActionReturn(hasSecurityQuestions, userSecureQuestions, model);
     }
 
     @RequestMapping("/email")

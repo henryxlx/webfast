@@ -421,4 +421,14 @@ public class AppUserServiceImpl implements AppUserService {
         String message = "您的个人实名认证，审核未通过！" + (note != null ? "(" + note + ")" : "");
         notificationService.notify(user.getId(), "default", message);
     }
+
+    @Override
+    public List<Map<String, Object>> getUserSecureQuestionsByUserId(Object userId) {
+        return null;
+    }
+
+    @Override
+    public void addUserSecureQuestionsWithUnHashedAnswers(AppUser currentUser, Map<String, Object> fields) {
+
+    }
 }

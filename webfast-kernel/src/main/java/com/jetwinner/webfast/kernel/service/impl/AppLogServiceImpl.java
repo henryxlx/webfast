@@ -5,10 +5,10 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppLogDao;
+import com.jetwinner.webfast.kernel.dao.AppUserDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
-import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +22,11 @@ import java.util.Map;
 public class AppLogServiceImpl implements AppLogService {
 
     private final AppLogDao logDao;
-    private final AppUserService userService;
+    private final AppUserDao userDao;
 
-    public AppLogServiceImpl(AppLogDao logDao, AppUserService userService) {
+    public AppLogServiceImpl(AppLogDao logDao, AppUserDao userDao) {
         this.logDao = logDao;
-        this.userService = userService;
+        this.userDao = userDao;
     }
 
     @Override
@@ -103,7 +103,7 @@ public class AppLogServiceImpl implements AppLogService {
 
     private void prepareSearchConditions(Map<String, Object> conditions) {
         if (EasyStringUtil.isNotBlank(conditions.get("username"))) {
-            AppUser existsUser = userService.getUserByUsername(String.valueOf(conditions.get("username")));
+            AppUser existsUser = userDao.getByUsername(String.valueOf(conditions.get("username")));
             Integer userId = existsUser != null ? existsUser.getId() : -1;
             conditions.put("userId", userId);
             conditions.remove("username");

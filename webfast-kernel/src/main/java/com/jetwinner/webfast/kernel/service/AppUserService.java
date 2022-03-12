@@ -61,4 +61,8 @@ public interface AppUserService extends BaseAppUserService {
     void passApproval(Integer userId, String note, AppUser currentUser);
 
     void rejectApproval(Integer userId, String note, AppUser currentUser);
+
+    List<Map<String, Object>> getUserSecureQuestionsByUserId(Object userId);
+
+    void addUserSecureQuestionsWithUnHashedAnswers(AppUser currentUser, Map<String, Object> fields);
 }

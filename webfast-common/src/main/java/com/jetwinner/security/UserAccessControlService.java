@@ -22,4 +22,8 @@ public interface UserAccessControlService {
     void setEncryptPassword(BaseAppUser user);
 
     String getSavedUrlBeforeLogin(HttpServletRequest request);
+
+    default boolean checkPassword(String password, String userLoginPassword) {
+        return true;
+    }
 }
