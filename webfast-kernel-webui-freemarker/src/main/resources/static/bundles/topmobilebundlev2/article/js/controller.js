@@ -21,7 +21,7 @@ function ListController($scope, $http, $ionicLoading, broadCast)
   	};
 
   	var queryArticelList = function(success){
-  		document.title = $scope.categoryName ? "网校资讯 - " + $scope.categoryName  : "网校资讯";
+  		document.title = $scope.categoryName ? "系统资讯 - " + $scope.categoryName  : "系统资讯";
   		$ionicLoading.show({
 		        template:'加载中...',
 		});

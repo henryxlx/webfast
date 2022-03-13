@@ -94,17 +94,17 @@
 
   <div class="form-group">
     <div class="col-md-2 control-label">
-      <label for="mobile_about">网校简介</label>
+      <label for="mobile_about">系统简介</label>
     </div>
     <div class="controls col-md-8">
       <textarea class="form-control" id="mobile_about" rows="10" name="about" data-image-upload-url="{{ path('editor_upload', {token:upload_token('default')}) }}">${(mobile.about)!}</textarea>
-      <div class="help-block">此简介将显示在移动客户端的"关于网校"</div>
+      <div class="help-block">此简介将显示在移动客户端的"关于系统"</div>
     </div>
   </div>
 
   <div class="form-group">
     <div class="col-md-2 control-label">
-      <label for="logo">网校LOGO</label>
+      <label for="logo">系统LOGO</label>
     </div>
     <div class="col-md-8 controls">
       <div id="mobile-logo-container"><#if (mobile.logo)!false><img src="{{ asset(mobile.logo) }}"></#if></div>
@@ -121,7 +121,7 @@
     </div>
     <div class="col-md-8 controls">
       <input type="text" class="form-control" name="notice" value="${(mobile.notice)!}">
-      <p class="help-block">将会在手机端banner下面显示网校的公告，建议用简练概括的语言描述，字数在20字以下。</p>
+      <p class="help-block">将会在手机端banner下面显示系统的公告，建议用简练概括的语言描述，字数在20字以下。</p>
     </div>
   </div>
 
@@ -379,7 +379,7 @@
 
   <fieldset>
   <legend>设置启动图</legend>
-  <div class="help-block">最多允许设置5张启动图(尺寸为640*960)，用户首次登录网校时会显示启动图。</div>
+  <div class="help-block">最多允许设置5张启动图(尺寸为640*960)，用户首次登录系统时会显示启动图。</div>
   <div class="form-group">
     <div class="col-md-2 control-label">
       <label for="splash1">启动图1</label>

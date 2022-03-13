@@ -53,7 +53,7 @@
 
     <span class="col-md-3 " style="margin-top: 5px;" >登录密码</span>
 
-    <span class="col-md-4 " style="margin-top: 5px;" >登录网校时需要输入的密码</span>
+    <span class="col-md-4 " style="margin-top: 5px;" >登录系统时需要输入的密码</span>
 
     <a  href="${ctx}/settings/password" class="col-md-offset-1  btn btn-primary" style="margin-top: -3px;" >修改</a>
 </div>

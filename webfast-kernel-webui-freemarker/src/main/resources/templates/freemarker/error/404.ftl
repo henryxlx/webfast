@@ -65,7 +65,7 @@
         </div>
         <div class="panel-body">
             <div class="well">
-                <p>该内容似乎已经被删除，或者已被网校遗忘。</p>
+                <p>该内容似乎已经被删除，或者已被系统遗忘。</p>
                 <p>请确认您的来源链接是否正确？</p>
                 <p><a href="javascript:history.go(-1)"><< 后退</a>&nbsp;&nbsp;&nbsp;&nbsp;
                     |&nbsp;&nbsp;&nbsp;&nbsp;<a href="${ctx}/">返回首页</a></p>

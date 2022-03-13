@@ -14,14 +14,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校LOGO失败，请重试！')
+                Notify.danger('上传系统LOGO失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-logo-container").html('<img src="' + response.url + '">');
                 $form.find('[name=logo]').val(response.path);
                 $("#mobile-logo-remove").show();
-                Notify.success('上传网校LOGO成功！');
+                Notify.success('上传系统LOGO成功！');
             }
         });
 
@@ -32,9 +32,9 @@ define(function(require, exports, module) {
                 $("#mobile-logo-container").html('');
                 $form.find('[name=logo]').val('');
                 $btn.hide();
-                Notify.success('删除网校LOGO成功！');
+                Notify.success('删除系统LOGO成功！');
             }).error(function(){
-                Notify.danger('删除网校LOGO失败！');
+                Notify.danger('删除系统LOGO失败！');
             });
         });
 
@@ -45,14 +45,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校启动图1失败，请重试！')
+                Notify.danger('上传系统启动图1失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-splash1-container").html('<img src="' + response.url + '">');
                 $form.find('[name=splash1]').val(response.path);
                 $("#mobile-splash1-remove").show();
-                Notify.success('上传网校启动图1成功！');
+                Notify.success('上传系统启动图1成功！');
             }
         });
 
@@ -63,9 +63,9 @@ define(function(require, exports, module) {
                 $("#mobile-splash1-container").html('');
                 $form.find('[name=splash1]').val('');
                 $btn.hide();
-                Notify.success('删除网校启动图1成功！');
+                Notify.success('删除系统启动图1成功！');
             }).error(function(){
-                Notify.danger('删除网校启动图1失败！');
+                Notify.danger('删除系统启动图1失败！');
             });
         });
 
@@ -76,14 +76,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校启动图2失败，请重试！')
+                Notify.danger('上传系统启动图2失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-splash2-container").html('<img src="' + response.url + '">');
                 $form.find('[name=splash2]').val(response.path);
                 $("#mobile-splash2-remove").show();
-                Notify.success('上传网校启动图2成功！');
+                Notify.success('上传系统启动图2成功！');
             }
         });
 
@@ -94,9 +94,9 @@ define(function(require, exports, module) {
                 $("#mobile-splash2-container").html('');
                 $form.find('[name=splash2]').val('');
                 $btn.hide();
-                Notify.success('删除网校启动图2成功！');
+                Notify.success('删除系统启动图2成功！');
             }).error(function(){
-                Notify.danger('删除网校启动图2失败！');
+                Notify.danger('删除系统启动图2失败！');
             });
         });
 
@@ -107,14 +107,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校启动图3失败，请重试！')
+                Notify.danger('上传系统启动图3失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-splash3-container").html('<img src="' + response.url + '">');
                 $form.find('[name=splash3]').val(response.path);
                 $("#mobile-splash3-remove").show();
-                Notify.success('上传网校启动图3成功！');
+                Notify.success('上传系统启动图3成功！');
             }
         });
 
@@ -125,9 +125,9 @@ define(function(require, exports, module) {
                 $("#mobile-splash3-container").html('');
                 $form.find('[name=splash3]').val('');
                 $btn.hide();
-                Notify.success('删除网校启动图3成功！');
+                Notify.success('删除系统启动图3成功！');
             }).error(function(){
-                Notify.danger('删除网校启动图3失败！');
+                Notify.danger('删除系统启动图3失败！');
             });
         });
 
@@ -138,14 +138,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校启动图4失败，请重试！')
+                Notify.danger('上传系统启动图4失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-splash4-container").html('<img src="' + response.url + '">');
                 $form.find('[name=splash4]').val(response.path);
                 $("#mobile-splash4-remove").show();
-                Notify.success('上传网校启动图4成功！');
+                Notify.success('上传系统启动图4成功！');
             }
         });
 
@@ -156,9 +156,9 @@ define(function(require, exports, module) {
                 $("#mobile-splash4-container").html('');
                 $form.find('[name=splash4]').val('');
                 $btn.hide();
-                Notify.success('删除网校启动图4成功！');
+                Notify.success('删除系统启动图4成功！');
             }).error(function(){
-                Notify.danger('删除网校启动图4失败！');
+                Notify.danger('删除系统启动图4失败！');
             });
         });
 
@@ -169,14 +169,14 @@ define(function(require, exports, module) {
             data: {'_csrf_token': $('meta[name=csrf-token]').attr('content') },
             accept: 'image/*',
             error: function(file) {
-                Notify.danger('上传网校启动图5失败，请重试！')
+                Notify.danger('上传系统启动图5失败，请重试！')
             },
             success: function(response) {
                 response = $.parseJSON(response);
                 $("#mobile-splash5-container").html('<img src="' + response.url + '">');
                 $form.find('[name=splash5]').val(response.path);
                 $("#mobile-splash5-remove").show();
-                Notify.success('上传网校启动图5成功！');
+                Notify.success('上传系统启动图5成功！');
             }
         });
 
@@ -187,9 +187,9 @@ define(function(require, exports, module) {
                 $("#mobile-splash5-container").html('');
                 $form.find('[name=splash5]').val('');
                 $btn.hide();
-                Notify.success('删除网校启动图5成功！');
+                Notify.success('删除系统启动图5成功！');
             }).error(function(){
-                Notify.danger('删除网校启动图5失败！');
+                Notify.danger('删除系统启动图5失败！');
             });
         });
 
