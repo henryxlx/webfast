@@ -369,3 +369,17 @@ CREATE TABLE `app_user_profile` (
   `textField10` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
+
+-- ----------------------------
+-- Table structure for `app_user_secure_question`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user_secure_question`;
+CREATE TABLE `app_user_secure_question` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+  `securityQuestionCode` varchar(64) NOT NULL DEFAULT '' COMMENT '问题的code',
+  `securityAnswer` varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案',
+  `securityAnswerSalt` varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案Salt',
+  `createdTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全设置安全问题表';
