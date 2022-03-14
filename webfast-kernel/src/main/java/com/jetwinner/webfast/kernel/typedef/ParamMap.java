@@ -34,17 +34,30 @@ public class ParamMap {
         return set;
     }
 
+    private static Object getValueFromRequest(String key, HttpServletRequest request) {
+        String[] values = request.getParameterValues(key);
+        if (values != null) {
+            int len = values.length;
+            if (len > 1) {
+                return values;
+            } else if (len == 1) {
+                return values[0];
+            }
+        }
+        return null;
+    }
+
     public static Map<String, Object> toCustomFormDataMap(HttpServletRequest request, String... includeNames) {
         if (includeNames == null || includeNames.length < 1) {
             return toFormDataMap(request);
         }
         Map<String, Object> map = new HashMap<>(includeNames.length);
         for (String key : includeNames) {
-            String value = request.getParameter(key);
+            Object value = getValueFromRequest(key, request);
             if (value == null) {
                 continue;
             }
-            map.put(key, request.getParameter(key));
+            map.put(key, value);
         }
         return map;
     }
@@ -58,7 +71,7 @@ public class ParamMap {
             if (excludeParameterNames.contains(key)) {
                 continue;
             }
-            String value = request.getParameter(key);
+            Object value = getValueFromRequest(key, request);
             if (value == null) {
                 continue;
             }
