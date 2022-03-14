@@ -1,9 +1,9 @@
 <#if setting('default.defaultAvatar')??>
 <div class="form-group" id="avatar-class">
     <div class="col-md-8 control-label"><b>自定义默认头像</b></div>
-    <form id="avatar-form" method="post" action="{{ path('admin_setting_default_avatar') }}" enctype="multipart/form-data">
+    <form id="avatar-form" method="post" action="${ctx}/setting/default/avatar" enctype="multipart/form-data">
         <div class="controls col-md-8 controls">
-            <img src="{{ system_default_path('avatar', 'true' ) }}">
+            <img src="${system_default_path('avatar', true)}">
         </div>
 
         <div class="form-group">
@@ -27,17 +27,17 @@
 <div class="form-group" id="system-avatar-class" style="display:none;">
     <div class="col-md-8 control-label"><b>系统默认头像</b></div>
     <div class="controls col-md-8 controls">
-        <img src="{{ system_default_path('avatar', '' ) }}">
+        <img src="${system_default_path('avatar')}">
     </div>
 </div>
 
-{% else %}
+<#else>
 
 <div class="form-group" id="avatar-class" style="display:none;">
     <div class="col-md-8 control-label"><b>自定义默认头像</b></div>
-    <form id="avatar-form" method="post" action="{{ path('admin_setting_default_avatar') }}" enctype="multipart/form-data">
+    <form id="avatar-form" method="post" action="${ctx}/setting/default/avatar" enctype="multipart/form-data">
         <div class="controls col-md-8 controls">
-            <img src="{{ system_default_path('avatar', 'true' ) }}">
+            <img src="${system_default_path('avatar', true)}">
         </div>
 
         <div class="form-group">
@@ -61,7 +61,7 @@
 <div class="form-group" id="system-avatar-class">
     <div class="col-md-8 control-label"><b>系统默认头像</b></div>
     <div class="controls col-md-8 controls">
-        <img src="{{ system_default_path('avatar', '' ) }}">
+        <img src="${system_default_path('avatar')}">
     </div>
 </div>
 

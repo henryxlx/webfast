@@ -46,6 +46,10 @@
     <#return webExtPack.getFileUrl(uri, default, absolute)/>
 </#function>
 
+<#function system_default_path category needSystemDefault=false>
+    <#return webExtPack.getSystemDefaultPath(category, needSystemDefault)/>
+</#function>
+
 <#function setting name defaultValue='null'>
     <#if defaultValue != 'null'>
         <#return webExtPack.getSetting(name, defaultValue)/>

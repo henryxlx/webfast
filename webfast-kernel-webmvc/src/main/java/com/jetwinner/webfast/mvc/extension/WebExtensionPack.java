@@ -5,6 +5,7 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.util.ValueParser;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -144,6 +145,25 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public List<Map<String, Object>> getDataTag(String keyForDataFetcher, Map<String, Object> params) {
         return delegator.dataFetcherHolder.get(keyForDataFetcher).getData(params);
+    }
+
+    public String getSystemDefaultPath(String category, boolean systemDefault) {
+        String url;
+        String publicUrlPath = "assets/img/default/";
+
+        Map<String, Object> defaultSetting = delegator.settingService.get("default");
+        if(systemDefault && !defaultSetting.isEmpty()){
+            String fileName = "default" + StringUtils.capitalize(category) + "FileName";
+            if (defaultSetting.containsKey(fileName)) {
+                url = getAssetUrl(publicUrlPath + defaultSetting.get(fileName));
+            } else {
+                url = getAssetUrl(publicUrlPath + category);
+            }
+        } else {
+            url = getAssetUrl(publicUrlPath + category);
+        }
+
+        return url;
     }
 
 }
