@@ -3,6 +3,15 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.6.9: @2022-03-15
+* ParamMap对Request中参数处理添加数组类型返回
+* 新增防止跨站请求伪造(CSRF)攻击处理的提供类，新增用于防止跨站请求伪造(CSRF)攻击的拦截器CsrfValidationInterceptor
+* 新增简单的加密处理应用类FastEncodeUtil
+* Web应用扩展（BaseWEbExtensionPack和html_extension.ftl）实现防止跨站请求伪造(CSRF)攻击生成Token的处理renderCsrfToken
+* FastAppConst添加用于控制应用处理离线状态的属性offline
+* 新增用于应用设置为离线状态的SpringMVC拦截器WebAppOfflineInterceptor和FreeMarker页面offline.ftl
+* 在SpringBoot应用配置FreeMarkerViewContextWebConfigurer中注册网站离线和防止跨站请求伪造(CSRF)攻击的拦截器
+
 0.6.8: @2022-03-14
 * 个人中心删除支付密码设置，修改安全问题设置的请求URL，个人中心安全设置添加缺少的安全问题页面
 * 将网页与JS中的词语网校替换为系统
