@@ -18,11 +18,13 @@ public class CsrfValidationInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if ("POST".equals(request.getMethod())) {
-            if (verifyCsrfToken(request) == false) {
-                logger.info(String.format("CsrfValidationInterceptor cross-site request forgery failed: client[%s, url: %s]",
-                        getRemoteHost(request), request.getServletPath()));
-                throw new RuntimeGoingException("");
+        if (handler != null) {
+            if ("POST".equals(request.getMethod())) {
+                if (verifyCsrfToken(request) == false) {
+                    logger.info(String.format("CsrfValidationInterceptor cross-site request forgery failed: client[%s, url: %s]",
+                            getRemoteHost(request), request.getServletPath()));
+                    throw new RuntimeGoingException("你的应用可能使用了非法的跨站请求伪造(CSRF)！");
+                }
             }
         }
 
