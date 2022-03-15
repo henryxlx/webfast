@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>出错啦 - WebFast - Powered By EduNext</title>
+    <title>出错啦 - WebFast - Powered By Jetwinner</title>
 
     <style>
 
