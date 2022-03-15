@@ -67,7 +67,7 @@ public class SettingController {
             String offline = request.getParameter("offline");
             appConst.setOffline("true".equalsIgnoreCase(offline) ? true : false);
             FlashMessageUtil.setFlashMessage("success",
-                    String.format("站点当前是%s状态！", appConst.getOffline() ? "离线" : "在线"), request.getSession());
+                    String.format("站点当前是【%s】状态！", appConst.getOffline() ? "离线" : "在线"), request.getSession());
         }
         model.addAttribute("offline", appConst.getOffline());
         return "/admin/system/site-offline";
