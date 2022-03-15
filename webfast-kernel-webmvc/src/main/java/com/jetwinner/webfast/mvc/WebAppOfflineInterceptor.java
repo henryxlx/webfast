@@ -34,14 +34,17 @@ public class WebAppOfflineInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 
-        if (appConst.getOffline() && !userAccessControlService.hasAnyRole("ROLE_ADMIN", "ROLE_SUPER_ADMIN")) {
-            response.setContentType("text/html; charset=" + StandardCharsets.UTF_8);
-            OutputStream out = response.getOutputStream();
-            ClassPathResource resource = new ClassPathResource("/static/offline.html");
-            FileCopyUtils.copy(resource.getInputStream(), out);
-            out.flush();
-            return false;
+        if (handler != null) {
+            if (appConst.getOffline() && !userAccessControlService.hasAnyRole("ROLE_ADMIN", "ROLE_SUPER_ADMIN")) {
+                response.setContentType("text/html; charset=" + StandardCharsets.UTF_8);
+                OutputStream out = response.getOutputStream();
+                ClassPathResource resource = new ClassPathResource("/static/offline.html");
+                FileCopyUtils.copy(resource.getInputStream(), out);
+                out.flush();
+                return false;
+            }
         }
+       
         return true;
     }
 
