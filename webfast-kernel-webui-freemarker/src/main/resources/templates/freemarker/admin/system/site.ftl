@@ -1,24 +1,22 @@
-<#assign menu = 'site'/>
+<#assign submenu = 'base'/>
 <#assign script_controller = 'setting/site'/>
 
-<#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>站点设置 - ${blockTitleParent}</#macro>
+<#include '/admin/system/site-layout.ftl'/>
+<#macro blockTitle>基本信息 - 站点设置 - ${blockTitleParent}</#macro>
 
-<#macro blockMain>
+<#macro blockMainContent>
 
 <style>
     #site-logo-container,#site-favicon-container img {max-width: 80%; margin-bottom: 10px;}
 </style>
 
-<div class="page-header"><h1>站点设置</h1></div>
-
 <@web_macro.flash_messages/>
+
+<div class="page-header"><h1>网站基本信息</h1></div>
 
 <form class="form-horizontal" id="site-form" method="post">
 
     <fieldset>
-        <legend>基础信息</legend>
-
         <div class="form-group">
             <div class="col-md-2 control-label">
                 <label for="name">网站名称</label>

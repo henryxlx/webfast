@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -22,10 +23,12 @@ public class SettingController {
 
     private final AppSettingService settingService;
     private final AppLogService logService;
+    private final FastAppConst appConst;
 
-    public SettingController(AppSettingService settingService, AppLogService logService) {
+    public SettingController(AppSettingService settingService, AppLogService logService, FastAppConst appConst) {
         this.settingService = settingService;
         this.logService = logService;
+        this.appConst = appConst;
     }
 
     @RequestMapping("/admin/setting/site")
@@ -56,6 +59,18 @@ public class SettingController {
         }
         model.addAttribute("site", siteMap);
         return "/admin/system/site";
+    }
+
+    @RequestMapping("/admin/setting/site/offline")
+    public String siteOfflinePage(HttpServletRequest request, Model model) {
+        if ("POST".equals(request.getMethod())) {
+            String offline = request.getParameter("offline");
+            appConst.setOffline("true".equalsIgnoreCase(offline) ? true : false);
+            FlashMessageUtil.setFlashMessage("success",
+                    String.format("站点当前是%s状态！", appConst.getOffline() ? "离线" : "在线"), request.getSession());
+        }
+        model.addAttribute("offline", appConst.getOffline());
+        return "/admin/system/site-offline";
     }
 
     @RequestMapping("/admin/setting/default")
