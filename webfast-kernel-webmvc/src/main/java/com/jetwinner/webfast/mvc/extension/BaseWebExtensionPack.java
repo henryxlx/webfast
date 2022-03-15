@@ -3,6 +3,7 @@ package com.jetwinner.webfast.mvc.extension;
 import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.mvc.extension.csrf.SessionCsrfProvider;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,18 +21,21 @@ public abstract class BaseWebExtensionPack {
 
     protected WebExtensionPackAppServiceDelegator delegator;
 
+    protected SessionCsrfProvider csrfProvider;
+
     public BaseWebExtensionPack(HttpServletRequest request, ApplicationContext appContext) {
         this.request = request;
         this.appContext = appContext;
         this.delegator = appContext.getBean(WebExtensionPackAppServiceDelegator.class);
+        this.csrfProvider = SessionCsrfProvider.getDefaultInstance(request.getSession(true));
     }
 
     public HttpServletRequest getRequest() {
         return request;
     }
 
-    public String csrfToken(String seed) {
-        return "";
+    public String renderCsrfToken(String intention) {
+        return this.csrfProvider.generateCsrfToken(intention);
     }
 
     public String getSchemeAndHttpHost() {

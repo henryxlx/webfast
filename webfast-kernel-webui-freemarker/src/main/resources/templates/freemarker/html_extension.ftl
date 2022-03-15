@@ -62,8 +62,8 @@
     <#return webExtPack.getDictText(type, key) />
 </#function>
 
-<#function csrf_token intention=''>
-    <#return ''/>
+<#function csrf_token intention='site'>
+    <#return webExtPack.renderCsrfToken(intention)/>
 </#function>
 
 <#function upload_max_filesize>
