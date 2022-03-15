@@ -33,7 +33,7 @@
                 <div class="form-group">
                     <div class="controls">
             <span class="checkbox mtm pull-right">
-              <label> <input type="checkbox" name="_remember_me" checked="checked"> 记住密码 </label>
+              <label> <input type="checkbox" name="_remember_me" checked="checked" value="true"> 记住密码 </label>
             </span>
                         <button type="submit" class="btn btn-fat btn-primary btn-large">登录</button>
                     </div>

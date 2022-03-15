@@ -38,12 +38,13 @@ public class LoginController {
     @PostMapping("/login")
     public String doLoginAction(@RequestParam("_username") String username,
                                 @RequestParam("_password") String password,
+                                @RequestParam(value = "_remember_me", defaultValue = "false") boolean rememberMe,
                                 @RequestParam(TARGET_PATH_KEY) String targetPath,
                                 HttpServletRequest request,
                                 Model model) {
 
         try {
-            userAccessControlService.doLoginCheck(username, password);
+            userAccessControlService.doLoginCheck(username, password, rememberMe);
             AppUser user = (AppUser) userAccessControlService.getCurrentUser();
             user.setLoginIp(RequestIpAddressUtil.getClientIp(request));
             logService.info(user, "user", "login_success", "登录成功");

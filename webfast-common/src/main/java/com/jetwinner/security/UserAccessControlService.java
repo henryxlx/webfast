@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface UserAccessControlService {
 
-    void doLoginCheck(String username, String password) throws Exception;
+    void doLoginCheck(String username, String password, boolean rememberMe) throws Exception;
 
     boolean isLoggedIn();
 

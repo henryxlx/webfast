@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 public class UserAccessControlServiceImpl implements UserAccessControlService {
 
     @Override
-    public void doLoginCheck(String username, String password) throws Exception {
+    public void doLoginCheck(String username, String password, boolean rememberMe) throws Exception {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        token.setRememberMe(rememberMe);
         try {
             SecurityUtils.getSubject().login(token);
         } catch (IncorrectCredentialsException e) {
