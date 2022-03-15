@@ -44,6 +44,8 @@ public class FastAppConst {
     @Value("${custom.app.upload.public_directory:/web/files}")
     private String uploadPublicDirectory;
 
+    private boolean offline = false;
+
     public String getDebug() {
         return debug;
     }
@@ -86,5 +88,13 @@ public class FastAppConst {
 
     public String getUploadPublicUrlPath() {
         return this.uploadPublicUrlPath;
+    }
+
+    public boolean getOffline() {
+        return offline;
+    }
+
+    public void setOffline(boolean offline) {
+        this.offline = offline;
     }
 }
