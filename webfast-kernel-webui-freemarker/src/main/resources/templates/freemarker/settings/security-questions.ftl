@@ -34,7 +34,7 @@
         <div  class="col-md-3 control-label"><label for="question-1">安全问题1</label></div> 
         <div class="col-md-4">
           <select class="form-control" id="question-1" name="question-1"> 
-            {{ select_options(questionOptions, question1|default('parents') ) }} 
+            <@select_options questionOptions question1!'parents' />
           </select> 
         </div> 
       </div> 
@@ -51,7 +51,7 @@
         <div class="col-md-3 control-label"><label for="question-2">安全问题2</label></div> 
         <div class="col-md-4"> 
           <select class="form-control " id="question-2" name="question-2"> 
-            {{ select_options(questionOptions, question2|default('teacher')) }} 
+            <@select_options questionOptions question2!'teacher' />
           </select> 
         </div> 
       </div> 
@@ -67,7 +67,7 @@
         <div  class="col-md-3 control-label"><label for="question-3">安全问题3</label></div> 
         <div class="col-md-4"> 
           <select class="form-control" id="question-3" name="question-3"> 
-            {{ select_options(questionOptions,question3|default('lover')) }} 
+            <@select_options questionOptions question3!'lover' />
           </select> 
         </div> 
       </div> 
@@ -100,7 +100,7 @@
   <#else>
 
     <ul class="breadcrumb">
-      <li><a href="{{ path('settings_security') }}">安全设置</a></li>
+      <li><a href="${ctx}/settings/security">安全设置</a></li>
       <li class="active">查看安全问题</li>
     </ul>
 
@@ -108,15 +108,15 @@
     <form class="form-horizontal" role="form">
       <div class="form-group row">
         <label  class="col-md-3 control-label">安全问题1</label>
-        <p class="form-control-static">{{ questionOptions[question1] }}</p>
+        <p class="form-control-static">${questionOptions[question1]}</p>
       </div>
       <div class="form-group row"> 
         <label  class="col-md-3 control-label">安全问题2</label> 
-        <p class="form-control-static">{{ questionOptions[question2] }}</p>
+        <p class="form-control-static">${questionOptions[question2]}</p>
       </div>  
       <div class="form-group row"> 
         <label  class="col-md-3 control-label">安全问题3</label> 
-        <p class="form-control-static">{{ questionOptions[question3] }}</p>
+        <p class="form-control-static">${questionOptions[question3]}</p>
       </div>
     </form>
   </#if>
