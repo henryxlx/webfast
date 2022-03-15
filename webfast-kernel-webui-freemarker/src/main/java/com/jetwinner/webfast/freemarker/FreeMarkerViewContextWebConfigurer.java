@@ -29,8 +29,8 @@ public class FreeMarkerViewContextWebConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(offlineInterceptor).order(0).addPathPatterns("/*").excludePathPatterns("/login");
-        registry.addInterceptor(new CsrfValidationInterceptor()).order(1).addPathPatterns("/*");
+        registry.addInterceptor(offlineInterceptor).order(0).addPathPatterns("/**").excludePathPatterns("/login");
+        registry.addInterceptor(new CsrfValidationInterceptor()).order(1).addPathPatterns("/**");
         registry.addInterceptor(viewReferenceInterceptor).order(9999).addPathPatterns("/**")
                 .excludePathPatterns("/assets/**", "/bundles/**", "/images/**", "/themes/**")
                 .excludePathPatterns(appConst.getUploadPublicUrlPath() + "/**")
