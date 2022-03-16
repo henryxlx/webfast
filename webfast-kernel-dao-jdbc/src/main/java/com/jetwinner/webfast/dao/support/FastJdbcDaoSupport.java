@@ -26,8 +26,9 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
     private final Set<String> tableColumns = new HashSet<>();
 
     protected Set<String> getTableColumns(String tableName) {
-        if (this.tableColumns.size()== 0) {
-            String[] strArray = getJdbcTemplate().queryForRowSet("SELECT * FROM "+ tableName + " LIMIT 1").getMetaData().getColumnNames();
+        if (this.tableColumns.isEmpty()) {
+            String sql = "SELECT * FROM "+ tableName + " LIMIT 1";
+            String[] strArray = getJdbcTemplate().queryForRowSet(sql).getMetaData().getColumnNames();
             for (String str : strArray) {
                 tableColumns.add(str);
             }

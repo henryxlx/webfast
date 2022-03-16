@@ -1,6 +1,5 @@
 package com.jetwinner.webfast.kernel.dao.impl;
 
-import com.jetwinner.util.ListUtil;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
 import org.springframework.stereotype.Repository;
@@ -29,7 +28,7 @@ public class AppUserProfileDaoImpl extends FastJdbcDaoSupport implements AppUser
         List<Integer> list = getJdbcTemplate().queryForList(
                 "SELECT 1 FROM app_user_profile WHERE id = ? LIMIT 1", Integer.class, id);
 
-        int num = ListUtil.isEmpty(list) ? insertMap(TABLE_NAME, profile) :
+        int num = list.isEmpty() ? insertMap(TABLE_NAME, profile) :
                 updateMap(TABLE_NAME, profile, "id");
     }
 
