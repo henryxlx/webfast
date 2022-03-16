@@ -37,13 +37,13 @@
       </#if>
     </#list>
   </#if>
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+  <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 </form>
 <#if block.mode == 'html'>
 <form id="block-image-upload-form" action="{{ path('file_upload', {group:'default'}) }}" method="post" enctype="multipart/form-data">
   <input class="btn btn-default btn-sm" type="file" name="file" value="上传" style="display:inline-block;">
   <button class="btn btn-default btn-sm">上传图片</button>
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+  <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 </form>
 </#if>
 

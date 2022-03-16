@@ -42,7 +42,7 @@
     <div class="col-md-3 control-label"></div>
     <div class="controls col-md-8">
       <button type="submit" class="btn btn-primary">同步</button>
-      <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+      <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
     </div>
   </div>
 

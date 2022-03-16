@@ -146,7 +146,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+			<input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 	    <button id="article-operate-save" class="btn btn-primary" data-toggle="form-submit" data-loading-text="正在保存...">确定</button>
 			<a class="btn btn-link" href="${ctx}/admin/article">返回</a>
 		</div>		

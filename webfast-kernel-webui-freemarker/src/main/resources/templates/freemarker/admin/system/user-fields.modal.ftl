@@ -42,7 +42,7 @@
              <label class="col-md-4 control-label">是否启用、显示</label>
              <div class="col-md-2"><input type="checkbox"  checked=checked name="field_enabled" vaule="1" style="height:18px;width:18px;"></div>
             </div>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+            <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
        </div> 
       
       <div class="modal-footer">

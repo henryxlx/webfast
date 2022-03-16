@@ -45,7 +45,7 @@
 <#--            <@form_rest(form)/>-->
             <input type="hidden" id="form_token" name="formToken" value="e240727a365956e36cf595a0dc8c260e397a4908" />
             <button type="submit" class="btn btn-primary">上传</button>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+            <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
         </div>
     </div>
 

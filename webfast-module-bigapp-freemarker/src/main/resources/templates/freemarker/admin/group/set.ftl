@@ -38,6 +38,6 @@
   </div>
 </div>
 
-<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+<input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 </form>
 </#macro>

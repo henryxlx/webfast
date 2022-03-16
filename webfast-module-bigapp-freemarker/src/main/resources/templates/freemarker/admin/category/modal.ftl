@@ -54,7 +54,7 @@
 
 		<input type="hidden" name="groupId" value="${category.groupId!}">
 		<input type="hidden" name="parentId" value="${category.parentId!}">
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+		<input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 	</form>
 </div>
 <script type="text/javascript"> app.load('category/save-modal') </script>

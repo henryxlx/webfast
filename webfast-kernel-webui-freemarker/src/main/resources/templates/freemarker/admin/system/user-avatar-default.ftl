@@ -20,7 +20,7 @@
                 <button type="submit" class="btn btn-default btn-sm">上传</button>
             </div>
         </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
     </form>
 </div>
 
@@ -54,7 +54,7 @@
                 <button type="submit" class="btn btn-default btn-sm">上传</button>
             </div>
         </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
     </form>
 </div>
 

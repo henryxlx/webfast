@@ -83,7 +83,7 @@
 				<div class="help-block">建议等栏目内容整理编辑完毕后再启用</div>
 			</div>
 		</div>
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+		<input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 	</form>
 	
 	<script type="text/javascript"> app.load('article/category/save-modal') </script>

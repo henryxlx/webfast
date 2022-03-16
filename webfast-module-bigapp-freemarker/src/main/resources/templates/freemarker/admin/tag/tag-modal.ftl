@@ -11,7 +11,7 @@
         <input class="form-control" id="tag-name-field" type="text" name="name" value="${tag.name}" data-url="${ctx}/admin/tag/checkname?exclude=${tag.name}">
       </div>
     </div>
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+    <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
   </form>
   <script type="text/javascript">app.load('tag/save-modal')</script>
 </#macro>

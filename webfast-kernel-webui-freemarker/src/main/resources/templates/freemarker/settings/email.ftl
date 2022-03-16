@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+    <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
 </form>
 <#else>
 <div class="alert alert-danger">管理员尚未设置邮件服务器，不能更改邮箱地址。</div>

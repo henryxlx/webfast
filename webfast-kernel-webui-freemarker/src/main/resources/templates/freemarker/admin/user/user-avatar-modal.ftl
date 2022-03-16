@@ -32,7 +32,7 @@
       <div class="col-md-2 control-label"></div>
       <div class="controls col-md-8 controls">
         <a id="avatar-upload-btn" data-url="${ctx}/admin/user/${user.id}/avatar" class="btn btn-primary">上传</a>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
       </div>
     </div>
 

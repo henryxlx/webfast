@@ -65,7 +65,7 @@
       <div class="mbl">
           <form action="${ctx}/group/search-group" method="get">
                 <div class="input-group">
-                  <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+                  <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
                   <input type="text" class="form-control" placeholder="小组搜索" name="keyWord">
                   <span class="input-group-btn">
                   <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>

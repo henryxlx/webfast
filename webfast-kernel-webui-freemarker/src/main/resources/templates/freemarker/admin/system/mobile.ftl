@@ -476,7 +476,7 @@
     </div>
   </fieldset>
 
-  <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+  <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
   
   <div class="row form-group">
     <div class="controls col-md-offset-2 col-md-8">

@@ -78,7 +78,7 @@
                                    data-url="{ctx}/group/thread/checkUser" data-display="用户昵称"  placeholder="请输入用户昵称">
                             <div class="help-block" style="display:none;"></div>
                         </div>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+                        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
                     </div>
                 </div>
                 <div class="modal-footer">

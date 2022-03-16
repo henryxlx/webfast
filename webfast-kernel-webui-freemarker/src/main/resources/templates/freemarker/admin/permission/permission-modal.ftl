@@ -24,7 +24,7 @@
                        value="${(perm.label)!}">
             </div>
         </div>
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('site') }}">
+        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
     </form>
     <script type="text/javascript">app.load('permission/save-modal')</script>
 </#macro>
