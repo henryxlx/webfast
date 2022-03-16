@@ -130,13 +130,7 @@ public class SystemInfoBean {
         return getTotalMemory() - getFreeMemory();
     }
 
-/*
-    private long getPercentage(long numerator, long denom) {
-        return (new MathBean()).getPercentage(numerator, denom);
-    }
-*/
-
-    private long getPercentage(long portion, long total) {        // TODO: This is not finished!
+    private long getPercentage(long portion, long total) {
         long columnWidth = Math.round(((double) portion / (double) total) * 100D);
         return columnWidth;
     }
