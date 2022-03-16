@@ -1,21 +1,14 @@
 <#include '/user/layout.ftl'/>
 
-<#assign pageNav = type!/>
+<#assign pageNav = type!'about'/>
 
 <#macro blockMain>
 <div class="row">
     <div class="col-md-12">
-        <#if courses??>
-        <@renderController path='/course/coursesBlock' params={view: 'list'}/>
-        <@web_macro.paginator paginator!/>
-        <#else>
-        <#if pageNav! == 'teach'>
-        <div class="empty">无在教的课程</div>
-        <#elseif pageNav! == 'learn'>
-        <div class="empty">无在学的课程</div>
+        <#if pageNav! == 'group'>
+        <div class="empty">无小组信息</div>
         <#elseif pageNav! == 'favorited'>
-        <div class="empty">无收藏的课程</div>
-        </#if>
+        <div class="empty">无收藏的内容</div>
         </#if>
     </div>
 </div>
