@@ -12,14 +12,14 @@
                     </#if>
                 </div>
                 <h1>${(user.username)!} <small>${(user.title)!}</small></h1>
-                <div class="about">${(user.about)!}</div>
+                <div class="about">${(userProfile.aboutme)!}</div>
                 <div class="links">
-                    <#if user??>
-                    <#if (user.weibo)??>
-                    <a href="${user.weibo}" target="_blank" class="mrm"><img src="${ctx}/assets/img/user/link-weibo.png"> 微博</a>
+                    <#if userProfile??>
+                    <#if (userProfile.weibo)??>
+                    <a href="${userProfile.weibo}" target="_blank" class="mrm"><img src="${ctx}/assets/img/user/link-weibo.png"> 微博</a>
                     </#if>
-                    <#if (user.site)??>
-                    <a href="${user.site}" target="_blank" class="mrm"><img src="${ctx}/assets/img/user/link-site.png"> 网站</a>
+                    <#if (userProfile.site)??>
+                    <a href="${userProfile.site}" target="_blank" class="mrm"><img src="${ctx}/assets/img/user/link-site.png"> 网站</a>
                     </#if>
                     </#if>
                 </div>
