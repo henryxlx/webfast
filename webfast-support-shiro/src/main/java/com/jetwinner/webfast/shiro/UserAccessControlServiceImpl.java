@@ -78,7 +78,7 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
     @Override
     public void setEncryptPassword(BaseAppUser user) {
         String salt = new SecureRandomNumberGenerator().nextBytes().toString();
-        String password = PasswordEncoder.encodePassword(user.getPassword(), salt);
+        String password = FastPasswordHelper.encodePassword(user.getPassword(), salt);
         user.setSalt(salt);
         user.setPassword(password);
     }

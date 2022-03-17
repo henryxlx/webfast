@@ -5,9 +5,9 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 /**
  * @author xulixin
  */
-public class PasswordEncoder {
+public class FastPasswordHelper {
 
-    private PasswordEncoder() {
+    private FastPasswordHelper() {
         // reserved.
     }
 
