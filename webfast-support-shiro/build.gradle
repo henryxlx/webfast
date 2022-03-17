@@ -1,4 +1,7 @@
 dependencies {
+    compileOnly('org.springframework.boot:spring-boot-starter-cache')
+    compileOnly("org.apache.shiro:shiro-ehcache:${jarVersion['shiro']}")
+    compileOnly("net.sf.ehcache:ehcache")
     implementation("org.apache.shiro:shiro-spring-boot-web-starter:${jarVersion['shiro']}")
     implementation project(':webfast-common')
 }
