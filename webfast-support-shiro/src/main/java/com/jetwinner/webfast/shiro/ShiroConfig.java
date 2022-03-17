@@ -35,6 +35,15 @@ public class ShiroConfig {
     @Value("${webfast.shiro.filterChainMappingLocation:shiro-filter-chain-mapping.properties}")
     private String filterChainMappingLocation;
 
+    @Value("${shiro.loginUrl:/login")
+    private String loginUrl;
+
+    @Value("${shiro.successUrl:/")
+    private String successUrl;
+
+    @Value("${shiro.unauthorizedUrl:/403")
+    private String unauthorizedUrl;
+
     /**
      * 设置用于匹配密码的CredentialsMatcher
      */
@@ -88,11 +97,11 @@ public class ShiroConfig {
          * 配置拦截器,实现无权限返回401,而不是跳转到登录页
          * filters.put("authc", new FormLoginFilter());
          * 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面 */
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl(loginUrl);
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl("/index");
+        shiroFilterFactoryBean.setSuccessUrl(successUrl);
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
         // 拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(getFilterChainDefinitionMap());
         return shiroFilterFactoryBean;
