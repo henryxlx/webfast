@@ -3,7 +3,6 @@ package com.jetwinner.webfast.shiro;
 import com.jetwinner.properties.LinkedHashMapProperties;
 import com.jetwinner.security.RbacService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
@@ -29,8 +28,8 @@ public class ShiroConfig {
 
     Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
-    @Value("${webfast.shiro.filterChainMappingLocation:shiro-filter-chain-mapping.properties}")
-    private String filterChainMappingLocation;
+    @Value("${shiro.filterChainDefinitionMapFilePath:shiro-filter-chain-definitions.properties}")
+    private String filterChainDefinitionMapFilePath;
 
     @Value("${shiro.loginUrl:/login")
     private String loginUrl;
@@ -108,13 +107,13 @@ public class ShiroConfig {
         Map<String, String> map = new LinkedHashMap<>();
         try {
             Properties properties = new LinkedHashMapProperties();
-            PropertiesLoaderUtils.fillProperties(properties, new ClassPathResource(filterChainMappingLocation));
+            PropertiesLoaderUtils.fillProperties(properties, new ClassPathResource(filterChainDefinitionMapFilePath));
             Set<String> keys = properties.stringPropertyNames();
             for (String key : keys) {
                 map.put(key, properties.getProperty(key));
             }
         } catch (IOException e) {
-            logger.warn("Can not location Shiro filter chain path definition mapping file: " + filterChainMappingLocation);
+            logger.warn("Can not location Shiro filter chain definitions map file: " + filterChainDefinitionMapFilePath);
         }
         return map;
     }
