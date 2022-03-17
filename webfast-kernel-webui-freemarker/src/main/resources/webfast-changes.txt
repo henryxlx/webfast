@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.7.1: @2022-03-17
+* Shiro过滤器保护资源映射定义文件重命名为shiro-filter-chain-definitions.properties
+* 密码加密工具类重命名为FastPasswordHelper，密码加密参数移至FastPasswordHelper工具类中
+* Shiro中定义的登录请求地址loginUrl与登录成功后的转发地址successUrl及未授权的地址authorizedUrl使用属性定义的方式
+* 表单提交时使用CSRF函数防止跨域攻击
+* 完善我的主页页面显示及面签个人介绍和关注/粉丝页面
+
 0.7.0: @2022-03-16
 * 在后台管理-系统-站点设置中新增离线设置功能
 * 修复应用离线处理的问题，管理员(ROLE_ADMIN)和超级管理员(ROLE_SUPER_ADMIN)角色用户登录后可使用程序进行操作
