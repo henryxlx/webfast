@@ -29,9 +29,6 @@ public class ShiroConfig {
 
     Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
-    static final String DEFAULT_HASH_ALGORITHM_NAME = Sha256Hash.ALGORITHM_NAME;
-    static final int DEFAULT_HASH_ITERATIONS = 1024;
-
     @Value("${webfast.shiro.filterChainMappingLocation:shiro-filter-chain-mapping.properties}")
     private String filterChainMappingLocation;
 
@@ -51,11 +48,11 @@ public class ShiroConfig {
     public HashedCredentialsMatcher credentialsMatcher() {
         HashedCredentialsMatcher credentialsMatcher = new HashedCredentialsMatcher();
         // 散列算法，这里使用更安全的sha256算法
-        credentialsMatcher.setHashAlgorithmName(DEFAULT_HASH_ALGORITHM_NAME);
+        credentialsMatcher.setHashAlgorithmName(FastPasswordHelper.DEFAULT_HASH_ALGORITHM_NAME);
         // 数据库存储的密码字段使用HEX还是BASE64方式加密，false是使用BASE64方式加密
         credentialsMatcher.setStoredCredentialsHexEncoded(false);
         // 散列迭代次数
-        credentialsMatcher.setHashIterations(DEFAULT_HASH_ITERATIONS);
+        credentialsMatcher.setHashIterations(FastPasswordHelper.DEFAULT_HASH_ITERATIONS);
         return credentialsMatcher;
     }
 

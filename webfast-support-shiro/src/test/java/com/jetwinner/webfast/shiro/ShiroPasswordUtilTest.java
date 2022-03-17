@@ -25,9 +25,9 @@ public class ShiroPasswordUtilTest {
 
     static String shiroEncryption(String password, String salt, boolean isHexEncoded) {
         // 算法名称
-        String algorithmName = ShiroConfig.DEFAULT_HASH_ALGORITHM_NAME;
+        String algorithmName = FastPasswordHelper.DEFAULT_HASH_ALGORITHM_NAME;
         // 加密次数
-        int times = ShiroConfig.DEFAULT_HASH_ITERATIONS;
+        int times = FastPasswordHelper.DEFAULT_HASH_ITERATIONS;
         SimpleHash simpleHash = new SimpleHash(algorithmName, password, salt, times);
         String encodedPassword = isHexEncoded ? simpleHash.toString() : simpleHash.toBase64();
         // 返回加密后的密码
