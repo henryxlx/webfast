@@ -11,7 +11,7 @@
     </#list>
 </#macro>
 
-<#macro radios name choices checked = 'null'>
+<#macro radios name choices checked = NULL!>
     <#list choices! as value, label>
         <#if checked == value>
             <label><input type="radio" name="${name}" value="${value!}" checked="checked">${label!}</label>
