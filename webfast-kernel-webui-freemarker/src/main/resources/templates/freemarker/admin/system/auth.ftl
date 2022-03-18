@@ -16,7 +16,7 @@
             <label >新用户注册</label>
         </div>
         <div class="controls col-md-8 radios">
-            <@radios 'register_mode' {'opened':'开启', 'closed':'关闭'} 'auth.registerMode' />
+            <@radios 'register_mode' {'opened':'开启', 'closed':'关闭'} auth.register_mode />
         </div>
     </div>
 
@@ -26,27 +26,27 @@
         </div>
         <div class="controls col-md-8 ">
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="none" value="none" <#if (auth.registerProtective)!'' == "none">checked="checked"</#if>> 无
+                <input type="radio" name="register_protective" id="none" value="none" <#if auth.register_protective == "none">checked="checked"</#if>> 无
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="low" value="low" <#if (auth.registerProtective)!'' == "low">checked="checked"</#if>> 低
+                <input type="radio" name="register_protective" id="low" value="low" <#if auth.register_protective == "low">checked="checked"</#if>> 低
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="middle" value="middle" <#if (auth.registerProtective)!'' == "middle">checked="checked"</#if>> 中
+                <input type="radio" name="register_protective" id="middle" value="middle" <#if auth.register_protective == "middle">checked="checked"</#if>> 中
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="high" value="high"<#if (auth.registerProtective)!'' == "high">checked="checked"</#if>> 高
+                <input type="radio" name="register_protective" id="high" value="high"<#if auth.register_protective == "high">checked="checked"</#if>> 高
             </label>
         </div>
 
-        <div class="controls col-md-8 mtl low register-help" <#if (auth.registerProtective)!'' == "low"><#else>style="display:none;"</#if>>
+        <div class="controls col-md-8 mtl low register-help" <#if auth.register_protective == "low"><#else>style="display:none;"</#if>>
         <div class="well">
             方案说明：
             <p class="mll mtm">1：注册时需填写验证码。</p>
         </div>
     </div>
 
-    <div class="controls col-md-8 mtl middle register-help" <#if (auth.registerProtective)!'' == "middle"><#else>style="display:none;"</#if>>
+    <div class="controls col-md-8 mtl middle register-help" <#if auth.register_protective == "middle"><#else>style="display:none;"</#if>>
     <div class="well">
         方案说明：
         <p class="mll mtm">1：注册时需填写验证码。</p>
@@ -54,7 +54,7 @@
     </div>
     </div>
 
-    <div class="controls col-md-8 mtl high register-help" <#if (auth.registerProtective)!'' == "high"><#else>style="display:none;"</#if>>
+    <div class="controls col-md-8 mtl high register-help" <#if auth.register_protective == "high"><#else>style="display:none;"</#if>>
     <div class="well">
         方案说明：
         <p class="mll mtm">1：注册时需填写验证码。</p>
@@ -122,7 +122,7 @@
                 <label for="email_activation_title" >新用户激活邮件标题</label>
             </div>
             <div class="controls col-md-8">
-                <input type="text" id="email_activation_title" name="email_activation_title" class="form-control" value="${(auth.emailActivationTitle)!}">
+                <input type="text" id="email_activation_title" name="email_activation_title" class="form-control" value="${(auth.email_activation_title)!}">
             </div>
         </div>
 
@@ -131,7 +131,7 @@
                 <label for="email_activation_body">新用户激活邮件内容</label>
             </div>
             <div class="controls col-md-8">
-                <textarea id="email_activation_body" name="email_activation_body" class="form-control" rows="5">${(auth.emailActivationBody)!}</textarea>
+                <textarea id="email_activation_body" name="email_activation_body" class="form-control" rows="5">${(auth.email_activation_body)!}</textarea>
                 <div class="help-block">
                     <#--{% verbatim %}-->
                     <div>变量说明：</div>
@@ -153,7 +153,7 @@
                 <label for="email_activation_body">注册时需提供</label>
             </div>
             <div class="controls col-md-8 "  id="show-list">
-                <#list (auth.registerSort)!?values as sort>
+                <#list (auth.register_sort)!?values as sort>
                 <#if sort=='email'>
                 <button type="button" class="btn btn-default btn-xs">邮箱地址</button>
                 </#if>
@@ -320,7 +320,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label>发送欢迎信息</label>
             </div>
             <div class="controls col-md-8 checkboxs">
-                {{ checkboxs('welcome_methods', {'message':'站内私信', 'email':'电子邮件'}, auth.welcome_methods) }}
+                <@checkboxs 'welcome_methods', {'message':'站内私信', 'email':'电子邮件'}, auth.welcome_methods  />
                 <div class="help-block">新用户邮件激活开启时，电子邮件的发送欢迎信息方式无效。</div>
             </div>
         </div>
@@ -330,7 +330,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="welcome_title">发送欢迎信息</label>
             </div>
             <div class="controls col-md-8 radios">
-                <@radios 'welcome_enabled' {'opened':'开启', 'closed':'关闭'} 'auth.welcome_enabled' />
+                <@radios 'welcome_enabled' {'opened':'开启', 'closed':'关闭'} auth.welcome_enabled />
                 <div class="help-block">欢迎信以站内私信的方式，发送给新用户。</div>
             </div>
         </div>
@@ -340,7 +340,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="welcome_sender">欢迎信息发送方</label>
             </div>
             <div class="controls col-md-8">
-                <input type="text" id="welcome_sender" name="welcome_sender" class="form-control" value="${(auth.welcomeSender)!}">
+                <input type="text" id="welcome_sender" name="welcome_sender" class="form-control" value="${(auth.welcome_sender)!}">
                 <div class="help-block">通常为这个网站的管理员，请输入用户昵称。</div>
             </div>
         </div>
@@ -350,7 +350,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="welcome_title">欢迎信息标题</label>
             </div>
             <div class="controls col-md-8">
-                <input type="text" id="welcome_title" name="welcome_title" class="form-control" value="${(auth.welcomeTitle)!}">
+                <input type="text" id="welcome_title" name="welcome_title" class="form-control" value="${(auth.welcome_title)!}">
             </div>
         </div>
 
@@ -359,7 +359,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="welcome_body">欢迎信息内容</label>
             </div>
             <div class="controls col-md-8">
-                <textarea id="welcome_body" name="welcome_body" class="form-control" rows="5">${(auth.welcomeBody)!}</textarea>
+                <textarea id="welcome_body" name="welcome_body" class="form-control" rows="5">${(auth.welcome_body)!}</textarea>
                 <div class="help-block">
                     <#--{% verbatim %}-->
                     <div>注意： 私信长度不能超过1000个字符</div>
@@ -382,7 +382,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="user_terms">是否开启服务条款</label>
             </div>
             <div class="controls col-md-8 radios">
-                <@radios 'user_terms' {'opened':'开启', 'closed':'关闭'} 'auth.user_terms' />
+                <@radios 'user_terms' {'opened':'开启', 'closed':'关闭'} auth.user_terms />
                 <div class="help-block">开启后用户注册时必须同意条款才能注册</div>
             </div>
         </div>
@@ -392,7 +392,7 @@ glyphicon glyphicon-chevron-up"></span></a></div>
                 <label for="user_terms_body">条款内容</label>
             </div>
             <div class="controls col-md-8">
-                <textarea class="form-control" id="user_terms_body" rows="16" name="user_terms_body" data-image-upload-url="{{ path('editor_upload', {token:upload_token('default')}) }}">${(auth.userTermsBody)!}</textarea>
+                <textarea class="form-control" id="user_terms_body" rows="16" name="user_terms_body" data-image-upload-url="{{ path('editor_upload', {token:upload_token('default')}) }}">${(auth.user_terms_body)!}</textarea>
             </div>
         </div>
 
