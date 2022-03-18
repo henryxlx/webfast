@@ -15,11 +15,6 @@ public class SystemDefaultSettingController {
         return "/admin/system/theme";
     }
 
-    @RequestMapping("/admin/setting/login-connect")
-    public String loginConnectPage() {
-        return "/admin/system/login-connect";
-    }
-
     @RequestMapping("/admin/setting/user-center")
     public String userCenterPage() {
         return "/admin/system/user-center";

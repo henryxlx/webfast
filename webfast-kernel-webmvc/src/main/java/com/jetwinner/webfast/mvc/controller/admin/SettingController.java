@@ -164,4 +164,39 @@ public class SettingController {
         model.addAttribute("auth", auth);
         return "/admin/system/auth";
     }
+
+    @RequestMapping("/admin/setting/login-connect")
+    public String loginConnectAction(HttpServletRequest request, Model model) {
+        Map<String, Object> loginConnect = settingService.get("login_bind");
+
+        Map<String, Object> defaultMap = new ParamMap()
+                .add("login_limit", 0)
+                .add("enabled", 0)
+                .add("verify_code", "")
+                .add("captcha_enabled", 0)
+                .add("temporary_lock_enabled", 0)
+                .add("temporary_lock_allowed_times", 5)
+                .add("temporary_lock_minutes", 20).toMap();
+
+        /* Map<String, Object> clients = OAuthClientFactory.clients();
+        clients.forEach((key, value) -> {
+            defaultMap.put(key + "_enabled", 0);
+            defaultMap.put(key + "_key", "");
+            defaultMap.put(key + "_secret", "");
+            defaultMap.put(key + "_set_fill_account", 0);
+        });
+        model.addAttribute("clients", clients); */
+
+        defaultMap.putAll(loginConnect);
+        loginConnect = defaultMap;
+        if ("POST".equals(request.getMethod())) {
+            loginConnect = ParamMap.toFormDataMap(request);
+            settingService.set("login_bind", loginConnect);
+            logService.info(AppUser.getCurrentUser(request), "system", "update_settings", "更新登录设置", loginConnect);
+            FlashMessageUtil.setFlashMessage("success", "登录设置已保存！", request.getSession());
+        }
+
+        model.addAttribute("loginConnect", loginConnect);
+        return "/admin/system/login-connect";
+    }
 }

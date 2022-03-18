@@ -17,7 +17,7 @@
         <label >用户登录限制</label>
       </div>
       <div class="controls col-md-8 radios">
-        <@radios 'login_limit', {'1':'开启', '0':'关闭'}, 'loginConnect.login_limit' />
+        <@radios 'login_limit', {'1':'开启', '0':'关闭'}, ''+loginConnect.login_limit />
       <p class="help-block">开启后同一帐号只能在一处登录</p>
       </div>
     </div>
@@ -30,7 +30,7 @@
         <label >第三方登录</label>
       </div>
       <div class="controls col-md-8 radios">
-        <@radios 'enabled', {'1':'开启', '0':'关闭'}, 'loginConnect.enabled' />
+        <@radios 'enabled', {'1':'开启', '0':'关闭'}, ''+loginConnect.enabled />
       </div>
     </div>
   </fieldset>
@@ -43,7 +43,7 @@
           <label >用户登陆保护</label>
       </div>
       <div class="controls col-md-8 radios">
-          <@radios 'temporary_lock_enabled' {'1':'开启', '0':'关闭'} 'loginConnect.temporary_lock_enabled' />
+          <@radios 'temporary_lock_enabled' {'1':'开启', '0':'关闭'} ''+loginConnect.temporary_lock_enabled />
           <p class="help-block">开启后，登陆时用户连续多次输入错误密码时暂时封禁用户,此功能不影响admin手动永久封禁用户</p>
       </div>
 
@@ -76,35 +76,35 @@
   </fieldset>
 
   <#list clients! as type, client>
-    <fieldset data-role="oauth2-setting" data-type="{{ type }}">
-      <legend>{{ client.name }}</legend>
+    <fieldset data-role="oauth2-setting" data-type="${type}">
+      <legend>${client.name}</legend>
       <div class="form-group">
         <div class="col-md-3 control-label">
-            <label >{{ client.name }}</label>
+            <label >${client.name}</label>
         </div>
         <div class="controls col-md-8 radios">
-          <@radios  type + '_enabled' {'1':'开启', '0':'关闭'}  "loginConnect[type + '_enabled']" />
-          {% if client.apply_url|default(null) %}
-            <div class="help-block"><a href="{{ client.apply_url }}" target="_blank">申请{{ client.name }}</a></div>
-          {% endif %}
+          <@radios type + '_enabled' {'1':'开启', '0':'关闭'}  "loginConnect[type + '_enabled']" />
+          <#if client.apply_url??>
+            <div class="help-block"><a href="${client.apply_url}" target="_blank">申请${client.name}</a></div>
+          </#if>
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-md-3 control-label">
-          <label for="{{ type }}_key" >{{ client.key_setting_label }}</label>
+          <label for="${type}_key" >${client.key_setting_label}</label>
         </div>
         <div class="controls col-md-8">
-          <input type="text" id="{{ type }}_key" name="{{ type }}_key" class="form-control" value="{{loginConnect[type ~ '_key']}}">
+          <input type="text" id="${type}_key" name="${type}_key" class="form-control" value="${loginConnect[type + '_key']}">
         </div>
       </div>
 
       <div class="form-group">
         <div class="col-md-3 control-label">
-          <label for="{{ type }}_secret" >${(client.secret_setting_label)!}</label>
+          <label for="${type}_secret" >${(client.secret_setting_label)!}</label>
         </div>
         <div class="controls col-md-8">
-          <input type="text" id="{{ type }}_secret" name="{{ type }}_secret" class="form-control" value="${(loginConnect[type! + '_secret'])!}">
+          <input type="text" id="${type}_secret" name="${type}_secret" class="form-control" value="${(loginConnect[type + '_secret'])!}">
         </div>
       </div>
       <div class="form-group">
