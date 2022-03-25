@@ -3,6 +3,12 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.7.2: @2022-03-25
+* Shiro配置与登录访问相关地址（loginUrl、successUrl和unauthorizedUrl）使用属性变量时无法获取设置的参数值
+* 台用户相关设置的用户登录控制功能完成，后台用户相关设置的用户注册页面内容显示不正确
+* Shiro支持模块添加EhCache缓存配置类
+* 宏定义中默认值NULL的使用方式<#macro radios name choices checked = NULL!> 默认值NULL不存在
+
 0.7.1: @2022-03-17
 * Shiro过滤器保护资源映射定义文件重命名为shiro-filter-chain-definitions.properties
 * 密码加密工具类重命名为FastPasswordHelper，密码加密参数移至FastPasswordHelper工具类中
