@@ -9,6 +9,7 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -24,20 +25,17 @@ import java.util.Set;
  * @author xulixin
  */
 @Configuration
+@ConfigurationProperties(prefix = "webfast.shiro")
 public class ShiroConfig {
 
     Logger logger = LoggerFactory.getLogger(ShiroConfig.class);
 
-    @Value("${shiro.filterChainDefinitionMapFilePath:shiro-filter-chain-definitions.properties}")
     private String filterChainDefinitionMapFilePath;
 
-    @Value("${shiro.loginUrl:/login")
     private String loginUrl;
 
-    @Value("${shiro.successUrl:/")
     private String successUrl;
 
-    @Value("${shiro.unauthorizedUrl:/403")
     private String unauthorizedUrl;
 
     /**
@@ -93,11 +91,11 @@ public class ShiroConfig {
          * 配置拦截器,实现无权限返回401,而不是跳转到登录页
          * filters.put("authc", new FormLoginFilter());
          * 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面 */
-        shiroFilterFactoryBean.setLoginUrl(loginUrl);
+        shiroFilterFactoryBean.setLoginUrl(getLoginUrl());
         // 登录成功后要跳转的链接
-        shiroFilterFactoryBean.setSuccessUrl(successUrl);
+        shiroFilterFactoryBean.setSuccessUrl(getSuccessUrl());
         // 未授权界面;
-        shiroFilterFactoryBean.setUnauthorizedUrl(unauthorizedUrl);
+        shiroFilterFactoryBean.setUnauthorizedUrl(getUnauthorizedUrl());
         // 拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(getFilterChainDefinitionMap());
         return shiroFilterFactoryBean;
@@ -107,7 +105,7 @@ public class ShiroConfig {
         Map<String, String> map = new LinkedHashMap<>();
         try {
             Properties properties = new LinkedHashMapProperties();
-            PropertiesLoaderUtils.fillProperties(properties, new ClassPathResource(filterChainDefinitionMapFilePath));
+            PropertiesLoaderUtils.fillProperties(properties, new ClassPathResource(getFilterChainDefinitionMapFilePath()));
             Set<String> keys = properties.stringPropertyNames();
             for (String key : keys) {
                 map.put(key, properties.getProperty(key));
@@ -118,4 +116,36 @@ public class ShiroConfig {
         return map;
     }
 
+    public String getFilterChainDefinitionMapFilePath() {
+        return filterChainDefinitionMapFilePath == null ? "shiro-filter-chain-definitions.properties" :
+                filterChainDefinitionMapFilePath;
+    }
+
+    public void setFilterChainDefinitionMapFilePath(String filterChainDefinitionMapFilePath) {
+        this.filterChainDefinitionMapFilePath = filterChainDefinitionMapFilePath;
+    }
+
+    public String getLoginUrl() {
+        return loginUrl == null ? "/login" : loginUrl;
+    }
+
+    public void setLoginUrl(String loginUrl) {
+        this.loginUrl = loginUrl;
+    }
+
+    public String getSuccessUrl() {
+        return successUrl == null ? "/" : successUrl;
+    }
+
+    public void setSuccessUrl(String successUrl) {
+        this.successUrl = successUrl;
+    }
+
+    public String getUnauthorizedUrl() {
+        return unauthorizedUrl == null ? "/403" : unauthorizedUrl;
+    }
+
+    public void setUnauthorizedUrl(String unauthorizedUrl) {
+        this.unauthorizedUrl = unauthorizedUrl;
+    }
 }
