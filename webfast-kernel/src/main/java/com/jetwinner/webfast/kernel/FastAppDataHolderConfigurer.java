@@ -29,7 +29,7 @@ public class FastAppDataHolderConfigurer {
 
     @Bean
     public FastMenuHolder menuHolder() {
-        Properties properties = new Properties(0);
+        Properties properties = new Properties();
         try {
             YamlPropertiesFactoryBean yaml = new YamlPropertiesFactoryBean();
             yaml.setResources(new ClassPathResource(appMenuYmlPath));
