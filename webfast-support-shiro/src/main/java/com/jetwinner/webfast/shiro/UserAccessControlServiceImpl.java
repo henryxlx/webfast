@@ -88,4 +88,10 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
         SavedRequest savedRequest = WebUtils.getSavedRequest(request);
         return savedRequest != null ? savedRequest.getRequestUrl() : null;
     }
+
+    @Override
+    public boolean checkPassword(BaseAppUser user, String password) {
+        String checkedPassword = FastPasswordHelper.encodePassword(password, user.getSalt());
+        return checkedPassword != null && checkedPassword.equals(user.getPassword());
+    }
 }

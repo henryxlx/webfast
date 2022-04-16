@@ -23,7 +23,5 @@ public interface UserAccessControlService {
 
     String getSavedUrlBeforeLogin(HttpServletRequest request);
 
-    default boolean checkPassword(String password, String userLoginPassword) {
-        return true;
-    }
+    boolean checkPassword(BaseAppUser user, String password);
 }
