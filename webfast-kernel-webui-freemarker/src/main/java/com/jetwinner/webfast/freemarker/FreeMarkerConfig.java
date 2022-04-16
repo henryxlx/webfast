@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.freemarker;
 
+import com.jetwinner.webfast.freemarker.ext.JsonEncodeFunction;
 import com.jetwinner.webfast.freemarker.tag.RenderControllerTag;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,5 +38,6 @@ public class FreeMarkerConfig {
         importMap.put("web_macro", "/web_macro.ftl");
         importMap.put("admin_macro", "/admin/admin_macro.ftl");
         configuration.setAutoImports(importMap);
+        configuration.setSharedVariable("json_encode", new JsonEncodeFunction());
     }
 }
