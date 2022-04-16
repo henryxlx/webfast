@@ -1,5 +1,4 @@
 <#assign side_nav = 'security'/>
-<#assign script_controller = 'settings/security'/>
 
 <#include '/settings/layout.ftl'/>
 
