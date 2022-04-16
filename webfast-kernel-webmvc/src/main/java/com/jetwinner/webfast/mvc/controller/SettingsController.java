@@ -216,11 +216,26 @@ public class SettingsController {
         return VIEW_PATH + "/security";
     }
 
-    @GetMapping("/password")
+    @RequestMapping("/password")
     public String passwordAction(HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
         if (EasyStringUtil.isBlank(user.getSetup())) {
             return "redirect:/settings/setup";
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            Map<String, Object> form = ParamMap.toCustomFormDataMap(request);
+            if (!userAccessControlService.checkPassword(user,
+                    String.valueOf(form.get("currentPassword")))) {
+
+                FlashMessageUtil.setFlashMessage("danger", "当前密码不正确，请重试！", request.getSession());
+            } else{
+                userService.changePassword(user.getId(),
+                        String.valueOf(form.get("currentPassword")), String.valueOf(form.get("newPassword")));
+                FlashMessageUtil.setFlashMessage("success", "密码修改成功。", request.getSession());
+            }
+
+            return "redirect:/settings/password";
         }
         return "settings/password";
     }
@@ -245,7 +260,9 @@ public class SettingsController {
         boolean hasSecurityQuestions = userSecureQuestions != null && userSecureQuestions.size() > 0;
 
         if ("POST" .equals(request.getMethod())) {
-            if (!userAccessControlService.checkPassword(user.getPassword(), request.getParameter("userLoginPassword"))) {
+            if (!userAccessControlService.checkPassword(user,
+                    request.getParameter("userLoginPassword"))) {
+
                 FlashMessageUtil.setFlashMessage("danger",
                         "您的登陆密码错误，不能设置安全问题。", request.getSession());
 
