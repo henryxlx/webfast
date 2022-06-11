@@ -10,4 +10,6 @@ public interface AppSettingService {
     void set(String name, Map<String, Object> mapForValue);
 
     Map<String, Object> get(String name);
+
+    String getSettingValue(String key, String defaultValue);
 }

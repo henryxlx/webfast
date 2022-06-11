@@ -31,4 +31,18 @@ public class AppSettingServiceImpl implements AppSettingService {
     public Map<String, Object> get(String name) {
         return settingDao.getSettingValueByName(name);
     }
+
+    @Override
+    public String getSettingValue(String key, String defaultValue) {
+        String result = defaultValue != null ? defaultValue : null;
+        String[] names = key.split("\\.");
+        if (names != null && names.length > 1) {
+            Map<String, Object> settingMap = get(names[0]);
+            if (settingMap != null) {
+                Object val = settingMap.get(names[1]);
+                result = val != null ? val.toString() : result;
+            }
+        }
+        return result;
+    }
 }
