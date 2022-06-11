@@ -6,13 +6,13 @@
 <#else>
     <#assign title = typeTitles[type] />
 </#if>
-<#macro blockTitle>${title} - ${blockTitleParent}</#macro>
+<#macro blockTitle>${title!'Untitle'} - ${blockTitleParent}</#macro>
 
 <#macro blockHeadScripts>${script!}</#macro>
 
 <#macro blockContent>
 
-<div id="page-message-container" class="page-message-container" data-goto="${gotoUrl!}" data-duration=${duration!}>
+<div id="page-message-container" class="page-message-container" data-goto="${ctx}/${gotoUrl!}" data-duration=${duration!}>
   <div class="page-message-panel">
     <div class="page-message-heading">
       <h2 class="page-message-title">${title!}</h2>
