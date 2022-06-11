@@ -31,20 +31,21 @@ public class PhpStringUtil {
 
     public static String rtrim(String str, String trimStr) {
         int pos = str.length() - 1;
-        for (int i = pos; i >= 0 ; i--) {
+        for (int i = pos; i >= 0; i--) {
             if (contains(trimStr, str.charAt(i))) {
                 pos -= 1;
-            } else{
+            } else {
                 break;
             }
         }
         return str.substring(0, pos + 1);
     }
 
-    public static String dirname (String path) {
+    public static String dirname(String path) {
         return dirname(path, 1);
     }
-    public static String dirname (String path, int levels) {
+
+    public static String dirname(String path, int levels) {
         if (levels < 1) {
             levels = 1;
         }
@@ -104,5 +105,9 @@ public class PhpStringUtil {
             return String.valueOf(cs);
         }
         return s;
+    }
+
+    public static int mt_rand(double min, double max) {
+        return (int) (Math.random() * (max - min) + min);
     }
 }
