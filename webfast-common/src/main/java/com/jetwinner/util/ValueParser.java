@@ -116,4 +116,18 @@ public abstract class ValueParser {
         }
         return value;
     }
+
+    public static long parseLong(String value) {
+        long result = 0;
+        try {
+            result = Long.parseLong(value != null ? value.trim() : value);
+        } catch (NumberFormatException e) {
+            // noops.
+        }
+        return result;
+    }
+
+    public static long parseLong(Object value) {
+        return parseLong(value != null ? value.toString() : null);
+    }
 }
