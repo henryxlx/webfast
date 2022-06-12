@@ -3,6 +3,26 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.7.6: @2022-06-13
+* 清册页面添加验证码功能，可使用简单的patchca库，或者Google的kaptcha库生成
+
+0.7.5: @2022-06-12
+* 注册页面与应用程序自身注册功能的实现，暂不能实现第三方注册功能
+* Shiro的权限控制中有关注册的功能可匿名访问，即公开/register/**的URL
+* 添加页面注册后成功发送邮件信息的页面及其处理功能方法sumitedAction
+
+0.7.4: @2022-06-11
+* PhpStringUtil添加随机数生成方法mt_rand
+* 配置服务接口AppSettingService添加获取配置参数的函数getSettingValue
+* BaseControllerHelper添加请求跳转方法redirect和生成URL的方法generateUrl
+* ValueParse工具类添加parseLong方法
+
+0.7.3: @2022-04-16
+* 用于FreeMarker页面上将对象转换为JSON字符串的自定义FreeMarker函数json_encode
+* 修改checkPassword的默认实现，由接口的实现类来完成检查密码的功能
+* 个人中心的安全设置中的登录密码修改完成提交后的处理
+* Java8中不支持Properties指定大小0初始化，修改FastAppDataHolderConfigurer类中的属性初始化代码
+
 0.7.2: @2022-03-25
 * Shiro配置与登录访问相关地址（loginUrl、successUrl和unauthorizedUrl）使用属性变量时无法获取设置的参数值
 * 台用户相关设置的用户登录控制功能完成，后台用户相关设置的用户注册页面内容显示不正确
