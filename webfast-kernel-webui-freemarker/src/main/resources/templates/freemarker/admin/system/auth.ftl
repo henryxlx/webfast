@@ -24,29 +24,30 @@
         <div class="col-md-3 control-label">
             <label >注册防护机制</label>
         </div>
+        <#assign local_auth_register_protective = auth.register_protective!''/>
         <div class="controls col-md-8 ">
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="none" value="none" <#if auth.register_protective == "none">checked="checked"</#if>> 无
+                <input type="radio" name="register_protective" id="none" value="none" <#if local_auth_register_protective == "none">checked="checked"</#if>> 无
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="low" value="low" <#if auth.register_protective == "low">checked="checked"</#if>> 低
+                <input type="radio" name="register_protective" id="low" value="low" <#if local_auth_register_protective == "low">checked="checked"</#if>> 低
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="middle" value="middle" <#if auth.register_protective == "middle">checked="checked"</#if>> 中
+                <input type="radio" name="register_protective" id="middle" value="middle" <#if local_auth_register_protective == "middle">checked="checked"</#if>> 中
             </label>
             <label class="radio-inline">
-                <input type="radio" name="register_protective" id="high" value="high"<#if auth.register_protective == "high">checked="checked"</#if>> 高
+                <input type="radio" name="register_protective" id="high" value="high"<#if local_auth_register_protective == "high">checked="checked"</#if>> 高
             </label>
         </div>
 
-        <div class="controls col-md-8 mtl low register-help" <#if auth.register_protective == "low"><#else>style="display:none;"</#if>>
+        <div class="controls col-md-8 mtl low register-help" <#if local_auth_register_protective == "low"><#else>style="display:none;"</#if>>
         <div class="well">
             方案说明：
             <p class="mll mtm">1：注册时需填写验证码。</p>
         </div>
     </div>
 
-    <div class="controls col-md-8 mtl middle register-help" <#if auth.register_protective == "middle"><#else>style="display:none;"</#if>>
+    <div class="controls col-md-8 mtl middle register-help" <#if local_auth_register_protective == "middle"><#else>style="display:none;"</#if>>
     <div class="well">
         方案说明：
         <p class="mll mtm">1：注册时需填写验证码。</p>
@@ -54,7 +55,7 @@
     </div>
     </div>
 
-    <div class="controls col-md-8 mtl high register-help" <#if auth.register_protective == "high"><#else>style="display:none;"</#if>>
+    <div class="controls col-md-8 mtl high register-help" <#if local_auth_register_protective == "high"><#else>style="display:none;"</#if>>
     <div class="well">
         方案说明：
         <p class="mll mtm">1：注册时需填写验证码。</p>
@@ -67,20 +68,20 @@
     <div class="controls col-md-8 mtl"  id="register-help">
         <div class="well">
             方案说明：
-            {% if  auth.register_protective|default(null) == "low" %}
+            {% if  local_auth_register_protective == "low" %}
             <div class="low">
                 <p class="mll mtm">1：注册时需填写验证码。</p>
             </div>
             {% endif %}
 
-            {% if  auth.register_protective|default(null) == "middle" %}
+            {% if  local_auth_register_protective == "middle" %}
             <div class="middle">
                 <p class="mll mtm">1：注册时需填写验证码。</p>
                 <p class="mll mtm">2：同一IP24小时內只能注册30次。</p>
             </div>
             {% endif %}
 
-            {% if  auth.register_protective|default(null) == "high" %}
+            {% if  local_auth_register_protective == "high" %}
             <div class="high">
                 <p class="mll mtm">1：注册时需填写验证码。</p>
                 <p class="mll mtm">2：同一IP24小时內只能注册10次。</p>
