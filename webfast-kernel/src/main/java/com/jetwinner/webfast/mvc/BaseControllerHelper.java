@@ -56,7 +56,7 @@ public class BaseControllerHelper {
     }
 
     public static ModelAndView redirect(String gotoUrl) {
-        return new ModelAndView(new RedirectView(gotoUrl));
+        return new ModelAndView("redirect:" + gotoUrl);
     }
 
     public static String generateUrl(String baseUrl, Map<String, Object> params) {
