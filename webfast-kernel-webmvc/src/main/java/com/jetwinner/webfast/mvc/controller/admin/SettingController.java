@@ -135,7 +135,7 @@ public class SettingController {
         defaultMap.putAll(auth);
         auth = defaultMap;
         if ("POST".equals(request.getMethod())) {
-            if (EasyStringUtil.isNotBlank(auth.get("setting_time")) && ValueParser.parseInt(auth.get("setting_time")) > 0) {
+            if (EasyStringUtil.isNotBlank(auth.get("setting_time")) && ValueParser.parseLong(auth.get("setting_time")) > 0) {
                 Object firstSettingTime = auth.get("setting_time");
                 auth = ParamMap.toCustomFormDataMap(request, auth.keySet().toArray(new String[auth.keySet().size()]));
                 auth.put("setting_time", firstSettingTime);
