@@ -45,4 +45,9 @@ public class AppSettingServiceImpl implements AppSettingService {
         }
         return result;
     }
+
+    @Override
+    public String getSettingValue(String key) {
+        return getSettingValue(key, null);
+    }
 }

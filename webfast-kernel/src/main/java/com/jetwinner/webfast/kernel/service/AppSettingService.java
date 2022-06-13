@@ -12,4 +12,6 @@ public interface AppSettingService {
     Map<String, Object> get(String name);
 
     String getSettingValue(String key, String defaultValue);
+
+    String getSettingValue(String key);
 }
