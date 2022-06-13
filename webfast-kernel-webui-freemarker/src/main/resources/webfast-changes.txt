@@ -4,7 +4,10 @@ TODO list
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
 0.7.6: @2022-06-13
-* 清册页面添加验证码功能，可使用简单的patchca库，或者Google的kaptcha库生成
+* 定义全局的Captcha验证码的服务接口FastCaptchaService
+* 清册页面添加验证码功能，可使用简单的patchca库，或者第三方的kaptcha库生成
+* 定义独立的验证码生成图片控制类CaptchaNumController
+* 在webfast-module-bigapp模块Gradle配置文件添加kaptcha库，有webfast-kernel-webmvc模块中放置本地依赖patchca.jar
 
 0.7.5: @2022-06-12
 * 注册页面与应用程序自身注册功能的实现，暂不能实现第三方注册功能
