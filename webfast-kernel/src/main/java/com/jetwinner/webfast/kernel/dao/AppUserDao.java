@@ -33,4 +33,6 @@ public interface AppUserDao {
     int waveCounterById(Integer userId, String name, int number);
 
     int clearCounterById(Integer userId, String name);
+
+    AppUser getByEmail(String email);
 }

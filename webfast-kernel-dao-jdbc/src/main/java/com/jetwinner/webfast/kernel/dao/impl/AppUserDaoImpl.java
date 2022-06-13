@@ -110,6 +110,13 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
         return getJdbcTemplate().update(sql, userId);
     }
 
+    @Override
+    public AppUser getByEmail(String email) {
+        String sql = String.format("SELECT * FROM %s WHERE email = ? LIMIT 1", TABLE_NAME);
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppUser.class), email)
+                .stream().findFirst().orElse(null);
+    }
+
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
 
         if (conditions.containsKey("roles")) {
