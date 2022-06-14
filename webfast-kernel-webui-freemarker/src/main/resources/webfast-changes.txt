@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.7.7: @2022-06-14
+* 系统增加邮件处理机制，用于使用SMTP协议发送邮件，在webfast-kernel模块添加SpringBoot的邮件依赖
+* 初步完成密码找回页面中的邮件发送重置密码功能。
+* 系统配置服务接口添加获取配置值的多态方法getSettingValue(String key), 该方法没有默认值参数
+* AppUserDao添加新方法getByEmail, 通过邮件获取用户信息
+* 添加用于保存用户Token的数据表app_user_token及其数据访问对象接口AppUserTokenDao与实现类AppUserTokenDaoImpl
+
 0.7.6: @2022-06-13
 * 定义全局的Captcha验证码的服务接口FastCaptchaService
 * 清册页面添加验证码功能，可使用简单的patchca库，或者第三方的kaptcha库生成
