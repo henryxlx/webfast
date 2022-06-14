@@ -559,4 +559,22 @@ public abstract class EasyStringUtil {
     public static String replaceOnce(String str, String target, String replace) {
         return str == null ? null : str.replaceFirst(target, replace);
     }
+
+    public static String plainTextFilter(String text, int length) {
+        String str = text.replaceAll("<[^>]+>", "");
+
+        str = str.replaceAll("\n|\r|\t" , "");
+        str = str.replace("&nbsp;" , " ");
+        str = trim(str);
+
+        if (length > 0 && str.length() > length)  {
+            str = str.substring(0, length);
+            str = str + "...";
+        }
+
+        return str;
+    }
+    public static String plainTextFilter(String text) {
+        return plainTextFilter(text, 0);
+    }
 }
