@@ -65,4 +65,11 @@ public interface AppUserService extends BaseAppUserService {
     List<Map<String, Object>> getUserSecureQuestionsByUserId(Object userId);
 
     void addUserSecureQuestionsWithUnHashedAnswers(AppUser currentUser, Map<String, Object> fields);
+
+    AppUser getUserByEmail(String email);
+
+    String makeToken(String type, Integer userId, long expiredTime, Object data);
+    String makeToken(String type, Integer userId, long expiredTime);
+
+    void rememberLoginSessionId(Integer userId, String sessionId);
 }

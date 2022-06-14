@@ -6,10 +6,7 @@ import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.security.UserHasRoleAndPermission;
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
-import com.jetwinner.util.ArrayUtil;
-import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.FastDirectoryUtil;
-import com.jetwinner.util.ValueParser;
+import com.jetwinner.util.*;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppRole;
@@ -46,6 +43,7 @@ public class AppUserServiceImpl implements AppUserService {
     private final FastAppConst appConst;
     private final UserAccessControlService userAccessControlService;
     private final AppLogService logService;
+    private final AppUserTokenDao userTokenDao;
 
     public AppUserServiceImpl(AppUserDao userDao,
                               AppUserApprovalDao userApprovalDao,
@@ -57,7 +55,7 @@ public class AppUserServiceImpl implements AppUserService {
                               RbacService rbacService,
                               FastAppConst appConst,
                               UserAccessControlService userAccessControlService,
-                              AppLogService logService) {
+                              AppLogService logService, AppUserTokenDao userTokenDao) {
 
         this.userDao = userDao;
         this.userApprovalDao = userApprovalDao;
@@ -70,6 +68,7 @@ public class AppUserServiceImpl implements AppUserService {
         this.appConst = appConst;
         this.userAccessControlService = userAccessControlService;
         this.logService = logService;
+        this.userTokenDao = userTokenDao;
     }
 
     @PostConstruct
@@ -430,5 +429,37 @@ public class AppUserServiceImpl implements AppUserService {
     @Override
     public void addUserSecureQuestionsWithUnHashedAnswers(AppUser currentUser, Map<String, Object> fields) {
 
+    }
+
+    @Override
+    public AppUser getUserByEmail(String email) {
+        return userDao.getByEmail(email);
+    }
+
+    @Override
+    public String makeToken(String type, Integer userId, long expiredTime, Object data) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", type);
+        map.put("userId", userId == null ? 0 : userId);
+        // map.put("token", base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
+        String token = TokenProducer.getInstance().generateToken();
+        map.put("token", token);
+        if (data != null) {
+            map.put("data", JsonUtil.objectToString(data));
+        }
+        map.put("expiredTime", expiredTime);
+        map.put("createdTime", System.currentTimeMillis());
+        userTokenDao.addToken(map);
+        return token;
+    }
+
+    @Override
+    public String makeToken(String type, Integer userId, long expiredTime) {
+        return makeToken(type, userId, expiredTime, null);
+    }
+
+    @Override
+    public void rememberLoginSessionId(Integer userId, String sessionId) {
+        userDao.updateMap(new ParamMap().add("id", userId).add("loginSessionId", sessionId).toMap());
     }
 }
