@@ -383,3 +383,21 @@ CREATE TABLE `app_user_secure_question` (
   `createdTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全设置安全问题表';
+
+-- ----------------------------
+-- Table structure for `app_user_token`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user_token`;
+CREATE TABLE `app_user_token` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'TOKEN编号',
+  `token` varchar(64) NOT NULL COMMENT 'TOKEN值',
+  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN关联的用户ID',
+  `type` varchar(255) NOT NULL COMMENT 'TOKEN类型',
+  `data` text NOT NULL COMMENT 'TOKEN数据',
+  `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN的校验次数限制(0表示不限制)',
+  `remainedTimes` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN剩余校验次数',
+  `expiredTime` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN过期时间',
+  `createdTime` bigint(20) unsigned NOT NULL COMMENT 'TOKEN创建时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `token` (`token`(60))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
