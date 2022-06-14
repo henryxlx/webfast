@@ -444,9 +444,7 @@ public class AppUserServiceImpl implements AppUserService {
         // map.put("token", base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         String token = TokenProducer.getInstance().generateToken();
         map.put("token", token);
-        if (data != null) {
-            map.put("data", JsonUtil.objectToString(data));
-        }
+        map.put("data", JsonUtil.objectToString(data == null ? "" : data));
         map.put("expiredTime", expiredTime);
         map.put("createdTime", System.currentTimeMillis());
         userTokenDao.addToken(map);
