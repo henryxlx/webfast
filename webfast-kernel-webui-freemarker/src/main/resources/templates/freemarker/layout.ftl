@@ -9,7 +9,8 @@
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
-        <#assign blockTitleParent>${setting('site.name', 'WebFast')}<#if setting('site.slogan')??> - ${setting('site.slogan')}</#if><#if setting('copyright.owned')??><#else> - Powered By WebFast</#if></#assign>
+        <#assign siteSlogan = setting('site.slogan')!''/>
+        <#assign blockTitleParent>${setting('site.name', 'WebFast')}<#if siteSlogan != ''> - siteSlogan</#if><#if setting('copyright.owned')??><#else> - Powered By WebFast</#if></#assign>
         <#if blockTitle??><@blockTitle/><#else>${blockTitleParent}</#if>
     </title>
     <meta name="keywords" content="${metaKeywords!}" />
