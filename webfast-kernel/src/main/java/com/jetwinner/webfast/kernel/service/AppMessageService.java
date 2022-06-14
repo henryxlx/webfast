@@ -35,4 +35,6 @@ public interface AppMessageService {
     List<AppModelMessage> findConversationMessages(Integer conversationId, int start, int limit);
 
     boolean deleteMessagesByIds(String[] ids);
+
+    AppModelMessageConversation getConversationByFromIdAndToId(Integer fromId, Integer toId);
 }

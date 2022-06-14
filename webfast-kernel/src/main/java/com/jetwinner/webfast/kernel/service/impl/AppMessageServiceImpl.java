@@ -249,6 +249,11 @@ public class AppMessageServiceImpl implements AppMessageService {
         return true;
     }
 
+    @Override
+    public AppModelMessageConversation getConversationByFromIdAndToId(Integer fromId, Integer toId) {
+        return conversationDao.getConversationByFromIdAndToId(fromId, toId);
+    }
+
     private void sortMessages(List<AppModelMessage> messages) {
         messages.sort((a, b) -> Long.compare(b.getCreatedTime(), a.getCreatedTime()));
     }
