@@ -29,7 +29,7 @@
         <p class="mtl">
           完成验证后，你还可以：
           <ul>
-            <li><a href="${ctx}${_target_path}">返回原页面</a></li>
+            <li><a href="${_target_path}">返回原页面</a></li>
             <li><a href="${ctx}">浏览首页</a></li>
           </ul>
         </p>
