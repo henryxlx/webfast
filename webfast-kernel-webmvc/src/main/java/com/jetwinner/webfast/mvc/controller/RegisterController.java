@@ -1,19 +1,19 @@
 package com.jetwinner.webfast.mvc.controller;
 
-import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.security.UserAccessControlService;
+import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.FastEncodeUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
+import com.jetwinner.webfast.kernel.service.AppMessageService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,18 +37,25 @@ public class RegisterController {
     private final AppSettingService settingService;
     private final AppUserFieldService userFieldService;
     private final AppUserService userService;
+    private final AppMessageService messageService;
+    private final UserAccessControlService aclService;
 
     @Value("${custom.app.hashkey:x19m06d03yt71cn06d17cl15}")
     private String userHashSecretKey;
 
     public RegisterController(UserAccessControlService userAccessControlService,
                               AppSettingService settingService,
-                              AppUserFieldService userFieldService, AppUserService userService) {
+                              AppUserFieldService userFieldService,
+                              AppUserService userService,
+                              AppMessageService messageService,
+                              UserAccessControlService aclService) {
 
         this.userAccessControlService = userAccessControlService;
         this.settingService = settingService;
         this.userFieldService = userFieldService;
         this.userService = userService;
+        this.messageService = messageService;
+        this.aclService = aclService;
     }
 
     @GetMapping("/register")
@@ -141,10 +148,10 @@ public class RegisterController {
             }
         }
 
-        BaseAppUser user = userService.register(registration);
+        AppUser user = userService.register(registration);
 
         if (authSettings.containsKey("email_enabled") && ("closed".equals(authSettings.get("email_enabled")))) {
-            this.authenticateUser(user);
+            this.authenticateUser(request, user);
             this.sendRegisterMessage(user);
         }
 
@@ -153,7 +160,7 @@ public class RegisterController {
                         .add("goto", this.getTargetPath(request)).toMap());
 
         if (this.hasPartnerAuth()) {
-            this.authenticateUser(user);
+            this.authenticateUser(request, user);
             this.sendRegisterMessage(user);
             return BaseControllerHelper.redirect(BaseControllerHelper.generateUrl("/partner/login",
                     new ParamMap().add("goto", gotoUrl).toMap()));
@@ -187,17 +194,75 @@ public class RegisterController {
         return true;
     }
 
-    private String makeHash(BaseAppUser user) {
-        String str = user.getId() + user.getLocked() +  userHashSecretKey;
+    private String makeHash(AppUser user) {
+        String str = user.getId() + user.getLocked() + userHashSecretKey;
         return FastEncodeUtil.md5(str);
     }
 
-    private void sendRegisterMessage(BaseAppUser user) {
-        //:TODO not finished.
+    private void sendRegisterMessage(AppUser user) {
+        Map<String, Object> auth = settingService.get("auth");
+
+        if (!auth.containsKey("welcome_enabled")) {
+            return ;
+        }
+
+        if ("opened".equals(auth.get("welcome_enabled"))) {
+            return ;
+        }
+
+        if (EasyStringUtil.isBlank(auth.containsKey("welcome_sender"))) {
+            return ;
+        }
+
+        AppUser senderUser = userService.getUserByUsername(String.valueOf(auth.get("welcome_sender")));
+        if (senderUser == null) {
+            return ;
+        }
+
+        String welcomeBody = this.getWelcomeBody(user);
+        if (EasyStringUtil.isBlank(welcomeBody)) {
+            return;
+        }
+
+        if (welcomeBody.length() >= 1000) {
+            welcomeBody = EasyStringUtil.plainTextFilter(welcomeBody, 1000);
+        }
+
+        messageService.sendMessage(senderUser.getId(), user.getId(), welcomeBody);
+
+        AppModelMessageConversation conversation =
+                messageService.getConversationByFromIdAndToId(user.getId(), senderUser.getId());
+
+        messageService.deleteConversation(conversation.getId());
     }
 
-    private void authenticateUser(BaseAppUser user) {
-        //:TODO not finished.
+    private String getWelcomeBody(AppUser user) {
+        Map<String, Object> auth = settingService.get("auth");
+        Map<String, Object> site = settingService.get("site");
+        String[] placeHolderArray = {"{{nickname}}", "{{sitename}}", "{{siteurl}}"};
+        String[] valuesToReplace = {user.getUsername(), String.valueOf(site.get("name")), String.valueOf(site.get("url"))};
+        String welcomeBody = settingService.getSettingValue("auth.welcome_body", "注册欢迎的内容");
+        for (int i = 0; i < valuesToReplace.length; i++) {
+            welcomeBody = welcomeBody.replace(placeHolderArray[i], valuesToReplace[i]);
+        }
+        return welcomeBody;
+    }
+
+    private void authenticateUser(HttpServletRequest request, AppUser user) {
+        user.setCreatedIp(request.getRemoteAddr());
+        try {
+            aclService.doLoginCheck(user.getUsername(), user.getPassword(), false);
+        } catch (Exception e) {
+            return;
+        }
+
+        Map<String, Object> loginBind = settingService.get("login_bind");
+        if (EasyStringUtil.isBlank(loginBind.get("login_limit"))) {
+            return ;
+        }
+
+        String sessionId = request.getSession().getId();
+        userService.rememberLoginSessionId(user.getId(), sessionId);
     }
 
     private boolean hasPartnerAuth() {
@@ -209,7 +274,31 @@ public class RegisterController {
     }
 
     private String getTargetPath(HttpServletRequest request) {
-        return "";
+        String targetPath;
+        if (EasyStringUtil.isNotBlank(request.getParameter("goto"))) {
+            targetPath = request.getParameter("goto");
+        } else if (EasyStringUtil.isNotBlank(request.getSession().getAttribute("_target_path"))) {
+            targetPath = String.valueOf(request.getSession().getAttribute("_target_path"));
+        } else {
+            targetPath = request.getHeader("Referer");
+        }
+
+        String appHomeUrl = RequestContextPathUtil.createBaseUrl(request) + "index";
+        if (targetPath.contains("login")) {
+            return appHomeUrl;
+        }
+
+        String[] url = targetPath.split("\\?");
+
+        if (url[0].contains("/partner/logout")) {
+            return appHomeUrl;
+        }
+
+        if (url[0].contains("/password/reset/update")) {
+            targetPath = appHomeUrl;
+        }
+
+        return targetPath;
     }
 
     @RequestMapping("/register/email/check")
@@ -230,7 +319,7 @@ public class RegisterController {
 
     @RequestMapping("/register/submited")
     public ModelAndView submitedAction(HttpServletRequest request, Integer id, String hash) {
-        BaseAppUser user = this.checkHash(id, hash);
+        AppUser user = this.checkHash(id, hash);
         if (user == null) {
             throw new RuntimeGoingException("创建注册用户失败！请联系管理员");
         }
@@ -249,8 +338,8 @@ public class RegisterController {
         return mav;
     }
 
-    private BaseAppUser checkHash(Integer userId, String hash) {
-        BaseAppUser user = userService.getUser(userId);
+    private AppUser checkHash(Integer userId, String hash) {
+        AppUser user = userService.getUser(userId);
         if (user == null) {
             return null;
         }
