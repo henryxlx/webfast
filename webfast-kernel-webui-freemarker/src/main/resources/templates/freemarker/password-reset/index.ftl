@@ -33,7 +33,7 @@
 
                     <div class="controls">
                         <#-- {{ form_widget(form.email, {attr:{class:'form-control'}}) }} -->
-                        <input type="email" id="form_email" name="form[email]" required="required" class="form-control" />
+                        <input type="email" id="form_email" name="email" required="required" class="form-control" />
 
                         <p class="help-block">请输入你在${setting('site.name')!}注册时填写的邮箱地址</p>
                     </div>
@@ -42,7 +42,7 @@
                 <div class="form-group">
                     <div class="controls">
                         <#-- {{ form_rest(form) }} -->
-                        <input type="hidden" id="form__token" name="form[_token]" value="13a6333bab0fb99ba83d29b7600b958402f53a0a" />
+                        <input type="hidden" id="password-reset-form_token" name="_form_token" value="13a6333bab0fb99ba83d29b7600b958402f53a0a" />
 
                         <button type="submit" class="btn btn-primary" data-loading-text="正在发送重设密码邮件...">重设密码</button>
                     </div>
