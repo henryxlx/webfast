@@ -8,4 +8,8 @@ import java.util.Map;
 public interface AppUserTokenDao {
 
     void addToken(Map<String, Object> entityMap);
+
+    Map<String, Object> findTokenByToken(String token);
+
+    int deleteToken(Object id);
 }

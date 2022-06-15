@@ -18,4 +18,16 @@ public class AppUserTokenDaoImpl extends FastJdbcDaoSupport implements AppUserTo
     public void addToken(Map<String, Object> entityMap) {
         insertMap(TABLE_NAME, entityMap);
     }
+
+    @Override
+    public Map<String, Object> findTokenByToken(String token) {
+        String sql = "SELECT * FROM app_user_token WHERE token = ? LIMIT 1";
+        return getJdbcTemplate().queryForList(sql, token).stream().findFirst().orElse(null);
+    }
+
+    @Override
+    public int deleteToken(Object id) {
+        String sql = "DELETE FROM app_user_token WHERE id = ?";
+        return getJdbcTemplate().update(sql, id);
+    }
 }

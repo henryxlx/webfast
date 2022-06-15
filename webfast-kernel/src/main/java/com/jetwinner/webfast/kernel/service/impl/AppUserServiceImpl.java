@@ -460,4 +460,28 @@ public class AppUserServiceImpl implements AppUserService {
     public void rememberLoginSessionId(Integer userId, String sessionId) {
         userDao.updateMap(new ParamMap().add("id", userId).add("loginSessionId", sessionId).toMap());
     }
+
+    @Override
+    public Map<String, Object> getToken(String type, String token) {
+        Map<String, Object> tokenMap = userTokenDao.findTokenByToken(token);
+        if (tokenMap == null || !type.equals(tokenMap.get("type"))) {
+            return null;
+        }
+        long expiredTime = ValueParser.parseLong(tokenMap.get("expiredTime"));
+        if (expiredTime > 0 && expiredTime < System.currentTimeMillis()) {
+            return null;
+        }
+        // tokenMap.put("data", unserialize(tokenMap.get("data")));
+        return tokenMap;
+    }
+
+    @Override
+    public boolean deleteToken(String type, String token) {
+        Map<String, Object> tokenMap = userTokenDao.findTokenByToken(token);
+        if (token == null || !type.equals(tokenMap.get("type"))) {
+            return false;
+        }
+        userTokenDao.deleteToken(tokenMap.get("id"));
+        return true;
+    }
 }

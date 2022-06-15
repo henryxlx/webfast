@@ -72,4 +72,8 @@ public interface AppUserService extends BaseAppUserService {
     String makeToken(String type, Integer userId, long expiredTime);
 
     void rememberLoginSessionId(Integer userId, String sessionId);
+
+    Map<String, Object> getToken(String type, String token);
+
+    boolean deleteToken(String type, String token);
 }
