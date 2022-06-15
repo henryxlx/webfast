@@ -9,13 +9,13 @@ define(function(require, exports, module) {
         });
 
         validator.addItem({
-            element: '[name="form[password]"]',
+            element: '[id="form_password"]',
             required: true,
             rule: 'minlength{min:6,max:24}'
         });
 
         validator.addItem({
-            element: '[name="form[confirmPassword]"]',
+            element: '[id="form_confirmPassword"]',
             required: true,
             rule: 'confirmation{target:"#form_password"}',
             errormessageConfirmation: '两次密码输入不一致，请重新输入'
