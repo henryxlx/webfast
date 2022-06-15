@@ -1,6 +1,8 @@
 package com.jetwinner.webfast.mvc.controller;
 
 import com.jetwinner.servlet.RequestContextPathUtil;
+import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.email.FastEmailService;
 import com.jetwinner.webfast.email.FastEmailServiceImpl;
 import com.jetwinner.webfast.kernel.AppUser;
@@ -8,11 +10,13 @@ import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.kernel.view.PostDataMapForm;
 import com.jetwinner.webfast.kernel.view.ViewRenderService;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,7 +101,7 @@ public class PasswordResetController {
         return mav;
     }
 
-    public String getEmailLoginUrl(String email) {
+    private String getEmailLoginUrl(String email) {
         String host = email.substring(email.indexOf('@') + 1);
         if ("hotmail.com".equals(host)) {
             return "http://www." + host;
@@ -106,6 +110,30 @@ public class PasswordResetController {
             return "http://mail.google.com";
         }
         return "http://mail."  + host;
+    }
+
+    @RequestMapping("/password/reset/update")
+    public String updateAction(HttpServletRequest request) {
+        Map<String, Object> token = userService.getToken("password-reset", request.getParameter("token"));
+        if (EasyStringUtil.isBlank(token)) {
+            return "/password-reset/error";
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            PostDataMapForm form = PostDataMapForm.createForm();
+            form.bind(request);
+            if (form.isValid()) {
+                Map<String, Object> data = form.getData();
+                userService.changePassword(ValueParser.parseInt(token.get("userId")), null,
+                        String.valueOf(data.get("password")));
+
+                userService.deleteToken("password-reset", String.valueOf(token.get("token")));
+
+                return "/password-reset/success";
+            }
+        }
+
+        return "/password-reset/update";
     }
 
 }
