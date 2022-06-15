@@ -93,7 +93,7 @@
                             <input type="text" class="form-control" id="captcha_num" name="captcha_num" maxlength="5" data-explain="输入验证码" required="required"  data-url="{{path('register_captcha_check')}}" >
                         </div>
                         <div class="col-md-4">
-                            <img class="pull-right" src="{{ path('register_captcha_num') }}" data-url="{{ path('register_captcha_num') }}" id="getcode_num" title="看不清，点击换一张" style="cursor:pointer;" >
+                            <img class="pull-right" src="${ctx}/captcha_num" data-url="${ctx}/captcha_num" id="getcode_num" title="看不清，点击换一张" style="cursor:pointer;" >
                         </div>
                         <div class="col-md-12 help-block">输入验证码</div>
                     </div>
