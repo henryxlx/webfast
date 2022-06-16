@@ -15,5 +15,14 @@ public class AnalysisController {
         return "/admin/operation/analysis/register";
     }
 
+    @RequestMapping("/admin/operation/analysis/login/{tab}")
+    public String loginPage(@PathVariable String tab) {
+        return "/admin/operation/analysis/login";
+    }
+
+    @RequestMapping("/admin/operation/analysis/user-sum/{tab}")
+    public String userSumPage(@PathVariable String tab) {
+        return "/admin/operation/analysis/user-sum";
+    }
 
 }
