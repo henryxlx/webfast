@@ -8,5 +8,6 @@ include 'webfast-common',
         'webfast-module-bigapp',
         'webfast-module-bigapp-dao-jdbc',
         'webfast-module-bigapp-freemarker',
+        'webfast-support-captcha',
         'webfast-support-shiro',
         'webfast-starter-demo'
