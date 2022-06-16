@@ -1,6 +1,6 @@
 dependencies {
     implementation project(':webfast-common')
     implementation project(':webfast-kernel')
-    implementation files('lib/patchca.jar')
+    implementation project(':webfast-support-captcha')
     implementation('org.springframework.boot:spring-boot-starter-web')
 }

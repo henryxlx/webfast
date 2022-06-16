@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.webfast.captcha.FastCaptchaUtil;
 import com.jetwinner.webfast.image.FastCaptchaService;
-import com.jetwinner.webfast.mvc.extension.FastCaptchaUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;

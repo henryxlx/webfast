@@ -1,4 +1,4 @@
-package com.jetwinner.webfast.mvc.extension;
+package com.jetwinner.webfast.captcha;
 
 import org.patchca.background.BackgroundFactory;
 import org.patchca.color.ColorFactory;
