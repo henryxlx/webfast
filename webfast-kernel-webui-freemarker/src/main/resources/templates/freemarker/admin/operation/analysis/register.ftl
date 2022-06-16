@@ -13,7 +13,7 @@
     <input id="registerStartDate"  type="hidden" value="${registerStartDate!}" />
 
     <#elseif tab! == "detail">
-        <#include '/admin/operation/analysis/table.ftl' />
+        <#include '/admin/operation/analysis/register-table.ftl' />
     </#if>
 </div>
 
