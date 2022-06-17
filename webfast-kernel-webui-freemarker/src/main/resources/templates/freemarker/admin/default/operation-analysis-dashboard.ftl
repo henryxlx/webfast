@@ -25,7 +25,7 @@
         <td><span class="pull-right">${todayLoginNum!}</span></td>
         <td><span class="pull-right">${yesterdayLoginNum!}</span></td>
         <#if userAcl.hasRole('ROLE_SUPER_ADMIN')>
-        <td><a href="${ctx}/admin/operation/analysis/login/trend?analysisDateType=login">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/login?tab=detail&analysisDateType=login">详情</a></td>
+        <td><a href="${ctx}/admin/operation/analysis/login/trend?analysisDateType=login">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/login/detail?analysisDateType=login">详情</a></td>
         </#if>
     </tr>
 
@@ -34,7 +34,7 @@
         <td><span class="pull-right">${todayUserSum!}</span></td>
         <td><span class="pull-right">${yesterdayUserSum!}</span></td>
         <#if userAcl.hasRole('ROLE_SUPER_ADMIN')>
-        <td><a href="${ctx}/admin/operation/analysis/user_sum/trend?analysisDateType=userSum">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/user_sum?tab=detail&analysisDateType=userSum">详情</a></td>
+        <td><a href="${ctx}/admin/operation/analysis/user-sum/trend?analysisDateType=userSum">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/user-sum/detail?analysisDateType=userSum">详情</a></td>
         </#if>
     </tr>
 
