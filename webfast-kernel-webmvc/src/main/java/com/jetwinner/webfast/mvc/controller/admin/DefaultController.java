@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.platform.SystemInfoBean;
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.mvc.block.BlockRenderController;
 import com.jetwinner.webfast.mvc.block.BlockRenderMethod;
@@ -22,11 +23,16 @@ import java.util.Map;
 @Controller("webfastAdminDefaultController")
 public class DefaultController implements BlockRenderController {
 
+    private final UserAccessControlService userAccessControlService;
+
     private final ServletContext servletContext;
 
     private DataSource dataSource;
 
-    public DefaultController(ServletContext servletContext, DataSource dataSource) {
+    public DefaultController(UserAccessControlService userAccessControlService,
+                             ServletContext servletContext, DataSource dataSource) {
+
+        this.userAccessControlService = userAccessControlService;
         this.servletContext = servletContext;
         this.dataSource = dataSource;
     }
@@ -84,7 +90,7 @@ public class DefaultController implements BlockRenderController {
     public Map<String, Object> onlineCountAction() {
         Map<String, Object> map = new HashMap<>(2);
         // statisticsService.getOnlineCount(15 * 60);
-        map.put("onlineCount", 0);
+        map.put("onlineCount", userAccessControlService.getOnlineCount());
         map.put("message", "ok");
         return map;
     }

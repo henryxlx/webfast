@@ -6,11 +6,14 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.apache.shiro.web.util.SavedRequest;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 
 /**
  * @author xulixin
@@ -93,5 +96,13 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
     public boolean checkPassword(BaseAppUser user, String password) {
         String checkedPassword = FastPasswordHelper.encodePassword(password, user.getSalt());
         return checkedPassword != null && checkedPassword.equals(user.getPassword());
+    }
+
+    @Override
+    public int getOnlineCount() {
+        DefaultWebSecurityManager securityManager = (DefaultWebSecurityManager) SecurityUtils.getSecurityManager();
+        DefaultWebSessionManager sessionManager = (DefaultWebSessionManager) securityManager.getSessionManager();
+        Collection sessions = sessionManager.getSessionDAO().getActiveSessions();
+        return sessions.size();
     }
 }

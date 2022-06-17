@@ -24,4 +24,6 @@ public interface UserAccessControlService {
     String getSavedUrlBeforeLogin(HttpServletRequest request);
 
     boolean checkPassword(BaseAppUser user, String password);
+
+    int getOnlineCount();
 }
