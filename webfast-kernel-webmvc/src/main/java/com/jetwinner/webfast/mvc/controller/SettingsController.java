@@ -1,25 +1,29 @@
 package com.jetwinner.webfast.mvc.controller;
 
 import com.jetwinner.security.UserAccessControlService;
+import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.FastStringEqualUtil;
+import com.jetwinner.webfast.email.FastEmailService;
 import com.jetwinner.webfast.image.ImageSize;
 import com.jetwinner.webfast.image.ImageUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.AppLogService;
+import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.kernel.view.PostDataMapForm;
+import com.jetwinner.webfast.kernel.view.ViewRenderService;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,22 +41,33 @@ import java.util.Map;
 @RequestMapping(SettingsController.VIEW_PATH)
 public class SettingsController {
 
-    static final String VIEW_PATH ="/settings";
+    static final String VIEW_PATH = "/settings";
 
     private final AppUserService userService;
     private final AppUserFieldService userFieldService;
     private final UserAccessControlService userAccessControlService;
     private final FastAppConst appConst;
+    private final AppSettingService settingService;
+    private final AppLogService logService;
+    private final ViewRenderService viewRenderService;
+    private final FastEmailService emailService;
 
     public SettingsController(AppUserService userService,
                               AppUserFieldService userFieldService,
                               UserAccessControlService userAccessControlService,
-                              FastAppConst appConst) {
+                              FastAppConst appConst, AppSettingService settingService,
+                              AppLogService logService,
+                              ViewRenderService viewRenderService,
+                              FastEmailService emailService) {
 
         this.userService = userService;
         this.userFieldService = userFieldService;
         this.userAccessControlService = userAccessControlService;
         this.appConst = appConst;
+        this.settingService = settingService;
+        this.logService = logService;
+        this.viewRenderService = viewRenderService;
+        this.emailService = emailService;
     }
 
     @RequestMapping("")
@@ -297,7 +312,64 @@ public class SettingsController {
     }
 
     @RequestMapping("/email")
-    public String emailPage() {
+    public String emailPage(HttpServletRequest request, Model model) {
+        AppUser user = AppUser.getCurrentUser(request);
+        if (user.getSetup() == null) {
+            return "redirect:/settings/setup";
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            PostDataMapForm form = PostDataMapForm.createForm();
+            form.bind(request);
+            if (form.isValid()) {
+                Map<String, Object> data = form.getData();
+
+                boolean isPasswordOk = userAccessControlService.checkPassword(user, String.valueOf(data.get("password")));
+
+                if (!isPasswordOk) {
+                    FlashMessageUtil.setFlashMessage("danger", "密码不正确，请重试。", request.getSession());
+                    return "redirect:/settings/email";
+                }
+
+                AppUser userOfNewEmail = userService.getUserByEmail(String.valueOf(data.get("email")));
+                if (userOfNewEmail != null && FastStringEqualUtil.equals(userOfNewEmail.getId(), user.getId())) {
+                    FlashMessageUtil.setFlashMessage("danger", "新邮箱，不能跟当前邮箱一样。", request.getSession());
+                    return "redirect:/settings/email";
+                }
+
+                if (userOfNewEmail != null && FastStringEqualUtil.notEquals(userOfNewEmail.getId(), user.getId())) {
+                    FlashMessageUtil.setFlashMessage("danger", "新邮箱已经被注册，请换一个试试。", request.getSession());
+                    return "redirect:/settings/email";
+                }
+
+                String token = userService.makeToken("email-verify", user.getId(),
+                        System.currentTimeMillis() + (24 * 60 * 60 * 1000),
+                        String.valueOf(data.get("email")));
+
+                try {
+                    emailService.sendEmail(
+                            String.valueOf(data.get("email")),
+                            String.format("重设%s在%s的电子邮箱", user.getUsername(),
+                                    settingService.getSettingValue("site.name", "WEBFAST")),
+                            viewRenderService.renderView("/settings/email-change.txt.ftl",
+                                    new ParamMap().add("user", user).add("token", token)
+                                            .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
+                                            .add("siteName", settingService.getSettingValue("site.name"))
+                                            .add("siteUrl", settingService.getSettingValue("site.url")).toMap())
+                    );
+                    FlashMessageUtil.setFlashMessage("success",
+                            String.format("请到邮箱%s中接收确认邮件，并点击确认邮件中的链接完成修改。", data.get("email")),
+                            request.getSession());
+                } catch (Exception e) {
+                    FlashMessageUtil.setFlashMessage("danger", "邮箱变更确认邮件发送失败，请联系管理员。", request.getSession());
+                    logService.error(user, "setting", "email_change", "邮箱变更确认邮件发送失败:" + e.getMessage());
+                }
+
+                return "redirect:/settings/email";
+            }
+        }
+
+        model.addAttribute("mailer", settingService.get("mailer"));
         return VIEW_PATH + "/email";
     }
 
