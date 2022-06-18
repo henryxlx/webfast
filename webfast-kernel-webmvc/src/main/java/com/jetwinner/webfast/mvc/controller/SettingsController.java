@@ -373,6 +373,33 @@ public class SettingsController {
         return VIEW_PATH + "/email";
     }
 
+    @RequestMapping("/emailVerify")
+    @ResponseBody
+    public Boolean emailVerifyAction(HttpServletRequest request) {
+        AppUser user = AppUser.getCurrentUser(request);
+        String token = userService.makeToken("email-verify", user.getId(),
+                System.currentTimeMillis() + (24 * 60 * 60 * 1000), user.getEmail());
+
+        try {
+            emailService.sendEmail(
+                    user.getEmail(),
+                    String.format("验证%s在%s的电子邮箱",
+                            user.getUsername(), settingService.getSettingValue("site.name")),
+                    viewRenderService.renderView("/settings/email-verify.ftl",
+                            new ParamMap().add("user", user).add("token", token)
+                                    .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
+                                    .add("siteName", settingService.getSettingValue("site.name"))
+                                    .add("siteUrl", settingService.getSettingValue("site.url")).toMap()));
+            FlashMessageUtil.setFlashMessage("success",
+                    String.format("请到邮箱%s中接收验证邮件，并点击邮件中的链接完成验证。", user.getEmail()),
+                    request.getSession());
+        } catch (Exception e) {
+            logService.error(user, "setting", "email-verify", "邮箱验证邮件发送失败:" + e.getMessage());
+            FlashMessageUtil.setFlashMessage("danger", "邮箱验证邮件发送失败，请联系管理员。", request.getSession());
+        }
+        return Boolean.TRUE;
+    }
+
     @RequestMapping("/setup")
     public String setupPage() {
         return VIEW_PATH + "/setup";
