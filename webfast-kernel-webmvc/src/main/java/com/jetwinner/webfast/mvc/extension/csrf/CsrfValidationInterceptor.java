@@ -33,7 +33,7 @@ public class CsrfValidationInterceptor extends HandlerInterceptorAdapter {
 
     private boolean verifyCsrfToken(HttpServletRequest request) {
         String csrfToken = request.getParameter(SessionCsrfProvider.CSRF_TOKEN_NAME_IN_FORM);
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession();
         String intention = (String) session.getAttribute(SessionCsrfProvider.CSRF_INTENTION_KEY_IN_SESSION);
         SessionCsrfProvider csrfProvider = SessionCsrfProvider.getDefaultInstance(session);
         if (csrfToken == null) {
