@@ -73,7 +73,7 @@ public class PasswordResetController {
                 emailService.sendEmail(user.getEmail(),
                         String.format("重设%s在%s的密码", user.getUsername(), siteName),
 
-                        viewRenderService.renderView("/password-reset/reset.ftl",
+                        viewRenderService.renderView("/password-reset/reset.txt.ftl",
                                 new ParamMap().add("user", user).add("token", token).add("siteName", siteName)
                                         .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
                                         .add("siteUrl", settingService.getSettingValue("site.url")).toMap()),
