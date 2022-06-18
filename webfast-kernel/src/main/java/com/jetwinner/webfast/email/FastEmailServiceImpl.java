@@ -55,6 +55,11 @@ public class FastEmailServiceImpl implements FastEmailService {
         }
     }
 
+    @Override
+    public void sendEmail(String to, String title, String body) throws Exception {
+        sendEmail(to, title, body, MailTypeEnum.TextMail);
+    }
+
     /**
      * 简单文本邮件
      *
