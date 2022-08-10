@@ -1,9 +1,9 @@
 # WebFast Project for RAD
 
-#### 介绍
+### 介绍
 SpringBoot与FreeMarker技术建立WebApp基础功能快速开发平台
 
-#### 源代码结构
+### 源代码结构
 
 ``` lua
 webfast
@@ -29,3 +29,15 @@ webfast
 | Shiro                | 1.7.0              | 认证和授权框架         | https://shiro.apache.org/                            |
 | Druid                | 1.2.8              | 数据库连接池           | https://github.com/alibaba/druid                    |
 | MySQL                | 5.7.x              | 关系数据库             | https://www.mysql.com/                              |
+
+### 快速部署
+1. clone 项目到本地 git@gitee.com:henryxpx/webfast.git
+2. 应用内置MySQL数据库脚本，程序第一次启动后会出现安装过程，根据要求填写系统会自动安装，默认数据库名称为webfast4dev，
+数据库参数配置及外部文件管理目录默认指定为d:/webfast/demo4dev/appdata。若该目录不存在需要手工创建。
+如果更改这些参数可在SpringBoot应用程序配置文件中修改 
+（webfast-starter-demo 模块中 resources 目录下的 application.properties 文件中）
+3. 提前准备好 MySQL并启动，数据库监听端口号为默认3306
+4. 在 IntelliJ IDEA 中打开 webfast 项目，在Gradle构建自动完成后，启动 webfast-starter-demo 模块
+
+OK，至此，服务端就启动成功了，此时我们直接在浏览器地址栏输入 http://localhost:8080/webfast 即可开始使用， 
+程序第一次启动会自动进入安装界面，安装成功后即进入使用界面。
