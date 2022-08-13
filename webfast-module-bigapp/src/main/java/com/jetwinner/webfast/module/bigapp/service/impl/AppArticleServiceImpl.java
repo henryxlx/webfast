@@ -6,12 +6,11 @@ import com.jetwinner.util.EasyDateUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderBy;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
-import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
 import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
 import com.jetwinner.webfast.module.bigapp.service.AppTagService;
@@ -273,16 +272,16 @@ public class AppArticleServiceImpl implements AppArticleService {
         OrderByBuilder orderByBuilder;
         switch (sort) {
             case "created":
-                orderByBuilder = OrderBy.builder().addDesc("createdTime");
+                orderByBuilder = new OrderByBuilder().addDesc("createdTime");
                 break;
             case "published":
-                orderByBuilder = OrderBy.builder().addDesc("sticky").addDesc("publishedTime");
+                orderByBuilder = new OrderByBuilder().addDesc("sticky").addDesc("publishedTime");
                 break;
             case "normal":
-                orderByBuilder = OrderBy.builder().addDesc("publishedTime");
+                orderByBuilder = new OrderByBuilder().addDesc("publishedTime");
                 break;
             case "popular":
-                orderByBuilder = OrderBy.builder().addDesc("hits");
+                orderByBuilder = new OrderByBuilder().addDesc("hits");
                 break;
             default:
                 throw new RuntimeGoingException("参数sort不正确。");

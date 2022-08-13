@@ -9,7 +9,7 @@ import com.jetwinner.util.FastTimeUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.AppLogDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import org.springframework.stereotype.Controller;
@@ -47,7 +47,7 @@ public class LoginRecordController {
         }
 
         if(userConditions.containsKey("keywordType") && userConditions.containsKey("keyword")) {
-            List<AppUser> users = userService.searchUsers(userConditions, OrderBy.builder().addDesc("createdTime"),0,2000);
+            List<AppUser> users = userService.searchUsers(userConditions, new OrderByBuilder().addDesc("createdTime"),0,2000);
             Set<Object> userIds = ArrayToolkitOnJava8.column(users, AppUser::getId);
             if(userIds != null && userIds.size() > 0){
                 conditions.put("userIds", userIds);
@@ -70,7 +70,7 @@ public class LoginRecordController {
 
         List<Map<String, Object>> logRecords = logDao.searchLogs(
                 conditions,
-                OrderBy.builder().addDesc("createdTime"),
+                new OrderByBuilder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
@@ -119,7 +119,7 @@ public class LoginRecordController {
                 logDao.searchLogCount(conditions), 8);
 
         List<Map<String, Object>> loginRecords = logDao.searchLogs(conditions,
-                OrderBy.builder().addDesc("createdTime"),
+                new OrderByBuilder().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

@@ -9,10 +9,6 @@ public class OrderBy {
     public static final String ASC = "ASC";
     public static final String DESC = "DESC";
 
-    public static final OrderByBuilder builder() {
-        return new OrderByBuilder();
-    }
-
     private String columnName;
 
     private String sortType;
