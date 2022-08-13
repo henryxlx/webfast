@@ -5,7 +5,7 @@ import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.Paginator;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -51,7 +51,7 @@ public class UserApprovalController {
 
         List<AppUser> users = userService.searchUsers(
                 conditions,
-                new OrderByBuilder().addDesc("createdTime"),
+                new OrderBy().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
@@ -103,7 +103,7 @@ public class UserApprovalController {
 
         List<AppUser> users = userService.searchUsers(
                 conditions,
-                new OrderByBuilder().addDesc("createdTime"),
+                new OrderBy().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

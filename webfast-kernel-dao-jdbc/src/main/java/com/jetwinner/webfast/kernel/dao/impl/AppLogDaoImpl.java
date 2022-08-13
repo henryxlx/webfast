@@ -3,7 +3,7 @@ package com.jetwinner.webfast.kernel.dao.impl;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppLogDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -29,13 +29,13 @@ public class AppLogDaoImpl extends FastJdbcDaoSupport implements AppLogDao {
     }
 
     @Override
-    public List<Map<String, Object>> searchLogs(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<Map<String, Object>> searchLogs(Map<String, Object> conditions, OrderBy orderBy,
                                                 Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createLogQueryBuilder(conditions)
                 .select("*")
                 .from("app_log")
-                .orderBy(orderByBuilder)
+                .orderBy(orderBy)
                 .setFirstResult(start)
                 .setMaxResults(limit);
 

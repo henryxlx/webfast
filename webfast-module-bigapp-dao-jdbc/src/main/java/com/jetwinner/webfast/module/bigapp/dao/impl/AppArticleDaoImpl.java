@@ -5,11 +5,10 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +25,12 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
     }
 
     @Override
-    public List<Map<String, Object>> searchArticles(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<Map<String, Object>> searchArticles(Map<String, Object> conditions, OrderBy orderBy,
                                                     Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")
-                .orderBy(orderByBuilder)
+                .orderBy(orderBy)
                 .setFirstResult(start)
                 .setMaxResults(limit);
 

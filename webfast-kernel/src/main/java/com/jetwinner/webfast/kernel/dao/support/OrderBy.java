@@ -7,24 +7,24 @@ import java.util.List;
  * @author x230-think-joomla
  * @date 2015/6/19
  */
-public class OrderByBuilder {
+public class OrderBy {
 
     private final List<OrderByEntry> orderByEntries;
 
-    public OrderByBuilder() {
+    public OrderBy() {
         this.orderByEntries = new ArrayList<>();
     }
 
-    public OrderByBuilder add(String columnName) {
+    public OrderBy add(String columnName) {
         return addAsc(columnName);
     }
 
-    public OrderByBuilder addAsc(String columnName) {
+    public OrderBy addAsc(String columnName) {
         this.orderByEntries.add(new OrderByEntry(columnName));
         return this;
     }
 
-    public OrderByBuilder addDesc(String columnName) {
+    public OrderBy addDesc(String columnName) {
         this.orderByEntries.add(new OrderByEntry(columnName, false));
         return this;
     }

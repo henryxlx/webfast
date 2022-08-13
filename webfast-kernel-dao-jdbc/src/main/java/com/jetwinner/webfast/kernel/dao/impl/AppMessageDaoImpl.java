@@ -4,7 +4,7 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppMessageDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -41,7 +41,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
     }
 
     @Override
-    public List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderBy orderBy,
                                                 int start, int limit) {
 
         if (EasyStringUtil.isNotBlank(conditions.get("content"))) {
@@ -52,7 +52,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
                 .select("*")
                 .setFirstResult(start)
                 .setMaxResults(limit)
-                .orderBy(new OrderByBuilder().addDesc("createdTime"));
+                .orderBy(new OrderBy().addDesc("createdTime"));
 
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions,
                 new BeanPropertyRowMapper<>(AppModelMessage.class));

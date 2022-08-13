@@ -6,7 +6,7 @@ import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
@@ -62,12 +62,12 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
     }
 
     @Override
-    public List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<AppUser> searchUsers(Map<String, Object> conditions, OrderBy orderBy,
                                      Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createUserQueryBuilder(conditions)
                 .select("*")
-                .orderBy(orderByBuilder)
+                .orderBy(orderBy)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions, new BeanPropertyRowMapper<>(AppUser.class));

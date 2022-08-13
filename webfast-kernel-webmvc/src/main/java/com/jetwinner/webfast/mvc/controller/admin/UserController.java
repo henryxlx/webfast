@@ -10,7 +10,7 @@ import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.Paginator;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
@@ -63,7 +63,7 @@ public class UserController {
 
         model.addAttribute("roles", roleService.listAllRole());
         model.addAttribute("users", userService.searchUsers(conditions,
-                new OrderByBuilder().addDesc("createdTime"),
+                new OrderBy().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()));
         model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);

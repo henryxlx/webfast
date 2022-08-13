@@ -13,7 +13,7 @@ import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.dao.*;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
 import com.jetwinner.webfast.kernel.service.AppLogService;
@@ -178,8 +178,8 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<AppUser> searchUsers(Map<String, Object> conditions, OrderByBuilder orderByBuilder, Integer start, Integer limit) {
-        return userDao.searchUsers(conditions, orderByBuilder, start, limit);
+    public List<AppUser> searchUsers(Map<String, Object> conditions, OrderBy orderBy, Integer start, Integer limit) {
+        return userDao.searchUsers(conditions, orderBy, start, limit);
     }
 
     @Override

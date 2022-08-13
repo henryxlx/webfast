@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 
@@ -19,7 +19,7 @@ public interface AppMessageService {
 
     int searchMessagesCount(Map<String, Object> conditions);
 
-    List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderBy orderBy,
                                          int start, int limit);
 
     AppModelMessageConversation getConversation(Integer conversationId);

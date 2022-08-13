@@ -8,7 +8,7 @@ import com.jetwinner.webfast.kernel.AppRole;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.AppPermissionDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -50,7 +50,7 @@ public class RoleController {
         }
         Paginator paginator = new Paginator(request, roleService.searchRolesCount(conditions), 30);
 
-        List<AppRole> roles = roleService.searchRoles(conditions, new OrderByBuilder().addDesc("createdTime"),
+        List<AppRole> roles = roleService.searchRoles(conditions, new OrderBy().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

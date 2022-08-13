@@ -6,7 +6,7 @@ import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppLogDao;
 import com.jetwinner.webfast.kernel.dao.AppUserDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -83,20 +83,20 @@ public class AppLogServiceImpl implements AppLogService {
     public List<Map<String, Object>> searchLogs(Map<String, Object> conditions, String sort, Integer start, Integer limit) {
         prepareSearchConditions(conditions);
 
-        OrderByBuilder orderByBuilder;
+        OrderBy orderBy;
         switch (sort) {
             case "created":
-                orderByBuilder = new OrderByBuilder().addDesc("createdTime");
+                orderBy = new OrderBy().addDesc("createdTime");
                 break;
             case "createdByAsc":
-                orderByBuilder = new OrderByBuilder().add("createdTime");
+                orderBy = new OrderBy().add("createdTime");
                 break;
 
             default:
                 throw new RuntimeGoingException("参数sort不正确。");
         }
 
-        List<Map<String, Object>> logs = logDao.searchLogs(conditions, orderByBuilder, start, limit);
+        List<Map<String, Object>> logs = logDao.searchLogs(conditions, orderBy, start, limit);
 
         return logs;
     }

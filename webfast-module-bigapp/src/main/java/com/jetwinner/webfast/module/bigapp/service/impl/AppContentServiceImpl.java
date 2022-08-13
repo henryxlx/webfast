@@ -2,7 +2,7 @@ package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.content.type.BaseContentType;
@@ -61,10 +61,10 @@ public class AppContentServiceImpl implements AppContentService {
     }
 
     @Override
-    public List<Map<String, Object>> searchContents(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<Map<String, Object>> searchContents(Map<String, Object> conditions, OrderBy orderBy,
                                                     Integer start, Integer limit) {
 
-        return contentDao.searchContent(conditions, orderByBuilder, start, limit);
+        return contentDao.searchContent(conditions, orderBy, start, limit);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.kernel.dao;
 
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public interface AppMessageDao {
 
     int searchMessagesCount(Map<String, Object> conditions);
 
-    List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderBy orderBy,
                                          int start, int limit);
 
     int addMessage(Map<String, Object> fields);

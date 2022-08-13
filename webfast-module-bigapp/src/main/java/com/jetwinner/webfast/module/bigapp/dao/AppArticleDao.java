@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.module.bigapp.dao;
 
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ public interface AppArticleDao {
 
     int searchArticlesCount(Map<String, Object> conditions);
 
-    List<Map<String, Object>> searchArticles(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    List<Map<String, Object>> searchArticles(Map<String, Object> conditions, OrderBy orderBy,
                                              Integer start, Integer limit);
 
     Map<String, Object> addArticle(Map<String, Object> article);

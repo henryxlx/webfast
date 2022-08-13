@@ -3,7 +3,7 @@ package com.jetwinner.webfast.module.bigapp.dao.impl;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.module.bigapp.dao.AppContentDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -34,12 +34,12 @@ public class AppContentDaoImpl extends FastJdbcDaoSupport implements AppContentD
 
     @Override
     public List<Map<String, Object>> searchContent(Map<String, Object> conditions,
-                                                   OrderByBuilder orderByBuilder,
+                                                   OrderBy orderBy,
                                                    Integer start, Integer limit) {
 
         DynamicQueryBuilder builder = createSearchQueryBuilder(conditions)
                 .select("*")
-                .orderBy(orderByBuilder)
+                .orderBy(orderBy)
                 .setFirstResult(start)
                 .setMaxResults(limit);
         return getNamedParameterJdbcTemplate().queryForList(builder.getSQL(), conditions);

@@ -6,7 +6,7 @@ import com.jetwinner.util.EasyDateUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -55,9 +55,9 @@ public class AppArticleServiceImpl implements AppArticleService {
     public List<Map<String, Object>> searchArticles(Map<String, Object> conditions, String sortName,
                                                     Integer start, Integer limit) {
 
-        OrderByBuilder orderByBuilder = filterSort(sortName);
+        OrderBy orderBy = filterSort(sortName);
         prepareSearchConditions(conditions);
-        return articleDao.searchArticles(conditions, orderByBuilder, start, limit);
+        return articleDao.searchArticles(conditions, orderBy, start, limit);
     }
 
     @Override
@@ -268,24 +268,24 @@ public class AppArticleServiceImpl implements AppArticleService {
         }
     }
 
-    private OrderByBuilder filterSort(String sort) {
-        OrderByBuilder orderByBuilder;
+    private OrderBy filterSort(String sort) {
+        OrderBy orderBy;
         switch (sort) {
             case "created":
-                orderByBuilder = new OrderByBuilder().addDesc("createdTime");
+                orderBy = new OrderBy().addDesc("createdTime");
                 break;
             case "published":
-                orderByBuilder = new OrderByBuilder().addDesc("sticky").addDesc("publishedTime");
+                orderBy = new OrderBy().addDesc("sticky").addDesc("publishedTime");
                 break;
             case "normal":
-                orderByBuilder = new OrderByBuilder().addDesc("publishedTime");
+                orderBy = new OrderBy().addDesc("publishedTime");
                 break;
             case "popular":
-                orderByBuilder = new OrderByBuilder().addDesc("hits");
+                orderBy = new OrderBy().addDesc("hits");
                 break;
             default:
                 throw new RuntimeGoingException("参数sort不正确。");
         }
-        return orderByBuilder;
+        return orderBy;
     }
 }

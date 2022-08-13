@@ -5,7 +5,7 @@ import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.dao.AppMessageConversationDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageRelationDao;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
@@ -77,10 +77,10 @@ public class AppMessageServiceImpl implements AppMessageService {
     }
 
     @Override
-    public List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderByBuilder orderByBuilder,
+    public List<AppModelMessage> searchMessages(Map<String, Object> conditions, OrderBy orderBy,
                                                 int start, int limit) {
 
-        return messageDao.searchMessages(conditions, orderByBuilder, start, limit);
+        return messageDao.searchMessages(conditions, orderBy, start, limit);
     }
 
     private AppModelMessage addMessage(Integer fromId, Integer toId, Object content) {

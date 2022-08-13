@@ -2,7 +2,7 @@ package com.jetwinner.webfast.mvc.controller.admin;
 
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.module.bigapp.service.AppCategoryService;
 import com.jetwinner.webfast.module.bigapp.service.AppContentService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
@@ -48,7 +48,7 @@ public class ContentController {
 
         List<Map<String, Object>> contents = contentService.searchContents(
                 conditions,
-                new OrderByBuilder().addDesc("createdTime"),
+                new OrderBy().addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

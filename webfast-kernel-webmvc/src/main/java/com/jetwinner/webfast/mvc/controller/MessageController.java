@@ -3,7 +3,7 @@ package com.jetwinner.webfast.mvc.controller;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 import com.jetwinner.webfast.kernel.service.AppMessageService;
@@ -151,7 +151,7 @@ public class MessageController {
         String callback = request.getParameter("callback");
         List<AppUser> findedUsersByNickname = userService.searchUsers(
                 new ParamMap().add("username", queryString).toMap(),
-                new OrderByBuilder().addDesc("registerDate"), 0, 10);
+                new OrderBy().addDesc("registerDate"), 0, 10);
         Set<Object> findedFollowingIds = userService.filterFollowingIds(currentUserId,
                 ArrayToolkitOnJava8.column(findedUsersByNickname, AppUser::getId));
 

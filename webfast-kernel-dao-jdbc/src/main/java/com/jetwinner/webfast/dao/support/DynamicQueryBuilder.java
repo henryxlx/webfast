@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.dao.support;
 
 import com.jetwinner.webfast.kernel.dao.support.OrderByEntry;
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class DynamicQueryBuilder extends AbstractQueryBuilder {
         return this;
     }
 
-    public DynamicQueryBuilder orderBy(OrderByBuilder builder) {
+    public DynamicQueryBuilder orderBy(OrderBy builder) {
         if (builder != null) {
             List<OrderByEntry> orderByEntries = builder.toList();
             for (OrderByEntry entry : orderByEntries) {

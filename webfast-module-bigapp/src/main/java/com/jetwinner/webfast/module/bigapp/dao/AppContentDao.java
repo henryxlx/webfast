@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.module.bigapp.dao;
 
-import com.jetwinner.webfast.kernel.dao.support.OrderByBuilder;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 
 import java.util.List;
 import java.util.Map;
@@ -15,7 +15,7 @@ public interface AppContentDao {
     int searchContentCount(Map<String, Object> conditions);
 
     List<Map<String, Object>> searchContent(Map<String, Object> conditions,
-                                            OrderByBuilder orderByBuilder,
+                                            OrderBy orderBy,
                                             Integer start, Integer limit);
 
     Map<String, Object> getContent(Integer id);
