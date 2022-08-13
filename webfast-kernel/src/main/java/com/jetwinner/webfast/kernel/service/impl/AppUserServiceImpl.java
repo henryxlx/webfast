@@ -484,4 +484,9 @@ public class AppUserServiceImpl implements AppUserService {
         userTokenDao.deleteToken(tokenMap.get("id"));
         return true;
     }
+
+    @Override
+    public void dropFieldData(Object fieldName) {
+        userProfileDao.dropFieldData(String.valueOf(fieldName));
+    }
 }

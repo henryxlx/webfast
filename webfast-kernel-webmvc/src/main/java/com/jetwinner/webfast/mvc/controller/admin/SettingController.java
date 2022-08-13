@@ -1,19 +1,25 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
-import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.ValueParser;
+import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
+import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author xulixin
@@ -24,11 +30,17 @@ public class SettingController {
     private final AppSettingService settingService;
     private final AppLogService logService;
     private final FastAppConst appConst;
+    private final AppUserFieldService userFieldService;
 
-    public SettingController(AppSettingService settingService, AppLogService logService, FastAppConst appConst) {
+    public SettingController(AppSettingService settingService,
+                             AppLogService logService,
+                             FastAppConst appConst,
+                             AppUserFieldService userFieldService) {
+
         this.settingService = settingService;
         this.logService = logService;
         this.appConst = appConst;
+        this.userFieldService = userFieldService;
     }
 
     @RequestMapping("/admin/setting/site")
@@ -129,7 +141,6 @@ public class SettingController {
             if (EasyStringUtil.isBlank(auth.get("register_protective"))) {
                 auth.put("register_protective", "low");
             }
-
         }
 
         defaultMap.putAll(auth);
@@ -198,5 +209,108 @@ public class SettingController {
 
         model.addAttribute("loginConnect", loginConnect);
         return "/admin/system/login-connect";
+    }
+
+    @RequestMapping("/admin/setting/user-fields")
+    public String userFieldsPage(Model model) {
+        model.addAttribute("textCount", userFieldService.searchFieldCount(new ParamMap().add("fieldName", "textField").toMap()));
+        model.addAttribute("intCount", userFieldService.searchFieldCount(new ParamMap().add("fieldName", "intField").toMap()));
+        model.addAttribute("floatCount", userFieldService.searchFieldCount(new ParamMap().add("fieldName", "floatField").toMap()));
+        model.addAttribute("dateCount", userFieldService.searchFieldCount(new ParamMap().add("fieldName", "dateField").toMap()));
+        model.addAttribute("varcharCount", userFieldService.searchFieldCount(new ParamMap().add("fieldName", "varcharField").toMap()));
+
+        List<Map<String, Object>> fields = userFieldService.getAllFieldsOrderBySeq();
+        for (Map<String, Object> field : fields) {
+            String fieldNameValue = String.valueOf(field.get("fieldName"));
+            if (EasyStringUtil.contains(fieldNameValue, "textField")) {
+                field.put("fieldName", "多行文本");
+            }
+
+            if (EasyStringUtil.contains(fieldNameValue, "varcharField")) {
+                field.put("fieldName", "文本");
+            }
+
+            if (EasyStringUtil.contains(fieldNameValue, "intField")) {
+                field.put("fieldName", "整数");
+            }
+
+            if (EasyStringUtil.contains(fieldNameValue, "floatField")) {
+                field.put("fieldName", "小数");
+            }
+
+            if (EasyStringUtil.contains(fieldNameValue, "dateField")) {
+                field.put("fieldName", "日期");
+            }
+        }
+
+        model.addAttribute("fields", fields);
+        return "/admin/system/user-fields";
+    }
+
+    @RequestMapping("/admin/user-fields/add")
+    public String addUserFieldsAction(HttpServletRequest request) {
+        Map<String, Object> field = ParamMap.toFormDataMap(request);
+        if (field.containsKey("field_title") &&
+                ArrayUtil.inArray(field.get("field_title"),
+                        "真实姓名", "手机号码", "QQ", "所在公司", "身份证号码", "性别", "职业", "微博", "微信")) {
+
+            throw new RuntimeGoingException("请勿添加与默认字段相同的自定义字段！");
+        }
+
+        int num = userFieldService.addUserField(field);
+        if (num == 0) {
+            FlashMessageUtil.setFlashMessage("danger", "已经没有可以添加的字段了!", request.getSession());
+        }
+
+        return "redirect:/admin/setting/user-fields";
+    }
+
+    @RequestMapping("/admin/user-fields/delete/{id}")
+    public String deleteUserFieldsAction(HttpServletRequest request, @PathVariable Integer id, Model model) {
+        Map<String, Object> field = userFieldService.getField(id);
+        if (MapUtil.isEmpty(field)) {
+            throw new RuntimeException("自定义字段未找到");
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            Map<String, Object> auth = settingService.get("auth");
+            if (auth.containsKey("registerFieldNameArray")) {
+                Map<String, Object> map = JsonUtil.stringToObject(String.valueOf(auth.get("'registerFieldNameArray'")), Map.class);
+                boolean hasChanged = false;
+                for (Map.Entry entry : map.entrySet()) {
+                    if (Objects.equals(entry.getValue(), field.get("fieldName"))) {
+                        map.remove(entry.getKey());
+                        hasChanged = true;
+                    }
+                }
+                if (hasChanged) {
+                    auth.put("'registerFieldNameArray'", JsonUtil.objectToString(map));
+                    settingService.set("auth", auth);
+                }
+            }
+
+            Map<String, Object> courseSetting = settingService.get("course");
+            if (courseSetting.containsKey("userinfoFieldNameArray")) {
+                Map<String, Object> map = JsonUtil.stringToObject(String.valueOf(courseSetting.get("userinfoFieldNameArray")), Map.class);
+                boolean hasChanged = false;
+                for (Map.Entry entry : map.entrySet()) {
+                    if (Objects.equals(entry.getValue(), field.get("fieldName"))) {
+                        map.remove(entry.getKey());
+                        hasChanged = true;
+                    }
+                }
+                if (hasChanged) {
+                    courseSetting.put("userinfoFieldNameArray", JsonUtil.objectToString(map));
+                    settingService.set("course", courseSetting);
+                }
+            }
+
+            userFieldService.dropField(id);
+
+            return "redirect:/admin/setting/user-fields";
+        }
+
+        model.addAttribute("field", field);
+        return "/admin/system/user-fields.modal.delete";
     }
 }

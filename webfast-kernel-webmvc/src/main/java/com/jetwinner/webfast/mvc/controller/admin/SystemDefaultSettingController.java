@@ -25,11 +25,6 @@ public class SystemDefaultSettingController {
         return "/admin/system/admin-sync";
     }
 
-    @RequestMapping("/admin/setting/user-fields")
-    public String userFieldsPage() {
-        return "/admin/system/user-fields";
-    }
-
     @RequestMapping("/admin/setting/user-avatar")
     public String userAvatarPage() {
         return "/admin/system/user-avatar";

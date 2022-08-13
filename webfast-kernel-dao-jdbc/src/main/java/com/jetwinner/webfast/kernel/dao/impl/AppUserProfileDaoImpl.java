@@ -1,7 +1,9 @@
 package com.jetwinner.webfast.kernel.dao.impl;
 
+import com.jetwinner.util.ArrayUtil;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
 import com.jetwinner.webfast.kernel.dao.AppUserProfileDao;
+import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -45,5 +47,51 @@ public class AppUserProfileDaoImpl extends FastJdbcDaoSupport implements AppUser
         String marks = ids.stream().map(String::valueOf).collect(Collectors.joining(", "));
         String sql = String.format("SELECT * FROM %s WHERE id IN (%s);", TABLE_NAME, marks);
         return getJdbcTemplate().queryForList(sql);
+    }
+
+    @Override
+    public int dropFieldData(String fieldName) {
+        String[] fieldNames = {
+                "intField1",
+                "intField2",
+                "intField3",
+                "intField4",
+                "intField5",
+                "dateField1",
+                "dateField2",
+                "dateField3",
+                "dateField4",
+                "dateField5",
+                "floatField1",
+                "floatField2",
+                "floatField3",
+                "floatField4",
+                "floatField5",
+                "textField1",
+                "textField2",
+                "textField3",
+                "textField4",
+                "textField5",
+                "textField6",
+                "textField7",
+                "textField8",
+                "textField9",
+                "textField10",
+                "varcharField1",
+                "varcharField2",
+                "varcharField3",
+                "varcharField4",
+                "varcharField5",
+                "varcharField6",
+                "varcharField7",
+                "varcharField8",
+                "varcharField9",
+                "varcharField10"};
+        if (!ArrayUtil.inArray(fieldName, fieldNames)) {
+            throw new RuntimeGoingException(AppUserProfileDao.class + " DAO Exception fieldName error");
+        }
+
+        String sql= String.format("UPDATE %s set %s = null ", TABLE_NAME, fieldName);
+        return getJdbcTemplate().update(sql);
     }
 }

@@ -9,4 +9,14 @@ import java.util.Map;
 public interface AppUserFieldService {
 
     List<Map<String, Object>> getAllFieldsOrderBySeqAndEnabled();
+
+    int searchFieldCount(Map<String, Object> condition);
+
+    List<Map<String, Object>> getAllFieldsOrderBySeq();
+
+    int addUserField(Map<String, Object> field);
+
+    Map<String, Object> getField(Object id);
+
+    void dropField(Object id);
 }

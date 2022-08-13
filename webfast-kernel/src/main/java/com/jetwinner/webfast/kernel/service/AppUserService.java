@@ -76,4 +76,6 @@ public interface AppUserService extends BaseAppUserService {
     Map<String, Object> getToken(String type, String token);
 
     boolean deleteToken(String type, String token);
+
+    void dropFieldData(Object fieldName);
 }

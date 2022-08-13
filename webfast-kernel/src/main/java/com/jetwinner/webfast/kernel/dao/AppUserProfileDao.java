@@ -14,4 +14,6 @@ public interface AppUserProfileDao {
     void updateProfile(Map<String, Object> profile);
 
     List<Map<String, Object>> findProfilesByIds(Set<Object> ids);
+
+    int dropFieldData(String fieldName);
 }
