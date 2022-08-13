@@ -21,14 +21,43 @@ webfast
 
 ### 技术选型
 
-#### 后端技术
+#### Java开发技术
 
 | 技术                  | 版本                | 说明                 | 官网                                                 |
 | -------------------- | -------------------| ------------------- | ---------------------------------------------------- |
 | SpringBoot           | 2.2.13             | 容器+MVC框架          | https://spring.io/projects/spring-boot              |
 | Shiro                | 1.7.0              | 认证和授权框架         | https://shiro.apache.org/                            |
 | Druid                | 1.2.8              | 数据库连接池           | https://github.com/alibaba/druid                    |
-| MySQL                | 5.7.x              | 关系数据库             | https://www.mysql.com/                              |
+| Gradle               | 6.8.2              | 项目构建工具           | https://gradle.org/                                 |
+
+#### 开发环境
+| 工具	               | 版本号	             | 下载                                                  |
+| -------------------- | ------------------- | ---------------------------------------------------- |
+| JDK	               | 8	                 | https://www.oracle.com/java/technologies/downloads/#java8|
+| Mysql	               | 5.7	             | https://www.mysql.com/                               |
+| Redis	               | 7.0	             | https://redis.io/download                            |
+| MongoDB              | 5.0                 | https://www.mongodb.com/download-center              |
+| RabbitMQ             | 3.10.5	             | http://www.rabbitmq.com/download.html                |
+| Elasticsearch	       | 7.17.3              | https://www.elastic.co/downloads/elasticsearch       |
+| Nginx                | 1.22	             | http://nginx.org/en/download.html                    |
+
+#### 开发工具
+
+| 工具名称               | 说明                 | 官网                                                 |
+| -------------------- | ------------------- | ---------------------------------------------------- |
+| IDEA                 | 开发IDE	             | https://www.jetbrains.com/idea/download              |
+| RedisDesktop         | redis客户端连接工具	 | https://github.com/qishibo/AnotherRedisDesktopManager |
+| Robomongo	           | mongo客户端连接工具	 | https://robomongo.org/download                       |
+| SwitchHosts          | 本地host管理	         | https://oldj.github.io/SwitchHosts/                  |
+| X-shell              | Linux远程连接工具	 | http://www.netsarang.com/download/software.html      |
+| Navicat              | 数据库连接工具	     | http://www.formysql.com/xiazai.html                  |
+| Axure                | 原型设计工具	         | https://www.axure.com/                               |
+| MindMaster           | 思维导图设计工具	     | http://www.edrawsoft.cn/mindmaster                   |
+| ScreenToGif          | gif录制工具           | https://www.screentogif.com/                         |
+| ProcessOn	           | 流程图绘制工具         | https://www.processon.com/                           |
+| PicPick              | 图片处理工具           | https://picpick.app/zh/                              |
+| Snipaste             | 屏幕截图工具           | https://www.snipaste.com/                            |
+| Postman              | API接口调试工具        | https://www.postman.com/                             |
 
 ### 快速部署
 1. clone 项目到本地 git@gitee.com:henryxpx/webfast.git
