@@ -9,10 +9,10 @@ import java.util.List;
  */
 public class OrderByBuilder {
 
-    private final List<OrderBy> orderByList;
+    private final List<OrderByEntry> orderByEntries;
 
     public OrderByBuilder() {
-        this.orderByList = new ArrayList<>();
+        this.orderByEntries = new ArrayList<>();
     }
 
     public OrderByBuilder add(String columnName) {
@@ -20,16 +20,16 @@ public class OrderByBuilder {
     }
 
     public OrderByBuilder addAsc(String columnName) {
-        this.orderByList.add(new OrderBy(columnName));
+        this.orderByEntries.add(new OrderByEntry(columnName));
         return this;
     }
 
     public OrderByBuilder addDesc(String columnName) {
-        this.orderByList.add(new OrderBy(columnName, false));
+        this.orderByEntries.add(new OrderByEntry(columnName, false));
         return this;
     }
 
-    public List<OrderBy> toList() {
-        return this.orderByList;
+    public List<OrderByEntry> toList() {
+        return this.orderByEntries;
     }
 }

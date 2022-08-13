@@ -1,7 +1,7 @@
 package com.jetwinner.webfast.dao.support;
 
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.dao.support.OrderByEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -122,14 +122,14 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         return getJdbcTemplate().update(sql.toString(), pkValue);
     }
 
-    protected void checkOrderBy(OrderBy orderBy, String[] allowedOrderByFields) {
-        if (EasyStringUtil.isBlank(orderBy.getColumnName()) || EasyStringUtil.isBlank(orderBy.getSortType())) {
+    protected void checkOrderBy(OrderByEntry orderByEntry, String[] allowedOrderByFields) {
+        if (EasyStringUtil.isBlank(orderByEntry.getColumnName()) || EasyStringUtil.isBlank(orderByEntry.getSortType())) {
             throw new RuntimeException("orderBy参数不正确");
         }
-        if (!EasyStringUtil.inArray(orderBy.getColumnName(), allowedOrderByFields)) {
-            throw new RuntimeException(String.format("不允许对%s字段进行排序", orderBy.getColumnName()));
+        if (!EasyStringUtil.inArray(orderByEntry.getColumnName(), allowedOrderByFields)) {
+            throw new RuntimeException(String.format("不允许对%s字段进行排序", orderByEntry.getColumnName()));
         }
-        if (!EasyStringUtil.inArray(orderBy.getSortType(), new String[]{"ASC", "DESC"})) {
+        if (!EasyStringUtil.inArray(orderByEntry.getSortType(), new String[]{"ASC", "DESC"})) {
             throw new RuntimeException("orderBy排序方式错误");
         }
     }
