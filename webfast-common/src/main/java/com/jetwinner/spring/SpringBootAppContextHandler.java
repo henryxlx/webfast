@@ -18,10 +18,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class SpringBootAppContextHandler {
 
-    private static SpringBootAppContextHandler instance = new SpringBootAppContextHandler();
+    private static final SpringBootAppContextHandler INSTANCE = new SpringBootAppContextHandler();
 
-    public static final SpringBootAppContextHandler me() {
-        return instance;
+    public static SpringBootAppContextHandler me() {
+        return INSTANCE;
     }
 
     private SpringBootAppContextHandler() {
