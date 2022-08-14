@@ -1,6 +1,6 @@
 package com.jetwinner.webfast.mvc.extension.csrf;
 
-import com.jetwinner.util.FastEncodeUtil;
+import com.jetwinner.util.FastEncryptionUtil;
 
 /**
  * @author xulixin
@@ -31,7 +31,7 @@ public class DefaultCsrfProvider implements CsrfProviderDefinable {
      */
     @Override
     public String generateCsrfToken(String intention) {
-        return FastEncodeUtil.sha1(this.secret + intention + this.getSessionId());
+        return FastEncryptionUtil.sha1(this.secret + intention + this.getSessionId());
     }
 
     /**

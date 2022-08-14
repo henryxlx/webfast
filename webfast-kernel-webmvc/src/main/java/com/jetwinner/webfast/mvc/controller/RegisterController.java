@@ -3,7 +3,7 @@ package com.jetwinner.webfast.mvc.controller;
 import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.FastEncodeUtil;
+import com.jetwinner.util.FastEncryptionUtil;
 import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
@@ -196,7 +196,7 @@ public class RegisterController {
 
     private String makeHash(AppUser user) {
         String str = user.getId() + user.getLocked() + userHashSecretKey;
-        return FastEncodeUtil.md5(str);
+        return FastEncryptionUtil.md5(str);
     }
 
     private void sendRegisterMessage(AppUser user) {
