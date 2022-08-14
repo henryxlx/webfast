@@ -12,7 +12,7 @@ public final class FileToolkit {
         // reserved.
     }
 
-    private static final String[] IMAGE_FILE_EXT_NAME = {"bmp", "gif", "jpg", "jpeg", "png"};
+    private static final String[] IMAGE_FILE_EXT_NAME_ARRAY = {"bmp", "gif", "jpg", "jpeg", "png"};
 
     public static String hashFilename(String filenamePrefix) {
         if (filenamePrefix == null || filenamePrefix.length() == 0) {
@@ -45,8 +45,8 @@ public final class FileToolkit {
     }
 
     public static boolean isImageFile(String filename) {
-        for (int i = 0; i < IMAGE_FILE_EXT_NAME.length; i++) {
-            if (filename.endsWith(IMAGE_FILE_EXT_NAME[i])) {
+        for (String extName : IMAGE_FILE_EXT_NAME_ARRAY) {
+            if (filename.endsWith(extName)) {
                 return true;
             }
         }
