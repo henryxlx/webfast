@@ -11,9 +11,9 @@ import java.util.Map;
 /**
  * Created by x230-think-joomla on 2015/5/29.
  */
-public abstract class ObjectUtil {
+public abstract class ObjectFieldUtil {
 
-    private static Logger logger = LoggerFactory.getLogger(ObjectUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(ObjectFieldUtil.class);
 
     public static Object getFieldValueByName(String fieldName, Object obj) {
         try {
