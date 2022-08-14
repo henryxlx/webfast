@@ -5,9 +5,9 @@ import java.util.Objects;
 /**
  * @author xulixin
  */
-public class FastStringEqualUtil {
+public class FastObjectUtil {
 
-    private FastStringEqualUtil() {
+    private FastObjectUtil() {
         // reserved.
     }
 

@@ -8,18 +8,15 @@ import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
-import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author xulixin
@@ -278,7 +275,7 @@ public class SettingController {
                 Map map = JsonUtil.stringToObject(String.valueOf(auth.get("registerFieldNameArray")), Map.class);
                 boolean hasRemoved = false;
                 for (Object key : map.keySet()) {
-                    if (FastStringEqualUtil.equals(map.get(key), field.get("fieldName"))) {
+                    if (FastObjectUtil.equals(map.get(key), field.get("fieldName"))) {
                         map.remove(key);
                         hasRemoved = true;
                     }
@@ -294,7 +291,7 @@ public class SettingController {
                 Map map = JsonUtil.stringToObject(String.valueOf(courseSetting.get("userinfoFieldNameArray")), Map.class);
                 boolean hasRemoved = false;
                 for (Object key : map.keySet()) {
-                    if (FastStringEqualUtil.equals(map.get(key), field.get("fieldName"))) {
+                    if (FastObjectUtil.equals(map.get(key), field.get("fieldName"))) {
                         map.remove(key);
                         hasRemoved = true;
                     }

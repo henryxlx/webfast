@@ -4,7 +4,7 @@ import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.toolbag.FileToolkit;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.FastStringEqualUtil;
+import com.jetwinner.util.FastObjectUtil;
 import com.jetwinner.webfast.email.FastEmailService;
 import com.jetwinner.webfast.image.ImageSize;
 import com.jetwinner.webfast.image.ImageUtil;
@@ -332,12 +332,12 @@ public class SettingsController {
                 }
 
                 AppUser userOfNewEmail = userService.getUserByEmail(String.valueOf(data.get("email")));
-                if (userOfNewEmail != null && FastStringEqualUtil.equals(userOfNewEmail.getId(), user.getId())) {
+                if (userOfNewEmail != null && FastObjectUtil.equals(userOfNewEmail.getId(), user.getId())) {
                     FlashMessageUtil.setFlashMessage("danger", "新邮箱，不能跟当前邮箱一样。", request.getSession());
                     return "redirect:/settings/email";
                 }
 
-                if (userOfNewEmail != null && FastStringEqualUtil.notEquals(userOfNewEmail.getId(), user.getId())) {
+                if (userOfNewEmail != null && FastObjectUtil.notEquals(userOfNewEmail.getId(), user.getId())) {
                     FlashMessageUtil.setFlashMessage("danger", "新邮箱已经被注册，请换一个试试。", request.getSession());
                     return "redirect:/settings/email";
                 }
