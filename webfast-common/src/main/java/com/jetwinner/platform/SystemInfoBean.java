@@ -10,15 +10,15 @@ import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
- * User: xulixin
  * Date: 2013-11-9
  * Time: 下午9:51
+ * @author xulixin
  */
 public class SystemInfoBean {
 
-    private Properties sysProps;
+    private final Properties sysProps;
 
-    private Runtime rt;
+    private final Runtime rt;
 
     public SystemInfoBean() {
         sysProps = System.getProperties();
@@ -26,7 +26,7 @@ public class SystemInfoBean {
     }
 
     public Map<String, Object> getSystemMap() {
-        Map<String, Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>(3);
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy年MM月dd日 E");
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
         props.put("System Date", dateFormatter.format(new Date()));
@@ -36,7 +36,7 @@ public class SystemInfoBean {
     }
 
     public Map<String, Object> getJavaMap() {
-        Map<String, Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>(3);
         props.put("Java Version", sysProps.getProperty("java.version"));
         props.put("Java Vendor", sysProps.getProperty("java.vendor"));
         props.put("Java Runtime", sysProps.getProperty("java.runtime.name"));
@@ -44,7 +44,7 @@ public class SystemInfoBean {
     }
 
     public Map<String, Object> getJavaVirtualMachineMap() {
-        Map<String, Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>(4);
         props.put("JVM Version", sysProps.getProperty("java.vm.specification.version"));
         props.put("JVM Vendor", sysProps.getProperty("java.vm.specification.vendor"));
         props.put("JVM Implementation Version", sysProps.getProperty("java.vm.version"));
@@ -53,7 +53,7 @@ public class SystemInfoBean {
     }
 
     public Map<String, Object> getProps() {
-        Map<String, Object> props = new HashMap<>();
+        Map<String, Object> props = new HashMap<>(14);
         SimpleDateFormat dateFormatter = new SimpleDateFormat("EEEEE, dd MMM yyyy");
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
         props.put("System Date", dateFormatter.format(new Date()));
@@ -94,7 +94,7 @@ public class SystemInfoBean {
     }
 
     public Map<String, Object> getJvmStats() {
-        Map<String, Object> jvmstats = new HashMap<>();
+        Map<String, Object> jvmstats = new HashMap<>(3);
         jvmstats.put("Total Memory", "" + getTotalMemory());
         jvmstats.put("Free Memory", "" + getFreeMemory());
         jvmstats.put("Used Memory", "" + getUsedMemory());
@@ -106,7 +106,7 @@ public class SystemInfoBean {
             return "N/A";
         } else {
             long currentTime = System.currentTimeMillis();
-            return dateDifference(startupTime.longValue(), currentTime, 4L);
+            return dateDifference(startupTime, currentTime, 4L);
         }
     }
 
@@ -131,12 +131,11 @@ public class SystemInfoBean {
     }
 
     private long getPercentage(long portion, long total) {
-        long columnWidth = Math.round(((double) portion / (double) total) * 100D);
-        return columnWidth;
+        return Math.round(((double) portion / (double) total) * 100D);
     }
 
-    private final String dateDifference(long dateA, long dateB, long resolution) {
-        StringBuffer sb = new StringBuffer();
+    private String dateDifference(long dateA, long dateB, long resolution) {
+        StringBuilder sb = new StringBuilder();
         long difference = Math.abs(dateB - dateA);
         if (resolution > 0L) {
             resolution--;
@@ -144,7 +143,7 @@ public class SystemInfoBean {
             if (months > 0L) {
                 difference %= 2678400000L;
                 if (months > 1L) {
-                    sb.append("" + months + " 月" + ", ");
+                    sb.append(months).append(" 月").append(", ");
                 }
             }
         }
@@ -156,7 +155,7 @@ public class SystemInfoBean {
         if (days > 0L) {
             difference %= 86400000L;
             if (days > 1L) {
-                sb.append("" + days + " 天" + ", ");
+                sb.append(days).append(" 天").append(", ");
             }
         }
         if (resolution <= 0L && sb.length() == 0) {
@@ -167,7 +166,7 @@ public class SystemInfoBean {
         if (hours > 0L) {
             difference %= 3600000L;
             if (hours > 1L) {
-                sb.append("" + hours + " 小时" + ", ");
+                sb.append(hours).append(" 小时").append(", ");
             }
         }
         if (resolution <= 0L && sb.length() == 0) {
@@ -178,7 +177,7 @@ public class SystemInfoBean {
         if (minutes > 0L) {
             difference %= 60000L;
             if (minutes > 1L) {
-                sb.append("" + minutes + " 分" + ", ");
+                sb.append(minutes).append(" 分").append(", ");
             }
         }
         if (resolution <= 0L && sb.length() == 0) {
@@ -189,7 +188,7 @@ public class SystemInfoBean {
         if (seconds > 0L) {
             difference %= 1000L;
             if (seconds > 1L) {
-                sb.append("" + seconds + " 秒" + ", ");
+                sb.append(seconds).append(" 秒").append(", ");
             }
         }
         if (resolution <= 0L && sb.length() == 0) {
