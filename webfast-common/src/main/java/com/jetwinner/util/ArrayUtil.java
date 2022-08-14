@@ -2,7 +2,10 @@ package com.jetwinner.util;
 
 import java.lang.reflect.Array;
 
-public abstract class ArrayUtil {
+/**
+ * @author xulixin
+ */
+public final class ArrayUtil {
 
     public static final int INDEX_NOT_FOUND = -1;
 

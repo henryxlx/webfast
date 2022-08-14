@@ -10,7 +10,11 @@ import java.util.Map;
  * @author: xulixin
  * @create: 2019-12-29 14:14
  **/
-public class BeanMapUtil {
+public final class BeanMapUtil {
+
+    private BeanMapUtil() {
+        // reserved.
+    }
 
     /**
      * 将对象属性转化为map结合

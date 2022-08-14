@@ -6,7 +6,7 @@ import static org.springframework.util.StringUtils.uncapitalize;
 /**
  * @author xulixin
  */
-public class NamingUtil {
+public final class NamingUtil {
 
     private static final char SEPARATOR = '_';
 

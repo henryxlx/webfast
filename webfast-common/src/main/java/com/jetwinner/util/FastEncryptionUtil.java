@@ -2,7 +2,14 @@ package com.jetwinner.util;
 
 import java.security.MessageDigest;
 
-public class FastEncryptionUtil {
+/**
+ * @author xulixin
+ */
+public final class FastEncryptionUtil {
+
+    public FastEncryptionUtil() {
+        // reserved.
+    }
 
     private static final String MD5_ALGORITHM = "MD5";
     private static final String SHA1_ALGORITHM = "SHA1";

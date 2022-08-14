@@ -1,9 +1,11 @@
 package com.jetwinner.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+/**
+ * @author xulixin
+ */
+public final class EasyDateUtil {
 
-public class EasyDateUtil {
-
+    private EasyDateUtil() {
+        // reserved.
+    }
 }

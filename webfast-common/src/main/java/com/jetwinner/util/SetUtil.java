@@ -4,7 +4,14 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-public class SetUtil {
+/**
+ * @author xulixin
+ */
+public final class SetUtil {
+
+    private SetUtil() {
+        // reserved.
+    }
 
     public static <E> HashSet<E> newHashSet() {
         return new HashSet<E>();

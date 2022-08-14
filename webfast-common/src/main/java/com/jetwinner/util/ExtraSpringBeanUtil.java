@@ -8,7 +8,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.*;
 
-public class ExtraSpringBeanUtil extends BeanUtils {
+/**
+ * @author xulixin
+ */
+public final class ExtraSpringBeanUtil extends BeanUtils {
+
+    public ExtraSpringBeanUtil() {
+        // reserved.
+    }
 
     public static <T> T propertiesCopy(Object source, Class<T> clazz) {
         if (null == source) {

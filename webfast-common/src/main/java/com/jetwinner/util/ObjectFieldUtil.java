@@ -9,9 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by x230-think-joomla on 2015/5/29.
+ *
+ * @author x230-think-joomla
+ * @date 2015/5/29
  */
-public abstract class ObjectFieldUtil {
+public final class ObjectFieldUtil {
+
+    private ObjectFieldUtil() {
+        // reserved.
+    }
 
     private static Logger logger = LoggerFactory.getLogger(ObjectFieldUtil.class);
 

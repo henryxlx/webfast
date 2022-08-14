@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author henry [xulixin at jetwinner home]
+ * @author xulixin [ work at jetwinner home]
  * @since 1.0
  */
-public abstract class ValueParser {
+public final class ValueParser {
+
+    public ValueParser() {
+        // reserved.
+    }
 
     public static int parseInt(String value) {
         int result = 0;

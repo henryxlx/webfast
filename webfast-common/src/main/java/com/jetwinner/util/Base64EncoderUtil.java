@@ -6,7 +6,7 @@ import java.util.Base64;
 /**
  * @author xulixin
  */
-public class Base64EncoderUtil {
+public final class Base64EncoderUtil {
 
     private Base64EncoderUtil() {
         // reserved.

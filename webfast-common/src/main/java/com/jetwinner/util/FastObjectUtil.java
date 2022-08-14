@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * @author xulixin
  */
-public class FastObjectUtil {
+public final class FastObjectUtil {
 
     private FastObjectUtil() {
         // reserved.

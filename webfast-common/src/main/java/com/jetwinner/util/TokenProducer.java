@@ -5,7 +5,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Random;
 
-public class TokenProducer {
+/**
+ * @author xulixin
+ */
+public final class TokenProducer {
 
     public static final String DEFAULT_TOKEN_KEY = "webfast" + TokenProducer.class;
 

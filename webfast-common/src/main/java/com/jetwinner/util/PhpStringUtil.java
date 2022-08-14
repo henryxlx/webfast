@@ -5,7 +5,11 @@ import java.io.File;
 /**
  * @author xulixin
  */
-public class PhpStringUtil {
+public final class PhpStringUtil {
+
+    private PhpStringUtil() {
+        // reserved.
+    }
 
     private static boolean contains(String str, char ch) {
         int len = str.length();

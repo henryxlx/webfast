@@ -10,7 +10,11 @@ import java.util.regex.Pattern;
 /**
  * @author xulixin
  */
-public abstract class EasyStringUtil {
+public final class EasyStringUtil {
+
+    private EasyStringUtil() {
+        // reserved.
+    }
 
     public static final String SPACE = " ";
     public static final String EMPTY = "";
