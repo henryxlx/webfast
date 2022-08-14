@@ -2,7 +2,7 @@ package com.jetwinner.webfast.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.jetwinner.util.EasyStringUtil;
-import com.jetwinner.util.StringEncoderUtil;
+import com.jetwinner.util.Base64EncoderUtil;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.datatag.AppDataFetcherHolder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
@@ -62,7 +62,7 @@ public class DataSourceConfigurer implements DataSourceConfig {
             Set<Object> keys = properties.keySet();
             keys.forEach(k -> {
                 if (EasyStringUtil.containsAny(k.toString(), "url", "username", "password")) {
-                    properties.put(k, StringEncoderUtil.decode(properties.get(k)));
+                    properties.put(k, Base64EncoderUtil.decode(properties.get(k)));
                 }
             });
             DruidDataSource dataSource = new DruidDataSource();

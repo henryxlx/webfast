@@ -261,13 +261,13 @@ public class InstallController {
                     if (strLineData.startsWith("druid:")) {
                         writer.write(strLineData);
                         writer.newLine();
-                        writer.write("  username: " + StringEncoderUtil.encode(setting.getUser()));
+                        writer.write("  username: " + Base64EncoderUtil.encode(setting.getUser()));
                         writer.newLine();
-                        writer.write("  password: " + StringEncoderUtil.encode(setting.getPassword()));
+                        writer.write("  password: " + Base64EncoderUtil.encode(setting.getPassword()));
                         writer.newLine();
                         String url = DataSourceConfig.getMysqlJdbcUrl(setting.getHost(),
                                 setting.getPort(), setting.getDbname());
-                        writer.write("  url: " + StringEncoderUtil.encode(url));
+                        writer.write("  url: " + Base64EncoderUtil.encode(url));
                         writer.newLine();
                     } else {
                         writer.write(strLineData);
