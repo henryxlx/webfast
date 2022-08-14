@@ -3,6 +3,15 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.2: @2022-08-14
+* OrderBy和OrderByBuilder重命名，OrderBy改为OrderByEntry，OrderByBuilder改为OrderBy
+* 删除EasyDateUtil中的重复方法toLongTime，使用FastTimeUtil中的dateStrToLong的日期时间转换
+* 完成后台管理端->系统->用户相关设置->字段自定义的编辑功能
+* 工具类ObjectUtil重命名为ObjectFieldUtil，专门用于处理对象中域变量的工具
+* 文字加解密工具类StringEncoderUtil改为Base64EncoderUtil，因为加解密方式使用Base64
+* 加密类FastEncodeUtil重命名为FastEncryptionUtil
+* 快速对象字符串相等工具类FastStringEqualUtil重命名为FastObjectUtil，判等方法equals作为Object工具类的一部分
+
 0.8.1: @2022-08-13
 * 完成后台管理端->系统->用户相关设置->字段自定义的浏览、添加和删除功能
 
