@@ -78,7 +78,7 @@ public final class ArrayToolkit {
     }
 
     public static boolean required(Map<String, Object> map, String... keys) {
-        if (keys == null && keys.length < 1) {
+        if (keys == null || keys.length < 1) {
             return false;
         }
         for (String key : keys) {
@@ -90,6 +90,6 @@ public final class ArrayToolkit {
     }
 
     public static boolean isArray(Object obj) {
-        return obj != null? obj.getClass().isArray() : false;
+        return obj != null && obj.getClass().isArray();
     }
 }
