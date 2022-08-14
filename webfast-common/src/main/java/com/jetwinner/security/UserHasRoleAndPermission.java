@@ -7,11 +7,11 @@ import java.util.Set;
  */
 public class UserHasRoleAndPermission {
 
-    private BaseAppUser user;
+    private final BaseAppUser user;
 
-    private Set<String> roles;
+    private final Set<String> roles;
 
-    private Set<String> permissions;
+    private final Set<String> permissions;
 
     public UserHasRoleAndPermission(BaseAppUser user, Set<String> roles, Set<String> permissions) {
         this.user = user;
