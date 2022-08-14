@@ -21,4 +21,6 @@ public interface AppUserFieldDao {
     Map<String, Object> getField(Object id);
 
     void deleteField(Object id);
+
+    void updateField(Integer id, Map<String, Object> field);
 }

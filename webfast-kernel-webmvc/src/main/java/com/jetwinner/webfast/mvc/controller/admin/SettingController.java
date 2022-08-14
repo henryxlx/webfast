@@ -313,4 +313,51 @@ public class SettingController {
         model.addAttribute("field", field);
         return "/admin/system/user-fields.modal.delete";
     }
+
+    @RequestMapping("/admin/user-fields/edit/{id}")
+    public String editUserFieldsAction(HttpServletRequest request, @PathVariable Integer id, Model model) {
+        Map<String, Object> field = userFieldService.getField(id);
+        if (MapUtil.isEmpty(field)) {
+            throw new RuntimeException("自定义字段未找到");
+        }
+
+        String fieldNameValue = String.valueOf(field.get("fieldName"));
+        if (EasyStringUtil.contains(fieldNameValue, "textField")) {
+            field.put("fieldName", "多行文本");
+        }
+
+        if (EasyStringUtil.contains(fieldNameValue, "varcharField")) {
+            field.put("fieldName", "文本");
+        }
+
+        if (EasyStringUtil.contains(fieldNameValue, "intField")) {
+            field.put("fieldName", "整数");
+        }
+
+        if (EasyStringUtil.contains(fieldNameValue, "floatField")) {
+            field.put("fieldName", "小数");
+        }
+
+        if (EasyStringUtil.contains(fieldNameValue, "dateField")) {
+            field.put("fieldName", "日期");
+        }
+
+        if ("POST".equals(request.getMethod())) {
+            Map<String, Object> form = ParamMap.toFormDataMap(request);
+            form.put("id", id);
+
+            if (form.containsKey("enabled")) {
+                form.put("enabled", 1);
+            } else {
+                form.put("enabled", 0);
+            }
+
+            userFieldService.updateField(id, form);
+
+            return "redirect:/admin/setting/user-fields";
+        }
+
+        model.addAttribute("field", field);
+        return "/admin/system/user-fields.modal.edit";
+    }
 }

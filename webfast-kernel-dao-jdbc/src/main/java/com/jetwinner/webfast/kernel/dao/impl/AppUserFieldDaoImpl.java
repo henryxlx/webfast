@@ -58,6 +58,11 @@ public class AppUserFieldDaoImpl extends FastJdbcDaoSupport implements AppUserFi
         getJdbcTemplate().update("DELETE FROM app_user_field WHERE id = ?", id);
     }
 
+    @Override
+    public void updateField(Integer id, Map<String, Object> field) {
+        updateMap("app_user_field", field, "id");
+    }
+
     private DynamicQueryBuilder createSearchQueryBuilder(Map<String, Object> condition) {
         if (EasyStringUtil.isNotBlank(condition.get("fieldName"))) {
             condition.put("fieldName", "%" + condition.get("fieldName") + "%");

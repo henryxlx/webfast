@@ -19,4 +19,6 @@ public interface AppUserFieldService {
     Map<String, Object> getField(Object id);
 
     void dropField(Object id);
+
+    void updateField(Integer id, Map<String, Object> field);
 }

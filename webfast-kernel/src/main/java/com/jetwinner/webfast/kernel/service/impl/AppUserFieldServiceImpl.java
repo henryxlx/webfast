@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service.impl;
 
+import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.dao.AppUserFieldDao;
@@ -82,6 +83,25 @@ public class AppUserFieldServiceImpl implements AppUserFieldService {
         Map<String, Object> field = userFieldDao.getField(id);
         userService.dropFieldData(field.get("fieldName"));
         userFieldDao.deleteField(id);
+    }
+
+    @Override
+    public void updateField(Integer id, Map<String, Object> field) {
+        ArrayToolkit.part(field, "title", "seq", "enabled", "id");
+
+        if (EasyStringUtil.isBlank(field.get("title"))) {
+            throw new RuntimeGoingException("字段名称不能为空！");
+        }
+
+        if (EasyStringUtil.isBlank(field.get("seq"))) {
+            throw new RuntimeGoingException("字段排序不能为空！");
+        }
+
+        if (!EasyStringUtil.isNumeric(String.valueOf(field.get("seq")))) {
+            throw new RuntimeGoingException("字段排序只能为数字！");
+        }
+
+        userFieldDao.updateField(id, field);
     }
 
     private Optional<String> checkType(String type) {
