@@ -2,8 +2,8 @@ package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
-import com.jetwinner.util.EasyDateUtil;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.FastTimeUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -235,7 +235,7 @@ public class AppArticleServiceImpl implements AppArticleService {
         article.put("categoryId", fields.get("categoryId"));
         article.put("source", fields.get("source"));
         article.put("sourceUrl", fields.get("sourceUrl"));
-        article.put("publishedTime", EasyDateUtil.toLongTime(fields.get("publishedTime")));
+        article.put("publishedTime", FastTimeUtil.dateStrToLong(fields.get("publishedTime")));
         article.put("updatedTime", System.currentTimeMillis());
 
         if (EasyStringUtil.isNotBlank(fields.get("tags")) && !fields.get("tags").getClass().isArray()) {
