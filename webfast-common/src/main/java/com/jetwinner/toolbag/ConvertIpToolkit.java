@@ -8,7 +8,7 @@ import java.util.Map;
  */
 public class ConvertIpToolkit {
 
-    private static IpRealDataSeeker ipSeeker = IpRealDataSeeker.getInstance();
+    private static final IpRealDataSeeker IP_SEEKER = IpRealDataSeeker.getInstance();
 
     public static void convertIp(List<Map<String, Object>> list, String fieldName) {
         list.forEach(e -> {
@@ -18,6 +18,6 @@ public class ConvertIpToolkit {
     }
 
     public static String convertIp(String ip) {
-        return ipSeeker == null ? "不能查询IP" : ipSeeker.getAddress(ip);
+        return IP_SEEKER == null ? "不能查询IP" : IP_SEEKER.getAddress(ip);
     }
 }
