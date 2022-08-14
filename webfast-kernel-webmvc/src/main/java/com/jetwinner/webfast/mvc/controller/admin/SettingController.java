@@ -275,31 +275,31 @@ public class SettingController {
         if ("POST".equals(request.getMethod())) {
             Map<String, Object> auth = settingService.get("auth");
             if (auth.containsKey("registerFieldNameArray")) {
-                Map<String, Object> map = JsonUtil.stringToObject(String.valueOf(auth.get("'registerFieldNameArray'")), Map.class);
-                boolean hasChanged = false;
-                for (Map.Entry entry : map.entrySet()) {
-                    if (Objects.equals(entry.getValue(), field.get("fieldName"))) {
-                        map.remove(entry.getKey());
-                        hasChanged = true;
+                Map map = JsonUtil.stringToObject(String.valueOf(auth.get("registerFieldNameArray")), Map.class);
+                boolean hasRemoved = false;
+                for (Object key : map.keySet()) {
+                    if (FastStringEqualUtil.equals(map.get(key), field.get("fieldName"))) {
+                        map.remove(key);
+                        hasRemoved = true;
                     }
                 }
-                if (hasChanged) {
-                    auth.put("'registerFieldNameArray'", JsonUtil.objectToString(map));
+                if (hasRemoved) {
+                    auth.put("registerFieldNameArray", JsonUtil.objectToString(map));
                     settingService.set("auth", auth);
                 }
             }
 
             Map<String, Object> courseSetting = settingService.get("course");
             if (courseSetting.containsKey("userinfoFieldNameArray")) {
-                Map<String, Object> map = JsonUtil.stringToObject(String.valueOf(courseSetting.get("userinfoFieldNameArray")), Map.class);
-                boolean hasChanged = false;
-                for (Map.Entry entry : map.entrySet()) {
-                    if (Objects.equals(entry.getValue(), field.get("fieldName"))) {
-                        map.remove(entry.getKey());
-                        hasChanged = true;
+                Map map = JsonUtil.stringToObject(String.valueOf(courseSetting.get("userinfoFieldNameArray")), Map.class);
+                boolean hasRemoved = false;
+                for (Object key : map.keySet()) {
+                    if (FastStringEqualUtil.equals(map.get(key), field.get("fieldName"))) {
+                        map.remove(key);
+                        hasRemoved = true;
                     }
                 }
-                if (hasChanged) {
+                if (hasRemoved) {
                     courseSetting.put("userinfoFieldNameArray", JsonUtil.objectToString(map));
                     settingService.set("course", courseSetting);
                 }
