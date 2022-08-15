@@ -86,7 +86,7 @@ public class SystemInfoBean {
     }
 
     public Integer getJavaVersion() {
-        return ValueParser.createInteger(sysProps.getProperty("java.version"));
+        return ValueParser.toInteger(sysProps.getProperty("java.version"));
     }
 
     public String getJvmVersion() {
