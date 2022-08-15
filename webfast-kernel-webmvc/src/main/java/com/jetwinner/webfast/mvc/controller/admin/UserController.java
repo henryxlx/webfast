@@ -17,7 +17,6 @@ import com.jetwinner.webfast.kernel.service.AppRoleService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
-import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -151,7 +150,7 @@ public class UserController {
             logService.info(AppUser.getCurrentUser(request), "user", "edit",
                     String.format("管理员编辑用户资料 {%s} (#%d)", user.getUsername(), user.getId()), profile);
         } else {
-            FlashMessageUtil.setFlashMessage("danger", "用户已绑定的手机不能修改。", request.getSession());
+            BaseControllerHelper.setFlashMessage("danger", "用户已绑定的手机不能修改。", request.getSession());
         }
 
         return "redirect:/admin/user";

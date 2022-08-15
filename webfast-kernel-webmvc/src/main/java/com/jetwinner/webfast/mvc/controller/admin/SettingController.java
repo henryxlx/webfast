@@ -8,7 +8,7 @@ import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import com.jetwinner.webfast.kernel.service.AppUserFieldService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
-import com.jetwinner.webfast.session.FlashMessageUtil;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,7 +64,7 @@ public class SettingController {
             settingService.set("site", siteMap);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新站点设置", siteMap);
-            FlashMessageUtil.setFlashMessage("success", "站点信息设置已保存！", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "站点信息设置已保存！", request.getSession());
         }
         model.addAttribute("site", siteMap);
         return "/admin/system/site";
@@ -75,7 +75,7 @@ public class SettingController {
         if ("POST".equals(request.getMethod())) {
             String offline = request.getParameter("offline");
             appConst.setOffline("true".equalsIgnoreCase(offline) ? true : false);
-            FlashMessageUtil.setFlashMessage("success",
+            BaseControllerHelper.setFlashMessage("success",
                     String.format("站点当前是【%s】状态！", appConst.getOffline() ? "离线" : "在线"), request.getSession());
         }
         model.addAttribute("offline", appConst.getOffline());
@@ -105,7 +105,7 @@ public class SettingController {
             settingService.set("mailer", mailer);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新邮件服务器设置", mailer);
-            FlashMessageUtil.setFlashMessage("success", "电子邮件设置已保存！", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "电子邮件设置已保存！", request.getSession());
         }
 
         model.addAttribute("mailer", mailer);
@@ -166,7 +166,7 @@ public class SettingController {
 
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新注册设置", auth);
-            FlashMessageUtil.setFlashMessage("success", "注册设置已保存！", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "注册设置已保存！", request.getSession());
         }
 
         model.addAttribute("auth", auth);
@@ -201,7 +201,7 @@ public class SettingController {
             loginConnect = ParamMap.toFormDataMap(request);
             settingService.set("login_bind", loginConnect);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings", "更新登录设置", loginConnect);
-            FlashMessageUtil.setFlashMessage("success", "登录设置已保存！", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "登录设置已保存！", request.getSession());
         }
 
         model.addAttribute("loginConnect", loginConnect);
@@ -256,7 +256,7 @@ public class SettingController {
 
         int num = userFieldService.addUserField(field);
         if (num == 0) {
-            FlashMessageUtil.setFlashMessage("danger", "已经没有可以添加的字段了!", request.getSession());
+            BaseControllerHelper.setFlashMessage("danger", "已经没有可以添加的字段了!", request.getSession());
         }
 
         return "redirect:/admin/setting/user-fields";

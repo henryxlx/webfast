@@ -11,7 +11,7 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.module.bigapp.service.AppArticleCategoryService;
 import com.jetwinner.webfast.module.bigapp.service.AppArticleService;
 import com.jetwinner.webfast.module.bigapp.service.AppTagService;
-import com.jetwinner.webfast.session.FlashMessageUtil;
+import com.jetwinner.webfast.mvc.BaseControllerHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -179,7 +179,7 @@ public class ArticleController {
             articleSetting = ParamMap.toCustomFormDataMap(request, "name", "pageNums");
             settingService.set("article", articleSetting);
             // logService.info("article", "update_settings", "更新资讯频道设置", articleSetting);
-            FlashMessageUtil.setFlashMessage("success", "资讯频道设置已保存！", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "资讯频道设置已保存！", request.getSession());
         }
         model.addAttribute("articleSetting", articleSetting);
         return "/admin/article/setting";

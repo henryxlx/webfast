@@ -19,7 +19,6 @@ import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.kernel.view.PostDataMapForm;
 import com.jetwinner.webfast.kernel.view.ViewRenderService;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
-import com.jetwinner.webfast.session.FlashMessageUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -82,7 +81,7 @@ public class SettingsController {
             if (userProfileIsEmpty) {
                 Map<String, Object> userProfileMap = ParamMap.toCustomFormDataMap(request);
                 userService.updateUserProfile(user.getId(), userProfileMap);
-                FlashMessageUtil.setFlashMessage("success", "用户基础信息添加成功。", request.getSession());
+                BaseControllerHelper.setFlashMessage("success", "用户基础信息添加成功。", request.getSession());
             } else {
                 Map<String, Object> mapForUpdate = ParamMap.toUpdateDataMap(request, profile);
                 if (mapForUpdate != null && mapForUpdate.size() > 0) {
@@ -90,12 +89,12 @@ public class SettingsController {
                             EasyStringUtil.isNotBlank(profile.get("mobile")))) {
 
                         userService.updateUserProfile(user.getId(), mapForUpdate);
-                        FlashMessageUtil.setFlashMessage("success", "基础信息保存成功。", request.getSession());
+                        BaseControllerHelper.setFlashMessage("success", "基础信息保存成功。", request.getSession());
                     } else {
-                        FlashMessageUtil.setFlashMessage("danger", "不能修改已绑定的手机。", request.getSession());
+                        BaseControllerHelper.setFlashMessage("danger", "不能修改已绑定的手机。", request.getSession());
                     }
                 } else {
-                    FlashMessageUtil.setFlashMessage("danger", "没有可更新的数据。", request.getSession());
+                    BaseControllerHelper.setFlashMessage("danger", "没有可更新的数据。", request.getSession());
                 }
             }
             return "redirect:/settings";
@@ -156,7 +155,7 @@ public class SettingsController {
             BaseControllerHelper.createMessageResponse("error", "上传图片位置错误：" + e.getMessage());
         }
         userService.applyUserApproval(user.getId(), formData, faceImgPath, backImgPath, directory);
-        FlashMessageUtil.setFlashMessage("success", "实名认证提交成功！", request.getSession());
+        BaseControllerHelper.setFlashMessage("success", "实名认证提交成功！", request.getSession());
         return new ModelAndView("redirect:/settings");
     }
 
@@ -243,11 +242,11 @@ public class SettingsController {
             if (!userAccessControlService.checkPassword(user,
                     String.valueOf(form.get("currentPassword")))) {
 
-                FlashMessageUtil.setFlashMessage("danger", "当前密码不正确，请重试！", request.getSession());
+                BaseControllerHelper.setFlashMessage("danger", "当前密码不正确，请重试！", request.getSession());
             } else{
                 userService.changePassword(user.getId(),
                         String.valueOf(form.get("currentPassword")), String.valueOf(form.get("newPassword")));
-                FlashMessageUtil.setFlashMessage("success", "密码修改成功。", request.getSession());
+                BaseControllerHelper.setFlashMessage("success", "密码修改成功。", request.getSession());
             }
 
             return "redirect:/settings/password";
@@ -278,7 +277,7 @@ public class SettingsController {
             if (!userAccessControlService.checkPassword(user,
                     request.getParameter("userLoginPassword"))) {
 
-                FlashMessageUtil.setFlashMessage("danger",
+                BaseControllerHelper.setFlashMessage("danger",
                         "您的登陆密码错误，不能设置安全问题。", request.getSession());
 
                 return securityQuestionsActionReturn(hasSecurityQuestions, userSecureQuestions, model);
@@ -303,7 +302,7 @@ public class SettingsController {
                     .add("securityAnswer3", request.getParameter("answer-3")).toMap();
 
             userService.addUserSecureQuestionsWithUnHashedAnswers(user, fields);
-            FlashMessageUtil.setFlashMessage("success", "安全问题设置成功。", request.getSession());
+            BaseControllerHelper.setFlashMessage("success", "安全问题设置成功。", request.getSession());
             hasSecurityQuestions = true;
             userSecureQuestions = userService.getUserSecureQuestionsByUserId(user.getId());
         }
@@ -327,18 +326,18 @@ public class SettingsController {
                 boolean isPasswordOk = userAccessControlService.checkPassword(user, String.valueOf(data.get("password")));
 
                 if (!isPasswordOk) {
-                    FlashMessageUtil.setFlashMessage("danger", "密码不正确，请重试。", request.getSession());
+                    BaseControllerHelper.setFlashMessage("danger", "密码不正确，请重试。", request.getSession());
                     return "redirect:/settings/email";
                 }
 
                 AppUser userOfNewEmail = userService.getUserByEmail(String.valueOf(data.get("email")));
                 if (userOfNewEmail != null && FastObjectUtil.equals(userOfNewEmail.getId(), user.getId())) {
-                    FlashMessageUtil.setFlashMessage("danger", "新邮箱，不能跟当前邮箱一样。", request.getSession());
+                    BaseControllerHelper.setFlashMessage("danger", "新邮箱，不能跟当前邮箱一样。", request.getSession());
                     return "redirect:/settings/email";
                 }
 
                 if (userOfNewEmail != null && FastObjectUtil.notEquals(userOfNewEmail.getId(), user.getId())) {
-                    FlashMessageUtil.setFlashMessage("danger", "新邮箱已经被注册，请换一个试试。", request.getSession());
+                    BaseControllerHelper.setFlashMessage("danger", "新邮箱已经被注册，请换一个试试。", request.getSession());
                     return "redirect:/settings/email";
                 }
 
@@ -357,11 +356,11 @@ public class SettingsController {
                                             .add("siteName", settingService.getSettingValue("site.name"))
                                             .add("siteUrl", settingService.getSettingValue("site.url")).toMap())
                     );
-                    FlashMessageUtil.setFlashMessage("success",
+                    BaseControllerHelper.setFlashMessage("success",
                             String.format("请到邮箱%s中接收确认邮件，并点击确认邮件中的链接完成修改。", data.get("email")),
                             request.getSession());
                 } catch (Exception e) {
-                    FlashMessageUtil.setFlashMessage("danger", "邮箱变更确认邮件发送失败，请联系管理员。", request.getSession());
+                    BaseControllerHelper.setFlashMessage("danger", "邮箱变更确认邮件发送失败，请联系管理员。", request.getSession());
                     logService.error(user, "setting", "email_change", "邮箱变更确认邮件发送失败:" + e.getMessage());
                 }
 
@@ -390,12 +389,12 @@ public class SettingsController {
                                     .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
                                     .add("siteName", settingService.getSettingValue("site.name"))
                                     .add("siteUrl", settingService.getSettingValue("site.url")).toMap()));
-            FlashMessageUtil.setFlashMessage("success",
+            BaseControllerHelper.setFlashMessage("success",
                     String.format("请到邮箱%s中接收验证邮件，并点击邮件中的链接完成验证。", user.getEmail()),
                     request.getSession());
         } catch (Exception e) {
             logService.error(user, "setting", "email-verify", "邮箱验证邮件发送失败:" + e.getMessage());
-            FlashMessageUtil.setFlashMessage("danger", "邮箱验证邮件发送失败，请联系管理员。", request.getSession());
+            BaseControllerHelper.setFlashMessage("danger", "邮箱验证邮件发送失败，请联系管理员。", request.getSession());
         }
         return Boolean.TRUE;
     }

@@ -8,12 +8,27 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
  * @author xulixin
  */
 public class BaseControllerHelper {
+
+    private static FlashBag getFlashBag(HttpSession session) {
+        String flashBagKey = "flashbag";
+        FlashBag flashBag = (FlashBag) session.getAttribute(flashBagKey);
+        if (flashBag == null) {
+            flashBag = new FlashBag();
+            session.setAttribute(flashBagKey, flashBag);
+        }
+        return flashBag;
+    }
+    
+    public static void setFlashMessage(String level, String message, HttpSession session) {
+        getFlashBag(session).add(level, message);
+    }
 
     /**
      * 创建消息提示响应
