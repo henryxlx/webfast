@@ -1,8 +1,15 @@
 TODO list
-# setting 获取配置参数的实现
+# setting 获取配置参数的实现（简单实现已完成，需要进一步研究优化）
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.3: @2022-08-15
+* ValueParser工具类异常处理生成日志，生成数值对象的方法重命名，重命名的toXXX()方法先判断类型后转换，代码优化为更简洁的方法
+* 删除FlashMessageUtil工具类，功能合并到BaseControllerHelper帮助类中
+* OrderBy类的构建使用静态方法build完成精准初始化，排序列的数量初始化OrderBy中的项目列表
+* 扩展模块bigapp的SQL脚本文件重命名webfast-module-bigapp.sql
+* 修复后台管理用户相关设置中用户默认头像设置的JavaScript控制缺少变量设置错误
+
 0.8.2: @2022-08-14
 * OrderBy和OrderByBuilder重命名，OrderBy改为OrderByEntry，OrderByBuilder改为OrderBy
 * 删除EasyDateUtil中的重复方法toLongTime，使用FastTimeUtil中的dateStrToLong的日期时间转换
