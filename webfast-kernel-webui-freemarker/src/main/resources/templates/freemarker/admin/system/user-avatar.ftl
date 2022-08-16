@@ -1,4 +1,5 @@
 <#assign submenu = 'user_avatar'/>
+<#assign script_controller = 'setting/default' />
 
 <#include '/admin/system/user-set-layout.ftl'/>
 <#macro blockTitle>注册设置 - 用户默认头像设置 - ${blockTitleParent}</#macro>
