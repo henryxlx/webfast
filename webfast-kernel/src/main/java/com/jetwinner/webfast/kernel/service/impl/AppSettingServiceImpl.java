@@ -14,6 +14,8 @@ import java.util.Map;
 @Service
 public class AppSettingServiceImpl implements AppSettingService {
 
+    private static final String SETTING_CACHE_NAME = "webfastSettingCache";
+
     private final AppSettingDao settingDao;
 
     public AppSettingServiceImpl(AppSettingDao settingDao) {
@@ -21,22 +23,22 @@ public class AppSettingServiceImpl implements AppSettingService {
     }
 
     @Override
-    @CacheEvict(value = "settingCache", key = "#name")
+    @CacheEvict(value = SETTING_CACHE_NAME, key = "#name")
     public void set(String name, Map<String, Object> mapForValue) {
         settingDao.updateSetting(name, mapForValue);
     }
 
     @Override
-    @Cacheable(value = "settingCache", key = "#name")
+    @Cacheable(value = SETTING_CACHE_NAME, key = "#name")
     public Map<String, Object> get(String name) {
         return settingDao.getSettingValueByName(name);
     }
 
     @Override
     public String getSettingValue(String key, String defaultValue) {
-        String result = defaultValue != null ? defaultValue : null;
-        String[] names = key.split("\\.");
-        if (names != null && names.length > 1) {
+        String result = defaultValue;
+        String[] names = key != null ? key.split("\\.") : new String[0];
+        if (names.length > 1) {
             Map<String, Object> settingMap = get(names[0]);
             if (settingMap != null) {
                 Object val = settingMap.get(names[1]);
