@@ -1,7 +1,7 @@
-<#if setting('default.defaultAvatar')??>
+<#if setting('default.defaultAvatar')?? && setting('default.defaultAvatar') == '1'>
 <div class="form-group" id="avatar-class">
     <div class="col-md-8 control-label"><b>自定义默认头像</b></div>
-    <form id="avatar-form" method="post" action="${ctx}/setting/default/avatar" enctype="multipart/form-data">
+    <form id="avatar-form" method="post" action="${ctx}/admin/setting/user-avatar" enctype="multipart/form-data">
         <div class="controls col-md-8 controls">
             <img src="${system_default_path('avatar', true)}">
         </div>
@@ -29,13 +29,25 @@
     <div class="controls col-md-8 controls">
         <img src="${system_default_path('avatar')}">
     </div>
+
+    <form class="form-horizontal" id="user-setting-form" method="post" action="${ctx}/admin/setting/user-avatar/default">
+        <input type="hidden" name="defaultAvatar" value="${defaultSetting.defaultAvatar}">
+
+        <div class="controls col-md-8 controls">
+            <br/>
+            <button type="submit" class="btn btn-primary btn-sm">保存</button>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="${csrf_token('site')}">
+    </form>
+
 </div>
 
 <#else>
 
 <div class="form-group" id="avatar-class" style="display:none;">
     <div class="col-md-8 control-label"><b>自定义默认头像</b></div>
-    <form id="avatar-form" method="post" action="${ctx}/setting/default/avatar" enctype="multipart/form-data">
+    <form id="avatar-form" method="post" action="${ctx}/admin/setting/user-avatar" enctype="multipart/form-data">
         <div class="controls col-md-8 controls">
             <img src="${system_default_path('avatar', true)}">
         </div>
