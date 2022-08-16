@@ -48,4 +48,10 @@ public final class FastDirectoryUtil {
             return false;
         }
     }
+
+    public static void dirNotExistsThenMake(String path) {
+        if (!dirExists(path)) {
+            makeDir(path);
+        }
+    }
 }
