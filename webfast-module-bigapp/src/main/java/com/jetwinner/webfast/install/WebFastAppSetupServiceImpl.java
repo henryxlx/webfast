@@ -96,6 +96,6 @@ public class WebFastAppSetupServiceImpl extends FastAppSetupServiceImpl {
 
     @Override
     public String getOtherSqlFilePath() {
-        return "sql/mysql/webfast-module-content.sql";
+        return "sql/mysql/webfast-module-bigapp.sql";
     }
 }
