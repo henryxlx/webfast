@@ -38,7 +38,11 @@ public class AppSettingDaoImpl extends FastJdbcDaoSupport implements AppSettingD
                 settingBlobData.length, new DefaultLobHandler()), Types.BLOB);
 
         String updateSql = "UPDATE app_setting set value = :value where name = :name";
-        getNamedParameterJdbcTemplate().update(updateSql, in);
+        int nums = getNamedParameterJdbcTemplate().update(updateSql, in);
+        if (nums < 1) {
+            String insertSql = "INSERT INTO app_setting(name, value) VALUES(:name, :value)";
+            getNamedParameterJdbcTemplate().update(insertSql, in);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +62,7 @@ public class AppSettingDaoImpl extends FastJdbcDaoSupport implements AppSettingD
             );
             return (Map<String, Object>) result[0];
         } catch (Exception e) {
-            return new HashMap<>(0);
+            return new HashMap<>(2);
         }
     }
 }
