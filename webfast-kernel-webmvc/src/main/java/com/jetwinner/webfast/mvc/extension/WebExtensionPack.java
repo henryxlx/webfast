@@ -154,8 +154,8 @@ public class WebExtensionPack extends BaseWebExtensionPack {
         Map<String, Object> defaultSetting = delegator.settingService.get("default");
         if(systemDefault && !defaultSetting.isEmpty()){
             String fileName = "default" + StringUtils.capitalize(category) + "FileName";
-            if (defaultSetting.containsKey(fileName)) {
-                url = getAssetUrl(publicUrlPath + defaultSetting.get(fileName));
+            if (EasyStringUtil.isNotBlank(defaultSetting.get(fileName))) {
+                url = getAssetUrl("files/" + publicUrlPath + defaultSetting.get(fileName));
             } else {
                 url = getAssetUrl(publicUrlPath + category);
             }
