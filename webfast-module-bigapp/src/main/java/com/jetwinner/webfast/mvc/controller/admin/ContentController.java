@@ -48,7 +48,7 @@ public class ContentController {
 
         List<Map<String, Object>> contents = contentService.searchContents(
                 conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

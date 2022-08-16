@@ -272,16 +272,16 @@ public class AppArticleServiceImpl implements AppArticleService {
         OrderBy orderBy;
         switch (sort) {
             case "created":
-                orderBy = new OrderBy().addDesc("createdTime");
+                orderBy = OrderBy.build(1).addDesc("createdTime");
                 break;
             case "published":
-                orderBy = new OrderBy().addDesc("sticky").addDesc("publishedTime");
+                orderBy = OrderBy.build(2).addDesc("sticky").addDesc("publishedTime");
                 break;
             case "normal":
-                orderBy = new OrderBy().addDesc("publishedTime");
+                orderBy = OrderBy.build(1).addDesc("publishedTime");
                 break;
             case "popular":
-                orderBy = new OrderBy().addDesc("hits");
+                orderBy = OrderBy.build(1).addDesc("hits");
                 break;
             default:
                 throw new RuntimeGoingException("参数sort不正确。");

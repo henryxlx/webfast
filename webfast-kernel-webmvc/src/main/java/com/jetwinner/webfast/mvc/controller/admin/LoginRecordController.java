@@ -47,7 +47,7 @@ public class LoginRecordController {
         }
 
         if(userConditions.containsKey("keywordType") && userConditions.containsKey("keyword")) {
-            List<AppUser> users = userService.searchUsers(userConditions, new OrderBy().addDesc("createdTime"),0,2000);
+            List<AppUser> users = userService.searchUsers(userConditions, OrderBy.build(1).addDesc("createdTime"),0,2000);
             Set<Object> userIds = ArrayToolkitOnJava8.column(users, AppUser::getId);
             if(userIds != null && userIds.size() > 0){
                 conditions.put("userIds", userIds);
@@ -70,7 +70,7 @@ public class LoginRecordController {
 
         List<Map<String, Object>> logRecords = logDao.searchLogs(
                 conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
@@ -119,7 +119,7 @@ public class LoginRecordController {
                 logDao.searchLogCount(conditions), 8);
 
         List<Map<String, Object>> loginRecords = logDao.searchLogs(conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );

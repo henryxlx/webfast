@@ -7,12 +7,16 @@ import java.util.List;
  * @author x230-think-joomla
  * @date 2015/6/19
  */
-public class OrderBy {
+public final class OrderBy {
 
     private final List<OrderByEntry> orderByEntries;
 
-    public OrderBy() {
-        this.orderByEntries = new ArrayList<>();
+    private OrderBy(int capacity) {
+        this.orderByEntries = capacity >= 0 && capacity <= 32  ? new ArrayList<>(capacity) : new ArrayList<>();
+    }
+
+    public static OrderBy build(int capacity) {
+        return new OrderBy(capacity);
     }
 
     public OrderBy add(String columnName) {

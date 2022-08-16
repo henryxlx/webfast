@@ -62,7 +62,7 @@ public class UserController {
 
         model.addAttribute("roles", roleService.listAllRole());
         model.addAttribute("users", userService.searchUsers(conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()));
         model.addAttribute(Paginator.MODEL_ATTR_NAME, paginator);

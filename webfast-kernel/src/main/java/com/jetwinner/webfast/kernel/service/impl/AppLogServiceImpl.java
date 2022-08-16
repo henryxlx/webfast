@@ -86,12 +86,11 @@ public class AppLogServiceImpl implements AppLogService {
         OrderBy orderBy;
         switch (sort) {
             case "created":
-                orderBy = new OrderBy().addDesc("createdTime");
+                orderBy = OrderBy.build(1).addDesc("createdTime");
                 break;
             case "createdByAsc":
-                orderBy = new OrderBy().add("createdTime");
+                orderBy = OrderBy.build(1).add("createdTime");
                 break;
-
             default:
                 throw new RuntimeGoingException("参数sort不正确。");
         }

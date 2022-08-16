@@ -52,7 +52,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
                 .select("*")
                 .setFirstResult(start)
                 .setMaxResults(limit)
-                .orderBy(new OrderBy().addDesc("createdTime"));
+                .orderBy(OrderBy.build(1).addDesc("createdTime"));
 
         return getNamedParameterJdbcTemplate().query(builder.getSQL(), conditions,
                 new BeanPropertyRowMapper<>(AppModelMessage.class));

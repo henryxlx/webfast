@@ -51,7 +51,7 @@ public class UserApprovalController {
 
         List<AppUser> users = userService.searchUsers(
                 conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
@@ -103,7 +103,7 @@ public class UserApprovalController {
 
         List<AppUser> users = userService.searchUsers(
                 conditions,
-                new OrderBy().addDesc("createdTime"),
+                OrderBy.build(1).addDesc("createdTime"),
                 paginator.getOffsetCount(),
                 paginator.getPerPageCount()
         );
