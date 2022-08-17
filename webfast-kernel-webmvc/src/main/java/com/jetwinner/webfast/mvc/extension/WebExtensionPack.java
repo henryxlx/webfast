@@ -77,7 +77,8 @@ public class WebExtensionPack extends BaseWebExtensionPack {
             String fileName = key + "FileName";
             if (defaultSetting.containsKey(key) && defaultSetting.containsKey(fileName)) {
                 if (ValueParser.parseInt(defaultSetting.get(key)) == 1) {
-                    url = getAssetUrl(publicUrlPath  + size + defaultSetting.get(fileName));
+                    url = getAssetUrl(delegator.appConst.getUploadPublicUrlPath() + "/" +
+                            publicUrlPath  + size + defaultSetting.get(fileName));
                 }
             }
 
@@ -155,7 +156,8 @@ public class WebExtensionPack extends BaseWebExtensionPack {
         if(systemDefault && !defaultSetting.isEmpty()){
             String fileName = "default" + StringUtils.capitalize(category) + "FileName";
             if (EasyStringUtil.isNotBlank(defaultSetting.get(fileName))) {
-                url = getAssetUrl("files/" + publicUrlPath + defaultSetting.get(fileName));
+                url = getAssetUrl(delegator.appConst.getUploadPublicUrlPath() + "/" +
+                        publicUrlPath + defaultSetting.get(fileName));
             } else {
                 url = getAssetUrl(publicUrlPath + category);
             }
