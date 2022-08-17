@@ -54,4 +54,32 @@ public final class FastDirectoryUtil {
             makeDir(path);
         }
     }
+
+    public static void emptyDir(String dirPath) {
+        File dir = new File(dirPath);
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            if (children != null && children.length > 0) {
+                for (String path : children) {
+                    deleteDir(new File(dir, path));
+                }
+            }
+        }
+    }
+
+    public static boolean deleteDir(File dir) {
+        if (dir.isDirectory()) {
+            String[] children = dir.list();
+            if (children != null && children.length > 0) {
+                for (String child : children) {
+                    boolean success = deleteDir(new File(dir, child));
+                    if (!success) {
+                        return false;
+                    }
+                }
+            }
+        }
+        // 目录此时为空，可以删除
+        return dir.delete();
+    }
 }
