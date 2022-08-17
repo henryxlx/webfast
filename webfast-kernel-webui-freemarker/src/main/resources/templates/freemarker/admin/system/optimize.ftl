@@ -19,7 +19,7 @@
       刷新并重建缓存,让系统保持最优的状态。 
     </p>
     <p >
-  		<button id="removecache" class="btn btn-primary fr " data-url="{{ url('admin_optimize_remove_cache') }}">刷新缓存</button>
+  		<button id="removecache" class="btn btn-primary fr " data-url="${ctx}/admin/optimize/remove-cache">刷新缓存</button>
   	</p>
   </div>
 </div>
@@ -33,7 +33,7 @@
 	       移除系统的临时数据，释放出更多磁盘空间。
 	    </p>
 	    <p >
-	  		<button id="removeTmp" class="btn btn-primary fr" data-url="{{ url('admin_optimize_remove_tmp') }}">优化磁盘空间</button>
+	  		<button id="removeTmp" class="btn btn-primary fr" data-url="${ctx}/admin/optimize/remove-tmp">优化磁盘空间</button>
 	  	</p>
 	  </div>
 	</div>
@@ -48,7 +48,7 @@
        备份数据库，并下载备份文件。 下载完成后请<span class="text-info">优化磁盘空间</span>。
     </p>
     <p>
-  		<button id="backupDatabase" class="btn btn-primary fr" data-url="{{ url('admin_optimize_backupdb') }}">数据库备份和下载</button>
+  		<button id="backupDatabase" class="btn btn-primary fr" data-url="${ctx}/optimize/backupdb">数据库备份和下载</button>
   	</p>
   	<p>
   		<span id="dbbackup" class="glyphicon glyphicon-download-alt hide"><a id="dbdownload" href="#" target="_blank">下载数据库备份</a></span>
@@ -75,7 +75,7 @@
 	       清空系统升级过程中备份的系统文件和备数据库。通过清空系统备份数据，可以让系统释放出更多的磁盘空间
 	    <p/>
 	    <p >
-	  		<button id="removeBackup" class="btn btn-warning fr" data-url="{{ url('admin_optimize_remove_backup') }}">清空系统备份数据</button>
+	  		<button id="removeBackup" class="btn btn-warning fr" data-url="${ctx}/admin/optimize/remove-backup">清空系统备份数据</button>
 	  	</p>
 	  </div>
 	</div>
