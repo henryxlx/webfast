@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.4: @2022-08-16
+* 完成后台管理系统设置之用户相关设置中用户默认头像上传、剪裁功能，系统默认头像重置功能
+* FastDirectoryUtil工具类添加新方法dirNotExistsThenMake，用于文件夹不存在时快速创建
+* 系统设置在保存到数据库中的操作AppSettingDaoImpl的更新操作修改为更新时返回更新数量为零时，说明没有相关参数项，插入新的参数项
+* 系统设置服务AppSettingServiceImpl代码优化，缓存名称使用统一的常量定义
+* WebExtensionPack辅助类中的方法getSystemDefaultPath在判断配置中包含自定义的参数时使用外部存储的文件路径资源定位
+
 0.8.3: @2022-08-15
 * ValueParser工具类异常处理生成日志，生成数值对象的方法重命名，重命名的toXXX()方法先判断类型后转换，代码优化为更简洁的方法
 * 删除FlashMessageUtil工具类，功能合并到BaseControllerHelper帮助类中
@@ -71,7 +78,7 @@ TODO list
 
 0.7.2: @2022-03-25
 * Shiro配置与登录访问相关地址（loginUrl、successUrl和unauthorizedUrl）使用属性变量时无法获取设置的参数值
-* 台用户相关设置的用户登录控制功能完成，后台用户相关设置的用户注册页面内容显示不正确
+* 后台用户相关设置的用户登录控制功能完成，后台用户相关设置的用户注册页面内容显示不正确
 * Shiro支持模块添加EhCache缓存配置类
 * 宏定义中默认值NULL的使用方式<#macro radios name choices checked = NULL!> 默认值NULL不存在
 
