@@ -97,4 +97,12 @@ public class FastAppConst {
     public void setOffline(boolean offline) {
         this.offline = offline;
     }
+
+    public String getUploadTmpPath() {
+        return this.storagePath + uploadPublicDirectory + "/tmp";
+    }
+
+    public String getDownloadPath() {
+        return this.storagePath + "/upgrade";
+    }
 }
