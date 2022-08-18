@@ -51,7 +51,7 @@ public class AnalysisController {
         TimeRange timeRange = this.getTimeRange(condition);
         if (timeRange == null) {
             BaseControllerHelper.setFlashMessage("danger", "输入的日期有误!", request.getSession());
-            return "redirect:/admin/operation/analysis/register/trend";
+            return "redirect:/admin/operation/analysis/register/" + tab;
         }
         Paginator paginator = new Paginator(request,
                 userService.searchUserCount(timeRange.toMap()),
@@ -162,7 +162,7 @@ public class AnalysisController {
         TimeRange timeRange = this.getTimeRange(condition);
         if (timeRange == null) {
             BaseControllerHelper.setFlashMessage("danger", "输入的日期有误!", request.getSession());
-            return "redirect:/admin/operation/analysis/user-sum/trend";
+            return "redirect:/admin/operation/analysis/user-sum/" + tab;
         }
 
         Map<String, Object> result = new ParamMap().add("tab", tab).toMap();
