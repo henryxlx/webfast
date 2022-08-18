@@ -17,10 +17,10 @@
             <div class="page-header">
                 <h1>数据统计</h1>
             </div>
-            <form  class="well well-sm form-inline" action="${ctx}/admin/operation/analysis/rountByanalysisDateType/${tab!'trend'}" method="get" id="operation-form"  role="form" >
+            <form  class="well well-sm form-inline" action="${ctx}/admin/operation/analysis/routeByAnalysisDateType/${tab!'trend'}" method="get" id="operation-form"  role="form" >
             <div class="form-group">
                 <select class="form-control" name="analysisDateType">
-                    <@select_options dict['analysisDateType']!{} 'dataInfo.analysisDateType' '--选择数据类型--' />
+                    <@select_options dict['analysisDateType']!{}, (dataInfo.analysisDateType)!'', '--选择数据类型--' />
                 </select>
             </div>
             <div class="form-group">
