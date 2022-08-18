@@ -34,7 +34,7 @@
         <td><span class="pull-right">${todayUserSum!}</span></td>
         <td><span class="pull-right">${yesterdayUserSum!}</span></td>
         <#if userAcl.hasRole('ROLE_SUPER_ADMIN')>
-        <td><a href="${ctx}/admin/operation/analysis/user-sum/trend?analysisDateType=userSum">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/user-sum/detail?analysisDateType=userSum">详情</a></td>
+        <td><a href="${ctx}/admin/operation/analysis/user-sum/trend?analysisDateType=user-sum">趋势</a> <span class="text-muted">|</span> <a href="${ctx}/admin/operation/analysis/user-sum/detail?analysisDateType=user-sum">详情</a></td>
         </#if>
     </tr>
 
