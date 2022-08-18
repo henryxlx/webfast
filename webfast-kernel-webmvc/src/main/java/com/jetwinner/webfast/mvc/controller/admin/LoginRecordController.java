@@ -94,8 +94,8 @@ public class LoginRecordController {
         if (EasyStringUtil.isNotBlank(conditions.get("startDateTime")) &&
                 EasyStringUtil.isNotBlank(conditions.get("endDateTime"))) {
 
-            conditions.put("startDateTime", FastTimeUtil.dateStrToLong(conditions.get("startDateTime")));
-            conditions.put("endDateTime", FastTimeUtil.dateStrToLong(conditions.get("endDateTime")));
+            conditions.put("startDateTime", FastTimeUtil.strToTime(conditions.get("startDateTime"), "yyyy-MM-dd HH:mm"));
+            conditions.put("endDateTime", FastTimeUtil.strToTime(conditions.get("endDateTime"), "yyyy-MM-dd HH:mm"));
         } else {
             conditions.remove("startDateTime");
             conditions.remove("endDateTime");

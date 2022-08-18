@@ -1,13 +1,12 @@
 package com.jetwinner.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
-import java.util.Date;
 
 /**
  * @author xulixin
@@ -23,23 +22,24 @@ public final class FastTimeUtil {
     }
 
     public static long dateStrToLong(Object dateStrObj) {
-        return dateStrToLong(dateStrObj, "yyyy-MM-dd HH:mm");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(String.valueOf(dateStrObj), dtf);
+        return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
-    public static long dateStrToLong(Object dateStrObj, String formatPattern) {
-        long result = 0;
-            SimpleDateFormat sdf = new SimpleDateFormat(formatPattern);
-            try {
-                result = sdf.parse(String.valueOf(dateStrObj)).getTime();
-            } catch (ParseException e) {
-                throw new RuntimeException("FastTimeUtil dateStrToLong error: " + e.getMessage());
-            }
-        return result;
+    public static long strToTime(Object obj, String formatPattern) {
+        return strToTime(String.valueOf(obj), formatPattern);
     }
 
-    public static String timeToDateStr(String dateFormat, long time) {
-        Date date = new Date(time);
-        return new SimpleDateFormat(dateFormat).format(date);
+    public static long strToTime(String dateTimeStr, String formatPattern) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(formatPattern);
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTimeStr, dtf);
+        return toTimestamp(localDateTime);
+    }
+
+    public static String timeToDateStr(String formatPattern, long time) {
+        LocalDate date = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault()).toLocalDate();
+        return DateTimeFormatter.ofPattern(formatPattern).format(date);
     }
 
     private static LocalDateTime toLocalDateTime(long timestamp) {
