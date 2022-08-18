@@ -78,4 +78,6 @@ public interface AppUserService extends BaseAppUserService {
     boolean deleteToken(String type, String token);
 
     void dropFieldData(Object fieldName);
+
+    List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime);
 }

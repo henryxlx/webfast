@@ -489,4 +489,9 @@ public class AppUserServiceImpl implements AppUserService {
     public void dropFieldData(Object fieldName) {
         userProfileDao.dropFieldData(String.valueOf(fieldName));
     }
+
+    @Override
+    public List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime) {
+        return userDao.analysisRegisterDataByTime(startTime, endTime);
+    }
 }

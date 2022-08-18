@@ -35,4 +35,6 @@ public interface AppUserDao {
     int clearCounterById(Integer userId, String name);
 
     AppUser getByEmail(String email);
+
+    List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime);
 }
