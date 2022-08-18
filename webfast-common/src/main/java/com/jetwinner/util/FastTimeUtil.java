@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
@@ -56,14 +57,17 @@ public final class FastTimeUtil {
     }
 
     public static long startTimeOfTheNextDay(long time) {
-        return 0;
+        LocalDateTime localDateTime = toLocalDateTime(time + 24 * 60 * 60 * 1000);
+        return toTimestamp(localDateTime);
     }
 
     public static long startTimeOfDayLastMonth(long time) {
-        return 0;
+        LocalDateTime localDateTime = toLocalDateTime(time);
+        return toTimestamp(localDateTime.minus(1, ChronoUnit.MONTHS));
     }
 
     public static long startTimeOfDayLastFewMonth(long time, int lastWhichMonth) {
-        return 0;
+        LocalDateTime localDateTime = toLocalDateTime(time);
+        return toTimestamp(localDateTime.minus(lastWhichMonth, ChronoUnit.MONTHS));
     }
 }
