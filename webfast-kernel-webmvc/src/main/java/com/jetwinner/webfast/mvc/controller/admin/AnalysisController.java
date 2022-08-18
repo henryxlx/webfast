@@ -66,7 +66,7 @@ public class AnalysisController {
         if ("trend".equals(tab)) {
             List<Map<String, Object>> registerData =
                     userService.analysisRegisterDataByTime(timeRange.getStartTime(), timeRange.getEndTime());
-            model.addAttribute("data", this.fillAnalysisData(condition, registerData));
+            model.addAttribute("chartData", this.fillAnalysisData(condition, registerData));
         }
 
         String registerStartData = "";
