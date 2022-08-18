@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.5: @2022-08-17
+* 应用程序常量定义类FastAppConst添加获取应用程序外部存储上传临时文件夹方法getUploadTmpPath和下载文件夹方法getDownloadPath
+* 工具类FastDirectoryUtil添加删除目录的方法deleteDir和清空指定目录的方法emptyDir
+* 添加后台优化处理的控制器OptimizeController，完成临时文件夹内容清理功能
+
 0.8.4: @2022-08-16
 * 完成后台管理系统设置之用户相关设置中用户默认头像上传、剪裁功能，系统默认头像重置功能
 * FastDirectoryUtil工具类添加新方法dirNotExistsThenMake，用于文件夹不存在时快速创建
