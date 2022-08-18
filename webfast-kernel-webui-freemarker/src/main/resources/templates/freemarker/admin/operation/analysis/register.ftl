@@ -6,13 +6,13 @@
 
 <#macro blockAnalysisBody>
 <div class="col-md-12">
-    <#if tab! == "trend">
+    <#if tab == "trend">
     <div id="line-data"></div>
-    <input id="data"  type="hidden" value="${myData!}" />
+    <input id="data"  type="hidden" value="${chartData!}" />
 
     <input id="registerStartDate"  type="hidden" value="${registerStartDate!}" />
 
-    <#elseif tab! == "detail">
+    <#elseif tab == "detail">
         <#include '/admin/operation/analysis/register-table.ftl' />
     </#if>
 </div>
