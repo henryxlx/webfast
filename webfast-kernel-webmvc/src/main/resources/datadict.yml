@@ -3,7 +3,7 @@ data:
     analysisDateType:
       register: 新注册用户数
       login: 用户登录数
-      userSum: 用户总数
+      user-sum: 用户总数
     dateType:
       today: 今日
       yesterday: 昨日
