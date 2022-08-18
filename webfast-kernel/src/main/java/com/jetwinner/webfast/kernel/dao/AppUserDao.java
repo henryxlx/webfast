@@ -37,4 +37,6 @@ public interface AppUserDao {
     AppUser getByEmail(String email);
 
     List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime);
+
+    List<Map<String, Object>> analysisUserSumByTime(long endTime);
 }

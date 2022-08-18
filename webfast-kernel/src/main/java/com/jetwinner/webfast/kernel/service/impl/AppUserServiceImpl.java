@@ -494,4 +494,22 @@ public class AppUserServiceImpl implements AppUserService {
     public List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime) {
         return userDao.analysisRegisterDataByTime(startTime, endTime);
     }
+
+    @Override
+    public List<Map<String, Object>> analysisUserSumByTime(long endTime) {
+        List<Map<String, Object>> perDayUserAddCount = userDao.analysisUserSumByTime(endTime);
+        List<Map<String, Object>> dayUserTotals = new ArrayList<>();
+        for (int key = 0; key < perDayUserAddCount.size(); key++) {
+            Map<String, Object> model = new HashMap<>();
+            model.put("date", perDayUserAddCount.get(key).get("date"));
+            model.put("count", 0);
+            dayUserTotals.add(model);
+            int count = ValueParser.parseInt(dayUserTotals.get(key).get("count"));
+            for (int i = key; i < perDayUserAddCount.size(); i++) {
+                count += ValueParser.parseInt(perDayUserAddCount.get(i).get("count"));
+            }
+            model.put("count", count);
+        }
+        return dayUserTotals;
+    }
 }

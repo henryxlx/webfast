@@ -11,18 +11,18 @@
           <tbody>
             <#list userSumDetail! as data>
               <tr>
-                <td>{{data.nickname}}</td>
-                <td>{{data.email}}</td>
-                <td>{% if data.type=="default" %}网站注册
-                  {% elseif data.type=="weibo" %}新浪微博
-                  {% elseif data.type=="qq" %}QQ
-                  {% elseif data.type=="renren" %}人人
-                  {% elseif data.type=="discuz" %}discuz
-                  {% elseif data.type=="phpwind" %}phpwind
-                  {% else %}其他
-                  {% endif %}</td>
-                <td>{{data.createdIp}}</td>
-                <td>{{data.createdTime|date("Y-m-d H:i:s")}}</td>
+                <td>${data.username}</td>
+                <td>${data.email}</td>
+                <td><#if data.type=="default">网站注册
+                  <#elseif data.type=="weibo">新浪微博
+                  <#elseif data.type=="qq">QQ
+                  <#elseif data.type=="renren">人人
+                  <#elseif data.type=="discuz">discuz
+                  <#elseif data.type=="phpwind">phpwind
+                  <#else>其他
+                  </#if></td>
+                <td>${data.createdIp}</td>
+                <td>${data.createdTime?number_to_date?string("yyyy-MM-dd HH:mm:ss")}</td>
               </tr>
             </#list>
           </tbody>

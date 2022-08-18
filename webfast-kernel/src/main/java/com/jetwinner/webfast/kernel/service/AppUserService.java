@@ -80,4 +80,6 @@ public interface AppUserService extends BaseAppUserService {
     void dropFieldData(Object fieldName);
 
     List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime);
+
+    List<Map<String, Object>> analysisUserSumByTime(long endTime);
 }

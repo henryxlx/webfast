@@ -123,6 +123,12 @@ public class AppUserDaoImpl extends FastJdbcDaoSupport implements AppUserDao {
         return getJdbcTemplate().queryForList(sql, startTime, endTime);
     }
 
+    @Override
+    public List<Map<String, Object>> analysisUserSumByTime(long endTime) {
+        String sql="select date, count(*) as count from (SELECT from_unixtime(o.createdTime,'%Y-%m-%d') as date from app_user o where o.createdTime<=? ) dates group by dates.date order by date desc";
+        return getJdbcTemplate().queryForList(sql, endTime);
+    }
+
     private DynamicQueryBuilder createUserQueryBuilder(Map<String, Object> conditions) {
 
         if (conditions.containsKey("roles")) {

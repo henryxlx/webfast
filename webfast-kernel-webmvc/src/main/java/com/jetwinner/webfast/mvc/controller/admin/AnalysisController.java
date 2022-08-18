@@ -156,14 +156,77 @@ public class AnalysisController {
         return JsonUtil.objectToString(zeroDataMap.values());
     }
 
+    @RequestMapping("/admin/operation/analysis/user-sum/{tab}")
+    public String userSumAction(@PathVariable String tab, HttpServletRequest request, Model model) {
+        Map<String, Object> condition = ParamMap.toFormDataMap(request);
+        TimeRange timeRange = this.getTimeRange(condition);
+        if (timeRange == null) {
+            BaseControllerHelper.setFlashMessage("danger", "输入的日期有误!", request.getSession());
+            return "redirect:/admin/operation/analysis/user-sum/trend";
+        }
+
+        Map<String, Object> result = new ParamMap().add("tab", tab).toMap();
+        if ("trend".equals(tab)) {
+            List<Map<String, Object>> userSumData = userService.analysisUserSumByTime(timeRange.getEndTime());
+            result.put("data", this.fillAnalysisUserSum(condition, userSumData));
+        } else {
+            Paginator paginator = new Paginator(request,
+                    userService.searchUserCount(timeRange.toMap()),
+                    20);
+
+            List<AppUser> userSumDetail = userService.searchUsers(timeRange.toMap(),
+                    OrderBy.build(1).addDesc("createdTime"),
+                    paginator.getOffsetCount(),
+                    paginator.getPerPageCount());
+            result.put("userSumDetail", userSumDetail);
+            result.put("paginator", paginator);
+        }
+
+        List<AppUser> userSumStartData = userService.searchUsers(MapUtil.newHashMap(0),
+                OrderBy.build(1).addAsc("createdTime"), 0, 1);
+
+        if (userSumStartData != null && userSumStartData.size() > 0) {
+            result.put("userSumStartDate", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
+                    userSumStartData.get(0).getCreatedTime()));
+        }
+        result.put("dataInfo", this.getDataInfo(condition, timeRange));
+
+        model.addAllAttributes(result);
+        return "/admin/operation/analysis/user-sum";
+    }
+
+    private String fillAnalysisUserSum(Map<String, Object> condition, List<Map<String, Object>>currentData) {
+        List<String> dates= this.getDatesByCondition(condition);
+        Map<String, Map<String, Object>> currentDataMap = ArrayToolkit.index(currentData, "date");
+        TimeRange timeRange = this.getTimeRange(condition);
+
+        List<Map<String, Object>> zeroData = new ArrayList<>();
+        for (String value : dates) {
+            Map<String, Object> map = new HashMap<>(2);
+            map.put("date", value);
+            map.put("count", 0);
+            zeroData.add(map);
+        }
+
+        List<Map<String, Object>> userSumData = userService.analysisUserSumByTime(timeRange.getEndTime());
+        if (userSumData != null && userSumData.size() > 0){
+            Object countTmp = userSumData.get(0).get("count");
+            for (Map<String, Object> value : zeroData) {
+                Object date = value.get("date");
+                if (currentData.contains(date)) {
+                    value.put("count", currentDataMap.get(date).get("count"));
+                    countTmp = currentDataMap.get(date).get("count");
+                } else {
+                    value.put("count", countTmp);
+                }
+            }
+        }
+
+        return JsonUtil.objectToString(zeroData);
+    }
+
     @RequestMapping("/admin/operation/analysis/login/{tab}")
     public String loginPage(@PathVariable String tab) {
         return "/admin/operation/analysis/login";
     }
-
-    @RequestMapping("/admin/operation/analysis/user-sum/{tab}")
-    public String userSumPage(@PathVariable String tab) {
-        return "/admin/operation/analysis/user-sum";
-    }
-
 }
