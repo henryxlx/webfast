@@ -95,7 +95,7 @@ public class AnalysisController {
                     FastTimeUtil.dateStrToLong(fields.get("endTime")) + 24 * 3600);
         }
         return TimeRange.create(FastTimeUtil.timeForFirstDayOfMonth(FastTimeUtil.now()),
-                FastTimeUtil.startTimeOfTheNextDay(FastTimeUtil.now()));
+                FastTimeUtil.timeForTheNextDay(FastTimeUtil.now()));
     }
 
     private List<String> makeDateRange(long startTime, long endTime) {
@@ -127,11 +127,11 @@ public class AnalysisController {
                                 FastTimeUtil.timeForFirstDayOfMonth(FastTimeUtil.now())))
                 .add("currentMonthEnd", FastTimeUtil.timeToDateStr("yyyy-MM-dd", FastTimeUtil.now()))
                 .add("lastMonthStart", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
-                        FastTimeUtil.startTimeOfDayLastMonth(FastTimeUtil.now())))
+                        FastTimeUtil.timeForDayOfLastMonth(FastTimeUtil.now())))
                 .add("lastMonthEnd", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
-                                FastTimeUtil.startTimeOfTheNextDay(FastTimeUtil.now())))
+                                FastTimeUtil.timeForTheNextDay(FastTimeUtil.now())))
                 .add("lastThreeMonthsStart", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
-                        FastTimeUtil.startTimeOfDayLastFewMonth(FastTimeUtil.now(), 3)))
+                        FastTimeUtil.timeForDayOfPreviousMonth(FastTimeUtil.now(), 3)))
                 .add("lastThreeMonthsEnd", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
                         FastTimeUtil.now()))
                 .add("analysisDateType", condition.get("analysisDateType")).toMap();

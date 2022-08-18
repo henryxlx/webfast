@@ -56,18 +56,18 @@ public final class FastTimeUtil {
         return toTimestamp(firstDayOfMonth);
     }
 
-    public static long startTimeOfTheNextDay(long time) {
+    public static long timeForTheNextDay(long time) {
         LocalDateTime localDateTime = toLocalDateTime(time + 24 * 60 * 60 * 1000);
         return toTimestamp(localDateTime);
     }
 
-    public static long startTimeOfDayLastMonth(long time) {
+    public static long timeForDayOfLastMonth(long time) {
         LocalDateTime localDateTime = toLocalDateTime(time);
         return toTimestamp(localDateTime.minus(1, ChronoUnit.MONTHS));
     }
 
-    public static long startTimeOfDayLastFewMonth(long time, int lastWhichMonth) {
+    public static long timeForDayOfPreviousMonth(long time, int previousMonth) {
         LocalDateTime localDateTime = toLocalDateTime(time);
-        return toTimestamp(localDateTime.minus(lastWhichMonth, ChronoUnit.MONTHS));
+        return toTimestamp(localDateTime.minus(previousMonth, ChronoUnit.MONTHS));
     }
 }
