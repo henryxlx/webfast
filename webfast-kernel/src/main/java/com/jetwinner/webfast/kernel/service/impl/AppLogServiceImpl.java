@@ -100,6 +100,11 @@ public class AppLogServiceImpl implements AppLogService {
         return logs;
     }
 
+    @Override
+    public List<Map<String, Object>> analysisLoginDataByTime(long startTime, long endTime) {
+        return logDao.analysisLoginDataByTime(startTime, endTime);
+    }
+
     private void prepareSearchConditions(Map<String, Object> conditions) {
         if (EasyStringUtil.isNotBlank(conditions.get("username"))) {
             AppUser existsUser = userDao.getByUsername(String.valueOf(conditions.get("username")));

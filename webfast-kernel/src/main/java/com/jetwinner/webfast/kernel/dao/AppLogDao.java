@@ -16,4 +16,6 @@ public interface AppLogDao {
 
     List<Map<String, Object>> searchLogs(Map<String, Object> conditions, OrderBy orderBy,
                                          Integer start, Integer limit);
+
+    List<Map<String, Object>> analysisLoginDataByTime(long startTime, long endTime);
 }

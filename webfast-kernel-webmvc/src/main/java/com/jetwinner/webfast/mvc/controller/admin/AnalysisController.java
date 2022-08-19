@@ -5,6 +5,7 @@ import com.jetwinner.util.*;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.mvc.BaseControllerHelper;
@@ -19,10 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author xulixin
@@ -31,9 +29,11 @@ import java.util.Map;
 public class AnalysisController {
 
     private final AppUserService userService;
+    private final AppLogService logService;
 
-    public AnalysisController(AppUserService userService) {
+    public AnalysisController(AppUserService userService, AppLogService logService) {
         this.userService = userService;
+        this.logService = logService;
     }
 
     @RequestMapping("/admin/operation/analysis/routeByAnalysisDateType/{tab}")
@@ -226,7 +226,51 @@ public class AnalysisController {
     }
 
     @RequestMapping("/admin/operation/analysis/login/{tab}")
-    public String loginPage(@PathVariable String tab) {
+    public String loginAction(@PathVariable String tab, HttpServletRequest request, Model model) {
+        Map<String, Object> condition = ParamMap.toFormDataMap(request);
+        TimeRange timeRange = this.getTimeRange(condition);
+        if (timeRange == null) {
+            BaseControllerHelper.setFlashMessage("danger", "输入的日期有误!", request.getSession());
+            return "redirect:/admin/operation/analysis/login/" + tab;
+        }
+
+        Paginator paginator = new Paginator(request,
+                logService.searchLogCount(new ParamMap().add("action", "login_success")
+                        .add("startDateTime", timeRange.getStartTime())
+                        .add("endDateTime", timeRange.getEndTime()).toMap()),
+                20);
+
+        List<Map<String, Object>> loginDetail = logService.searchLogs(
+                new ParamMap().add("action", "login_success")
+                        .add("startDateTime", timeRange.getStartTime())
+                        .add("endDateTime", timeRange.getEndTime()).toMap(),
+                "created",
+                paginator.getOffsetCount(),
+                paginator.getPerPageCount());
+
+
+        if ("trend".equals(tab)) {
+            List<Map<String, Object>> LoginData = logService.analysisLoginDataByTime(timeRange.getStartTime(),
+                    timeRange.getEndTime());
+
+            model.addAttribute("data", this.fillAnalysisData(condition, LoginData));
+        }
+
+        Set<Object> userIds = ArrayToolkit.column(loginDetail, "userId");
+        model.addAttribute("users", userService.findUsersByIds(userIds));
+
+        List<Map<String, Object>> loginStartData = logService.searchLogs(
+                new ParamMap().add("action", "login_success").toMap(), "createdByAsc", 0, 1);
+
+        if (loginStartData != null && loginStartData.size() > 0) {
+            model.addAttribute("loginStartDate", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
+                    ValueParser.parseLong(loginStartData.get(0).get("createdTime"))));
+        }
+
+        model.addAttribute("dataInfo", this.getDataInfo(condition, timeRange));
+        model.addAttribute("loginDetail", loginDetail);
+        model.addAttribute("paginator", paginator);
+        model.addAttribute("tab", tab);
         return "/admin/operation/analysis/login";
     }
 }

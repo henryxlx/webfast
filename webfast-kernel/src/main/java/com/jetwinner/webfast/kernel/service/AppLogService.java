@@ -25,4 +25,6 @@ public interface AppLogService {
     int searchLogCount(Map<String, Object> conditions);
 
     List<Map<String, Object>> searchLogs(Map<String, Object> conditions, String sort, Integer start, Integer limit);
+
+    List<Map<String, Object>> analysisLoginDataByTime(long startTime, long endTime);
 }
