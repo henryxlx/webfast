@@ -21,7 +21,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
 
     group = 'com.jetwinner'
-    version = '0.8.5'
+    version = '0.8.6'
     sourceCompatibility = 1.8
     ext {
         jarVersion = rootProject.ext.version
