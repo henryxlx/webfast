@@ -9,9 +9,9 @@
           <tbody>
             <#list loginDetail! as data>
               <tr>
-                <td><@admin_macro.user_link users[data.userId]/></td>
+                <td><@admin_macro.user_link users['' + data.userId]/></td>
                 <td>${(data.ip)!}</td>
-                <td>${data.createdTime?c}</td>
+                <td>${data.createdTime?number_to_date?string('yyyy-MM-dd HH:mm:ss')}</td>
               </tr>
             </#list>
           </tbody>
