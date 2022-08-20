@@ -86,13 +86,12 @@ public class AnalysisController {
 
     private TimeRange getTimeRange(Map<String, Object> fields) {
         if (EasyStringUtil.isNotBlank(fields.get("startTime")) && EasyStringUtil.isNotBlank(fields.get("endTime"))) {
-            long startTime = ValueParser.parseLong(fields.get("startTime"));
-            long endTime = ValueParser.parseLong(fields.get("endTime"));
+            long startTime = FastTimeUtil.dateStrToLong(fields.get("startTime"));
+            long endTime = FastTimeUtil.dateStrToLong(fields.get("endTime"));
             if (startTime > endTime) {
                 return null;
             }
-            return TimeRange.create(FastTimeUtil.dateStrToLong(fields.get("startTime")),
-                    FastTimeUtil.dateStrToLong(fields.get("endTime")) + 24 * 3600);
+            return TimeRange.create(startTime, endTime + FastTimeUtil.ONE_DAY_MILLIS);
         }
         return TimeRange.create(FastTimeUtil.timeForFirstDayOfMonth(FastTimeUtil.now()),
                 FastTimeUtil.timeForTheNextDay(FastTimeUtil.now()));
@@ -109,20 +108,21 @@ public class AnalysisController {
             String currentDate = FastTimeUtil.timeToDateStr("yyyy-MM-dd", currentTime);
             dates.add(currentDate);
 
-            currentTime = currentTime + 3600 * 24;
+            currentTime = currentTime + FastTimeUtil.ONE_DAY_MILLIS;
         }
         return dates;
     }
 
     private List<String> getDatesByCondition(Map<String, Object> condition) {
         TimeRange timeRange = this.getTimeRange(condition);
-        return this.makeDateRange(timeRange.getStartTime(), timeRange.getEndTime() - 24 * 3600);
+        return this.makeDateRange(timeRange.getStartTime(), timeRange.getEndTime() - FastTimeUtil.ONE_DAY_MILLIS);
     }
 
     private Map<String, Object> getDataInfo(Map<String, Object> condition, TimeRange timeRange) {
         return new ParamMap()
                 .add("startTime", FastTimeUtil.timeToDateStr("yyyy-MM-dd", timeRange.getStartTime()))
-                .add("endTime", FastTimeUtil.timeToDateStr("yyyy-MM-dd", timeRange.getEndTime() - 24 * 3600))
+                .add("endTime", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
+                        timeRange.getEndTime() - FastTimeUtil.ONE_DAY_MILLIS))
                 .add("currentMonthStart", FastTimeUtil.timeToDateStr("yyyy-MM-dd",
                                 FastTimeUtil.timeForFirstDayOfMonth(FastTimeUtil.now())))
                 .add("currentMonthEnd", FastTimeUtil.timeToDateStr("yyyy-MM-dd", FastTimeUtil.now()))
@@ -168,7 +168,7 @@ public class AnalysisController {
         Map<String, Object> result = new ParamMap().add("tab", tab).toMap();
         if ("trend".equals(tab)) {
             List<Map<String, Object>> userSumData = userService.analysisUserSumByTime(timeRange.getEndTime());
-            result.put("data", this.fillAnalysisUserSum(condition, userSumData));
+            result.put("chartData", this.fillAnalysisUserSum(condition, userSumData));
         } else {
             Paginator paginator = new Paginator(request,
                     userService.searchUserCount(timeRange.toMap()),
@@ -253,7 +253,7 @@ public class AnalysisController {
             List<Map<String, Object>> LoginData = logService.analysisLoginDataByTime(timeRange.getStartTime(),
                     timeRange.getEndTime());
 
-            model.addAttribute("data", this.fillAnalysisData(condition, LoginData));
+            model.addAttribute("chartData", this.fillAnalysisData(condition, LoginData));
         }
 
         Set<Object> userIds = ArrayToolkit.column(loginDetail, "userId");
