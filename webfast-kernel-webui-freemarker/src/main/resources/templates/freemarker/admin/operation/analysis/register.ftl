@@ -8,7 +8,7 @@
 <div class="col-md-12">
     <#if tab == "trend">
     <div id="line-data"></div>
-    <input id="data"  type="hidden" value="${chartData!}" />
+    <input id="data"  type="hidden" value='${chartData!}' />
 
     <input id="registerStartDate"  type="hidden" value="${registerStartDate!}" />
 
