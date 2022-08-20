@@ -9,7 +9,7 @@
 
               <#if tab=="trend" >
 	          <div id="line-data"></div>
-	           <input id="data"  type="hidden" value='${data!}'>
+	           <input id="data"  type="hidden" value='${chartData!}'>
 	          </input> <input id="userSumStartDate"  type="hidden" value='${userSumStartDate!}'>
 	          </input>
               <#elseif tab=="detail">
