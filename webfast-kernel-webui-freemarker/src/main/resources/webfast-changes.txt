@@ -3,6 +3,18 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.7: @2022-08-20
+* 完成后台管理首页用户统计中的用户登录数功能的完整实现
+* 后台管理首页统计中用户数与用户登录数注入名称使用chartData，原来的名称data在FreeMarker页面中出现冲突
+* 使用自定义的JSON工具函数生成的JSON字符串是双引号，传送到网页中的隐藏域中的value属性，该属性的边界定界符必须使用单引号
+  <input id="data"  type="hidden" value='${chartData!}' />
+  如果使用双引号方式会造成JavaScript读取数据不完整，后续处理产生错误
+  <input id="data"  type="hidden" value="[{"date":"2022-08-11","count":0},...]" />，这种形式下通过JS/JQuery
+  $('#data').attr("value")获取data的value属性的值为[{。
+* 由于Java生成的时间整数是13位，在MySQL中不能使用int类型，改为bigint类型保存数据。因此在SQL中使用MySQL的内置函数from_unixtime进行
+  日期格式化时需要将毫秒转换为秒，故而数据先除以1000再使用from_unixtime函数进行转换
+  SELECT count(distinct userid) as count, from_unixtime(createdTime/1000,'%Y-%m-%d')
+
 0.8.6: @2022-08-18
 * 新增用于日期时间间隔处理的网页视图使用的数据模理类TimeRange
 * 完成后台管理首页用户统计中的新注册用户数功能的完整实现
