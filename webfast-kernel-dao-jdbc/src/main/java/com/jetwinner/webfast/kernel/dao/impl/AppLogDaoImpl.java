@@ -44,7 +44,7 @@ public class AppLogDaoImpl extends FastJdbcDaoSupport implements AppLogDao {
 
     @Override
     public List<Map<String, Object>> analysisLoginDataByTime(long startTime, long endTime) {
-        String sql="SELECT count(distinct userid) as count, from_unixtime(createdTime,'%Y-%m-%d') as date FROM `app_log` WHERE `action`='login_success' and `createdTime`>= ? and `createdTime`<= ? group by from_unixtime(`createdTime`,'%Y-%m-%d') order by date ASC ";
+        String sql="SELECT count(distinct userid) as count, from_unixtime(createdTime/1000,'%Y-%m-%d') as date FROM `app_log` WHERE `action`='login_success' and `createdTime`>= ? and `createdTime`<= ? group by from_unixtime(`createdTime`/1000,'%Y-%m-%d') order by date ASC ";
         return getJdbcTemplate().queryForList(sql, startTime, endTime);
     }
 
