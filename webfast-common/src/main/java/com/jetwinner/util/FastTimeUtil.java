@@ -17,6 +17,8 @@ public final class FastTimeUtil {
         // reserved.
     }
 
+    public static final long ONE_DAY_MILLIS = 24 * 60 * 60 * 1000;
+
     public static long now() {
         return System.currentTimeMillis();
     }
@@ -57,7 +59,7 @@ public final class FastTimeUtil {
     }
 
     public static long timeForTheNextDay(long time) {
-        LocalDateTime localDateTime = toLocalDateTime(time + 24 * 60 * 60 * 1000);
+        LocalDateTime localDateTime = toLocalDateTime(time + ONE_DAY_MILLIS);
         return toTimestamp(localDateTime);
     }
 
