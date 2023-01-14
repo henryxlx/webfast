@@ -1,13 +1,15 @@
 /*
- * Copyright: (c) 2009-2019 ChangChun Genghis Corp. All rights reserved.
+ * Copyright: (c) 2009-2029 ChangChun Aviation Nanhu Home. All rights reserved.
  * Created with IntelliJ IDEA on 2019-07-04 17:14:23
  * Author: Lixin Xu
  * Version: 1.0
- * Title: Version of the dependent package.
+ * Title: Version of the Java archived file (The third party jar dependent file).
  */
 
 ext {
-    version = [
+    jarVersion = [
+            // For SpringBoot
+            springboot   : '2.2.13.RELEASE',
             // For Developing
             junit        : '4.12',
             selenide     : '5.14.2',

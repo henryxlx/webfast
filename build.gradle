@@ -1,16 +1,13 @@
-apply from: 'config.gradle'
-
 buildscript {
-    ext {
-        springBootVersion = '2.2.13.RELEASE'
-        FAST_MIRROR_REPO_URL = 'https://maven.aliyun.com/nexus/content/groups/public/'
-    }
+    apply from: 'config.gradle'
+    ext.FAST_MIRROR_REPO_URL = 'https://maven.aliyun.com/nexus/content/groups/public/'
+
     repositories {
         maven { url FAST_MIRROR_REPO_URL }
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${jarVersion['springboot']}")
     }
 }
 
@@ -23,15 +20,12 @@ subprojects {
     group = 'com.jetwinner'
     version = '0.8.7'
     sourceCompatibility = 1.8
-    ext {
-        jarVersion = rootProject.ext.version
-    }
 
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
         }
     }
 
@@ -56,7 +50,7 @@ subprojects {
     }
 
     test {
-        systemProperty "spring.profiles.active", System.getProperty("spring.profiles.active")
+        systemProperty 'spring.profiles.active', System.getProperty('spring.profiles.active')
     }
 
     processResources {
@@ -82,19 +76,19 @@ subprojects {
     }
 }
 
-Task copyJar = project.task("copyJar", type: Copy, dependsOn: subprojects.jar) {
+Task copyJar = project.task('copyJar', type: Copy, dependsOn: subprojects.jar) {
     from(subprojects.jar)
     into project.file('dist')
 }
 
-Task copyJarToQuickStart = project.task("copyJarToQuickStart", type: Copy, dependsOn: subprojects.jar) {
+Task copyJarToQuickStart = project.task('copyJarToQuickStart', type: Copy, dependsOn: subprojects.jar) {
     from(subprojects.jar)
     exclude('webfast-module*.jar')
     exclude('webfast-starter-demo*.jar')
     into project.file('../webfast2quickstart/lib')
 }
 
-Task taskForSourceZip = project.task("makeSourceZip", type: Zip) {
+Task taskForSourceZip = project.task('makeSourceZip', type: Zip) {
     archiveBaseName = "${rootProject.name}-${subprojects.version[0]}"
     from(project.rootDir) {
         excludes = ['dist/**', '.gradle/**', '.idea/**', 'backup4dev/**', '**/out/**', '**/build/**']
