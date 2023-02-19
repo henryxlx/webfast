@@ -36,4 +36,13 @@ public final class OrderBy {
     public List<OrderByEntry> toList() {
         return this.orderByEntries;
     }
+
+    public boolean hasColumnName(String columnName) {
+        for (OrderByEntry entry : this.orderByEntries) {
+            if (entry.getColumnName().equals(columnName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
