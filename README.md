@@ -60,7 +60,7 @@ webfast
 | Postman              | API接口调试工具        | https://www.postman.com/                             |
 
 ### 快速部署
-1. clone 项目到本地 git@gitee.com:henryxpx/webfast.git
+1. clone 项目到本地 git@gitee.com:<gitee用户名>/webfast.git
 2. 应用内置MySQL数据库脚本，程序第一次启动后会出现安装过程，根据要求填写系统会自动安装，默认数据库名称为webfast4dev，
 数据库参数配置及外部文件管理目录默认指定为d:/webfast/demo4dev/appdata。若该目录不存在需要手工创建。
 如果更改这些参数可在SpringBoot应用程序配置文件中修改 
