@@ -74,6 +74,14 @@
     <#return webExtPack.getDataTag(key, arguments)/>
 </#function>
 
+<#function is_granted roleName>
+    <#if userAcl??>
+        <#return userAcl.hasRole(roleName) />
+    <#else>
+        <#return false />
+    </#if>
+</#function>
+
 <#function convertIP ipAddress>
     <#return webExtPack.getConvertIp(ipAddress) />
 </#function>
