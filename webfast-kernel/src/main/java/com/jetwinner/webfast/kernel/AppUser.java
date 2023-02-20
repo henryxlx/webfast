@@ -250,4 +250,16 @@ public class AppUser extends BaseAppUser {
     public void setCreatedTime(Long createdTime) {
         this.createdTime = createdTime;
     }
+
+    public boolean hasAnyRole(String... roleNames) {
+        String userRoles = getRoles();
+        if (roleNames != null && userRoles != null) {
+            for (String roleName : roleNames) {
+                if (userRoles.indexOf(roleName) >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
