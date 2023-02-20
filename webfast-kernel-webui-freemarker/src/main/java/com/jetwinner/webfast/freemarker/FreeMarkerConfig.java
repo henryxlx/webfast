@@ -4,6 +4,9 @@ import com.jetwinner.webfast.freemarker.ext.DictTextFunction;
 import com.jetwinner.webfast.freemarker.ext.JsonEncodeFunction;
 import com.jetwinner.webfast.freemarker.tag.RenderControllerTag;
 import com.jetwinner.webfast.kernel.FastDataDictHolder;
+import freemarker.template.TemplateModelException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +18,8 @@ import java.util.HashMap;
  */
 @Configuration
 public class FreeMarkerConfig {
+
+    private static final Logger log = LoggerFactory.getLogger(FreeMarkerConfig.class);
 
     protected final freemarker.template.Configuration configuration;
 
@@ -43,6 +48,11 @@ public class FreeMarkerConfig {
         importMap.put("web_macro", "/web_macro.ftl");
         importMap.put("admin_macro", "/admin/admin_macro.ftl");
         configuration.setAutoImports(importMap);
+        try {
+            configuration.setSharedVariable("dict", dictHolder.getDict());
+        } catch (TemplateModelException e) {
+            log.error("Data Dictionary all data put in FreeMarker template error: " + e.getMessage());
+        }
         configuration.setSharedVariable(RenderControllerTag.MODEL_VAR_NAME, renderControllerTag);
         configuration.setSharedVariable("json_encode", new JsonEncodeFunction());
         configuration.setSharedVariable(DictTextFunction.MODEL_VAR_NAME, new DictTextFunction(dictHolder));
