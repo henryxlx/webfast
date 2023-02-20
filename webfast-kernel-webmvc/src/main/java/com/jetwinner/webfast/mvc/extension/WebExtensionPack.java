@@ -132,10 +132,6 @@ public class WebExtensionPack extends BaseWebExtensionPack {
         return url;
     }
 
-    public String getDictText(String type, String key) {
-        return delegator.dataDictHolder.text(type, key);
-    }
-
     public String getConvertIp(String ipAddress) {
         if (EasyStringUtil.isNotBlank(ipAddress)) {
             String location = ConvertIpToolkit.convertIp(ipAddress);
