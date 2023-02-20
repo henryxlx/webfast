@@ -10,6 +10,7 @@ import java.util.Map;
  */
 public class FastDataDictHolder {
 
+    /* 此属性dict必须与datadict.yml中第二层的键名一致，第一级键名使用binder绑定进行了筛选 */
     Map<String, Map<String, String>> dict = new HashMap<>();
 
     public Map<String, Map<String, String>> getDict() {
