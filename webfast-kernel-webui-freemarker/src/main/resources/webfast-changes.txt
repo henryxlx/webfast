@@ -3,6 +3,17 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.8.9: @2023-02-20
+* 新增可在同一页面多次使用的Bootstrap风格的Panel模板panel.embed.ftl
+* html_extension.ftl宏定义新增用于检查用户角色的FreeMarker页面用函数is_granted
+* 自定义参数类ParamMap新增获取HttpServletRequest全部参数的方法toQueryAllMap
+* AppUser添加新方法hasAnyRole,检查当前用户的全部角色是否包含指定的多个角色中任何一个角色
+* 为项目中数据字典使用机制添加注释，说明如何使用SpringBoot2.0的机制获取全部搜索路径上的datadict.yml文件中的全部属性
+* FreeMarker页面获取数据字典项的值自定义函数dict_text使用FreeMarker高级指令模型定义，并在程序启动后长期保存在模板引擎中使用
+* 将数据字典datadict全部内容注入页面的方式从SpringController请求拦截器移到FreeMarkerConfig中，
+  由于数据字典基本上需要总在页面访问，将其移到FreeMarker配置中更方便各类模板渲染使用
+* 将数据字典DataDictHolder的使用从WebExtensionPack及其代理中移除
+
 0.8.8: @2023-02-19
 * OrderBy新增用于检查排序数据表列名的方法hasColumnName
 * 文字修改，克隆仓库需要使用用户自己的gitea账号
