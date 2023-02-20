@@ -119,4 +119,16 @@ public class ParamMap {
         });
         return map;
     }
+
+    public static Map<String, Object> toQueryAllMap(HttpServletRequest request) {
+        Map<String, String[]> parameterMap = request.getParameterMap();
+        Map<String, Object> map = new HashMap<>(parameterMap.size());
+        parameterMap.keySet().forEach(key -> {
+            String value = request.getParameter(key);
+            if (EasyStringUtil.isNotBlank(value)) {
+                map.put(key, value);
+            }
+        });
+        return map;
+    }
 }
