@@ -431,7 +431,7 @@ public final class EasyStringUtil {
      * 替换掉HTML标签方法
      */
     public static String stripHtml(String html) {
-        if (isBlank(html)){
+        if (isBlank(html)) {
             return "";
         }
         //html.replaceAll("\\&[a-zA-Z]{0,9};", "").replaceAll("<[^>]*>", "");
@@ -441,6 +441,33 @@ public final class EasyStringUtil {
         String s = m.replaceAll("");
         return s;
     }
+
+    public static String purifyHtml(String input) {
+        return purifyHtml(input, 0);
+    }
+
+    public static String purifyHtml(String input, int length) {
+        if (input == null || "" .equals(input.trim())) {
+            return "";
+        }
+
+        String str = input.replaceAll("\\&[a-zA-Z]{1,10};", "").replaceAll(
+                "<[^>]*>", "");
+        str = str.replaceAll("[(/>)<]", "");
+
+        if (length > 0) {
+            int len = str.length();
+            if (len <= length) {
+                return str;
+            } else {
+                str = str.substring(0, length);
+                str += "......";
+            }
+        }
+
+        return str;
+    }
+
 
     public static boolean containsAny(final CharSequence cs, final CharSequence... searchCharSequences) {
         if (isEmpty(cs) || ArrayUtil.isEmpty(searchCharSequences)) {
