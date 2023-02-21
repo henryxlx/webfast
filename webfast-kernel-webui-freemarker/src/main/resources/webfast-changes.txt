@@ -3,6 +3,13 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.0: @2023-02-21
+* 重构：ViewReferenceFacade添加获取FreeMarker页面必须共享变量的方法getViewSharedVariable，
+  只保留userAcl()方法，删除其它不使用的共享变量访问方法
+* 重构：自定义视图渲染服务ViewRenderService接口修改，renderView方法添加request参数，
+  使用ViewReferenceFacade将原来request中的共享变量注入到模型中，其它使用ViewRenderService同时修改
+* 工具函数EasyStringUtil添加将HTML转换为纯文本的方法purifyHtml
+
 0.8.9: @2023-02-20
 * 新增可在同一页面多次使用的Bootstrap风格的Panel模板panel.embed.ftl
 * html_extension.ftl宏定义新增用于检查用户角色的FreeMarker页面用函数is_granted
