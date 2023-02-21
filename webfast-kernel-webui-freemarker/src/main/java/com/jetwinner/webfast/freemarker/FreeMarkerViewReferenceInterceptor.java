@@ -3,8 +3,6 @@ package com.jetwinner.webfast.freemarker;
 import com.jetwinner.security.BaseAppUser;
 import com.jetwinner.webfast.datasource.DataSourceConfig;
 import com.jetwinner.webfast.kernel.view.ViewReferenceFacadeImpl;
-import com.jetwinner.webfast.kernel.view.ViewReferenceKeyEnum;
-import com.jetwinner.webfast.mvc.extension.WebExtensionPack;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -57,16 +55,8 @@ public class FreeMarkerViewReferenceInterceptor implements HandlerInterceptor {
             return;
         }
 
-        addObject(ViewReferenceKeyEnum.MenuHolder.getName(), viewRef.menuHolder(), request, mav);
-        addObject(ViewReferenceKeyEnum.AppConst.getName(), viewRef.appConst(), request, mav);
-        addObject(ViewReferenceKeyEnum.RequestContextPath.getName(), request.getContextPath(), request, mav);
-        addObject(ViewReferenceKeyEnum.UserAcl.getName(), viewRef.userAcl(), request, mav);
-        addObject(WebExtensionPack.MODEL_VAR_NAME, new WebExtensionPack(request, viewRef.appContext()), request, mav);
+        mav.addAllObjects(viewRef.getViewSharedVariable(request));
+
     }
 
-    private void addObject(String name, Object value, HttpServletRequest request, ModelAndView mav) {
-        if (request.getAttribute(name) == null) {
-            mav.addObject(name, value);
-        }
-    }
 }

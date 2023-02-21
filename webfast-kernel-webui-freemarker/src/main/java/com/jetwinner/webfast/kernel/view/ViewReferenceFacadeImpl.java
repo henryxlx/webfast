@@ -4,8 +4,13 @@ import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.FastDataDictHolder;
 import com.jetwinner.webfast.kernel.FastMenuHolder;
+import com.jetwinner.webfast.mvc.extension.WebExtensionPack;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author xulixin
@@ -33,27 +38,18 @@ public class ViewReferenceFacadeImpl implements ViewReferenceFacade {
     }
 
     @Override
-    public FastAppConst appConst() {
-        return this.appConst;
-    }
-
-    @Override
-    public FastDataDictHolder dictHolder() {
-        return this.dataDictHolder;
-    }
-
-    @Override
     public UserAccessControlService userAcl() {
         return this.userAccessControlService;
     }
 
     @Override
-    public FastMenuHolder menuHolder() {
-        return this.menuHolder;
-    }
-
-    @Override
-    public ApplicationContext appContext() {
-        return this.applicationContext;
+    public Map<String, ?> getViewSharedVariable(HttpServletRequest request) {
+        Map<String, Object> map = new HashMap<>(5);
+        map.put(ViewReferenceKeyEnum.MenuHolder.getName(), this.menuHolder);
+        map.put(ViewReferenceKeyEnum.AppConst.getName(), this.appConst);
+        map.put(ViewReferenceKeyEnum.RequestContextPath.getName(), request.getContextPath());
+        map.put(ViewReferenceKeyEnum.UserAcl.getName(), this.userAccessControlService);
+        map.put(WebExtensionPack.MODEL_VAR_NAME, new WebExtensionPack(request, this.applicationContext));
+        return map;
     }
 }
