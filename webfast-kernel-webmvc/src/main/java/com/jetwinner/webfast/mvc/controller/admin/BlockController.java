@@ -117,10 +117,8 @@ public class BlockController {
         block = blockService.updateBlock(AppUser.getCurrentUser(request), blockId, fields);
         Map<String, Object> latestBlockHistory = blockService.getLatestBlockHistory();
         AppUser latestUpdateUser = userService.getUser(latestBlockHistory.get("userId"));
-        String html = viewRenderService.renderView("/admin/block/list-tr.ftl",
-                new ParamMap().add("block", block).add("ctx", request.getContextPath())
-                        .add("latestUpdateUser", latestUpdateUser).toMap(),
-                new ParamMap().add("admin_macro", "/admin/admin_macro.ftl").toMap());
+        String html = viewRenderService.renderView(request, "/admin/block/list-tr.ftl",
+                new ParamMap().add("block", block).add("latestUpdateUser", latestUpdateUser).toMap());
         return new ParamMap().add("status", "ok").add("html", html).toMap();
     }
 

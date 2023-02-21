@@ -4,7 +4,6 @@ import com.jetwinner.servlet.RequestContextPathUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.ValueParser;
 import com.jetwinner.webfast.email.FastEmailService;
-import com.jetwinner.webfast.email.FastEmailServiceImpl;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.service.AppLogService;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
@@ -73,7 +72,7 @@ public class PasswordResetController {
                 emailService.sendEmail(user.getEmail(),
                         String.format("重设%s在%s的密码", user.getUsername(), siteName),
 
-                        viewRenderService.renderView("/password-reset/reset.txt.ftl",
+                        viewRenderService.renderView(request, "/password-reset/reset.txt.ftl",
                                 new ParamMap().add("user", user).add("token", token).add("siteName", siteName)
                                         .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
                                         .add("siteUrl", settingService.getSettingValue("site.url")).toMap()),

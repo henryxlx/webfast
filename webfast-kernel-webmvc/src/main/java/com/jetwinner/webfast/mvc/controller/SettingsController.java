@@ -350,7 +350,7 @@ public class SettingsController {
                             String.valueOf(data.get("email")),
                             String.format("重设%s在%s的电子邮箱", user.getUsername(),
                                     settingService.getSettingValue("site.name", "WEBFAST")),
-                            viewRenderService.renderView("/settings/email-change.txt.ftl",
+                            viewRenderService.renderView(request, "/settings/email-change.txt.ftl",
                                     new ParamMap().add("user", user).add("token", token)
                                             .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
                                             .add("siteName", settingService.getSettingValue("site.name"))
@@ -384,7 +384,7 @@ public class SettingsController {
                     user.getEmail(),
                     String.format("验证%s在%s的电子邮箱",
                             user.getUsername(), settingService.getSettingValue("site.name")),
-                    viewRenderService.renderView("/settings/email-verify.ftl",
+                    viewRenderService.renderView(request, "/settings/email-verify.ftl",
                             new ParamMap().add("user", user).add("token", token)
                                     .add("baseUrl", RequestContextPathUtil.createBaseUrl(request))
                                     .add("siteName", settingService.getSettingValue("site.name"))
