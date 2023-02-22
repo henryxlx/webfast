@@ -37,6 +37,9 @@ public class ParamMap {
     private static Object getValueFromRequest(String key, HttpServletRequest request) {
         String[] values = request.getParameterValues(key);
         if (values != null) {
+            if (key.endsWith("[]")) {
+                return values;
+            }
             int len = values.length;
             if (len > 1) {
                 return values;
@@ -57,6 +60,7 @@ public class ParamMap {
             if (value == null) {
                 continue;
             }
+            key = key.endsWith("[]") ? key.replace("[]", "") : key;
             map.put(key, value);
         }
         return map;
@@ -75,6 +79,7 @@ public class ParamMap {
             if (value == null) {
                 continue;
             }
+            key = key.endsWith("[]") ? key.replace("[]", "") : key;
             map.put(key, value);
         }
         return map;
