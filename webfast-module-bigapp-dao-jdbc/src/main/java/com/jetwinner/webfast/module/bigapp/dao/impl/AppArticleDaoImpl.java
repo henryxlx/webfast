@@ -2,10 +2,11 @@ package com.jetwinner.webfast.module.bigapp.dao.impl;
 
 import com.jetwinner.toolbag.MapKitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.util.JsonUtil;
 import com.jetwinner.webfast.dao.support.DynamicQueryBuilder;
 import com.jetwinner.webfast.dao.support.FastJdbcDaoSupport;
-import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.module.bigapp.dao.AppArticleDao;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collections;
@@ -17,6 +18,16 @@ import java.util.Map;
  */
 @Repository
 public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleDao {
+
+    private void serialize(Map<String, Object> model) {
+        String[] serializeFieldNames = {"tagIds"};
+        for (String fieldName : serializeFieldNames) {
+            Object value = model.get(fieldName);
+            if (value != null) {
+                model.put(fieldName, JsonUtil.objectToString(value));
+            }
+        }
+    }
 
     @Override
     public int searchArticlesCount(Map<String, Object> conditions) {
@@ -39,6 +50,7 @@ public class AppArticleDaoImpl extends FastJdbcDaoSupport implements AppArticleD
 
     @Override
     public Map<String, Object> addArticle(Map<String, Object> article) {
+        serialize(article);
         Number key = insertMapReturnKey("big_app_article", article);
         return getArticle(key.intValue());
     }
