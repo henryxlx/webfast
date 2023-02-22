@@ -1,5 +1,9 @@
 package com.jetwinner.toolbag;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -51,5 +55,15 @@ public final class FileToolkit {
             }
         }
         return false;
+    }
+
+    public static void transferFile(MultipartFile file, String directory, String filename) throws IOException {
+        File fileDir = new File(directory);
+        if (!fileDir.exists()) {
+            if (!fileDir.mkdirs()) {
+                throw new IOException("Create directory: " + directory + " error! Can not transfer file");
+            }
+        }
+        file.transferTo(new File(directory + "/" + filename));
     }
 }
