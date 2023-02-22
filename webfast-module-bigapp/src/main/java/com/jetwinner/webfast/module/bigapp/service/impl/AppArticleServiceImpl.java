@@ -235,7 +235,7 @@ public class AppArticleServiceImpl implements AppArticleService {
         article.put("categoryId", fields.get("categoryId"));
         article.put("source", fields.get("source"));
         article.put("sourceUrl", fields.get("sourceUrl"));
-        article.put("publishedTime", FastTimeUtil.dateStrToLong(fields.get("publishedTime")));
+        article.put("publishedTime", FastTimeUtil.dateTimeStrToLong(fields.get("publishedTime")));
         article.put("updatedTime", System.currentTimeMillis());
 
         if (EasyStringUtil.isNotBlank(fields.get("tags")) && !fields.get("tags").getClass().isArray()) {
