@@ -3,6 +3,19 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.1: @2023-02-22
+* Json处理工具类JsonUtil添加日志支持，删除异常处理中的输出异常栈的机制
+* 数组工具类ArrayUtil添加判断对象是否为数组的方法isArray和isNotArray
+* 专用数组工具类ArrayToolkit方法filter添加是否添加指定值参数及多态方法，用于过滤Map集合时是否添加指定的默认值
+* 处理request参数类ParamMap中的toFormDataMap()添加对参数名称带有中括号[]后缀处理，带[]后缀的参数的值代表的类型是数组，
+  通过request中的方法getParameterValues直接获取
+* 文件处理工具类FileToolKit添加transferFile方法，专门用于传送Spring中上传文件类型MultipartFile到指定的目录，
+  如果指定目录不存在则创建目标路径
+* 时间处理工具类FastTimeUtil添加新的方法dateTimeStrToLong，用于将带有时间的日期转换为毫秒数，
+  因为dateStrToLong方法对带有时间的日期进行毫秒数转换会发生错误，
+  错误信息形式为'2023-02-22 17:27:22' could not be parsed, unparsed text found at index 10
+* 资讯处理ArticleDao在保存数据时要对实体内的集合内容进行序列化处理，使用Json进行序列化处理
+
 0.9.0: @2023-02-21
 * 重构：ViewReferenceFacade添加获取FreeMarker页面必须共享变量的方法getViewSharedVariable，
   只保留userAcl()方法，删除其它不使用的共享变量访问方法
