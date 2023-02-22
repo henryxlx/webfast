@@ -31,6 +31,10 @@ public final class ArrayToolkit {
     }
 
     public static void filter(Map<String, Object> map, Map<String, Object> specialValues) {
+        filter(map, specialValues, false);
+    }
+
+    public static void filter(Map<String, Object> map, Map<String, Object> specialValues, boolean needAddSpecialValue) {
         Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry<String, Object> entry = it.next();
@@ -40,11 +44,13 @@ public final class ArrayToolkit {
                 it.remove();
             }
         }
-        specialValues.forEach((k, v) -> {
-            if (!map.containsKey(k)) {
-                map.put(k, v);
-            }
-        });
+        if (needAddSpecialValue) {
+            specialValues.forEach((k, v) -> {
+                if (!map.containsKey(k)) {
+                    map.put(k, v);
+                }
+            });
+        }
     }
 
     public static Map<String, Object> filterRequestMap(Map<String, String[]> parameterMap, String... parameterNames) {
