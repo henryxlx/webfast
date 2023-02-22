@@ -29,6 +29,10 @@ public final class FastTimeUtil {
         return localDate.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
     }
 
+    public static long dateTimeStrToLong(Object dateTimeStrObj) {
+        return strToTime(dateTimeStrObj, "yyyy-MM-dd HH:mm:ss");
+    }
+
     public static long strToTime(Object obj, String formatPattern) {
         return strToTime(String.valueOf(obj), formatPattern);
     }
