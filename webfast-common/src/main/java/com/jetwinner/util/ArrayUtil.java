@@ -62,4 +62,12 @@ public final class ArrayUtil {
     public static boolean inArray(Object objectToFind, String... array) {
         return indexOf(array, objectToFind) != INDEX_NOT_FOUND;
     }
+
+    public static boolean isArray(Object obj) {
+        return obj != null && obj.getClass().isArray();
+    }
+
+    public static boolean isNotArray(Object obj) {
+        return !isArray(obj);
+    }
 }
