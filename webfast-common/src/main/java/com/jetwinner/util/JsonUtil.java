@@ -10,6 +10,8 @@ package com.jetwinner.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
@@ -17,6 +19,8 @@ import java.io.IOException;
  * @author xulixin
  */
 public final class JsonUtil {
+
+    private static final Logger log = LoggerFactory.getLogger(JsonUtil.class);
 
     private JsonUtil() {
         // reserved.
@@ -28,7 +32,7 @@ public final class JsonUtil {
         try {
             return objectMapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            log.error("JsonUtil objectToString error: " + e.getMessage());
         }
         return "";
     }
@@ -37,7 +41,7 @@ public final class JsonUtil {
         try {
             return objectMapper.readValue(json, clazz);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("JsonUtil stringToObject error: " + e.getMessage());
         }
         return null;
     }
