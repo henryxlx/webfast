@@ -3,6 +3,14 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.2: @2023-02-23
+* 应用程序分类服务添加新方法getCategoryByCode，使用编码获取分类信息
+* 用于页面块显示RenderControllerTag类，使用的HttpServletRequest添加Attribute属性记录集合，
+  并覆盖getAttribute和setAttribute方法从属性中获取传入的参数值，自定义renderController传递集合参数不使用Parameters而是Attribute
+  HTTP Post提交List等集合数据SpringMVC映射会发生类型错误，因此将集合类型直接注入到Request的属性Attribute中，
+  这样处理的好处是集合类型不用再进行类型转换和重新映射，直接从Request的属性中获取更高效。
+  不足之处就是处理请求的方法不能直接明确定义集合类型，方法参数只能添加HttpServletRequest类型参数，然后通过Request.getAttribute间接获取
+
 0.9.1: @2023-02-22
 * Json处理工具类JsonUtil添加日志支持，删除异常处理中的输出异常栈的机制
 * 数组工具类ArrayUtil添加判断对象是否为数组的方法isArray和isNotArray
