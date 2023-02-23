@@ -282,4 +282,9 @@ public class AppCategoryServiceImpl implements AppCategoryService {
     public Map<String, Object> getGroupByCode(String code) {
         return groupDao.findGroupByCode(code);
     }
+
+    @Override
+    public Map<String, Object> getCategoryByCode(String code) {
+        return categoryDao.findCategoryByCode(code);
+    }
 }
