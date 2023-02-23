@@ -1,8 +1,8 @@
 package com.jetwinner.webfast.freemarker.tag;
 
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.mvc.extension.WebExtensionPack;
 import com.jetwinner.webfast.mvc.block.BlockRenderControllerExecutor;
+import com.jetwinner.webfast.mvc.extension.WebExtensionPack;
 import freemarker.core.Environment;
 import freemarker.core._DelayedFTLTypeDescription;
 import freemarker.core._MiscTemplateException;
@@ -38,7 +38,7 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                         TemplateDirectiveBody templateDirectiveBody)
             throws TemplateException, IOException {
 
-        TemplateModel path = (TemplateModel)params.get("path");
+        TemplateModel path = (TemplateModel) params.get("path");
         if (path == null) {
             throw new _MiscTemplateException(env, "Missing required parameter \"path\"");
         } else if (!(path instanceof TemplateScalarModel)) {
@@ -55,13 +55,13 @@ public class RenderControllerTag implements TemplateDirectiveModel {
 
                 // Get explicit params, if any
                 final Map paramsMap = getExtraParameterAsMap(env, params);
-                final HttpServletRequest wrappedRequest = new CustomParamsRequest(strPath, request, paramsMap, true);
+                final HttpServletRequest wrappedRequest = new CustomBlockRequestWrapper(strPath, request, paramsMap, true);
 
                 try {
                     ModelAndView mav = controllerExecutor.handleRequest(wrappedRequest);
                     if (mav != null) {
                         Map<String, Object> map = mav.getModel();
-                        for(String key : map.keySet()) {
+                        for (String key : map.keySet()) {
                             env.setVariable(key, getModel(map.get(key)));
                         }
                         String viewName = mav.getViewName();
@@ -114,14 +114,16 @@ public class RenderControllerTag implements TemplateDirectiveModel {
         return this.getBuilder().wrap(o);
     }
 
-    private static final class CustomParamsRequest extends HttpServletRequestWrapper {
+    private static final class CustomBlockRequestWrapper extends HttpServletRequestWrapper {
         private final HashMap<String, String[]> paramsMap;
+        private final HashMap<String, Object> attributeMap;
         private final String lookupPath;
 
-        private CustomParamsRequest(String lookupPath, HttpServletRequest request, Map paramMap,
-                                    boolean inheritParams) {
+        private CustomBlockRequestWrapper(String lookupPath, HttpServletRequest request, Map paramMap,
+                                          boolean inheritParams) {
             super(request);
             this.lookupPath = lookupPath;
+            this.attributeMap = new HashMap<>();
             paramsMap = inheritParams ? new HashMap<>(request.getParameterMap()) : new HashMap<>();
             for (Iterator it = paramMap.entrySet().iterator(); it.hasNext(); ) {
                 Map.Entry entry = (Map.Entry) it.next();
@@ -131,19 +133,29 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                 if (value == null) {
                     // Null values are explicitly added (so, among other
                     // things, we can hide inherited param values).
-                    valueArray = new String[] { null };
+                    valueArray = new String[]{null};
                 } else if (value instanceof String[]) {
                     // String[] arrays are just passed through
                     valueArray = (String[]) value;
                 } else if (value instanceof Collection) {
                     // Collections are converted to String[], with
                     // String.valueOf() used on elements
+/*
                     Collection col = (Collection) value;
                     valueArray = new String[col.size()];
                     int i = 0;
                     for (Iterator it2 = col.iterator(); it2.hasNext(); ) {
                         valueArray[i++] = String.valueOf(it2.next());
                     }
+*/
+                    /* fixed
+                     * HTTP Post提交List等集合数据SpringMVC映射会发生类型错误，因此将集合类型直接注入到Request的属性Attribute中
+                     * 这样处理的好处是集合类型不用再进行类型转换和重新映射，直接从Request的属性中获取更高效
+                     * 不足之处就是处理请求的方法不能直接明确定义集合类型，方法参数只能添加HttpServletRequest类型参数，
+                     * 然后通过Request.getAttribute间接获取
+                     */
+                    valueArray = new String[]{null};
+                    this.attributeMap.put(name, value);
                 } else if (value.getClass().isArray()) {
                     // Other array types are too converted to String[], with
                     // String.valueOf() used on elements
@@ -156,7 +168,7 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                     // All other values (including strings) are converted to a
                     // single-element String[], with String.valueOf applied to
                     // the value.
-                    valueArray = new String[] { String.valueOf(value) };
+                    valueArray = new String[]{String.valueOf(value)};
                 }
                 String[] existingParams = paramsMap.get(name);
                 int el = existingParams == null ? 0 : existingParams.length;
@@ -204,6 +216,16 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                 entry.setValue(entry.getValue().clone());
             }
             return Collections.unmodifiableMap(clone);
+        }
+
+        @Override
+        public Object getAttribute(String name) {
+            return this.attributeMap.get(name);
+        }
+
+        @Override
+        public void setAttribute(String name, Object obj) {
+            this.attributeMap.put(name, obj);
         }
 
         @Override
