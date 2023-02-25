@@ -15,8 +15,11 @@ public final class ArrayToolkit {
     }
 
     public static Map<String, Map<String, Object>> index(List<Map<String, Object>> list, final String keyFor) {
-        final Map<String, Map<String, Object>> map = new HashMap<>(list.size());
-        list.forEach(e -> map.put(String.valueOf(e.get(keyFor)), e));
+        int len = list != null ? list.size() : 0;
+        final Map<String, Map<String, Object>> map = new HashMap<>(len);
+        if (len > 0) {
+            list.forEach(e -> map.put(String.valueOf(e.get(keyFor)), e));
+        }
         return map;
     }
 
@@ -93,9 +96,5 @@ public final class ArrayToolkit {
             }
         }
         return true;
-    }
-
-    public static boolean isArray(Object obj) {
-        return obj != null && obj.getClass().isArray();
     }
 }
