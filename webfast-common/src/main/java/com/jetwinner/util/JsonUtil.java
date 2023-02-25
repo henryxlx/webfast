@@ -46,6 +46,14 @@ public final class JsonUtil {
         return null;
     }
 
+    public static <T> T jsonDecode(Object json, Class<T> clazz) {
+        try {
+            return objectMapper.readValue(String.valueOf(json), clazz);
+        } catch (IOException e) {
+            log.error("JsonUtil jsonDecode error: " + e.getMessage());
+        }
+        return null;
+    }
 
     public static String jsonDecode(Object jsonStr, boolean assoc) {
         return String.valueOf(jsonStr);
