@@ -3,6 +3,10 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.3: @2023-02-24
+* 新增页面行为模型数据注入服务接口PageActionModelService，用于扩展首页添加的额外数据的功能
+* 前台首页DefaultController新增页面行为模型数据注入服务接口PageActionModelService，用于扩展首页添加的额外数据的功能
+
 0.9.2: @2023-02-23
 * 应用程序分类服务添加新方法getCategoryByCode，使用编码获取分类信息
 * 用于页面块显示RenderControllerTag类，使用的HttpServletRequest添加Attribute属性记录集合，
