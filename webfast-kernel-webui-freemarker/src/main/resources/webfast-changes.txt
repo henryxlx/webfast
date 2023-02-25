@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.4: @2023-02-25
+* 数组工具类ArrayUtil添加新的方法toStringArray，通过判断对象是否为数组将其转换为字符串数组
+* 工具类ArrayToolkit删除与ArrayUtil重复的判断是否为数组类型的isArray，对index方法的代码做防御性编程，消除空指针的列表可能出现问题
+* 工具类JsonUtil添加多态的jsonDecode方法，对基本的对象反Json化处理转换为指定的类型
+
 0.9.3: @2023-02-24
 * 新增页面行为模型数据注入服务接口PageActionModelService，用于扩展首页添加的额外数据的功能
 * 前台首页DefaultController新增页面行为模型数据注入服务接口PageActionModelService，用于扩展首页添加的额外数据的功能
