@@ -2,6 +2,7 @@ package com.jetwinner.webfast.module.bigapp.service.impl;
 
 import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.MapKitOnJava8;
+import com.jetwinner.util.ArrayUtil;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.FastTimeUtil;
 import com.jetwinner.util.ValueParser;
@@ -238,15 +239,14 @@ public class AppArticleServiceImpl implements AppArticleService {
         article.put("publishedTime", FastTimeUtil.dateTimeStrToLong(fields.get("publishedTime")));
         article.put("updatedTime", System.currentTimeMillis());
 
-        if (EasyStringUtil.isNotBlank(fields.get("tags")) && !fields.get("tags").getClass().isArray()) {
+        if (ArrayUtil.isNotArray(fields.get("tags")) && EasyStringUtil.isNotBlank(fields.get("tags"))) {
             String[] arrayTags = EasyStringUtil.explode(",", fields.get("tags"));
             fields.put("tags", arrayTags);
             article.put("tagIds", ArrayToolkit.column(tagService.findTagsByNames(arrayTags), "id"));
         }
 
         if (!updateMode) {
-            String[] arrayTags = ArrayToolkit.isArray(fields.get("tags")) ? (String[]) fields.get("tags") :
-                    new String[]{String.valueOf(fields.get("tags"))};
+            String[] arrayTags = ArrayUtil.toStringArray(fields.get("tags"));
             article.put("tagIds", ArrayToolkit.column(tagService.findTagsByNames(arrayTags), "id"));
             article.put("status", "published");
             article.put("userId", currentUser.getId());
