@@ -12,17 +12,17 @@
 
 <#macro blockHeading>邮箱设置</#macro>
 <#macro blockPanelBody>
-<#if (mailer.enabled)?? && mailer.enabled == '1'>
-<form id="setting-email-form" class="form-horizontal" method="post" >
-    <@web_macro.flash_messages/>
+<#if (mailer.enabled)?? && mailer.enabled?c == '1'>
+    <form id="setting-email-form" class="form-horizontal" method="post">
+        <@web_macro.flash_messages/>
 
-    <div class="form-group">
-        <div class="col-md-2 control-label"><label>当前登录邮箱</label></div>
-        <div class="col-md-8 controls">
+        <div class="form-group">
+            <div class="col-md-2 control-label"><label>当前登录邮箱</label></div>
+            <div class="col-md-8 controls">
             <span class="control-text">
               ${(appUser.email)!}
-              <#if (appUser.emailVerified)?? && appUser.emailVerified gt 0>
-                <span class="text-success">(已验证)</span>
+                <#if (appUser.emailVerified)?? && appUser.emailVerified gt 0>
+                    <span class="text-success">(已验证)</span>
               <#else>
                 <p class="help-block mtm">
                   邮箱地址尚未验证，
