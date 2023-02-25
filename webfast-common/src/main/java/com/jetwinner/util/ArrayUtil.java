@@ -70,4 +70,25 @@ public final class ArrayUtil {
     public static boolean isNotArray(Object obj) {
         return !isArray(obj);
     }
+
+    public static String[] toStringArray(Object target) {
+        String[] arr = new String[0];
+        if (target != null) {
+            if (target.getClass().isArray()) {
+                if (target.getClass().equals(String[].class)) {
+                    arr = (String[]) target;
+                } else {
+                    Object[] objArray = (Object[]) target;
+                    int len = objArray.length;
+                    if (len > 0) {
+                        arr = new String[len];
+                        for (int i = 0; i < len; i++) {
+                            arr[i] = String.valueOf(objArray[i]);
+                        }
+                    }
+                }
+            }
+        }
+        return arr;
+    }
 }
