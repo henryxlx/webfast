@@ -1,6 +1,5 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
-import com.jetwinner.toolbag.ArrayToolkit;
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.MapUtil;
@@ -42,7 +41,7 @@ public class RoleController {
 
     @GetMapping("/admin/role")
     public String indexPage(HttpServletRequest request, Model model) {
-        Map<String, Object> fields = ArrayToolkit.filterRequestMap(request.getParameterMap(), "keyword", "keywordType");
+        Map<String, Object> fields = ParamMap.toCustomFormDataMap(request, "keyword", "keywordType");
         Map<String, Object> conditions = new ParamMap().toMap();
 
         if (EasyStringUtil.isNotBlank(fields.get("keywordType"))) {
