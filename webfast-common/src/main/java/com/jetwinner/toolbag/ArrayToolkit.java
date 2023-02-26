@@ -14,20 +14,20 @@ public final class ArrayToolkit {
         // reserved.
     }
 
-    public static Map<String, Map<String, Object>> index(List<Map<String, Object>> list, final String keyFor) {
+    public static Map<String, Map<String, Object>> index(List<Map<String, Object>> list, final String key) {
         int len = list != null ? list.size() : 0;
         final Map<String, Map<String, Object>> map = new HashMap<>(len);
         if (len > 0) {
-            list.forEach(e -> map.put(String.valueOf(e.get(keyFor)), e));
+            list.forEach(e -> map.put(String.valueOf(e.get(key)), e));
         }
         return map;
     }
 
-    public static Set<Object> column(List<Map<String, Object>> mapList, String fieldName) {
+    public static Set<Object> column(Collection<Map<String, Object>> mapList, String columnName) {
         Set<Object> columnValues = new HashSet<>();
         mapList.forEach(v -> {
-            if (EasyStringUtil.isNotBlank(v.get(fieldName))) {
-                columnValues.add(v.get(fieldName));
+            if (EasyStringUtil.isNotBlank(v.get(columnName))) {
+                columnValues.add(v.get(columnName));
             }
         });
         return columnValues;
@@ -54,22 +54,6 @@ public final class ArrayToolkit {
                 }
             });
         }
-    }
-
-    public static Map<String, Object> filterRequestMap(Map<String, String[]> parameterMap, String... parameterNames) {
-        int len = parameterNames != null ? parameterNames.length : 0;
-        Map<String, Object> map = new HashMap<>(len);
-        if (parameterNames != null) {
-            for (String pName : parameterNames) {
-                if (parameterMap.containsKey(pName)) {
-                    String[] values = parameterMap.get(pName);
-                    if (values != null && values.length > 0) {
-                        map.put(pName, values[0]);
-                    }
-                }
-            }
-        }
-        return map;
     }
 
     public static Map<String, Object> part(Map<String, Object> map, String... keys) {
