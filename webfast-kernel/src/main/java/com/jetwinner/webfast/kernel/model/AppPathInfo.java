@@ -7,6 +7,8 @@ import com.jetwinner.util.PhpStringUtil;
  */
 public class AppPathInfo {
 
+    private static final String DEFAULT_FILE_EXT_SEPARATOR = ".";
+
     private String dirname;
 
     private String filename;
@@ -14,7 +16,7 @@ public class AppPathInfo {
     private String extension;
 
     public AppPathInfo(String path) {
-        this(path, ".");
+        this(path, DEFAULT_FILE_EXT_SEPARATOR);
     }
 
     public AppPathInfo(String path, String fileExtSeparator) {
@@ -22,7 +24,14 @@ public class AppPathInfo {
         int pos = path.lastIndexOf(pathSeparator);
         this.dirname = pos > 0 ? path.substring(0, pos) : "";
         this.filename = path.substring(pos > 0 ? pos + 1 : 0);
-        pos = this.filename.indexOf(fileExtSeparator);
+        parseFileExtension(fileExtSeparator);
+    }
+
+    private void parseFileExtension(String fileExtSeparator) {
+        int pos = this.filename.indexOf(fileExtSeparator);
+        if (pos < 1 && !DEFAULT_FILE_EXT_SEPARATOR.equals(fileExtSeparator)) {
+            pos = this.filename.indexOf(DEFAULT_FILE_EXT_SEPARATOR);
+        }
         this.extension = pos > 0 ? this.filename.substring(pos + 1) : "";
         this.filename = pos > 0 ? this.filename.substring(0, pos) : this.filename;
     }
