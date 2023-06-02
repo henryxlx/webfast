@@ -9,11 +9,13 @@ package com.jetwinner.util;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author xulixin
@@ -57,5 +59,11 @@ public final class JsonUtil {
 
     public static String jsonDecode(Object jsonStr, boolean assoc) {
         return String.valueOf(jsonStr);
+    }
+
+    public static Map<String, Object> jsonDecodeMap(Object json) {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.convertValue(json, new TypeReference<Map<String, Object>>() {
+        });
     }
 }
