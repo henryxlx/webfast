@@ -6,6 +6,7 @@ import com.jetwinner.util.PhpStringUtil;
 import com.jetwinner.util.ValueParser;
 import org.springframework.context.ApplicationContext;
 import org.springframework.util.StringUtils;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,17 +20,24 @@ public class WebExtensionPack extends BaseWebExtensionPack {
 
     public static final String MODEL_VAR_NAME = "webExtPack";
 
+    public WebExtensionPack(HttpServletRequest request) {
+        super(request, RequestContextUtils.findWebApplicationContext(request));
+    }
+
     public WebExtensionPack(HttpServletRequest request,
                             ApplicationContext appContext) {
 
         super(request, appContext);
     }
 
+    public String getFilePath(String uri, String defaultPath) {
+        return getFilePath(uri, defaultPath, false);
+    }
+
     /**
-     *
-     * @param uri 不允许为空
+     * @param uri         不允许为空
      * @param defaultPath 默认值是空串
-     * @param absolute 默认值是false
+     * @param absolute    默认值是false
      */
     public String getFilePath(String uri, String defaultPath, boolean absolute) {
         String url = "";
