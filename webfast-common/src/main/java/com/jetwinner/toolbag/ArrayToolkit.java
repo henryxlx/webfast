@@ -25,11 +25,13 @@ public final class ArrayToolkit {
 
     public static Set<Object> column(Collection<Map<String, Object>> mapList, String columnName) {
         Set<Object> columnValues = new HashSet<>();
-        mapList.forEach(v -> {
-            if (EasyStringUtil.isNotBlank(v.get(columnName))) {
-                columnValues.add(v.get(columnName));
-            }
-        });
+        if (mapList != null && mapList.size() > 0) {
+            mapList.forEach(v -> {
+                if (EasyStringUtil.isNotBlank(v.get(columnName))) {
+                    columnValues.add(v.get(columnName));
+                }
+            });
+        }
         return columnValues;
     }
 
