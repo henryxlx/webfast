@@ -133,4 +133,26 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
             throw new RuntimeException("orderBy排序方式错误");
         }
     }
+
+    protected String repeatQuestionMark(final int repeat) {
+        return repeatMark('?', repeat, ',');
+    }
+
+    protected String repeatMark(final char ch, final int repeat) {
+        return repeatMark(ch, repeat, ',');
+    }
+
+    protected String repeatMark(final char ch, final int repeat, final char separator) {
+        if (repeat <= 0) {
+            return "";
+        }
+        StringBuilder buf = new StringBuilder();
+        for (int i = 0; i < repeat; i++) {
+            if (i > 0) {
+                buf.append(separator).append(' ');
+            }
+            buf.append(ch);
+        }
+        return buf.toString();
+    }
 }
