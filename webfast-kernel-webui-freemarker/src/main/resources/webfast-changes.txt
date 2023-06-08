@@ -3,6 +3,14 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.6: @2023-06-08
+* 添加Jackson直接转换Map<String, Object>的工具方法jsonDecodeMap
+* WebExtensionPack构造函数只使用request创建，添加getFilePath的多态方法
+* 工具类ArrayToolkit中的column方法进行防御性编程，对Collection为null和空的情况忽略
+* FastJdbcDaoSupport类添加构建SQL语句经常使用问号占位符处理函数repeatQuestionMark及repeatMark
+* 添加对FastJdbcDaoSupport类进行测试的FastJdbcDaoSupportTest的测试类
+* 前台标签显示TagController中的显示全部标签功能修复完成
+
 0.9.5: @2023-03-05
 * ArrayToolkit工具类删除多余和重复的filterRequestMap方法，其它方法参数命名调整
 * AppPathInfo文件路径信息对文件扩展名的判断，对用户指定的分隔符进行判断后再对默认的分隔符（点）进行处理
