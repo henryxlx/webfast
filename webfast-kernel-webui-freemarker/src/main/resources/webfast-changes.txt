@@ -3,6 +3,10 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.7: @2023-06-09
+* @RenderController函数调用参数增加对Map类型的处理，将其添加到request的属性中，不能直接对方法的参数映射
+* FreeMarker页面添加新的函数方法plain_text(text, length)，对于长文本进行截断，同时消除文本中的非文字内容
+
 0.9.6: @2023-06-08
 * 添加Jackson直接转换Map<String, Object>的工具方法jsonDecodeMap
 * WebExtensionPack构造函数只使用request创建，添加getFilePath的多态方法
