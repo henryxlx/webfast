@@ -156,6 +156,10 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                      */
                     valueArray = new String[]{null};
                     this.attributeMap.put(name, value);
+                } else if (value instanceof Map) {
+                    // Map类型的数据同样保存到HttpServletRequest中，使用getAttribute方法获取
+                    valueArray = new String[]{null};
+                    this.attributeMap.put(name, value);
                 } else if (value.getClass().isArray()) {
                     // Other array types are too converted to String[], with
                     // String.valueOf() used on elements
