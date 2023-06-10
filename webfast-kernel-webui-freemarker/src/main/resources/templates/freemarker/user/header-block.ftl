@@ -8,15 +8,15 @@
                     <#assign appUserId = (appUser.id)!0/>
                     <#if appUserId != targetUserId>
                         <button class="btn btn-success unfollow-btn"
-                                data-url="${ctx}/user/unfollow?id=${targetUserId}" <#if !isFollowed!false> style="display:none;"</#if>>
+                                data-url="${ctx}/user/${targetUserId}/unfollow" <#if !isFollowed!false> style="display:none;"</#if>>
                             已关注
                         </button>
                         <button class="btn btn-primary follow-btn"
-                                data-url="${ctx}/user/follow?id=${targetUserId}" <#if isFollowed!false> style="display:none;"</#if>>
+                                data-url="${ctx}/user/${targetUserId}/follow" <#if isFollowed!false> style="display:none;"</#if>>
                             关注
                         </button>
                         <button class="btn btn-default" data-toggle="modal" data-target="#modal"
-                                data-url="${ctx}/message/create?toId=${targetUserId}">私信
+                                data-url="${ctx}/message/create/${targetUserId}">私信
                         </button>
                     </#if>
                 </div>
