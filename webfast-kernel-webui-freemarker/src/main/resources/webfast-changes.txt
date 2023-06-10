@@ -3,6 +3,17 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.8: @2023-06-10
+* 定义数据库备份工具接口DatabaseDumper及操作方法
+* 基于SpringJDBC操作的自定义FastJdbcTemplate接口及实现类FastJdbcTemplateImpl
+* EasyDateUtil添加今天日期格式化函数today
+* FastDirectoryUtil添加在文件路径中获取目录路径的方法getDirPath
+* 创建MySQL备份的处理类MySQLDumper，完成对MySQL数据库表的备份的功能
+* 新增数据操作工具类FastDatabaseUtil用于缓存数据库备份工具的操作
+* DataSourceConfigurer在创建数据源的方法中注入MySQL备份程序MySQLDumper到数据库操作工具类FastDatabaseUtil的缓存中供其它程序调用
+* 后台管理中的系统优化功能OptimizeController实现对数据库中数据表的备份与下载功能backupDbAction
+* 使用@SupporessWarnings忽略MySQLDumper中方法private <T> T getSet(String key, Class<T> targetClass) 出现的泛型转换异常问题
+
 0.9.7: @2023-06-09
 * @RenderController函数调用参数增加对Map类型的处理，将其添加到request的属性中，不能直接对方法的参数映射
 * FreeMarker页面添加新的函数方法plain_text(text, length)，对于长文本进行截断，同时消除文本中的非文字内容
