@@ -43,6 +43,7 @@ public class MySQLDumper implements DatabaseDumper {
         return getSet(key, Object.class);
     }
 
+    @SuppressWarnings("unchecked")
     private <T> T getSet(String key, Class<T> targetClass) {
         Object result;
         if (this.dbSettings.containsKey(key)) {
