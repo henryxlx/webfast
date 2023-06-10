@@ -166,4 +166,24 @@ public class MessageController {
         return data;
     }
 
+
+    @RequestMapping("/message/create/{toId}")
+    public String createAction(@PathVariable Integer toId, HttpServletRequest request, Model model) {
+        AppUser user = AppUser.getCurrentUser(request);
+        AppUser receiver = this.userService.getUser(toId);
+        if ("POST".equals(request.getMethod())) {
+            Map<String, Object> message = ParamMap.toFormDataMap(request);
+            String username = String.valueOf(message.get("message[receiver]"));
+            receiver = this.userService.getUserByUsername(username);
+            if (receiver == null) {
+                throw new RuntimeGoingException("抱歉，该收信人尚未注册!");
+            }
+            this.messageService.sendMessage(user.getId(), receiver.getId(), message.get("message[content]"));
+            return "redirect:/message";
+        }
+        model.addAttribute("userId", toId);
+        model.addAttribute("receiver", receiver.getUsername());
+        return "/message/send-message-modal";
+    }
+
 }
