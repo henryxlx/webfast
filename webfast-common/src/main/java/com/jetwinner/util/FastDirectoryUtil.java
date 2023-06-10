@@ -82,4 +82,9 @@ public final class FastDirectoryUtil {
         // 目录此时为空，可以删除
         return dir.delete();
     }
+
+    public static String getDirPath(String path) {
+        int pos = path.lastIndexOf(File.separatorChar);
+        return pos > 0 ? path.substring(0, pos) : "";
+    }
 }
