@@ -1,12 +1,15 @@
 package com.jetwinner.webfast.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.Base64EncoderUtil;
+import com.jetwinner.util.EasyStringUtil;
+import com.jetwinner.webfast.database.DatabaseDumper;
+import com.jetwinner.webfast.database.FastDatabaseUtil;
+import com.jetwinner.webfast.dbtool.MySQLDumper;
+import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.datatag.AppDataFetcherHolder;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
-import com.jetwinner.webfast.install.InstallControllerRegisterService;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -67,6 +70,8 @@ public class DataSourceConfigurer implements DataSourceConfig {
             });
             DruidDataSource dataSource = new DruidDataSource();
             dataSource.setConnectProperties(properties);
+            DatabaseDumper dumper = new MySQLDumper(dataSource);
+            FastDatabaseUtil.addDumper(FastDatabaseUtil.MYSQL_DUMPER_KEY, dumper);
             return dataSource;
         } catch (Exception e) {
             dataSourceDisabled = true;
