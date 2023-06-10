@@ -39,22 +39,25 @@
 	</div>
 
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">数据库备份和下载</h3>
-  </div>
-  <div class="panel-body">
-   	<p>
-       备份数据库，并下载备份文件。 下载完成后请<span class="text-info">优化磁盘空间</span>。
-    </p>
-    <p>
-  		<button id="backupDatabase" class="btn btn-primary fr" data-url="${ctx}/optimize/backupdb">数据库备份和下载</button>
-  	</p>
-  	<p>
-  		<span id="dbbackup" class="glyphicon glyphicon-download-alt hide"><a id="dbdownload" href="#" target="_blank">下载数据库备份</a></span>
-  	</p>
-  </div>
-</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">数据库备份和下载</h3>
+		</div>
+		<div class="panel-body">
+			<p>
+				备份数据库，并下载备份文件。 下载完成后请<span class="text-info">优化磁盘空间</span>。
+			</p>
+			<p>
+				<button id="backupDatabase" class="btn btn-primary fr" data-url="${ctx}/admin/optimize/backupdb">
+					数据库备份和下载
+				</button>
+			</p>
+			<p>
+				<span id="dbbackup" class="glyphicon glyphicon-download-alt hide"><a id="dbdownload" href="#"
+																					 target="_blank">下载数据库备份</a></span>
+			</p>
+		</div>
+	</div>
 
 <#--
 <hr/>
