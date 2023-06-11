@@ -4,34 +4,35 @@ SET FOREIGN_KEY_CHECKS=0;
 -- Table structure for `app_block`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_block`;
-CREATE TABLE `app_block` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区ID',
-  `userId` int(11) NOT NULL COMMENT '编辑区创建人ID',
-  `title` varchar(255) NOT NULL COMMENT '编辑区名称',
-  `mode` enum('html','template') NOT NULL DEFAULT 'html' COMMENT '模式',
-  `template` text COMMENT '模板',
-  `templateData` text COMMENT '模板数据',
-  `content` text COMMENT '编辑区内容',
-  `code` varchar(64) NOT NULL DEFAULT '' COMMENT '编辑区编码',
-  `tips` text COMMENT '编辑区编辑提示',
-  `updateTime` bigint NOT NULL DEFAULT '0' COMMENT '编辑区最后更新时间',
-  `createdTime` bigint NOT NULL COMMENT '编辑区创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `code` (`code`)
+CREATE TABLE `app_block`(
+                            `id`           int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区ID',
+                            `userId`       int(11) NOT NULL COMMENT '编辑区创建人ID',
+                            `title`        varchar(255) NOT NULL COMMENT '编辑区名称',
+                            `mode`         enum('html','template') NOT NULL DEFAULT 'html' COMMENT '模式',
+                            `template`     text COMMENT '模板',
+                            `templateData` text COMMENT '模板数据',
+                            `content`      text COMMENT '编辑区内容',
+                            `code`         varchar(64)  NOT NULL DEFAULT '' COMMENT '编辑区编码',
+                            `tips`         text COMMENT '编辑区编辑提示',
+                            `updateTime`   bigint unsigned NOT NULL DEFAULT '0' COMMENT '编辑区最后更新时间',
+                            `createdTime`  bigint unsigned NOT NULL COMMENT '编辑区创建时间',
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `code` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='页面编辑区表';
 
 -- ----------------------------
 -- Table structure for `app_block_history`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_block_history`;
-CREATE TABLE `app_block_history` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区历史记录ID',
-  `blockId` int(11) NOT NULL COMMENT '编辑区ID',
-  `templateData` text COMMENT '模板历史数据',
-  `content` text COMMENT '编辑区历史内容',
-  `userId` int(11) NOT NULL COMMENT '编辑区编辑人ID',
-  `createdTime` bigint NOT NULL COMMENT '编辑区历史记录创建时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_block_history`
+(
+    `id`           int(11) NOT NULL AUTO_INCREMENT COMMENT '编辑区历史记录ID',
+    `blockId`      int(11) NOT NULL COMMENT '编辑区ID',
+    `templateData` text COMMENT '模板历史数据',
+    `content`      text COMMENT '编辑区历史内容',
+    `userId`       int(11) NOT NULL COMMENT '编辑区编辑人ID',
+    `createdTime`  bigint unsigned NOT NULL COMMENT '编辑区历史记录创建时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='编辑区历史表';
 
 -- ----------------------------
@@ -66,12 +67,13 @@ CREATE TABLE `app_file_group` (
 -- Table structure for `app_friend`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_friend`;
-CREATE TABLE `app_friend` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '关注ID',
-  `fromId` int(11) unsigned NOT NULL COMMENT '关注人ID',
-  `toId` int(11) unsigned NOT NULL COMMENT '被关注人ID',
-  `createdTime` int(11) unsigned NOT NULL COMMENT '关注时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_friend`
+(
+    `id`          int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '关注ID',
+    `fromId`      int(11) unsigned NOT NULL COMMENT '关注人ID',
+    `toId`        int(11) unsigned NOT NULL COMMENT '被关注人ID',
+    `createdTime` bigint unsigned NOT NULL COMMENT '关注时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注表';
 
 -- ----------------------------
@@ -138,18 +140,19 @@ CREATE TABLE `app_message_relation` (
 -- Table structure for `app_navigation`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_navigation`;
-CREATE TABLE `app_navigation` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '导航ID',
-  `name` varchar(255) NOT NULL COMMENT '导航名称',
-  `url` varchar(300) NOT NULL COMMENT '链接地址',
-  `sequence` tinyint(4) unsigned NOT NULL COMMENT '显示顺序',
-  `parentId` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父导航ID',
-  `type` varchar(30) NOT NULL COMMENT '类型',
-  `isOpen` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认1，为开启',
-  `isNewWin` tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认为1,另开窗口',
-  `updateTime` bigint NOT NULL DEFAULT '0' COMMENT '最后更新时间',
-  `createdTime` bigint NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_navigation`
+(
+    `id`          int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '导航ID',
+    `name`        varchar(255) NOT NULL COMMENT '导航名称',
+    `url`         varchar(300) NOT NULL COMMENT '链接地址',
+    `sequence`    tinyint(4) unsigned NOT NULL COMMENT '显示顺序',
+    `parentId`    int(11) unsigned NOT NULL DEFAULT '0' COMMENT '父导航ID',
+    `type`        varchar(30)  NOT NULL COMMENT '类型',
+    `isOpen`      tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认1，为开启',
+    `isNewWin`    tinyint(2) NOT NULL DEFAULT '1' COMMENT '默认为1,另开窗口',
+    `updateTime`  bigint unsigned NOT NULL DEFAULT '0' COMMENT '最后更新时间',
+    `createdTime` bigint unsigned NOT NULL COMMENT '创建时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='网站导航表';
 
 -- ----------------------------
@@ -170,14 +173,15 @@ CREATE TABLE `app_notification` (
 -- Table structure for `app_permission`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_permission`;
-CREATE TABLE `app_permission` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) NOT NULL COMMENT '角色文字标签',
-  `permissionKey` varchar(32) NOT NULL COMMENT '角色名称',
-  `createdUserId` int(11) unsigned NOT NULL COMMENT '创建用户ID',
-  `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `updatedTime` bigint NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_permission`
+(
+    `id`            int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `label`         varchar(32) NOT NULL COMMENT '角色文字标签',
+    `permissionKey` varchar(32) NOT NULL COMMENT '角色名称',
+    `createdUserId` int(11) unsigned NOT NULL COMMENT '创建用户ID',
+    `createdTime`   bigint unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+    `updatedTime`   bigint unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='权限定义表';
 
 -- ----------------------------
@@ -189,15 +193,16 @@ INSERT INTO `app_permission` VALUES ('1', '访问后端管理', 'ACCESS_BACKEND'
 -- Table structure for `app_role`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_role`;
-CREATE TABLE `app_role` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `label` varchar(32) NOT NULL COMMENT '角色文字标签',
-  `roleName` varchar(32) NOT NULL COMMENT '角色名称',
-  `permissionData` text COMMENT '角色权限配置',
-  `createdUserId` int(11) unsigned NOT NULL COMMENT '创建用户ID',
-  `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `updatedTime` bigint NOT NULL DEFAULT '0' COMMENT '更新时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_role`
+(
+    `id`             int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `label`          varchar(32) NOT NULL COMMENT '角色文字标签',
+    `roleName`       varchar(32) NOT NULL COMMENT '角色名称',
+    `permissionData` text COMMENT '角色权限配置',
+    `createdUserId`  int(11) unsigned NOT NULL COMMENT '创建用户ID',
+    `createdTime`    bigint unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+    `updatedTime`    bigint unsigned NOT NULL DEFAULT '0' COMMENT '更新时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='角色定义表';
 
 -- ----------------------------
@@ -235,40 +240,40 @@ INSERT INTO `app_setting` VALUES ('6', 'article', 0x613A323A7B733A343A226E616D65
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user`;
 CREATE TABLE `app_user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-  `email` varchar(128) NOT NULL COMMENT '用户邮箱',
-  `verifiedMobile` varchar(32) NOT NULL DEFAULT '',
-  `password` varchar(64) NOT NULL COMMENT '用户密码',
-  `salt` varchar(32) NOT NULL COMMENT '密码SALT',
-  `username` varchar(64) NOT NULL COMMENT '用户名',
-  `title` varchar(255) NOT NULL DEFAULT '' COMMENT '头衔',
-  `tags` varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
-  `type` varchar(32) NOT NULL COMMENT 'default默认为网站注册, weibo新浪微薄登录',
-  `smallAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '小头像',
-  `mediumAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '中头像',
-  `largeAvatar` varchar(255) NOT NULL DEFAULT '' COMMENT '大头像',
-  `emailVerified` tinyint(1) NOT NULL DEFAULT '0' COMMENT '邮箱是否为已验证',
-  `setup` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否初始化设置的，未初始化的可以设置邮箱、昵称。',
-  `roles` varchar(255) NOT NULL COMMENT '用户角色',
-  `permissionData` text COMMENT '用户权限配置',
-  `promoted` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为推荐',
-  `promotedTime` bigint NOT NULL DEFAULT '0' COMMENT '推荐时间',
-  `locked` tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否被禁止',
-  `lockDeadline` int(11) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
-  `consecutivePasswordErrorTimes` int(11) NOT NULL DEFAULT '0' COMMENT '帐号密码错误次数',
-  `lastPasswordFailTime` bigint NOT NULL DEFAULT '0',
-  `loginTime` bigint NOT NULL DEFAULT '0' COMMENT '最后登录时间',
-  `loginIp` varchar(64) NOT NULL DEFAULT '' COMMENT '最后登录IP',
-  `loginSessionId` varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录会话ID',
-  `approvalTime` bigint NOT NULL DEFAULT '0' COMMENT '实名认证时间',
-  `approvalStatus` enum('unapprove','approving','approved','approve_fail') NOT NULL DEFAULT 'unapprove' COMMENT '实名认证状态',
-  `newMessageNum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
-  `newNotificationNum` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
-  `createdIp` varchar(64) NOT NULL DEFAULT '' COMMENT '注册IP',
-  `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '注册时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `username` (`username`)
+                            `id`                            int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+                            `email`                         varchar(128) NOT NULL COMMENT '用户邮箱',
+                            `verifiedMobile`                varchar(32)  NOT NULL DEFAULT '',
+                            `password`                      varchar(64)  NOT NULL COMMENT '用户密码',
+                            `salt`                          varchar(32)  NOT NULL COMMENT '密码SALT',
+                            `username`                      varchar(64)  NOT NULL COMMENT '用户名',
+                            `title`                         varchar(255) NOT NULL DEFAULT '' COMMENT '头衔',
+                            `tags`                          varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
+                            `type`                          varchar(32)  NOT NULL COMMENT 'default默认为网站注册, weibo新浪微薄登录',
+                            `smallAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '小头像',
+                            `mediumAvatar`                  varchar(255) NOT NULL DEFAULT '' COMMENT '中头像',
+                            `largeAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '大头像',
+                            `emailVerified`                 tinyint(1) NOT NULL DEFAULT '0' COMMENT '邮箱是否为已验证',
+                            `setup`                         tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否初始化设置的，未初始化的可以设置邮箱、昵称。',
+                            `roles`                         varchar(255) NOT NULL COMMENT '用户角色',
+                            `permissionData`                text COMMENT '用户权限配置',
+                            `promoted`                      tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为推荐',
+                            `promotedTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '推荐时间',
+                            `locked`                        tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否被禁止',
+                            `lockDeadline`                  int(11) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
+                            `consecutivePasswordErrorTimes` int(11) NOT NULL DEFAULT '0' COMMENT '帐号密码错误次数',
+                            `lastPasswordFailTime`          bigint unsigned NOT NULL DEFAULT '0',
+                            `loginTime`                     bigint unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+                            `loginIp`                       varchar(64)  NOT NULL DEFAULT '' COMMENT '最后登录IP',
+                            `loginSessionId`                varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录会话ID',
+                            `approvalTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '实名认证时间',
+                            `approvalStatus`                enum('unapprove','approving','approved','approve_fail') NOT NULL DEFAULT 'unapprove' COMMENT '实名认证状态',
+                            `newMessageNum`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
+                            `newNotificationNum`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
+                            `createdIp`                     varchar(64)  NOT NULL DEFAULT '' COMMENT '注册IP',
+                            `createdTime`                   bigint unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
+                            PRIMARY KEY (`id`),
+                            UNIQUE KEY `email` (`email`),
+                            UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
@@ -281,32 +286,34 @@ INSERT INTO `app_user` VALUES ('2', 'test@qq.com', '', 'RIGagyj4RFv7Y4Fk3oxEO0CF
 -- Table structure for `app_user_approval`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_approval`;
-CREATE TABLE `app_user_approval` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户认证ID',
-  `userId` int(11) NOT NULL COMMENT '用户ID',
-  `idcard` varchar(24) NOT NULL DEFAULT '' COMMENT '身份证号',
-  `faceImg` varchar(500) NOT NULL DEFAULT '' COMMENT '认证正面图',
-  `backImg` varchar(500) NOT NULL DEFAULT '' COMMENT '认证背面图',
-  `truename` varchar(255) DEFAULT NULL COMMENT '真实姓名',
-  `note` text COMMENT '认证信息',
-  `status` enum('unapprove','approving','approved','approve_fail') NOT NULL COMMENT '是否通过：1是 0否',
-  `operatorId` int(11) unsigned DEFAULT NULL COMMENT '审核人',
-  `createdTime` bigint NOT NULL DEFAULT '0' COMMENT '申请时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_user_approval`
+(
+    `id`          int(11) NOT NULL AUTO_INCREMENT COMMENT '用户认证ID',
+    `userId`      int(11) NOT NULL COMMENT '用户ID',
+    `idcard`      varchar(24)  NOT NULL DEFAULT '' COMMENT '身份证号',
+    `faceImg`     varchar(500) NOT NULL DEFAULT '' COMMENT '认证正面图',
+    `backImg`     varchar(500) NOT NULL DEFAULT '' COMMENT '认证背面图',
+    `truename`    varchar(255)          DEFAULT NULL COMMENT '真实姓名',
+    `note`        text COMMENT '认证信息',
+    `status`      enum('unapprove','approving','approved','approve_fail') NOT NULL COMMENT '是否通过：1是 0否',
+    `operatorId`  int(11) unsigned DEFAULT NULL COMMENT '审核人',
+    `createdTime` bigint unsigned NOT NULL DEFAULT '0' COMMENT '申请时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户认证表';
 
 -- ----------------------------
 -- Table structure for `app_user_field`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_field`;
-CREATE TABLE `app_user_field` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `fieldName` varchar(100) NOT NULL DEFAULT '',
-  `title` varchar(1024) NOT NULL DEFAULT '',
-  `seq` int(11) unsigned NOT NULL,
-  `enabled` int(11) unsigned NOT NULL DEFAULT '0',
-  `createdTime` bigint(20) unsigned NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_user_field`
+(
+    `id`          int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `fieldName`   varchar(100)  NOT NULL DEFAULT '',
+    `title`       varchar(1024) NOT NULL DEFAULT '',
+    `seq`         int(11) unsigned NOT NULL,
+    `enabled`     int(11) unsigned NOT NULL DEFAULT '0',
+    `createdTime` bigint unsigned NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -374,30 +381,32 @@ CREATE TABLE `app_user_profile` (
 -- Table structure for `app_user_secure_question`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_secure_question`;
-CREATE TABLE `app_user_secure_question` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
-  `securityQuestionCode` varchar(64) NOT NULL DEFAULT '' COMMENT '问题的code',
-  `securityAnswer` varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案',
-  `securityAnswerSalt` varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案Salt',
-  `createdTime` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+CREATE TABLE `app_user_secure_question`
+(
+    `id`                   int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `userId`               int(10) unsigned NOT NULL DEFAULT '0' COMMENT '用户ID',
+    `securityQuestionCode` varchar(64) NOT NULL DEFAULT '' COMMENT '问题的code',
+    `securityAnswer`       varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案',
+    `securityAnswerSalt`   varchar(64) NOT NULL DEFAULT '' COMMENT '安全问题的答案Salt',
+    `createdTime`          bigint unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全设置安全问题表';
 
 -- ----------------------------
 -- Table structure for `app_user_token`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user_token`;
-CREATE TABLE `app_user_token` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'TOKEN编号',
-  `token` varchar(64) NOT NULL COMMENT 'TOKEN值',
-  `userId` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN关联的用户ID',
-  `type` varchar(255) NOT NULL COMMENT 'TOKEN类型',
-  `data` text NOT NULL COMMENT 'TOKEN数据',
-  `times` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN的校验次数限制(0表示不限制)',
-  `remainedTimes` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN剩余校验次数',
-  `expiredTime` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN过期时间',
-  `createdTime` bigint(20) unsigned NOT NULL COMMENT 'TOKEN创建时间',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `token` (`token`(60))
+CREATE TABLE `app_user_token`
+(
+    `id`            int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'TOKEN编号',
+    `token`         varchar(64)  NOT NULL COMMENT 'TOKEN值',
+    `userId`        int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN关联的用户ID',
+    `type`          varchar(255) NOT NULL COMMENT 'TOKEN类型',
+    `data`          text         NOT NULL COMMENT 'TOKEN数据',
+    `times`         int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN的校验次数限制(0表示不限制)',
+    `remainedTimes` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN剩余校验次数',
+    `expiredTime`   bigint unsigned NOT NULL DEFAULT '0' COMMENT 'TOKEN过期时间',
+    `createdTime`   bigint unsigned NOT NULL COMMENT 'TOKEN创建时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `token` (`token`(60))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
