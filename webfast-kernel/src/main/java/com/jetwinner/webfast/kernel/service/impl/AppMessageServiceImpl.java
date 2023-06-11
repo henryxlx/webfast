@@ -204,8 +204,9 @@ public class AppMessageServiceImpl implements AppMessageService {
             conversationDao.updateConversation(conversation.getId(),
                     new ParamMap().add("unreadNum", 0).toMap());
         } else {
+            int unreadNum = conversation.getUnreadNum();
             conversationDao.updateConversation(conversation.getId(),
-                    new ParamMap().add("unreadNum", conversation.getUnreadNum() - 1).toMap());
+                    new ParamMap().add("unreadNum", unreadNum > 0 ? unreadNum - 1 : 0).toMap());
         }
     }
 
