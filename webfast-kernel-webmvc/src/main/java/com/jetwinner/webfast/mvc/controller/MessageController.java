@@ -51,6 +51,7 @@ public class MessageController {
         );
 
         messageService.clearUserNewMessageCounter(user.getId());
+        user.setNewMessageNum(0);
         model.addAttribute("users", userService.findUsersByIds(ArrayToolkitOnJava8.column(conversations,
                 AppModelMessageConversation::getFromId)));
         model.addAttribute("conversations", conversations);
