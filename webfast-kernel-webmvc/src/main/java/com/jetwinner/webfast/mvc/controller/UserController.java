@@ -78,7 +78,7 @@ public class UserController implements BlockRenderController {
     @RequestMapping("/user/{id}/following")
     private String followingAction(@PathVariable Integer id, Model model) {
         AppUser user = tryGetUser(id);
-        //model.addAttribute("friends", userService.findAllUserFollowing(user.getId()));
+        model.addAttribute("friends", userService.findAllUserFollowing(user.getId()));
         model.addAttribute("user", user);
         model.addAttribute("friendNav", "following");
         return "/user/friend";
@@ -87,7 +87,7 @@ public class UserController implements BlockRenderController {
     @RequestMapping("/user/{id}/follower")
     public String followerAction(@PathVariable Integer id, Model model) {
         AppUser user = tryGetUser(id);
-        //model.addAttribute("friends", userService.findAllUserFollower(user.getId()));
+        model.addAttribute("friends", userService.findAllUserFollower(user.getId()));
         model.addAttribute("user", user);
         model.addAttribute("friendNav", "follower");
         return "/user/friend";

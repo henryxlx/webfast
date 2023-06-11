@@ -16,4 +16,8 @@ public interface AppFriendDao {
     Map<String, Object> addFriend(Map<String, Object> fields);
 
     int deleteFriend(Object id);
+
+    List<Map<String, Object>> findAllUserFollowingByFromId(Integer fromId);
+
+    List<Map<String, Object>> findAllUserFollowerByToId(Integer toId);
 }

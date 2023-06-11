@@ -50,4 +50,16 @@ public class AppFriendDaoImpl extends FastJdbcDaoSupport implements AppFriendDao
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
         return getJdbcTemplate().update(sql, id);
     }
+
+    @Override
+    public List<Map<String, Object>> findAllUserFollowingByFromId(Integer fromId) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE fromId = ? ORDER BY createdTime DESC ";
+        return getJdbcTemplate().queryForList(sql, fromId);
+    }
+
+    @Override
+    public List<Map<String, Object>> findAllUserFollowerByToId(Integer toId) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE toId = ? ORDER BY createdTime DESC ";
+        return getJdbcTemplate().queryForList(sql, toId);
+    }
 }

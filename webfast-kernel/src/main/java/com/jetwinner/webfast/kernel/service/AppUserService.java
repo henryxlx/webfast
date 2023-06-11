@@ -87,4 +87,10 @@ public interface AppUserService extends BaseAppUserService {
     Map<String, Object> follow(Integer fromId, Integer toId) throws ActionGraspException;
 
     int unFollow(Integer fromId, Integer toId) throws ActionGraspException;
+
+    Map<String, AppUser> findAllUserFollowing(Integer userId);
+
+    Map<String, AppUser> findAllUserFollower(Integer userId);
+
+    Boolean isFollowed(Integer fromId, Integer toId);
 }

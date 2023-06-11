@@ -548,4 +548,34 @@ public class AppUserServiceImpl implements AppUserService {
         }
         return this.friendDao.deleteFriend(friend.get("id"));
     }
+
+    @Override
+    public Map<String, AppUser> findAllUserFollowing(Integer userId) {
+        List<Map<String, Object>> friends = this.friendDao.findAllUserFollowingByFromId(userId);
+        Set<Object> ids = ArrayToolkit.column(friends, "toId");
+        return this.findUsersByIds(ids);
+    }
+
+    @Override
+    public Map<String, AppUser> findAllUserFollower(Integer userId) {
+        List<Map<String, Object>> friends = this.friendDao.findAllUserFollowerByToId(userId);
+        Set<Object> ids = ArrayToolkit.column(friends, "fromId");
+        return this.findUsersByIds(ids);
+    }
+
+    @Override
+    public Boolean isFollowed(Integer fromId, Integer toId) {
+        AppUser fromUser = this.getUser(fromId);
+        AppUser toUser = this.getUser(toId);
+        if (fromUser == null) {
+            throw new RuntimeGoingException("用户不存在，检测关注状态失败！");
+        }
+
+        if (toUser == null) {
+            throw new RuntimeGoingException("被关注者不存在，检测关注状态失败！");
+        }
+
+        Map<String, Object> friend = this.friendDao.getFriendByFromIdAndToId(fromId, toId);
+        return MapUtil.isEmpty(friend) ? Boolean.FALSE : Boolean.TRUE;
+    }
 }
