@@ -5,10 +5,12 @@ import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.model.AppModelMessage;
 import com.jetwinner.webfast.kernel.model.AppModelMessageConversation;
 import com.jetwinner.webfast.kernel.service.AppMessageService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
+import com.jetwinner.webfast.kernel.view.ViewRenderService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +26,15 @@ public class MessageController {
 
     private final AppUserService userService;
     private final AppMessageService messageService;
+    private final ViewRenderService viewRenderService;
 
-    public MessageController(AppUserService userService, AppMessageService messageService) {
+    public MessageController(AppUserService userService,
+                             AppMessageService messageService,
+                             ViewRenderService viewRenderService) {
+
         this.userService = userService;
         this.messageService = messageService;
+        this.viewRenderService = viewRenderService;
     }
 
     @RequestMapping("/message")
@@ -69,9 +76,10 @@ public class MessageController {
         return "redirect:/message";
     }
 
-    @GetMapping("/message/conversation/{conversationId}/show")
-    public String showConversationAction(@PathVariable Integer conversationId, HttpServletRequest request,
-                                         Model model) throws Exception {
+    @GetMapping("/message/conversation/{conversationId}")
+    public String showConversationPage(@PathVariable Integer conversationId,
+                                       HttpServletRequest request,
+                                       Model model) {
 
         AppUser user = AppUser.getCurrentUser(request);
         AppModelMessageConversation conversation = messageService.getConversation(conversationId);
@@ -92,6 +100,24 @@ public class MessageController {
         model.addAttribute("receiver", userService.getUser(conversation.getFromId()));
         model.addAttribute("paginator", paginator);
         return "/message/conversation-show";
+    }
+
+    @PostMapping("/message/conversation/{conversationId}")
+    @ResponseBody
+    public Map<String, Object> showConversationAction(@PathVariable Integer conversationId,
+                                                      HttpServletRequest request) {
+
+        AppUser user = AppUser.getCurrentUser(request);
+        AppModelMessageConversation conversation = messageService.getConversation(conversationId);
+        if (conversation == null || !Objects.equals(conversation.getToId(), user.getId())) {
+            throw new RuntimeGoingException("私信会话不存在！");
+        }
+        Map<String, Object> fields = ParamMap.toFormDataMap(request);
+        AppModelMessage message = this.messageService.sendMessage(user.getId(), conversation.getFromId(), fields.get("content"));
+        String html = viewRenderService.renderView(request, "/message/item.ftl",
+                new ParamMap().add("ctx", request.getContextPath()).add("appUser", user)
+                        .add("message", message).add("conversation", conversation).toMap());
+        return new ParamMap().add("status", "ok").add("html", html).toMap();
     }
 
     @RequestMapping("/message/check/receiver")
@@ -136,7 +162,7 @@ public class MessageController {
         messageService.deleteConversationMessage(conversationId, messageId);
         int messagesCount = messageService.getConversationMessageCount(conversationId);
         if (messagesCount > 0) {
-            return "redirect:/message/conversation/" + conversationId + "/show";
+            return "redirect:/message/conversation/" + conversationId;
         } else {
             return "redirect:/message";
         }
