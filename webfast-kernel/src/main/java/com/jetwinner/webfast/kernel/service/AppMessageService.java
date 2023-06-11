@@ -15,7 +15,7 @@ public interface AppMessageService {
 
     void clearUserNewMessageCounter(Integer userId);
 
-    void sendMessage(Integer fromUserId, Integer toUserId, Object content);
+    AppModelMessage sendMessage(Integer fromUserId, Integer toUserId, Object content);
 
     int searchMessagesCount(Map<String, Object> conditions);
 

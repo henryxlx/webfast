@@ -1,7 +1,9 @@
 package com.jetwinner.webfast.kernel.service.impl;
 
+import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.toolbag.HtmlToolkit;
 import com.jetwinner.util.ValueParser;
+import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.AppMessageConversationDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageDao;
 import com.jetwinner.webfast.kernel.dao.AppMessageRelationDao;
@@ -60,7 +62,7 @@ public class AppMessageServiceImpl implements AppMessageService {
     }
 
     @Override
-    public void sendMessage(Integer fromUserId, Integer toUserId, Object content) {
+    public AppModelMessage sendMessage(Integer fromUserId, Integer toUserId, Object content) {
         if (fromUserId.intValue() == toUserId.intValue()) {
             throw new RuntimeGoingException("抱歉,不允许给自己发送私信!");
         }
@@ -69,6 +71,7 @@ public class AppMessageServiceImpl implements AppMessageService {
         prepareConversationAndRelationForSender(message, toUserId, fromUserId);
         prepareConversationAndRelationForReceiver(message, fromUserId, toUserId);
         userService.waveUserCounter(toUserId, "newMessageNum", 1);
+        return message;
     }
 
     @Override
@@ -222,6 +225,10 @@ public class AppMessageServiceImpl implements AppMessageService {
         List<AppModelMessageRelation> relations = relationDao.findRelationsByConversationId(conversationId, start, limit);
         List<AppModelMessage> messages = messageDao.findMessagesByIds(
                 relations.stream().map(AppModelMessageRelation::getMessageId).collect(Collectors.toList()));
+        Map<String, AppUser> createUsers = this.userService.findUsersByIds(ArrayToolkitOnJava8.column(messages,
+                AppModelMessage::getFromId));
+
+        messages.forEach(message -> message.setCreatedUser(createUsers.get("" + message.getFromId())));
         sortMessages(messages);
         return messages;
     }
