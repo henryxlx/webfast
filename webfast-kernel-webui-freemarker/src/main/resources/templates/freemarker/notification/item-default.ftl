@@ -4,7 +4,7 @@
   </div>
   <div class="media-body">
     <div class="notification-body">
-      ${notification.content?html}
+      ${notification.content}
     </div>
     <div class="notification-footer">
       ${notification.createdTime?number_to_datetime?string('yyyy-MM-dd HH:mm:ss')}
