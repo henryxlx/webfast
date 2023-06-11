@@ -3,6 +3,7 @@ package com.jetwinner.webfast.kernel.service;
 import com.jetwinner.security.BaseAppUserService;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 
 import java.util.List;
 import java.util.Map;
@@ -82,4 +83,8 @@ public interface AppUserService extends BaseAppUserService {
     List<Map<String, Object>> analysisRegisterDataByTime(long startTime, long endTime);
 
     List<Map<String, Object>> analysisUserSumByTime(long endTime);
+
+    Map<String, Object> follow(Integer fromId, Integer toId) throws ActionGraspException;
+
+    int unFollow(Integer fromId, Integer toId) throws ActionGraspException;
 }

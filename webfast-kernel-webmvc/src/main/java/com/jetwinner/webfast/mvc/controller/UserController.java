@@ -1,7 +1,10 @@
 package com.jetwinner.webfast.mvc.controller;
 
+import com.jetwinner.security.UserAccessControlService;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
+import com.jetwinner.webfast.kernel.service.AppNotificationService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import com.jetwinner.webfast.mvc.block.BlockRenderController;
 import com.jetwinner.webfast.mvc.block.BlockRenderMethod;
@@ -10,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,9 +24,16 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController implements BlockRenderController {
 
     private final AppUserService userService;
+    private final AppNotificationService notificationService;
+    private final UserAccessControlService userAccessControlService;
 
-    public UserController(AppUserService userService) {
+    public UserController(AppUserService userService,
+                          AppNotificationService notificationService,
+                          UserAccessControlService userAccessControlService) {
+
         this.userService = userService;
+        this.notificationService = notificationService;
+        this.userAccessControlService = userAccessControlService;
     }
 
     @RequestMapping({"/user/{id}", "/user/{id}/about"})
@@ -57,6 +68,49 @@ public class UserController implements BlockRenderController {
         model.addAttribute("user", user);
         model.addAttribute("friendNav", "follower");
         return "/user/friend";
+    }
+
+    @RequestMapping("/user/{id}/follow")
+    @ResponseBody
+    public Boolean followAction(@PathVariable Integer id, HttpServletRequest request) {
+        AppUser user = AppUser.getCurrentUser(request);
+        if (!userAccessControlService.isLoggedIn()) {
+            throw new RuntimeGoingException("请先登录再关注！");
+        }
+        try {
+            this.userService.follow(user.getId(), id);
+        } catch (ActionGraspException e) {
+            return Boolean.FALSE;
+        }
+
+        String userShowUrl = request.getContextPath() + "/user/" + user.getId();
+        String message = String.format("用户<a href='%s' target='_blank'>%s</a>已经关注了你！",
+                userShowUrl, user.getUsername());
+        this.notificationService.notify(id, "default", message);
+
+        return Boolean.TRUE;
+    }
+
+    @RequestMapping("/user/{id}/unfollow")
+    @ResponseBody
+    public Boolean unfollowAction(@PathVariable Integer id, HttpServletRequest request) {
+        AppUser user = AppUser.getCurrentUser(request);
+        if (!userAccessControlService.isLoggedIn()) {
+            throw new RuntimeGoingException("请先登录再取消关注！");
+        }
+
+        try {
+            this.userService.unFollow(user.getId(), id);
+        } catch (ActionGraspException e) {
+            return Boolean.FALSE;
+        }
+
+        String userShowUrl = request.getContextPath() + "/user/" + user.getId();
+        String message = String.format("用户<a href='%s' target='_blank'>%s</a>对你已经取消了关注！",
+                userShowUrl, user.getUsername());
+        this.notificationService.notify(id, "default", message);
+
+        return Boolean.TRUE;
     }
 
     private AppUser tryGetUser(Integer id) {

@@ -14,6 +14,7 @@ import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.FastAppConst;
 import com.jetwinner.webfast.kernel.dao.*;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
+import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.model.AppPathInfo;
 import com.jetwinner.webfast.kernel.service.AppLogService;
@@ -511,5 +512,40 @@ public class AppUserServiceImpl implements AppUserService {
             model.put("count", count);
         }
         return dayUserTotals;
+    }
+
+    @Override
+    public Map<String, Object> follow(Integer fromId, Integer toId) throws ActionGraspException {
+        AppUser fromUser = this.getUser(fromId);
+        AppUser toUser = this.getUser(toId);
+        if (fromUser == null || toUser == null) {
+            throw new ActionGraspException("用户不存在，关注失败！");
+        }
+        if (fromId.intValue() == toId.intValue()) {
+            throw new ActionGraspException("不能关注自己！");
+        }
+        Map<String, Object> friend = this.friendDao.getFriendByFromIdAndToId(fromId, toId);
+        if (MapUtil.isNotEmpty(friend)) {
+            throw new ActionGraspException("不允许重复关注!");
+        }
+        Map<String, Object> fields = new ParamMap()
+                .add("fromId", fromId)
+                .add("toId", toId)
+                .add("createdTime", System.currentTimeMillis()).toMap();
+        return this.friendDao.addFriend(fields);
+    }
+
+    @Override
+    public int unFollow(Integer fromId, Integer toId) throws ActionGraspException {
+        AppUser fromUser = this.getUser(fromId);
+        AppUser toUser = this.getUser(toId);
+        if (fromUser == null || toUser == null) {
+            throw new ActionGraspException("用户不存在，取消关注失败！");
+        }
+        Map<String, Object> friend = this.friendDao.getFriendByFromIdAndToId(fromId, toId);
+        if (MapUtil.isEmpty(friend)) {
+            throw new ActionGraspException("不存在此关注关系，取消关注失败！");
+        }
+        return this.friendDao.deleteFriend(friend.get("id"));
     }
 }

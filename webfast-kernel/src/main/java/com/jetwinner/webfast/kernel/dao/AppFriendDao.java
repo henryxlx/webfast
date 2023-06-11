@@ -10,4 +10,10 @@ import java.util.Set;
 public interface AppFriendDao {
 
     List<Map<String, Object>> getFriendsByFromIdAndToIds(Integer fromId, Set<Object> toIds);
+
+    Map<String, Object> getFriendByFromIdAndToId(Integer fromId, Integer toId);
+
+    Map<String, Object> addFriend(Map<String, Object> fields);
+
+    int deleteFriend(Object id);
 }
