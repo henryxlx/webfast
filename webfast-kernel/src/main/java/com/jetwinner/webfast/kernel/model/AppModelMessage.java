@@ -1,7 +1,8 @@
 package com.jetwinner.webfast.kernel.model;
 
+import com.jetwinner.webfast.kernel.AppUser;
+
 /**
- *
  * @author x230-think-joomla
  * @date 2016/1/8
  */
@@ -12,6 +13,7 @@ public class AppModelMessage {
     private Integer toId;
     private String content;
     private Long createdTime;
+    private AppUser createdUser;
 
     public Integer getId() {
         return id;
@@ -53,4 +55,11 @@ public class AppModelMessage {
         this.createdTime = createdTime;
     }
 
+    public AppUser getCreatedUser() {
+        return createdUser;
+    }
+
+    public void setCreatedUser(AppUser createdUser) {
+        this.createdUser = createdUser;
+    }
 }
