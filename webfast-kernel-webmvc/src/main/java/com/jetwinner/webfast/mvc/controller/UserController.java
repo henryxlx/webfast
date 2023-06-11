@@ -95,7 +95,7 @@ public class UserController implements BlockRenderController {
 
     @RequestMapping("/user/{id}/follow")
     @ResponseBody
-    public Boolean followAction(@PathVariable Integer id, HttpServletRequest request) {
+    public Map<String, Object> followAction(@PathVariable Integer id, HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
         if (!userAccessControlService.isLoggedIn()) {
             throw new RuntimeGoingException("请先登录再关注！");
@@ -103,7 +103,7 @@ public class UserController implements BlockRenderController {
         try {
             this.userService.follow(user.getId(), id);
         } catch (ActionGraspException e) {
-            return Boolean.FALSE;
+            return new ParamMap().add("status", "error").add("message", e.getMessage()).toMap();
         }
 
         String userShowUrl = request.getContextPath() + "/user/" + user.getId();
@@ -111,12 +111,12 @@ public class UserController implements BlockRenderController {
                 userShowUrl, user.getUsername());
         this.notificationService.notify(id, "default", message);
 
-        return Boolean.TRUE;
+        return new ParamMap().add("status", "ok").toMap();
     }
 
     @RequestMapping("/user/{id}/unfollow")
     @ResponseBody
-    public Boolean unfollowAction(@PathVariable Integer id, HttpServletRequest request) {
+    public Map<String, Object> unfollowAction(@PathVariable Integer id, HttpServletRequest request) {
         AppUser user = AppUser.getCurrentUser(request);
         if (!userAccessControlService.isLoggedIn()) {
             throw new RuntimeGoingException("请先登录再取消关注！");
@@ -125,7 +125,7 @@ public class UserController implements BlockRenderController {
         try {
             this.userService.unFollow(user.getId(), id);
         } catch (ActionGraspException e) {
-            return Boolean.FALSE;
+            return new ParamMap().add("status", "error").add("message", e.getMessage()).toMap();
         }
 
         String userShowUrl = request.getContextPath() + "/user/" + user.getId();
@@ -133,7 +133,7 @@ public class UserController implements BlockRenderController {
                 userShowUrl, user.getUsername());
         this.notificationService.notify(id, "default", message);
 
-        return Boolean.TRUE;
+        return new ParamMap().add("status", "ok").toMap();
     }
 
     private AppUser tryGetUser(Integer id) {
