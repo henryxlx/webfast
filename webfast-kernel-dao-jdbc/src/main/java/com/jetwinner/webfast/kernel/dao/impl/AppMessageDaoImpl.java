@@ -70,7 +70,7 @@ public class AppMessageDaoImpl extends FastJdbcDaoSupport implements AppMessageD
         }
         String marks = ids.stream().map(String::valueOf).collect(Collectors.joining(", "));
         String sql = String.format("SELECT * FROM %s WHERE id IN (%s);", TABLE_NAME, marks);
-        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppModelMessage.class), ids.toArray());
+        return getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(AppModelMessage.class));
     }
 
     @Override
