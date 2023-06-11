@@ -41,7 +41,7 @@ public class NotificationController {
                         paginator.getOffsetCount(), paginator.getPerPageCount()));
 
         notificationService.clearUserNewNotificationCounter(user.getId());
-
+        user.setNewNotificationNum(0);
         model.addAttribute("paginator", paginator);
         return "/notification/index";
     }
