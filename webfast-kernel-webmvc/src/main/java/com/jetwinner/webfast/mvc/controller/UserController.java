@@ -146,8 +146,14 @@ public class UserController implements BlockRenderController {
 
     @GetMapping("/user/headerBlock")
     @BlockRenderMethod
-    public String showHeaderBlock(AppUser user, Model model) {
-        model.addAttribute("userProfile", userService.getUserProfile(user.getId()));
+    public String showHeaderBlock(Integer userId, Model model) {
+        AppUser currentUser = (AppUser) userAccessControlService.getCurrentUser();
+        Boolean isFollowed = Boolean.FALSE;
+        if (this.userAccessControlService.isLoggedIn()) {
+            isFollowed = this.userService.isFollowed(currentUser.getId(), userId);
+        }
+        model.addAttribute("isFollowed", isFollowed);
+        model.addAttribute("userProfile", userService.getUserProfile(userId));
         return "/user/header-block";
     }
 }

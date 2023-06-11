@@ -7,7 +7,7 @@
 
 <#macro blockContent>
 
-<@renderController path='/user/headerBlock' params={'user': user}/>
+<@renderController path='/user/headerBlock' params={'userId': user.id}/>
 
 <div class="es-row-wrap container-gap userpage-body">
     <ul class="nav nav-pills userpage-nav clearfix">
