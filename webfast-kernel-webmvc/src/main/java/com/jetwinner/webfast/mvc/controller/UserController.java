@@ -1,11 +1,16 @@
 package com.jetwinner.webfast.mvc.controller;
 
 import com.jetwinner.security.UserAccessControlService;
+import com.jetwinner.toolbag.ArrayToolkit;
+import com.jetwinner.toolbag.ArrayToolkitOnJava8;
 import com.jetwinner.webfast.kernel.AppUser;
+import com.jetwinner.webfast.kernel.Paginator;
+import com.jetwinner.webfast.kernel.dao.support.OrderBy;
 import com.jetwinner.webfast.kernel.exception.ActionGraspException;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.service.AppNotificationService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
+import com.jetwinner.webfast.kernel.typedef.ParamMap;
 import com.jetwinner.webfast.mvc.block.BlockRenderController;
 import com.jetwinner.webfast.mvc.block.BlockRenderMethod;
 import org.springframework.stereotype.Controller;
@@ -16,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author xulixin
@@ -50,6 +57,22 @@ public class UserController implements BlockRenderController {
         model.addAttribute("pageNav", pageNav);
         model.addAttribute("user", userService.getUser(id));
         return "/user/user-home";
+    }
+
+    @RequestMapping("/users")
+    public String userListPage(HttpServletRequest request, Model model) {
+        Map<String, Object> conditions = new ParamMap().add("locked", 0).toMap();
+        Paginator paginator = new Paginator(request, userService.searchUserCount(conditions), 20);
+
+        List<AppUser> users = userService.searchUsers(conditions,
+                OrderBy.build(1).addDesc("promotedTime"),
+                paginator.getOffsetCount(), paginator.getPerPageCount());
+
+        List<Map<String, Object>> profiles = userService.findUserProfilesByIds(ArrayToolkitOnJava8.column(users, AppUser::getId));
+        model.addAttribute("profiles", ArrayToolkit.index(profiles, "id"));
+        model.addAttribute("users", users);
+        model.addAttribute("paginator", paginator);
+        return "/user/user-list";
     }
 
     @RequestMapping("/user/{id}/following")
