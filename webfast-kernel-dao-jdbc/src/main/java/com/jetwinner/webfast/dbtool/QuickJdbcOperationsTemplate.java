@@ -12,13 +12,13 @@ import javax.sql.DataSource;
 /**
  * @author xulixin
  */
-public class FastJdbcTemplateImpl extends org.springframework.jdbc.core.JdbcTemplate implements FastJdbcTemplate {
+public class QuickJdbcOperationsTemplate extends org.springframework.jdbc.core.JdbcTemplate implements QuickJdbcOperations {
 
     private PlatformTransactionManager platformTransactionManager;
     private DefaultTransactionDefinition transactionDefinition;
     private final ThreadLocal<TransactionStatus> transactionStatus = new ThreadLocal<>();
 
-    public FastJdbcTemplateImpl(DataSource dataSource) {
+    public QuickJdbcOperationsTemplate(DataSource dataSource) {
         super(dataSource);
     }
 

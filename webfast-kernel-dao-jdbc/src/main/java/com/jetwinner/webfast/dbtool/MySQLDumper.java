@@ -30,12 +30,12 @@ public class MySQLDumper implements DatabaseDumper {
             .add("lockwrite", Boolean.FALSE)  // 默认是Boolean.True写锁定，在备份中存在问题jdbcTemplate的机制要深入研究
             .add("isextend", Boolean.TRUE).toMap();
 
-    private final FastJdbcTemplateImpl jdbcTemplate;
+    private final QuickJdbcOperationsTemplate jdbcTemplate;
     private MySQLMetaData metaData = new MySQLMetaData();
 
     public MySQLDumper(DataSource dataSource) {
         this.metaData.parse(dataSource);
-        this.jdbcTemplate = new FastJdbcTemplateImpl(dataSource);
+        this.jdbcTemplate = new QuickJdbcOperationsTemplate(dataSource);
         this.jdbcTemplate.execute("SET NAMES utf8");
     }
 

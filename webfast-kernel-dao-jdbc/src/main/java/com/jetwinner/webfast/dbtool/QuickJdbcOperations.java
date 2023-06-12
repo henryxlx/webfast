@@ -2,7 +2,7 @@ package com.jetwinner.webfast.dbtool;
 
 import org.springframework.jdbc.core.JdbcOperations;
 
-public interface FastJdbcTemplate extends JdbcOperations {
+public interface QuickJdbcOperations extends JdbcOperations {
 
     void beginTransaction();
 
