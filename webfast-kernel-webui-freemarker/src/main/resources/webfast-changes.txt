@@ -3,6 +3,12 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.11: @2023-06-13
+* 将FastJdbcOperations重命名为QuickJdbcOperations，
+  将FastJdbcTemplateImpl重命名为QuickJdbcOperationsTemplate，防止与经常使用FastJdbcDaoSupport在导入出现误用的情况
+* 分类服务AppCategoryService添加新方法findAllCategoriesByParentId
+* 网站宏定义库web_macro.ftl中自定义宏user_avatar中参数class设置默认值，可使用两个参数，也可使用一个参数调用
+
 0.9.10: @2023-06-12
 * 在用户我的主页中关注和取消关注发生错误时使用Notify方式在顶部显示出错信息，修改操作返回信息的方式由原来的Boolean改为Map
 * 完成在用户我的主页中关注/粉丝标签中用户信息正确显示
