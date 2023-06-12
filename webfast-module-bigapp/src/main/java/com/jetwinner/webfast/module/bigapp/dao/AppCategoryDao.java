@@ -22,4 +22,6 @@ public interface AppCategoryDao {
     void updateCategory(Integer id, Map<String, Object> fields);
 
     void deleteByIds(Set<Object> ids);
+
+    List<Map<String, Object>> findAllCategoriesByParentId(Integer parentId);
 }

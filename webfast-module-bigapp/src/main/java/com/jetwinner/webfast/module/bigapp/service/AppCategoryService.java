@@ -38,4 +38,6 @@ public interface AppCategoryService {
     Map<String, Object> getGroupByCode(String code);
 
     Map<String, Object> getCategoryByCode(String code);
+
+    List<Map<String, Object>> findAllCategoriesByParentId(Integer parentId);
 }

@@ -287,4 +287,9 @@ public class AppCategoryServiceImpl implements AppCategoryService {
     public Map<String, Object> getCategoryByCode(String code) {
         return categoryDao.findCategoryByCode(code);
     }
+
+    @Override
+    public List<Map<String, Object>> findAllCategoriesByParentId(Integer parentId) {
+        return this.categoryDao.findAllCategoriesByParentId(parentId);
+    }
 }

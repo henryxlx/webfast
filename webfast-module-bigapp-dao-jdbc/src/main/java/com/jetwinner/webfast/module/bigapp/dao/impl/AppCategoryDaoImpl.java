@@ -63,4 +63,10 @@ public class AppCategoryDaoImpl extends FastJdbcDaoSupport implements AppCategor
         MapSqlParameterSource parameters = new MapSqlParameterSource().addValue("ids", ids);
         getNamedParameterJdbcTemplate().update("DELETE FROM big_app_category WHERE id in (:ids)", parameters);
     }
+
+    @Override
+    public List<Map<String, Object>> findAllCategoriesByParentId(Integer parentId) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE parentId = ? ORDER BY weight ASC";
+        return getJdbcTemplate().queryForList(sql, parentId);
+    }
 }
