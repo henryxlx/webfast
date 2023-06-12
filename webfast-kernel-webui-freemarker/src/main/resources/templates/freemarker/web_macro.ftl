@@ -1,4 +1,4 @@
-<#macro user_avatar user class>
+<#macro user_avatar user class=''>
     <a class="user-link user-avatar-link ${class!}" href="${ctx}/user/${user.id!}">
         <img src="${webExtPack.getDefaultPath('avatar', user.smallAvatar!'', '', false)}">
     </a>
