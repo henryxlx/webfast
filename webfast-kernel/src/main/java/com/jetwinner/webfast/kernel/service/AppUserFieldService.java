@@ -8,6 +8,13 @@ import java.util.Map;
  */
 public interface AppUserFieldService {
 
+    default void checkFieldNameSetType(Map<String, Object> field, String fieldNameContain, String type) {
+        String fieldName = String.valueOf(field.get("fieldName"));
+        if (fieldName.contains(fieldNameContain)) {
+            field.put("type", type);
+        }
+    }
+
     List<Map<String, Object>> getAllFieldsOrderBySeqAndEnabled();
 
     int searchFieldCount(Map<String, Object> condition);
