@@ -3,6 +3,14 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.12: @2023-06-14
+* 添加FreeMarker页面常用函数调用的公共对象FastLibraryObject
+* AppUserFieldService添加接口定义的默认方法checkFieldNameSetType，通过字段名判断字段的数据类型
+* 网站前台顶部工具用户通知功能添加清除当前用户全部通知功能
+* 网站通知方法notify保存内容使用Map的方式，并在后台存储使用JSON编码
+  原来的方法传递单个字符串content转换为接口默认方法调用新定义的nofify方法
+  网站通知页面默认页面item-default.ftl先将通知内容由JSON字符串通过FreeMarker的内置?eval函数转换为对象，然后再显示其中的message
+
 0.9.11: @2023-06-13
 * 将FastJdbcOperations重命名为QuickJdbcOperations，
   将FastJdbcTemplateImpl重命名为QuickJdbcOperationsTemplate，防止与经常使用FastJdbcDaoSupport在导入出现误用的情况
