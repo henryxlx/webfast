@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,13 @@ import java.util.Map;
  */
 public interface AppNotificationService {
 
-    void notify(Integer userId, String type, String... content);
+    default void notify(Integer userId, String type, String content) {
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("message", content);
+        this.notify(userId, type, map);
+    }
+
+    void notify(Integer userId, String type, Map<String, Object> content);
 
     int getUserNotificationCount(Integer userId);
 

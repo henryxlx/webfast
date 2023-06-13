@@ -26,7 +26,7 @@ public class AppNotificationServiceImpl implements AppNotificationService {
     }
 
     @Override
-    public void notify(Integer userId, String type, String... content) {
+    public void notify(Integer userId, String type, Map<String, Object> content) {
         Map<String, Object> notification = new HashMap<>(5);
         notification.put("userId", userId);
         notification.put("type", EasyStringUtil.isBlank(type) ? "default" : type);
