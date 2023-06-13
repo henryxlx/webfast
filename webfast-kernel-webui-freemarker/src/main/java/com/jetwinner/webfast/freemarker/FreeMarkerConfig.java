@@ -51,6 +51,7 @@ public class FreeMarkerConfig {
         configuration.setAutoImports(importMap);
         try {
             configuration.setSharedVariable("dict", dictHolder.getDict());
+            configuration.setSharedVariable(FastLibraryObject.MODEL_VAR_NAME, new FastLibraryObject());
         } catch (TemplateModelException e) {
             log.error("Data Dictionary all data put in FreeMarker template error: " + e.getMessage());
         }
