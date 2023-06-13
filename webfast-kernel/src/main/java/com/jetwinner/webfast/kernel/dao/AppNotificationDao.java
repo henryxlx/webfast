@@ -13,4 +13,6 @@ public interface AppNotificationDao {
     int getNotificationCountByUserId(Integer userId);
 
     List<Map<String, Object>> findNotificationsByUserId(Integer userId, Integer start, Integer limit);
+
+    int deleteByUserId(Integer userId);
 }

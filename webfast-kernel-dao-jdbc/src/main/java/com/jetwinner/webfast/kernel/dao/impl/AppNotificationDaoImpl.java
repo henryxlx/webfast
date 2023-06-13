@@ -29,4 +29,10 @@ public class AppNotificationDaoImpl extends FastJdbcDaoSupport implements AppNot
         String sql = "SELECT * FROM app_notification WHERE userId = ? ORDER BY createdTime DESC LIMIT ?, ?";
         return getJdbcTemplate().queryForList(sql, userId, start, limit);
     }
+
+    @Override
+    public int deleteByUserId(Integer userId) {
+        String sql = "DELETE FROM app_notification WHERE userId = ?";
+        return getJdbcTemplate().update(sql, userId);
+    }
 }

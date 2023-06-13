@@ -15,4 +15,6 @@ public interface AppNotificationService {
     List<Map<String, Object>> findUserNotifications(Integer userId, Integer start, Integer limit);
 
     void clearUserNewNotificationCounter(Integer userId);
+
+    void deleteNotificationByUserId(Integer userId);
 }

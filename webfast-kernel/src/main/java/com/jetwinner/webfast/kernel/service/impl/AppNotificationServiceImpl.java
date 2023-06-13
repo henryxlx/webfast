@@ -51,4 +51,9 @@ public class AppNotificationServiceImpl implements AppNotificationService {
     public void clearUserNewNotificationCounter(Integer userId) {
         userDao.clearCounterById(userId, "newNotificationNum");
     }
+
+    @Override
+    public void deleteNotificationByUserId(Integer userId) {
+        notificationDao.deleteByUserId(userId);
+    }
 }

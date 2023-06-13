@@ -7,6 +7,7 @@ import com.jetwinner.webfast.kernel.service.AppNotificationService;
 import com.jetwinner.webfast.kernel.service.AppUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,5 +45,11 @@ public class NotificationController {
         user.setNewNotificationNum(0);
         model.addAttribute("paginator", paginator);
         return "/notification/index";
+    }
+
+    @RequestMapping("/notification/{userId}/clearAll")
+    public String clearAllAction(@PathVariable Integer userId) {
+        this.notificationService.deleteNotificationByUserId(userId);
+        return "redirect:/notification";
     }
 }
