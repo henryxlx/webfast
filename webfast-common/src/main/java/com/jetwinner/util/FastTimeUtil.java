@@ -48,6 +48,11 @@ public final class FastTimeUtil {
         return DateTimeFormatter.ofPattern(formatPattern).format(date);
     }
 
+    public static String timeToDateTimeStr(String formatPattern, long time) {
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
+        return DateTimeFormatter.ofPattern(formatPattern).format(dateTime);
+    }
+
     private static LocalDateTime toLocalDateTime(long timestamp) {
         return LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault());
     }
