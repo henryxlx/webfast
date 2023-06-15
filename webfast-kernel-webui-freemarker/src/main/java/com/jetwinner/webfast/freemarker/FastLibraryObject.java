@@ -31,4 +31,10 @@ public class FastLibraryObject {
 
         return (remain / 86400000) + "天";
     }
+
+    public String duration(long value) {
+        long minutes = value / (60 * 1000);
+        long seconds = (value - minutes * 60 * 1000) / 1000;
+        return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+    }
 }
