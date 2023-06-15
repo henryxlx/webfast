@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.13: @2023-06-15
+* FreeMarker页面公共对象FastLibraryObject添加计算时间长度的方法remainTime
+* 工具类FastTimeUtil添加函数timeToDateTimeStr，将用整数表示的时间转换为指定日期和时间格式的字符串
+* FreeMarker页面公共对象FastLibraryObject添加计算持续时间的方法duration
+
 0.9.12: @2023-06-14
 * 添加FreeMarker页面常用函数调用的公共对象FastLibraryObject
 * AppUserFieldService添加接口定义的默认方法checkFieldNameSetType，通过字段名判断字段的数据类型
