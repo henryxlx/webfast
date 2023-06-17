@@ -1,6 +1,7 @@
 package com.jetwinner.webfast.mvc.controller;
 
 import com.jetwinner.toolbag.ArrayToolkitOnJava8;
+import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.Paginator;
 import com.jetwinner.webfast.kernel.dao.support.OrderBy;
@@ -200,13 +201,15 @@ public class MessageController {
         AppUser receiver = this.userService.getUser(toId);
         if ("POST".equals(request.getMethod())) {
             Map<String, Object> message = ParamMap.toFormDataMap(request);
-            String username = String.valueOf(message.get("message[receiver]"));
-            receiver = this.userService.getUserByUsername(username);
-            if (receiver == null) {
-                throw new RuntimeGoingException("抱歉，该收信人尚未注册!");
+            if (MapUtil.isNotEmpty(message)) {
+                String username = String.valueOf(message.get("message[receiver]"));
+                receiver = this.userService.getUserByUsername(username);
+                if (receiver == null) {
+                    throw new RuntimeGoingException("抱歉，该收信人尚未注册!");
+                }
+                this.messageService.sendMessage(user.getId(), receiver.getId(), message.get("message[content]"));
+                return "redirect:/message";
             }
-            this.messageService.sendMessage(user.getId(), receiver.getId(), message.get("message[content]"));
-            return "redirect:/message";
         }
         model.addAttribute("userId", toId);
         model.addAttribute("receiver", receiver.getUsername());
