@@ -45,4 +45,13 @@ public final class OrderBy {
         }
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        for (OrderByEntry entry : this.orderByEntries) {
+            buf.append(" ").append(entry.getColumnName()).append(" ").append(entry.getSortType()).append(" ");
+        }
+        return buf.toString();
+    }
 }
