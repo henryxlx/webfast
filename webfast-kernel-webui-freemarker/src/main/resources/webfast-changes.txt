@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.15: @2023-06-17
+* 工具类EasyStringUtil消除HTML标签的方法purifyHtml添加可接受Object类型的形式
+* 数据库SQL语句的排序处理类OrderBy添加自定义的toString方法
+* 发私信时如果是AJAX的POST提交方式可能也是显示表单页面，因此添加判断如果提交Form的数据为空则显示空白表单页面
+
 0.9.14: @2023-06-16
 * FreeMarker页面公共对象FastLibraryObject添加文件长度的方法fileSize，灵活显示时间的方法smartTime和简化截断字符串的方法plainText
 
