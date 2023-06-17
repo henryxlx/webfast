@@ -105,4 +105,9 @@ public class UserAccessControlServiceImpl implements UserAccessControlService {
         Collection sessions = sessionManager.getSessionDAO().getActiveSessions();
         return sessions.size();
     }
+
+    @Override
+    public boolean isAdmin() {
+        return hasAnyRole("ROLE_ADMIN", "ROLE_SUPER_ADMIN");
+    }
 }

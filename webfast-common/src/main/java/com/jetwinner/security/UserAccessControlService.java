@@ -26,4 +26,6 @@ public interface UserAccessControlService {
     boolean checkPassword(BaseAppUser user, String password);
 
     int getOnlineCount();
+
+    boolean isAdmin();
 }
