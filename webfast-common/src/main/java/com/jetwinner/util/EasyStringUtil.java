@@ -442,12 +442,17 @@ public final class EasyStringUtil {
         return s;
     }
 
+    public static String purifyHtml(Object input) {
+        String text = input == null ? null : String.valueOf(input);
+        return purifyHtml(text);
+    }
+
     public static String purifyHtml(String input) {
         return purifyHtml(input, 0);
     }
 
     public static String purifyHtml(String input, int length) {
-        if (input == null || "" .equals(input.trim())) {
+        if (input == null || "".equals(input.trim())) {
             return "";
         }
 
