@@ -65,7 +65,10 @@ public class AdminAppController {
 
     @GetMapping("/admin/app/logs")
     public String changeLogPage(Model model) {
-        ClassPathResource resource = new ClassPathResource("/webfast-changes.txt");
+        ClassPathResource resource = new ClassPathResource("/changes.txt");
+        if (!resource.exists()) {
+            resource = new ClassPathResource("/webfast-changes.txt");
+        }
         List<Map<String, Object>> entries = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(resource.getFile()))) {
             String s = null;
