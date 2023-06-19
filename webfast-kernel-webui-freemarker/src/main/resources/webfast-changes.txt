@@ -3,6 +3,12 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.16: @2023-06-18
+* 用户访问权限控制接口UserAccessControlService添加isAdmin()方法，判断当前用户是否是管理员
+* 在webfast-common模块中添加方便处理哈希表Map<String, Object>的包装类FastHashMap
+* 新增EasyWebFormEditor用于处理页面表单提交数据可带表单名前缀和指定字段名的自定义表单数据绑定编辑类
+* 后台管理显示应用程序日志，首先搜索changes.txt文件，便于其它扩展应用显示自己的日志，如果没有则显示webfast自己的日志
+
 0.9.15: @2023-06-17
 * 工具类EasyStringUtil消除HTML标签的方法purifyHtml添加可接受Object类型的形式
 * 数据库SQL语句的排序处理类OrderBy添加自定义的toString方法
