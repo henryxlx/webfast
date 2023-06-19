@@ -2,6 +2,7 @@ package com.jetwinner.webfast.kernel.datatag;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ import java.util.Map;
  * @author xulixin
  */
 @Component(AppDataFetcherHolder.BEAN_NAME_IN_SPRING)
-public class AppDataFetcherHolder {
+public class AppDataFetcherHolder implements InitializingBean {
 
     public static final String BEAN_NAME_IN_SPRING = "appDataFetcherHolder";
 
@@ -23,6 +24,10 @@ public class AppDataFetcherHolder {
 
     public AppDataFetcherHolder(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
         initDataFetcherMap(FastDataTagRegister.dataFetcherClassNames);
     }
 
