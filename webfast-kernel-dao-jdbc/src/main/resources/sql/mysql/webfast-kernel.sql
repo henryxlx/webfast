@@ -239,41 +239,42 @@ INSERT INTO `app_setting` VALUES ('6', 'article', 0x613A323A7B733A343A226E616D65
 -- Table structure for `app_user`
 -- ----------------------------
 DROP TABLE IF EXISTS `app_user`;
-CREATE TABLE `app_user` (
-                            `id`                            int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
-                            `email`                         varchar(128) NOT NULL COMMENT '用户邮箱',
-                            `verifiedMobile`                varchar(32)  NOT NULL DEFAULT '',
-                            `password`                      varchar(64)  NOT NULL COMMENT '用户密码',
-                            `salt`                          varchar(32)  NOT NULL COMMENT '密码SALT',
-                            `username`                      varchar(64)  NOT NULL COMMENT '用户名',
-                            `title`                         varchar(255) NOT NULL DEFAULT '' COMMENT '头衔',
-                            `tags`                          varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
-                            `type`                          varchar(32)  NOT NULL COMMENT 'default默认为网站注册, weibo新浪微薄登录',
-                            `smallAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '小头像',
-                            `mediumAvatar`                  varchar(255) NOT NULL DEFAULT '' COMMENT '中头像',
-                            `largeAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '大头像',
-                            `emailVerified`                 tinyint(1) NOT NULL DEFAULT '0' COMMENT '邮箱是否为已验证',
-                            `setup`                         tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否初始化设置的，未初始化的可以设置邮箱、昵称。',
-                            `roles`                         varchar(255) NOT NULL COMMENT '用户角色',
-                            `permissionData`                text COMMENT '用户权限配置',
-                            `promoted`                      tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为推荐',
-                            `promotedTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '推荐时间',
-                            `locked`                        tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否被禁止',
-                            `lockDeadline`                  int(11) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
-                            `consecutivePasswordErrorTimes` int(11) NOT NULL DEFAULT '0' COMMENT '帐号密码错误次数',
-                            `lastPasswordFailTime`          bigint unsigned NOT NULL DEFAULT '0',
-                            `loginTime`                     bigint unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
-                            `loginIp`                       varchar(64)  NOT NULL DEFAULT '' COMMENT '最后登录IP',
-                            `loginSessionId`                varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录会话ID',
-                            `approvalTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '实名认证时间',
-                            `approvalStatus`                enum('unapprove','approving','approved','approve_fail') NOT NULL DEFAULT 'unapprove' COMMENT '实名认证状态',
-                            `newMessageNum`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
-                            `newNotificationNum`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
-                            `createdIp`                     varchar(64)  NOT NULL DEFAULT '' COMMENT '注册IP',
-                            `createdTime`                   bigint unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
-                            PRIMARY KEY (`id`),
-                            UNIQUE KEY `email` (`email`),
-                            UNIQUE KEY `username` (`username`)
+CREATE TABLE `app_user`
+(
+    `id`                            int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `email`                         varchar(128) NOT NULL COMMENT '用户邮箱',
+    `verifiedMobile`                varchar(32)  NOT NULL DEFAULT '',
+    `password`                      varchar(64)  NOT NULL COMMENT '用户密码',
+    `salt`                          varchar(32)  NOT NULL COMMENT '密码SALT',
+    `username`                      varchar(64)  NOT NULL COMMENT '用户名',
+    `title`                         varchar(255) NOT NULL DEFAULT '' COMMENT '头衔',
+    `tags`                          varchar(255) NOT NULL DEFAULT '' COMMENT '标签',
+    `type`                          varchar(32)  NOT NULL COMMENT 'default默认为网站注册, weibo新浪微薄登录',
+    `smallAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '小头像',
+    `mediumAvatar`                  varchar(255) NOT NULL DEFAULT '' COMMENT '中头像',
+    `largeAvatar`                   varchar(255) NOT NULL DEFAULT '' COMMENT '大头像',
+    `emailVerified`                 tinyint(1) NOT NULL DEFAULT '0' COMMENT '邮箱是否为已验证',
+    `setup`                         tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否初始化设置的，未初始化的可以设置邮箱、昵称。',
+    `roles`                         varchar(255) NOT NULL COMMENT '用户角色',
+    `permissionData`                text COMMENT '用户权限配置',
+    `promoted`                      tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否为推荐',
+    `promotedTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '推荐时间',
+    `locked`                        tinyint(3) unsigned NOT NULL DEFAULT '0' COMMENT '是否被禁止',
+    `lockDeadline`                  int(11) NOT NULL DEFAULT '0' COMMENT '帐号锁定期限',
+    `consecutivePasswordErrorTimes` int(11) NOT NULL DEFAULT '0' COMMENT '帐号密码错误次数',
+    `lastPasswordFailTime`          bigint unsigned NOT NULL DEFAULT '0',
+    `loginTime`                     bigint unsigned NOT NULL DEFAULT '0' COMMENT '最后登录时间',
+    `loginIp`                       varchar(64)  NOT NULL DEFAULT '' COMMENT '最后登录IP',
+    `loginSessionId`                varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录会话ID',
+    `approvalTime`                  bigint unsigned NOT NULL DEFAULT '0' COMMENT '实名认证时间',
+    `approvalStatus`                enum('unapprove','approving','approved','approve_fail') NOT NULL DEFAULT 'unapprove' COMMENT '实名认证状态',
+    `newMessageNum`                 int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读私信数',
+    `newNotificationNum`            int(11) unsigned NOT NULL DEFAULT '0' COMMENT '未读消息数',
+    `createdIp`                     varchar(64)  NOT NULL DEFAULT '' COMMENT '注册IP',
+    `createdTime`                   bigint unsigned NOT NULL DEFAULT '0' COMMENT '注册时间',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `email` (`email`),
+    UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
@@ -391,6 +392,28 @@ CREATE TABLE `app_user_secure_question`
     `createdTime`          bigint unsigned NOT NULL DEFAULT '0' COMMENT '创建时间',
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户安全设置安全问题表';
+
+-- ----------------------------
+-- Table structure for `app_user_status`
+-- ----------------------------
+DROP TABLE IF EXISTS `app_user_status`;
+CREATE TABLE `app_user_status`
+(
+    `id`          int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `userId`      int(10) unsigned NOT NULL COMMENT '动态发布的人',
+    `type`        varchar(64) NOT NULL COMMENT '动态类型',
+    `objectType`  varchar(64) NOT NULL DEFAULT '' COMMENT '动态对象的类型',
+    `objectId`    int(10) unsigned NOT NULL DEFAULT '0' COMMENT '动态对象ID',
+    `message`     text        NOT NULL COMMENT '动态的消息体',
+    `properties`  text        NOT NULL COMMENT '动态的属性',
+    `commentNum`  int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评论数',
+    `likeNum`     int(10) unsigned NOT NULL DEFAULT '0' COMMENT '被赞的数量',
+    `private`     tinyint(1) unsigned NOT NULL DEFAULT '0' COMMENT '是否隐藏',
+    `createdTime` bigint unsigned NOT NULL DEFAULT '0' COMMENT '动态发布时间',
+    PRIMARY KEY (`id`),
+    KEY           `userId` (`userId`),
+    KEY           `createdTime` (`createdTime`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for `app_user_token`
