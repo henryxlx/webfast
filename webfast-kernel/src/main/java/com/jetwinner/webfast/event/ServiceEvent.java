@@ -45,6 +45,7 @@ public class ServiceEvent {
         return this.currentUser;
     }
 
+    @SuppressWarnings("unchecked")
     public Map<String, Object> getArgumentAsMap(String key) {
         if (this.arguments == null) {
             return new HashMap<>(0);
