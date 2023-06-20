@@ -224,7 +224,10 @@ public class RenderControllerTag implements TemplateDirectiveModel {
 
         @Override
         public Object getAttribute(String name) {
-            return this.attributeMap.get(name);
+            if (this.attributeMap.containsKey(name)) {
+                return this.attributeMap.get(name);
+            }
+            return getRequest() != null ? getRequest().getAttribute(name) : null;
         }
 
         @Override
