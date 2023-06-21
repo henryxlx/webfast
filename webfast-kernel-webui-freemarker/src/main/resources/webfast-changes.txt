@@ -3,6 +3,16 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.18: @2023-06-20
+* 自定义FreeMarker宏定义@renderController问题修复，获取自定义CustomBlockRequestWrapper中request
+  的属性getAttribute()方法时，可访问原有的正常request内部的属性，防止在页面渲染时出现属性为null的问题
+* @renderController向env环境注入当前命名空间变量时，如果出现同名的已有变量先保存其原有变量，等局部模板渲染
+  完成后再恢复原来的变量，防止块模板注入新的变量造成数据覆盖产生错误
+* 弹出窗口模板bootstrap-modal-layout通过判断是否定义底部工具栏宏blockFooter决定是否显示窗口底部区域
+  不再使用原来的变量hideFooter的控制方式决定窗口底部是否显示
+* 文件上传使用工具类FileToolkit中自定义的方法transferFile，在传送文件前判断目标位置路径是否存在，不存在则创建目录后再传送
+* 上传用户头像成功后更新当前登录用户图像的三种缩略图描述信息
+
 0.9.17: @2023-06-19
 * 系统核心数据库脚本文件webfast-kernel.sql添加记录用户状态的数据表app_user_status
 * AppDataFetcherHolder获取数据访问对象列表的方法不能在构造方法中调用而是在Bean初始化后调用，因此实现InitializingBean接口，
