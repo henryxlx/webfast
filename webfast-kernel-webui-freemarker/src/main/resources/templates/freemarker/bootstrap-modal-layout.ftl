@@ -6,8 +6,8 @@
             <h4 class="modal-title"><#if blockTitle??><@blockTitle/></#if></h4>
         </div>
         <div class="modal-body"><#if blockBody??><@blockBody/></#if></div>
-        <#if !hideFooter!false>
-        <div class="modal-footer"><#if blockFooter??><@blockFooter/></#if></div>
+        <#if blockFooter??>
+            <div class="modal-footer"><@blockFooter/></div>
         </#if>
     </div>
 </div>
