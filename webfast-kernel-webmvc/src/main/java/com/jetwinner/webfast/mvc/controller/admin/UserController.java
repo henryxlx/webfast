@@ -199,7 +199,7 @@ public class UserController {
 
         String directory = appConst.getUploadPublicDirectory() + "/tmp/";
         try {
-            file.transferTo(new File(directory + filename));
+            FileToolkit.transferFile(file, directory, filename);
         } catch (IOException e) {
             return BaseControllerHelper.createMessageResponse("error",
                     String.format("图片上传失败，请检查上传目录(%s)或文件(%s)是否存在。", directory, filename));

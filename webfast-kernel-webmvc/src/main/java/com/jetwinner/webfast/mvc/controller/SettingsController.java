@@ -149,8 +149,8 @@ public class SettingsController {
         String faceImgPath = "userFaceImg" + user.getId() + now + "." + FileToolkit.getFileExtension(faceImg);
         String backImgPath = "userbackImg" + user.getId() + now + "." + FileToolkit.getFileExtension(backImg);
         try {
-            faceImgFile.transferTo(new File(directory + "/" + faceImgPath));
-            backImgFile.transferTo(new File(directory + "/" + backImgPath));
+            FileToolkit.transferFile(faceImgFile, directory, faceImgPath);
+            FileToolkit.transferFile(backImgFile, directory, backImgPath);
         } catch (IOException e) {
             BaseControllerHelper.createMessageResponse("error", "上传图片位置错误：" + e.getMessage());
         }
@@ -188,7 +188,7 @@ public class SettingsController {
 
         String directory = appConst.getUploadPublicDirectory() + "/tmp/";
         try {
-            file.transferTo(new File(directory + filename));
+            FileToolkit.transferFile(file, directory, filename);
         } catch (IOException e) {
             return BaseControllerHelper.createMessageResponse("error",
                     String.format("图片上传失败，请检查上传目录(%s)或文件(%s)是否存在。", directory, filename));
