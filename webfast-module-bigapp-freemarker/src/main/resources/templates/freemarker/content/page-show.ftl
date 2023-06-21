@@ -17,8 +17,8 @@
 
   <div class="row">
     <div class="col-md-12">
-      <#if (content.body)?? >
-      	${content.body}
+      <#if (content.body)?? && content.body != ''>
+        ${content.body}
       <#else>
         <div class="empty">当前页面尚未编辑内容，请在管理后台编辑。</div>
       </#if>
