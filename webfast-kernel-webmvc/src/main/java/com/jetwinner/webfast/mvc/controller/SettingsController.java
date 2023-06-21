@@ -219,9 +219,15 @@ public class SettingsController {
     @PostMapping("/avatar-crop")
     public String avatarCropAction(HttpServletRequest request, String filename) {
         AppUser user = AppUser.getCurrentUser(request);
-        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/"  + filename;
+        String pictureFilePath = appConst.getUploadPublicDirectory() + "/tmp/" + filename;
         Map<String, Object> options = ParamMap.toFormDataMap(request);
-        userService.changeAvatar(user.getId(), pictureFilePath, options);
+        boolean result = userService.changeAvatar(user.getId(), pictureFilePath, options);
+        if (result) {
+            AppUser avatarUser = userService.getUser(user.getId());
+            user.setLargeAvatar(avatarUser.getLargeAvatar());
+            user.setMediumAvatar(avatarUser.getMediumAvatar());
+            user.setSmallAvatar(avatarUser.getSmallAvatar());
+        }
         return "redirect:/settings/avatar";
     }
 
