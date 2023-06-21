@@ -61,7 +61,12 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                     ModelAndView mav = controllerExecutor.handleRequest(wrappedRequest);
                     if (mav != null) {
                         Map<String, Object> map = mav.getModel();
+                        Map<String, TemplateModel> maskVariablesMap = new HashMap<>(map.size());
+                        Set varNames = env.getKnownVariableNames();
                         for (String key : map.keySet()) {
+                            if (varNames.contains(key)) {
+                                maskVariablesMap.put(key, env.getVariable(key));
+                            }
                             env.setVariable(key, getModel(map.get(key)));
                         }
                         String viewName = mav.getViewName();
@@ -70,6 +75,9 @@ public class RenderControllerTag implements TemplateDirectiveModel {
                         }
                         Template template = env.getTemplateForImporting(viewName);
                         env.include(template);
+                        if (maskVariablesMap.size() > 0) {
+                            maskVariablesMap.forEach((k, v) -> env.setVariable(k, v));
+                        }
                     }
                 } catch (Exception e) {
                     throw new RuntimeGoingException("Can not render Controller mapping at " + e.getMessage());
