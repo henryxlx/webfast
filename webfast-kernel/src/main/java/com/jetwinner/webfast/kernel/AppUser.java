@@ -3,6 +3,7 @@ package com.jetwinner.webfast.kernel;
 import com.jetwinner.security.BaseAppUser;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author xulixin
@@ -12,6 +13,22 @@ public class AppUser extends BaseAppUser {
     public static AppUser getCurrentUser(HttpServletRequest request) {
         AppUser user = (AppUser) request.getAttribute(MODEL_VAR_NAME);
         return user != null ? user : new AppUser();
+    }
+
+    public static AppUser getCurrentUser(Map<String, Object> map) {
+        AppUser user = (AppUser) map.get(MODEL_VAR_NAME);
+        return user != null ? user : new AppUser();
+    }
+
+    public static Map<String, Object> putCurrentUser(Map<String, Object> map, AppUser currentUser) {
+        map.put(MODEL_VAR_NAME, currentUser);
+        return map;
+    }
+
+    public static Map<String, Object> putCurrentUser(Map<String, Object> map, HttpServletRequest request) {
+        AppUser user = getCurrentUser(request);
+        map.put(MODEL_VAR_NAME, user);
+        return map;
     }
 
     private String verifiedMobile;
