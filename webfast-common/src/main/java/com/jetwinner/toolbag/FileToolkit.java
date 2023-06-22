@@ -1,11 +1,15 @@
 package com.jetwinner.toolbag;
 
+import com.jetwinner.util.ArrayUtil;
+import com.jetwinner.util.FastEncryptionUtil;
+import com.jetwinner.util.FastTimeUtil;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 /**
  * @author xulixin
@@ -17,6 +21,8 @@ public final class FileToolkit {
     }
 
     private static final String[] IMAGE_FILE_EXT_NAME_ARRAY = {"bmp", "gif", "jpg", "jpeg", "png"};
+
+    private static final String SECURITY_FILE_EXT_NAME = "jpg jpeg gif png txt doc docx xls xlsx pdf ppt pptx pps ods odp mp4 mp3 avi flv wmv wma mov zip rar gz tar 7z swf ico";
 
     public static String hashFilename(String filenamePrefix) {
         if (filenamePrefix == null || filenamePrefix.length() == 0) {
@@ -65,5 +71,33 @@ public final class FileToolkit {
             }
         }
         file.transferTo(new File(directory + "/" + filename));
+    }
+
+    public static String getFileTypeByExtension(String extension) {
+        extension = extension != null ? extension.toLowerCase() : "";
+
+        if (ArrayUtil.inArray(extension, "mp4", "avi", "wmv", "flv", "mov")) {
+            return "video";
+        } else if (ArrayUtil.inArray(extension, "mp3", "wma")) {
+            return "audio";
+        } else if (ArrayUtil.inArray(extension, "jpg", "jpeg", "gif", "png")) {
+            return "image";
+        } else if (ArrayUtil.inArray(extension, "txt", "doc", "docx", "xls", "xlsx", "pdf")) {
+            return "document";
+        } else if (ArrayUtil.inArray(extension, "ppt", "pptx")) {
+            return "ppt";
+        } else {
+            return "other";
+        }
+    }
+
+    public static boolean validateFileExtension(String extension) {
+        return SECURITY_FILE_EXT_NAME.indexOf(extension) == -1;
+    }
+
+    public static String generateFilename(String ext) {
+        String filename = FastTimeUtil.timeToDateTimeStr("yyyyMMddHHmmss", System.currentTimeMillis())
+                + "-" + FastEncryptionUtil.sha1(String.valueOf(new Random().nextInt())).substring(0, 6);
+        return filename + "." + ext;
     }
 }
