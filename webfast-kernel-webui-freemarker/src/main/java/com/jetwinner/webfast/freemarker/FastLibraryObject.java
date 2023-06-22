@@ -13,7 +13,7 @@ public class FastLibraryObject {
 
     public static final String MODEL_VAR_NAME = "fastLib";
 
-    Integer percent(Integer part, Integer whole) {
+    public Integer percent(Integer part, Integer whole) {
         if (part != null && whole != null) {
             return (int) (part * 1.0 / whole * 1.0 * 100);
         }
