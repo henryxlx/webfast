@@ -38,11 +38,14 @@ public class FastAppConst {
     @Value("${custom.app.upload.public_url_path:/files}")
     private String uploadPublicUrlPath;
 
-    @Value("${custom.app.upload.private_directory:/depot/private_files}")
+    @Value("${custom.app.upload.private_directory:/private_files}")
     private String uploadPrivateDirectory;
 
     @Value("${custom.app.upload.public_directory:/web/files}")
     private String uploadPublicDirectory;
+
+    @Value("${custom.app.disk.local_directory:/udisk}")
+    private String diskLocalDirectory;
 
     private boolean offline = false;
 
@@ -104,5 +107,9 @@ public class FastAppConst {
 
     public String getDownloadPath() {
         return this.storagePath + "/upgrade";
+    }
+
+    public String getDiskLocalDirectory() {
+        return this.storagePath + this.diskLocalDirectory;
     }
 }
