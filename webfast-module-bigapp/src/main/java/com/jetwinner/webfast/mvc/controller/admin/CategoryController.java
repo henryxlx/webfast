@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.mvc.controller.admin;
 
+import com.jetwinner.util.MapUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import com.jetwinner.webfast.kernel.exception.RuntimeGoingException;
 import com.jetwinner.webfast.kernel.typedef.ParamMap;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -33,8 +35,11 @@ public class CategoryController {
                             Model model) {
 
         Map<String, Object> groupModel = categoryService.getGroupByCode(group);
-        if (groupModel == null || groupModel.isEmpty()) {
-            // throw new RuntimeGoingException("Category group not found.");
+        if (MapUtil.isEmpty(groupModel)) {
+            groupModel = new HashMap<>(2);
+            groupModel.put("code", group);
+            groupModel.put("name", "新的分类(category_group数据表未保存) " + group);
+            groupModel.put("depth", 2);
             groupModel.put("id", 1);
         }
         model.addAttribute("group", groupModel);
