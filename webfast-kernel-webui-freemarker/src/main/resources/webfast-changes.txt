@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.20: @2023-06-22
+* AppUser用户类添加操作哈希表中用户数据的新的工具方法，getCurrentUser(Map<String, Object)和putCurrentUser
+* 应用程序常量定义FastAppConst添加用于文件上传的存储目录属性diskLocalDirectory，私有目录的位置删除depot目录
+* 工具类FileToolKit新增方法getFileTypeByExtension、validateFileExtension和generateFilename
+
 0.9.19: @2023-06-21
 * 页面FreeMarker的共享变量处理类FastLibraryObject中定义的百分比方法percent没有使用public公开，造成页面访问错误
 * 表单编辑类EasyWebFormEditor没有指定输入域列表时则按原来提交的全部数据getParameterMap的内容进行处理
