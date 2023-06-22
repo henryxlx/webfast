@@ -1,6 +1,7 @@
 package com.jetwinner.util;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,7 +46,7 @@ public class EasyWebFormEditor {
     public EasyWebFormEditor bind(HttpServletRequest request) {
         Map<String, String[]> parameterMap = request.getParameterMap();
         this.mapFormData = new HashMap<>(parameterMap.size());
-        if (this.fieldNames != null) {
+        if (this.fieldNames != null && this.fieldNames.length > 0) {
             for (String fieldName : this.fieldNames) {
                 if (parameterMap.containsKey(fieldName)) {
                     put(this.mapFormData, fieldName, parameterMap.get(fieldName));
@@ -58,7 +59,13 @@ public class EasyWebFormEditor {
                     }
                 }
             } // end for
-        } // enf if (this.fieldNames != null)
+        } else {
+            Enumeration<String> names = request.getParameterNames();
+            while (names.hasMoreElements()) {
+                String key = names.nextElement();
+                put(this.mapFormData, key, parameterMap.get(key));
+            }
+        }
         return this;
     }
 
