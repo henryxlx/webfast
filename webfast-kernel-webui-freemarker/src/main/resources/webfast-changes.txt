@@ -3,6 +3,10 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.19: @2023-06-21
+* 页面FreeMarker的共享变量处理类FastLibraryObject中定义的百分比方法percent没有使用public公开，造成页面访问错误
+* 表单编辑类EasyWebFormEditor没有指定输入域列表时则按原来提交的全部数据getParameterMap的内容进行处理
+
 0.9.18: @2023-06-20
 * 自定义FreeMarker宏定义@renderController问题修复，获取自定义CustomBlockRequestWrapper中request
   的属性getAttribute()方法时，可访问原有的正常request内部的属性，防止在页面渲染时出现属性为null的问题
