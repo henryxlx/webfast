@@ -101,14 +101,14 @@ public final class FileToolkit {
         return filename + "." + ext;
     }
 
-    public static boolean deleteFile(String fullPath) {
-        return del(file(fullPath));
+    public static boolean delete(String fullPath) {
+        return deleteFile(toFile(fullPath));
     }
 
-    public static boolean del(File file) {
+    public static boolean deleteFile(File file) {
         if (file != null && file.exists()) {
             if (file.isDirectory()) {
-                boolean isOk = clean(file);
+                boolean isOk = cleanFile(file);
                 if (!isOk) {
                     return false;
                 }
@@ -120,7 +120,7 @@ public final class FileToolkit {
         }
     }
 
-    public static boolean clean(File directory) {
+    public static boolean cleanFile(File directory) {
         if (directory == null || directory.exists() == false || false == directory.isDirectory()) {
             return true;
         }
@@ -129,7 +129,7 @@ public final class FileToolkit {
         if (null != files) {
             boolean isOk;
             for (File childFile : files) {
-                isOk = del(childFile);
+                isOk = deleteFile(childFile);
                 if (isOk == false) {
                     // 删除一个出错则本次删除任务失败
                     return false;
@@ -139,7 +139,7 @@ public final class FileToolkit {
         return true;
     }
 
-    public static File file(String fullPath) {
+    public static File toFile(String fullPath) {
         return null == fullPath ? null : new File(fullPath);
     }
 }
