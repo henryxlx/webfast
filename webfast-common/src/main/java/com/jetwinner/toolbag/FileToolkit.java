@@ -100,4 +100,46 @@ public final class FileToolkit {
                 + "-" + FastEncryptionUtil.sha1(String.valueOf(new Random().nextInt())).substring(0, 6);
         return filename + "." + ext;
     }
+
+    public static boolean deleteFile(String fullPath) {
+        return del(file(fullPath));
+    }
+
+    public static boolean del(File file) {
+        if (file != null && file.exists()) {
+            if (file.isDirectory()) {
+                boolean isOk = clean(file);
+                if (!isOk) {
+                    return false;
+                }
+            }
+
+            return file.delete();
+        } else {
+            return true;
+        }
+    }
+
+    public static boolean clean(File directory) {
+        if (directory == null || directory.exists() == false || false == directory.isDirectory()) {
+            return true;
+        }
+
+        final File[] files = directory.listFiles();
+        if (null != files) {
+            boolean isOk;
+            for (File childFile : files) {
+                isOk = del(childFile);
+                if (isOk == false) {
+                    // 删除一个出错则本次删除任务失败
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public static File file(String fullPath) {
+        return null == fullPath ? null : new File(fullPath);
+    }
 }
