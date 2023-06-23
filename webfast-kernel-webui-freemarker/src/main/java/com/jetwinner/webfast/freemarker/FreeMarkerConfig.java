@@ -2,7 +2,6 @@ package com.jetwinner.webfast.freemarker;
 
 import com.jetwinner.webfast.freemarker.ext.DictTextFunction;
 import com.jetwinner.webfast.freemarker.ext.JsonEncodeFunction;
-import com.jetwinner.webfast.freemarker.ext.PlainTextExtractFunction;
 import com.jetwinner.webfast.freemarker.tag.RenderControllerTag;
 import com.jetwinner.webfast.kernel.FastDataDictHolder;
 import freemarker.template.TemplateModelException;
@@ -58,6 +57,5 @@ public class FreeMarkerConfig {
         configuration.setSharedVariable(RenderControllerTag.MODEL_VAR_NAME, renderControllerTag);
         configuration.setSharedVariable("json_encode", new JsonEncodeFunction());
         configuration.setSharedVariable(DictTextFunction.MODEL_VAR_NAME, new DictTextFunction(dictHolder));
-        configuration.setSharedVariable(PlainTextExtractFunction.MODEL_VAR_NAME, new PlainTextExtractFunction());
     }
 }
