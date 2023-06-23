@@ -110,4 +110,22 @@ public class FastLibraryObject {
 
         return FastTimeUtil.timeToDateTimeStr("yyyy-MM-dd", time);
     }
+
+    public String subText(String text, Integer length) {
+        if (text == null || length == null) {
+            return text;
+        }
+//        text = strip_tags(text);
+
+        text = text.replaceAll("\n|\r|\t", "");
+        text = text.replaceAll("&nbsp;", " ");
+        text = text.trim();
+
+        if (text.length() > length) {
+            text = text.substring(0, length);
+            text = text + "...";
+        }
+
+        return text;
+    }
 }
