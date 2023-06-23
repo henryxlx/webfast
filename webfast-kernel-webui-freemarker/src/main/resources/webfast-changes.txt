@@ -3,6 +3,12 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.21: @2023-06-23
+* 数据库脚本webfast-kernel.sql添加文件上传需要的数据表app_upload_file和app_upload_file_share
+* FreeMarker页面公共函数库FastLibraryObject添加文本截取方法subText
+* 删除单独定义的过滤字符串文本函数plain_text，使用FreeMarker页面公共函数库FastLibraryObject的方法plainText方法
+* 文件工具类FileToolkit删除文件的方法deleteFile重命名为delete相关的方法有deleteFile/toFile/cleanFile
+
 0.9.20: @2023-06-22
 * AppUser用户类添加操作哈希表中用户数据的新的工具方法，getCurrentUser(Map<String, Object)和putCurrentUser
 * 应用程序常量定义FastAppConst添加用于文件上传的存储目录属性diskLocalDirectory，私有目录的位置删除depot目录
