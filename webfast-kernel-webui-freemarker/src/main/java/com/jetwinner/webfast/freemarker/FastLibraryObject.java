@@ -3,7 +3,7 @@ package com.jetwinner.webfast.freemarker;
 import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.util.FastTimeUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -61,7 +61,7 @@ public class FastLibraryObject {
     public String fileSize(long size) {
         double currentValue = 0.0;
         String currentUnit = "";
-        Map<String, Double> unitExps = new HashMap<>(4);
+        Map<String, Double> unitExps = new LinkedHashMap<>(4);
         unitExps.put("B", 0.0);
         unitExps.put("KB", 1.0);
         unitExps.put("MB", 2.0);
