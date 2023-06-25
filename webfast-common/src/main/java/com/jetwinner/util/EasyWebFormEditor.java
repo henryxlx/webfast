@@ -21,11 +21,11 @@ public class EasyWebFormEditor {
     }
 
     public static Map<String, Object> toFormDataMap(HttpServletRequest request) {
-        return toFormDataMap(request, null, null);
+        return toFormDataMap(request, null, new String[]{});
     }
 
     public static Map<String, Object> toFormDataMap(HttpServletRequest request, String formName) {
-        return toFormDataMap(request, formName, null);
+        return toFormDataMap(request, formName, new String[]{});
     }
 
     public static Map<String, Object> toFormDataMap(HttpServletRequest request, String... fieldNames) {
