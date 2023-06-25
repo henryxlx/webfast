@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.22: @2023-06-24
+* 快速函数工具类FastLibraryObject中计算文件大小的函数fileSize中单位使用的Map使用LinkedHashMap保证按key的先后顺序计算，防止出现单位随机出现的结果错误
+* 工具类JsonUtil中的jsonDecodeMap方法中的异常捕获处理，防止转换不正确出现的异常影响程序正常运行
+* 页面表单数据提交处理类EasyWebFormEditor添加新的多态方法toFormDataMap用于处理无效参数或带中括号后缀参数名称与数据表列不一致问题
+
 0.9.21: @2023-06-23
 * 数据库脚本webfast-kernel.sql添加文件上传需要的数据表app_upload_file和app_upload_file_share
 * FreeMarker页面公共函数库FastLibraryObject添加文本截取方法subText
