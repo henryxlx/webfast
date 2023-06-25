@@ -63,7 +63,11 @@ public final class JsonUtil {
 
     public static Map<String, Object> jsonDecodeMap(Object json) {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(json, new TypeReference<Map<String, Object>>() {
-        });
+        try {
+            return mapper.convertValue(json, new TypeReference<Map<String, Object>>() {
+            });
+        } catch (Exception e) {
+            return null;
+        }
     }
 }
