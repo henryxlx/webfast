@@ -128,4 +128,11 @@ public class FastLibraryObject {
 
         return text;
     }
+
+    public String fillQuestionStemText(String stem) {
+        if (stem != null && stem.indexOf("[[") >= 0 && stem.indexOf("]]") >= 0) {
+            return stem.replaceAll("\\[\\[.+?\\]\\]", "____");
+        }
+        return stem;
+    }
 }
