@@ -10,12 +10,33 @@ import java.util.Map;
  */
 public class EasyWebFormEditor {
 
+    private static final String[] EXCLUDE_PARAMETER_NAME_ARRAY = {"_csrf_token"};
+
     public static EasyWebFormEditor createNamedFormEditor(String formName, String... fieldNames) {
         return new EasyWebFormEditor(formName, fieldNames);
     }
 
     public static EasyWebFormEditor createFormEditor(String... fieldNames) {
         return new EasyWebFormEditor(null, fieldNames);
+    }
+
+    public static Map<String, Object> toFormDataMap(HttpServletRequest request) {
+        return toFormDataMap(request, null, null);
+    }
+
+    public static Map<String, Object> toFormDataMap(HttpServletRequest request, String formName) {
+        return toFormDataMap(request, formName, null);
+    }
+
+    public static Map<String, Object> toFormDataMap(HttpServletRequest request, String... fieldNames) {
+        return toFormDataMap(request, null, fieldNames);
+    }
+
+    public static Map<String, Object> toFormDataMap(HttpServletRequest request, String formName, String... fieldNames) {
+        EasyWebFormEditor formEditor = new EasyWebFormEditor(formName, fieldNames);
+        formEditor.bind(request);
+        formEditor.sweepField();
+        return formEditor.getData();
     }
 
     private String[] fieldNames;
@@ -31,6 +52,35 @@ public class EasyWebFormEditor {
     private EasyWebFormEditor(String formName, String[] fieldNames) {
         this.formName = formName;
         this.fieldNames = fieldNames;
+    }
+
+    private boolean isExcludeField(String value) {
+        for (String name : EXCLUDE_PARAMETER_NAME_ARRAY) {
+            if (name.equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static final String SUFFIX_BRACKET = "[]";
+
+    private void copyValidItemToNewMap(Map<String, Object> map, String key, Object value) {
+        if (!isExcludeField(key)) {
+            if (key.endsWith(SUFFIX_BRACKET)) {
+                map.put(key.replace(SUFFIX_BRACKET, ""), value);
+            } else {
+                map.put(key, value);
+            }
+        }
+    }
+
+    private void sweepField() {
+        if (mapFormData != null && mapFormData.size() > 0) {
+            Map<String, Object> map = new HashMap<>(mapFormData.size());
+            mapFormData.forEach((k, v) -> copyValidItemToNewMap(map, k, v));
+            mapFormData = map;
+        }
     }
 
     private void put(Map<String, Object> mapForm, String key, String[] values) {
