@@ -3,6 +3,15 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.23: @2023-06-25
+* 对于EasyWebFormEditor中toFormDataMap方法中将可变参数null改为String[]压制编译可变参数的警告：
+  对于varargs调用, 应使用String, 对于非varargs调用, 应使用 String[]
+* FreeMarker页面公共函数库FastLibraryObject添加方法fillQuestionStemText，用于清除填空题中的答案选项
+* 控制器帮助类BaseControllerHelper添加方法getGotoUrl获取页面传递的跳转链接，消除requestUri带有的contextPath前缀
+* JsonUtil工具类的方法jsonDecodeMap使用readValue而不是convertValue则转换Json字符串到对象是正常的，并对obj参数进行判断处理，
+  使用统一的objectMapper，并在出现异常时添加日志处理，添加JsonUtil的测试类JsonUtilTest，对Json字符串转换进行测试
+* EasyWebFormEditor在获取请求表单数据时，如果提交数据时变量名称带[]结束标志，则代表其是数组数据，不论有没有数据均使用数组保存
+
 0.9.22: @2023-06-24
 * 快速函数工具类FastLibraryObject中计算文件大小的函数fileSize中单位使用的Map使用LinkedHashMap保证按key的先后顺序计算，防止出现单位随机出现的结果错误
 * 工具类JsonUtil中的jsonDecodeMap方法中的异常捕获处理，防止转换不正确出现的异常影响程序正常运行
