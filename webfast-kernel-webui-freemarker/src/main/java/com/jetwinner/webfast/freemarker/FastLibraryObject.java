@@ -44,20 +44,6 @@ public class FastLibraryObject {
         return String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
     }
 
-    public String plainText(String text) {
-        if (text != null) {
-            return EasyStringUtil.plainTextFilter(text);
-        }
-        return text;
-    }
-
-    public String plainText(String text, int length) {
-        if (text != null && text.length() > length) {
-            return EasyStringUtil.plainTextFilter(text, length);
-        }
-        return text;
-    }
-
     public String fileSize(long size) {
         double currentValue = 0.0;
         String currentUnit = "";
@@ -111,6 +97,20 @@ public class FastLibraryObject {
         return FastTimeUtil.timeToDateTimeStr("yyyy-MM-dd", time);
     }
 
+    public String plainText(String text) {
+        if (text != null) {
+            return EasyStringUtil.plainTextFilter(text);
+        }
+        return text;
+    }
+
+    public String plainText(String text, int length) {
+        if (text != null && text.length() > length) {
+            return EasyStringUtil.plainTextFilter(text, length);
+        }
+        return text;
+    }
+
     public String subText(String text, Integer length) {
         if (text == null || length == null) {
             return text;
@@ -127,12 +127,5 @@ public class FastLibraryObject {
         }
 
         return text;
-    }
-
-    public String fillQuestionStemText(String stem) {
-        if (stem != null && stem.indexOf("[[") >= 0 && stem.indexOf("]]") >= 0) {
-            return stem.replaceAll("\\[\\[.+?\\]\\]", "____");
-        }
-        return stem;
     }
 }
