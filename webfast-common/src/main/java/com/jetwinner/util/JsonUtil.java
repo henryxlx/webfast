@@ -61,13 +61,17 @@ public final class JsonUtil {
         return String.valueOf(jsonStr);
     }
 
-    public static Map<String, Object> jsonDecodeMap(Object json) {
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.convertValue(json, new TypeReference<Map<String, Object>>() {
-            });
-        } catch (Exception e) {
-            return null;
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> jsonDecodeMap(Object obj) {
+        if (obj != null) {
+            String json = obj instanceof String ? (String) obj : String.valueOf(obj);
+            try {
+                return objectMapper.readValue(json, new TypeReference<Map>() {
+                });
+            } catch (Exception e) {
+                log.error("JsonUtil jsonDecodeMap error: " + e.getMessage());
+            }
         }
+        return null;
     }
 }
