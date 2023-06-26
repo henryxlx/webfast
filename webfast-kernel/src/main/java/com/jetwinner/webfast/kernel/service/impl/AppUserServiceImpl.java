@@ -334,7 +334,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public Set<Object> filterFollowingIds(Integer userId, Set<Object> followingUserIds) {
-        if (EasyStringUtil.isNotBlank(followingUserIds)) {
+        if (followingUserIds == null || followingUserIds.size() < 1) {
             return new HashSet<>(0);
         }
         List<Map<String, Object>> friends = friendDao.getFriendsByFromIdAndToIds(userId, followingUserIds);
