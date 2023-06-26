@@ -85,7 +85,7 @@ public class EasyWebFormEditor {
 
     private void put(Map<String, Object> mapForm, String key, String[] values) {
         if (values != null) {
-            if (values.length == 1) {
+            if (values.length == 1 && !key.endsWith("]")) {
                 mapForm.put(key, values[0]);
             } else {
                 mapForm.put(key, values);
