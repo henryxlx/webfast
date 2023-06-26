@@ -23,15 +23,19 @@ public class FreeMarkerConfig {
 
     protected final freemarker.template.Configuration configuration;
 
+    private final FreeMarkerSharedVariableRegister[] sharedVariableRegisters;
+
     private final FastDataDictHolder dictHolder;
 
     private final RenderControllerTag renderControllerTag;
 
     public FreeMarkerConfig(freemarker.template.Configuration configuration,
+                            FreeMarkerSharedVariableRegister[] sharedVariableRegisters,
                             FastDataDictHolder dictHolder,
                             RenderControllerTag renderControllerTag) {
 
         this.configuration = configuration;
+        this.sharedVariableRegisters = sharedVariableRegisters;
         this.dictHolder = dictHolder;
         this.renderControllerTag = renderControllerTag;
     }
@@ -57,5 +61,10 @@ public class FreeMarkerConfig {
         configuration.setSharedVariable(RenderControllerTag.MODEL_VAR_NAME, renderControllerTag);
         configuration.setSharedVariable("json_encode", new JsonEncodeFunction());
         configuration.setSharedVariable(DictTextFunction.MODEL_VAR_NAME, new DictTextFunction(dictHolder));
+        if (sharedVariableRegisters != null) {
+            for (FreeMarkerSharedVariableRegister sharedVariableRegister : sharedVariableRegisters) {
+                sharedVariableRegister.getSharedVariables().forEach((name, val) -> configuration.setSharedVariable(name, val));
+            }
+        }
     }
 }
