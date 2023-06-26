@@ -5,7 +5,6 @@ import com.jetwinner.util.EasyStringUtil;
 import com.jetwinner.webfast.kernel.AppUser;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -85,5 +84,17 @@ public class BaseControllerHelper {
             lastCharIndex = buf.lastIndexOf("&");
         }
         return lastCharIndex != -1 ? buf.substring(0, lastCharIndex) : buf.toString();
+    }
+
+    public static String getGotoUrl(HttpServletRequest request, String keyForGotoUrl) {
+        String url = request.getParameter(keyForGotoUrl);
+        if (url != null && url.length() > 0) {
+            String contextPath = request.getContextPath();
+            contextPath = contextPath.endsWith("/") ? contextPath.substring(0, contextPath.length() - 2) : contextPath;
+            if (url.startsWith(contextPath)) {
+                url = url.substring(contextPath.length());
+            }
+        }
+        return url;
     }
 }
