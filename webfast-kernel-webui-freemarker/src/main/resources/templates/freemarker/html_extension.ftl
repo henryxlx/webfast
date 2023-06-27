@@ -91,3 +91,7 @@
     <#local tail = phoneNum[startPos..endPos] />
     <#return head + '****' + tail />
 </#function>
+
+<#function bbCode2Html bbCode>
+    <#return bbCode />
+</#function>
