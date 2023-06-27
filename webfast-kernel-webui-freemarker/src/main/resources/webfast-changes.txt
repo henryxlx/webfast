@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.24: @2023-06-26
+* 定义用于配置FreeMarker共享变量函数调用方法的接口FreeMarkerSharedVariableRegister
+* 定义FreeMarker共享变量函数调用接口的基本实现BaseFreeMarkerSharedVariableRegister，可作为基类被其他模块共享父类
+* FreeMarker配置类使用共享变量注册接口数组，可使用在程序中配置实现FreeMarkerSharedVariableRegister接口的Bean注册自己的共享变量方法调用
+
 0.9.23: @2023-06-25
 * 对于EasyWebFormEditor中toFormDataMap方法中将可变参数null改为String[]压制编译可变参数的警告：
   对于varargs调用, 应使用String, 对于非varargs调用, 应使用 String[]
