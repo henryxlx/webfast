@@ -83,4 +83,56 @@ public final class ArrayToolkit {
         }
         return true;
     }
+
+    public static void filterNullEntry(Map<String, Object> conditions) {
+        Iterator<Map.Entry<String, Object>> it = conditions.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<String, Object> entry = it.next();
+            if (entry.getValue() == null) {
+                it.remove();
+            }
+        }
+    }
+
+    public static Map<String, List<Map<String, Object>>> group(List<Map<String, Object>> items, String key) {
+        Map<String, List<Map<String, Object>>> grouped = new HashMap<>();
+        items.forEach(item -> {
+            grouped.computeIfAbsent(String.valueOf(item.get(key)), v -> new ArrayList<>()).add(item);
+        });
+        return grouped;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static Map<String, Object> toMap(Object obj) {
+        if (obj == null) {
+            return null;
+        }
+        if (obj instanceof Map) {
+            Map map = ((Map) obj);
+            Set keys = map.keySet();
+            boolean keyNotString = true;
+            Iterator it = keys.iterator();
+            while (it.hasNext()) {
+                Object key = it.next();
+                if (key instanceof String) {
+                    keyNotString = false;
+                    break;
+                }
+            }
+            if (keyNotString) {
+                Map<String, Object> toMap = new HashMap<>(map.size());
+                it = keys.iterator();
+                while (it.hasNext()) {
+                    Object k = it.next();
+                    toMap.put(String.valueOf(k), map.get(k));
+                }
+                return toMap;
+            }
+            return (Map<String, Object>) obj;
+        } else {
+            Map<String, Object> map = new HashMap<>(1);
+            map.put("mass", obj);
+            return map;
+        }
+    }
 }
