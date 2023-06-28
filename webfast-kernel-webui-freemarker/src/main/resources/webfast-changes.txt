@@ -3,6 +3,17 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.25: @2023-06-27
+* 删除fillQuestionStemText方法造成测试无效没有及时处理，保留对字符串replaceAll的正则表达式用法测试
+* FreeMarker页面自动包含的HTML扩展库html_extension.ftl添加处理BBCode的函数bbCode2Html
+  调用定义在WebExtensionPack中的相关的bbCode2Html完成对BBCode标记的转换
+* DAO处理基类FastJdbcDaoSupport添加方法joinINStringValues，将IN中的字符串集合的值形成用逗号分隔，单引号定界的字符串
+  方便用多个值构成SQL语句的IN子句，FastJdbcDaoSupport测试类添加方法joinINStringValues的单元测试
+* 工具类ArrayToolkit添加方法fitlerNullEntry、group和toMap方法
+* 工具类ListUtil添加方法contains方法，判断集合中是否存在某元素
+* 添加新的临时性集合工具类TempCollectionUtil，其中的方法arraySlice是对集合中指定范围元素的截取
+  如果有更好的方法，本工具类将来可能会被移除，
+
 0.9.24: @2023-06-26
 * 定义用于配置FreeMarker共享变量函数调用方法的接口FreeMarkerSharedVariableRegister
 * 定义FreeMarker共享变量函数调用接口的基本实现BaseFreeMarkerSharedVariableRegister，可作为基类被其他模块共享父类
