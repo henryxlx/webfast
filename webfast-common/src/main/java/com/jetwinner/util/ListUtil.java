@@ -150,4 +150,12 @@ public final class ListUtil {
         return list;
     }
 
+    public static boolean contains(Object item, Collection<?> collection) {
+        for (Object obj : collection) {
+            if (Objects.equals(obj, item)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
