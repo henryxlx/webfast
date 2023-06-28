@@ -83,10 +83,26 @@ public class EasyWebFormEditor {
         }
     }
 
+    private boolean endWithSquareBracket(String str) {
+        if (str == null) {
+            return false;
+        }
+        int nums = 0;
+        str = str.trim();
+        if (str.endsWith("]")) {
+            nums++;
+            str = str.substring(0, str.length() - 2);
+            if (str.endsWith("[")) {
+                nums++;
+            }
+        }
+        return nums == 2 ? true : false;
+    }
+
     private void put(Map<String, Object> mapForm, String key, String[] values) {
         if (values != null) {
-            if (values.length == 1 && !key.endsWith("]")) {
-                mapForm.put(key, values[0]);
+            if (values.length == 1) {
+                mapForm.put(key, endWithSquareBracket(key) ? values : values[0]);
             } else {
                 mapForm.put(key, values);
             }
