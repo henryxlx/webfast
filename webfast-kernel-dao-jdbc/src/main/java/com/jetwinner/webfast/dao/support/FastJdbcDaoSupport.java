@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 
 import javax.sql.DataSource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author xulixin
@@ -132,6 +133,19 @@ public class FastJdbcDaoSupport extends NamedParameterJdbcDaoSupport {
         if (!EasyStringUtil.inArray(orderByEntry.getSortType(), new String[]{"ASC", "DESC"})) {
             throw new RuntimeException("orderBy排序方式错误");
         }
+    }
+
+    protected String joinInStringValues(Object mass) {
+        String result = mass == null ? "" : "'" + mass + "'";
+        if (mass.getClass().isArray()) {
+            Object[] array = (Object[]) mass;
+            return Arrays.stream(array).map(String::valueOf).collect(Collectors.joining("', '", "'", "'"));
+        }
+        if (mass instanceof Collection) {
+            Object[] array = ((Collection) mass).toArray();
+            return Arrays.stream(array).map(String::valueOf).collect(Collectors.joining("', '", "'", "'"));
+        }
+        return result;
     }
 
     protected String repeatQuestionMark(final int repeat) {
