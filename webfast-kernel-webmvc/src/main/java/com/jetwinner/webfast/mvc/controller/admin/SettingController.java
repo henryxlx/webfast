@@ -61,6 +61,12 @@ public class SettingController {
 
         if ("POST".equals(request.getMethod())) {
             siteMap = ParamMap.toFormDataMap(request);
+            String[][] siteMapDefault = {{"favicon", "assets/img/favicon.ico"}};
+            for (String[] pairs : siteMapDefault) {
+                if (EasyStringUtil.isBlank(siteMap.get(pairs[0]))) {
+                    siteMap.put(pairs[0], pairs[1]);
+                }
+            }
             settingService.set("site", siteMap);
             logService.info(AppUser.getCurrentUser(request), "system", "update_settings",
                     "更新站点设置", siteMap);
