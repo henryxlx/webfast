@@ -1,15 +1,17 @@
 <#assign menu = 'article'/>
 <#assign script_controller = 'article/list'/>
 
+<@block_title '资讯管理'/>
+
 <#include '/admin/content/layout.ftl'/>
-<#macro blockTitle>资讯管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header clearfix">
-    <a class="btn btn-success btn-sm pull-right" id="article-add-btn" type="button" href="${ctx}/admin/article/create"><span class="glyphicon glyphicon-plus"></span> 添加资讯</a>
-    <h1 class="pull-left">资讯管理</h1>
-</div>
+    <div class="page-header clearfix">
+        <a class="btn btn-success btn-sm pull-right" id="article-add-btn" type="button"
+           href="${ctx}/admin/article/create"><span class="glyphicon glyphicon-plus"></span> 添加资讯</a>
+        <h1 class="pull-left">资讯管理</h1>
+    </div>
 
 <form class="well well-sm form-inline" action="${ctx}/admin/article">
     <div class="form-group">

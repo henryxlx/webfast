@@ -1,17 +1,17 @@
 <#assign submenu = 'theme'/>
 <#assign script_controller = 'setting/theme'/>
 
+<@block_title '主题设置'/>
+
 <#include '/admin/system/operation-layout.ftl'/>
 
-<#macro blockTitle>主题设置 - 全局设置 - ${blockTitleParent}</#macro>
-
 <#macro blockMainContent>
-<div class="page-header"><h1>主题设置</h1></div>
+    <div class="page-header"><h1>主题设置</h1></div>
 
-<table class="table table-striped table-hover" id="theme-table">
-    <thead>
-    <tr>
-        <th>名称</th>
+    <table class="table table-striped table-hover" id="theme-table">
+        <thead>
+        <tr>
+            <th>名称</th>
         <th>主题版本</th>
         <th>作者</th>
         <th>操作</th>

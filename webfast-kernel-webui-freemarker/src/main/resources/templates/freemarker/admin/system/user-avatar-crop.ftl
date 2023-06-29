@@ -1,17 +1,18 @@
 <#assign submenu = 'user_avatar'/>
 <#assign script_controller = 'setting/default-avatar-crop' />
 
+<@block_title '用户默认头像设置'/>
+
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>用户默认头像设置 - 用户设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 
-<div class="panel panel-default panel-col">
-  <div class="panel-heading">
-    自定义默认头像
-  </div>
+    <div class="panel panel-default panel-col">
+        <div class="panel-heading">
+            自定义默认头像
+        </div>
 
-  <div class="panel-body">
+        <div class="panel-body">
     <form id="default-avatar-crop-form" method="post" action="${ctx}/admin/setting/user-avatar-crop" enctype="multipart/form-data">
       <@web_macro.flash_messages />
 

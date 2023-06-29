@@ -1,17 +1,17 @@
 <#assign submenu = 'user_center'/>
 <#assign script_controller = 'setting/user-center'/>
 
-<#include '/admin/system/user-set-layout.ftl'/>
+<@block_title '管理员帐号同步'/>
 
-<#macro blockTitle>系统默认设置 - 管理员帐号同步 - ${blockTitleParent}</#macro>
+<#include '/admin/system/user-set-layout.ftl'/>
 
 <#macro blockMainContent>
 
-<#local user_center_name = 'Ucenter' />
-<#if mode! == 'phpwind'><#local user_center_name = 'WindID' /></#if>
+  <#local user_center_name = 'Ucenter' />
+  <#if mode! == 'phpwind'><#local user_center_name = 'WindID' /></#if>
 
-<div class="page-header">
-  <h1>管理员帐号同步</h1>
+  <div class="page-header">
+    <h1>管理员帐号同步</h1>
 </div>
 
 <#if bind??>

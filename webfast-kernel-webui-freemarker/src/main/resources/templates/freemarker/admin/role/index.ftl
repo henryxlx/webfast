@@ -1,12 +1,15 @@
 <#assign menu = 'role'/>
 <#assign script_controller = 'role/list'/>
 
+<@block_title '角色管理'/>
+
 <#include '/admin/user/layout.ftl'/>
-<#macro blockTitle>角色管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
     <div class="page-header clearfix">
-        <button class="btn btn-success btn-sm pull-right" id="add-role-btn" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/role/create">添加新角色</button>
+        <button class="btn btn-success btn-sm pull-right" id="add-role-btn" data-toggle="modal" data-target="#modal"
+                data-url="${ctx}/admin/role/create">添加新角色
+        </button>
         <h1 class="pull-left">角色管理</h1>
     </div>
     <@web_macro.flash_messages />

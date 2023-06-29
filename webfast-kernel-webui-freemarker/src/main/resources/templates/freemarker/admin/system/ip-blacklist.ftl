@@ -1,15 +1,16 @@
 <#assign menu = 'ip_blacklist'/>
 
+<@block_title 'IP黑名单'/>
+
 <#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>IP黑名单 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header"><h1>IP黑名单</h1></div>
+    <div class="page-header"><h1>IP黑名单</h1></div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<form method="post">
+    <form method="post">
 	<textarea id="ips" name="ips" rows="18" class="form-control">${ips!}
 </textarea>
 

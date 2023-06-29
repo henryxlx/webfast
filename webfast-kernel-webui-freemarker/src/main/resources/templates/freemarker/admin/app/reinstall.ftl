@@ -1,8 +1,9 @@
 <#assign menu = 'reinstall'/>
 <#assign script_controller = 'app/reinstall'/>
 
+<@block_title '重新安装应用'/>
+
 <#include '/admin/app/layout.ftl'/>
-<#macro blockTitle>重新安装应用 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 

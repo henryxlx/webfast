@@ -1,16 +1,17 @@
 <#assign menu = 'logs'/>
 <#assign script_controller = 'log/list'/>
 
+<@block_title '系统日志'/>
+
 <#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>系统日志 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header"><h1>系统日志</h1></div>
+    <div class="page-header"><h1>系统日志</h1></div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<form class="well well-sm form-inline">
+    <form class="well well-sm form-inline">
 
   <div class="form-group">
     <select class="form-control" name="level">

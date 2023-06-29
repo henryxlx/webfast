@@ -1,16 +1,17 @@
 <#assign submenu = 'offline'/>
 
+<@block_title '离线设置'/>
+
 <#include '/admin/system/site-layout.ftl'/>
-<#macro blockTitle>离线设置 - 站点设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
-	<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-	<div class="page-header"><h1>离线设置</h1></div>
+    <div class="page-header"><h1>离线设置</h1></div>
 
-	<form class="form-horizontal" id="site-offline-form" action="${ctx}/admin/setting/site/offline" method="post">
+    <form class="form-horizontal" id="site-offline-form" action="${ctx}/admin/setting/site/offline" method="post">
 
-		<div class="row form-group">
+        <div class="row form-group">
 			<div class="col-md-3 control-label">
 				<label >应用运行状态</label>
 			</div>

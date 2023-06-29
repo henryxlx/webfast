@@ -1,15 +1,16 @@
 <#assign menu = 'set'/>
 
+<@block_title '小组设置'/>
+
 <#include '/admin/group/layout.ftl'/>
-<#macro blockTitle>小组设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<div class="page-header clearfix">
-  <h1 class="pull-left">小组设置</h1>
-</div>
-<form class="form-horizontal" method="post" id="member-zone-form" novalidate>
+    <div class="page-header clearfix">
+        <h1 class="pull-left">小组设置</h1>
+    </div>
+    <form class="form-horizontal" method="post" id="member-zone-form" novalidate>
 
 <div class="row form-group">
   <div class="col-md-2 control-label">

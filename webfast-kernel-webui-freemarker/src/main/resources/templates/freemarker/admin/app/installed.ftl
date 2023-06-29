@@ -1,16 +1,17 @@
 <#assign menu = 'installed'/>
 <#assign script_controller = 'app/installed'/>
 
+<@block_title '已安装应用'/>
+
 <#include '/admin/app/layout.ftl'/>
-<#macro blockTitle>已安装应用 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<div class="page-header">
-    <h1>已安装应用</h1>
-</div>
+    <div class="page-header">
+        <h1>已安装应用</h1>
+    </div>
 
-<table class="table table-striped table-hover">
-    <thead>
+    <table class="table table-striped table-hover">
+        <thead>
     <tr>
         <th width="80%">应用描述</th>
         <th width="10%">开发者</th>

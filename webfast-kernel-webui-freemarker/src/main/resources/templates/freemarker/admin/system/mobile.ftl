@@ -1,16 +1,17 @@
 <#assign menu = 'client'/>
 <#assign script_controller = 'setting/mobile'/>
 
+<@block_title '移动客户端设置'/>
+
 <#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>移动客户端设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<style>
-#mobile-logo-container img ,
-#mobile-splash1-container img , 
-#mobile-splash2-container img , 
-#mobile-splash3-container img , 
-#mobile-splash4-container img , 
+    <style>
+        #mobile-logo-container img,
+        #mobile-splash1-container img,
+        #mobile-splash2-container img,
+        #mobile-splash3-container img,
+        #mobile-splash4-container img,
 #mobile-splash5-container img ,
 #mobile-banner1-container img , 
 #mobile-banner2-container img , 

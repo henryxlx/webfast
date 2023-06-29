@@ -1,8 +1,9 @@
 <#assign menu = 'logs'/>
 <#assign script_controller = 'app/logs'/>
-<#include '/admin/app/layout.ftl'/>
 
-<#macro blockTitle>应用更新日志 - ${blockTitleParent}</#macro>
+<@block_title '应用更新日志'/>
+
+<#include '/admin/app/layout.ftl'/>
 
 <#macro blockMain>
   <style>

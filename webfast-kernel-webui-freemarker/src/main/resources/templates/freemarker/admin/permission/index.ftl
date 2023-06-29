@@ -1,12 +1,15 @@
 <#assign menu = 'permission'/>
 <#assign script_controller = 'permission/list'/>
 
+<@block_title '权限管理'/>
+
 <#include '/admin/user/layout.ftl'/>
-<#macro blockTitle>权限管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
     <div class="page-header clearfix">
-        <button class="btn btn-success btn-sm pull-right" id="add-permission-btn" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/permission/create">添加新权限</button>
+        <button class="btn btn-success btn-sm pull-right" id="add-permission-btn" data-toggle="modal"
+                data-target="#modal" data-url="${ctx}/admin/permission/create">添加新权限
+        </button>
         <h1 class="pull-left">权限管理</h1>
     </div>
     <@web_macro.flash_messages />

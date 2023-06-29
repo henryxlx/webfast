@@ -1,17 +1,18 @@
 <#assign submenu = 'login_bind'/>
 <#assign script_controller = 'system/login_bind'/>
 
+<@block_title '登录设置'/>
+
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>登录设置 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
-<div class="page-header"><h1>登录设置</h1></div>
+    <div class="page-header"><h1>登录设置</h1></div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<form class="form-horizontal" method="post" id="login_bind-form" novalidate>
+    <form class="form-horizontal" method="post" id="login_bind-form" novalidate>
 
-  <fieldset>
+        <fieldset>
     <div class="form-group">
       <div class="col-md-3 control-label">
         <label >用户登录限制</label>

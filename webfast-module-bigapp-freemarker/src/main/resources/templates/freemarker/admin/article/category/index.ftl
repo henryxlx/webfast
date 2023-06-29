@@ -1,14 +1,17 @@
 <#assign menu = 'category'/>
 
+<@block_title '栏目管理'/>
+
 <#include '/admin/content/layout.ftl'/>
-<#macro blockTitle>栏目管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header clearfix">
-    <button class="btn btn-sm btn-success pull-right add-category" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/article/category/create">新建栏目</button>
-    <h1 class="pull-left">栏目管理</h1>
-</div>
+    <div class="page-header clearfix">
+        <button class="btn btn-sm btn-success pull-right add-category" data-toggle="modal" data-target="#modal"
+                data-url="${ctx}/admin/article/category/create">新建栏目
+        </button>
+        <h1 class="pull-left">栏目管理</h1>
+    </div>
 
 <table class="table table-hover" id="category-table">
     <thead>

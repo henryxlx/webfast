@@ -1,8 +1,8 @@
 <#assign menu = 'message'/>
 <#assign script_controller = 'message/list'/>
 
+<@block_title '私信管理'/>
 <#include '/admin/user/layout.ftl'/>
-<#macro blockTitle>私信管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 <div class="page-header">

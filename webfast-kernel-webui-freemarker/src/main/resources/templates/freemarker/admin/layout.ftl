@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=""> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="${csrf_token('site')}" name="csrf-token" />
-    <#assign blockTitleParent>${setting('copyright.owned')!'WebFast'}管理后台</#assign>
-    <title><#if blockTitle??><@blockTitle/><#else>${blockTitleParent!}</#if></title>
-    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
-    <link href="${ctx}/assets/libs/gallery2/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet" />
-    <link href="${ctx}/assets/css/common.css" rel="stylesheet" />
-    <link href="${ctx}/bundles/topadmin/css/admin.css" rel="stylesheet" />
-    <link href="${ctx}/bundles/topadmin/css/admin_v2.css" rel="stylesheet" />
+    <meta content="${csrf_token('site')}" name="csrf-token"/>
+    <title><#if varBreadCrumbTitle??>${varBreadCrumbTitle} - </#if>${setting('copyright.owned')!'WebFast'}管理后台</title>
+    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon"/>
+    <link href="${ctx}/assets/libs/gallery2/bootstrap/3.1.1/css/bootstrap.css" rel="stylesheet"/>
+    <link href="${ctx}/assets/css/common.css" rel="stylesheet"/>
+    <link href="${ctx}/bundles/topadmin/css/admin.css" rel="stylesheet"/>
+    <link href="${ctx}/bundles/topadmin/css/admin_v2.css" rel="stylesheet"/>
     <#if blockJavaScripts??><@blockJavaScripts/></#if>
     <!--[if lt IE 9]>
     <script src="${ctx}/assets/libs/html5shiv.js"></script>

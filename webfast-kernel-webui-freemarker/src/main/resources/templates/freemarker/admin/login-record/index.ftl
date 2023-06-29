@@ -1,16 +1,17 @@
 <#assign menu = 'login_record'/>
 <#assign script_controller = 'login-record/list'/>
 
+<@block_title '登录日志'/>
+
 <#include '/admin/user/layout.ftl'/>
-<#macro blockTitle>登录日志 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<div class="page-header">
-    <h1>登录日志</h1>
-</div>
+    <div class="page-header">
+        <h1>登录日志</h1>
+    </div>
 
-<div class="well well-sm">
-    <form id="login-record-search-form" class="form-inline" action="" method="get" novalidate>
+    <div class="well well-sm">
+        <form id="login-record-search-form" class="form-inline" action="" method="get" novalidate>
 
 
         <div class="form-group">

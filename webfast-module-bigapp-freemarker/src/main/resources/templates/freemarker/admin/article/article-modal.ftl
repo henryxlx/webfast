@@ -2,16 +2,17 @@
 <#assign menu = 'article'/>
 <#assign script_controller = 'article/article-modal'/>
 
+<@block_title '资讯管理${(article??)?then("编辑", "添加")}资讯' />
+
 <#include '/admin/content/layout.ftl'/>
-<#macro blockTitle>资讯管理>><#if article??>编辑<#else>添加</#if>资讯 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<style>
-  #article-form .popover {
-  	max-width: 400px;
-  	width: 400px;
-  }	
+    <style>
+        #article-form .popover {
+            max-width: 400px;
+            width: 400px;
+        }
 
 </style>
 

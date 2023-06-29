@@ -1,16 +1,17 @@
 <#assign menu = 'content'/>
 <#assign script_controller = 'content/list'/>
 
+<@block_title '内容管理'/>
+
 <#include '/admin/content/layout.ftl'/>
-<#macro blockTitle>内容管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<#assign type = RequestParameters['type']!'page' />
-<#assign typeName = (dict['contentType'][type])! />
+    <#assign type = RequestParameters['type']!'page' />
+    <#assign typeName = (dict['contentType'][type])! />
 
 
-<div class="page-header clearfix">
+    <div class="page-header clearfix">
     <button class="btn btn-success btn-sm pull-right" id="content-add-btn" type="button" data-target="#modal" data-toggle="modal" data-url="${ctx}/admin/content/create?type=${type}"><span class="glyphicon glyphicon-plus"></span> 添加${typeName!}</button>
     <h1 class="pull-left">${typeName!}管理</h1>
 </div>

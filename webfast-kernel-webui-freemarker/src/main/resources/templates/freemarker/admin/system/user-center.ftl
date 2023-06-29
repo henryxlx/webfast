@@ -1,15 +1,17 @@
 <#assign submenu = 'user_center'/>
 <#assign script_controller = 'setting/user-center'/>
 
+<@block_title '用户中心设置'/>
+
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>用户中心设置 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 
-<div class="page-header">
-  <#if (settingVo.mode)! !='default'><a href="${ctx}/admin/setting/admin-sync" class="pull-right btn btn-link">管理员帐号同步</a></#if>
-  <h1>用户中心设置</h1>
-</div>
+    <div class="page-header">
+        <#if (settingVo.mode)! !='default'><a href="${ctx}/admin/setting/admin-sync" class="pull-right btn btn-link">
+                管理员帐号同步</a></#if>
+        <h1>用户中心设置</h1>
+    </div>
 
 <@web_macro.flash_messages />
 

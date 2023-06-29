@@ -1,16 +1,19 @@
 <#assign submenu = 'user_fields'/>
 <#assign script_controller = 'system/user-fields'/>
 
+<@block_title '用户字段自定义'/>
+
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>用户字段自定义 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
-<button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">添加字段</button>
-<div class="page-header"><br><h1>用户字段自定义</h1></div>
-	<table class="table table-striped table-hover" id="course-table">
-		<thead>
-		<tr>
-			<th>字段名称</th>
+    <button type="button" class="btn btn-primary btn-sm pull-right" data-toggle="modal" data-target="#myModal">添加字段
+    </button>
+    <div class="page-header"><br>
+        <h1>用户字段自定义</h1></div>
+    <table class="table table-striped table-hover" id="course-table">
+        <thead>
+        <tr>
+            <th>字段名称</th>
 			<th>类型</th>
 			<th>是否显示</th>
 			<th>显示序号</th>

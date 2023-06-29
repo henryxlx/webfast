@@ -1,16 +1,17 @@
 <#assign menu = 'thread'/>
 <#assign script_controller = 'group/thread'/>
 
+<@block_title '话题管理'/>
+
 <#include '/admin/group/layout.ftl'/>
-<#macro blockTitle>话题管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-  <div class="page-header">
-    <h1>话题管理</h1>
-  </div>
+    <div class="page-header">
+        <h1>话题管理</h1>
+    </div>
 
-  <form  class="form-inline well well-sm" action="" method="get" novalidate>
+    <form class="form-inline well well-sm" action="" method="get" novalidate>
 
     <div class="form-group">
       <select class="form-control" name="status">

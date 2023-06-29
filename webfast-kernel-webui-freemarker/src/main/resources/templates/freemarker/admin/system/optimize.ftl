@@ -1,16 +1,17 @@
 <#assign menu = 'optimize'/>
 <#assign script_controller = 'optimize/optimize'/>
 
+<@block_title '优化和备份'/>
+
 <#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>优化和备份 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-	<div class="page-header"><h1>优化和备份</h1></div>
+    <div class="page-header"><h1>优化和备份</h1></div>
 
-	<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<div class="panel panel-default">
+    <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">刷新缓存</h3>
   </div>

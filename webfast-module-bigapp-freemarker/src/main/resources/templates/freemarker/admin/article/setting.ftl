@@ -1,15 +1,16 @@
 <#assign menu = 'setting'/>
 
+<@block_title '资讯频道设置'/>
+
 <#include '/admin/content/layout.ftl'/>
-<#macro blockTitle>资讯频道设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header clearfix">
-  <h1 class="pull-left">资讯频道设置</h1>
-</div>
+    <div class="page-header clearfix">
+        <h1 class="pull-left">资讯频道设置</h1>
+    </div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
   <form class="form-horizontal" id="article-form" method="post">
     

@@ -1,16 +1,17 @@
 <#assign submenu = 'auth'/>
 <#assign script_controller = 'setting/auth'/>
 
+<@block_title '注册设置'/>
+
 <#include '/admin/system/user-set-layout.ftl'/>
-<#macro blockTitle>注册设置 - 用户相关设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 
-<div class="page-header"><h1>注册设置</h1></div>
+    <div class="page-header"><h1>注册设置</h1></div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<form  id="auth-form" class="form-horizontal" method="post" novalidate>
+    <form id="auth-form" class="form-horizontal" method="post" novalidate>
     <div class="form-group">
         <div class="col-md-3 control-label">
             <label >新用户注册</label>

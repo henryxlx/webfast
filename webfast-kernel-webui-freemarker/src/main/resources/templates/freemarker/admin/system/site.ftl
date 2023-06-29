@@ -1,16 +1,20 @@
 <#assign submenu = 'base'/>
 <#assign script_controller = 'setting/site'/>
 
+<@block_title '基本信息'/>
+
 <#include '/admin/system/site-layout.ftl'/>
-<#macro blockTitle>基本信息 - 站点设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMainContent>
 
-<style>
-    #site-logo-container,#site-favicon-container img {max-width: 80%; margin-bottom: 10px;}
-</style>
+    <style>
+        #site-logo-container, #site-favicon-container img {
+            max-width: 80%;
+            margin-bottom: 10px;
+        }
+    </style>
 
-<@web_macro.flash_messages/>
+    <@web_macro.flash_messages/>
 
 <div class="page-header"><h1>网站基本信息</h1></div>
 

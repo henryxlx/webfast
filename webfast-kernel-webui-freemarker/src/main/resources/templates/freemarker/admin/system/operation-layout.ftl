@@ -1,15 +1,16 @@
 <#assign menu = 'operation'/>
 
+<@block_title '全局设置'/>
+
 <#include '/admin/system/layout.ftl'/>
-<#macro blockTitle>全局设置 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<ul class="nav nav-tabs mbl">
+    <ul class="nav nav-tabs mbl">
 
-    <li class="<#if submenu! == 'mailer'>active</#if>">
-        <a href="${ctx}/admin/setting/mailer">邮件服务器设置
-        </a>
-    </li>
+        <li class="<#if submenu! == 'mailer'>active</#if>">
+            <a href="${ctx}/admin/setting/mailer">邮件服务器设置
+            </a>
+        </li>
     <li class="<#if submenu! == 'theme'>active</#if>">
         <a href="${ctx}/admin/setting/theme">主题设置</a>
     </li>

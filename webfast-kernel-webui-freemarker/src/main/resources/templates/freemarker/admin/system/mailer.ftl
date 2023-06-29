@@ -1,17 +1,17 @@
 <#assign submenu = 'mailer'/>
 <#assign script_controller = 'setting/mailer'/>
 
+<@block_title '电子邮件'/>
+
 <#include '/admin/system/operation-layout.ftl'/>
 
-<#macro blockTitle>电子邮件 - 全局设置 - ${blockTitleParent}</#macro>
-
 <#macro blockMainContent>
-<div class="page-header"><h1>邮件服务器设置</h1></div>
+    <div class="page-header"><h1>邮件服务器设置</h1></div>
 
-<@web_macro.flash_messages />
+    <@web_macro.flash_messages />
 
-<form class="form-horizontal" method="post" id="mailer-form" novalidate>
-  <div class="row form-group">
+    <form class="form-horizontal" method="post" id="mailer-form" novalidate>
+        <div class="row form-group">
     <div class="col-md-3 control-label">
       <label >邮件发送</label>
     </div>

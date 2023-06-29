@@ -2,15 +2,18 @@
 <#assign menu = 'navigation'/>
 <#assign script_controller = 'navigation/page'/>
 
+<@block_title '导航管理'/>
+
 <#include layout!'/admin/content/layout.ftl' />
-<#macro blockTitle>导航管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header clearfix">
-    <button class="btn btn-success btn-sm pull-right" id="add-navigation-btn" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/navigation/create?type=${type!}">新增${(types[type])!}导航</button>
-    <h1 class="pull-left">导航管理</h1>
-</div>
+    <div class="page-header clearfix">
+        <button class="btn btn-success btn-sm pull-right" id="add-navigation-btn" data-toggle="modal"
+                data-target="#modal" data-url="${ctx}/admin/navigation/create?type=${type!}">新增${(types[type])!}导航
+        </button>
+        <h1 class="pull-left">导航管理</h1>
+    </div>
 
 <div data-role="navigation">
     <ul class="nav nav-tabs">

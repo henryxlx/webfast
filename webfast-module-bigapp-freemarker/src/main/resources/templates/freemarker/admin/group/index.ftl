@@ -1,16 +1,17 @@
 <#assign menu = 'group'/>
 <#assign script_controller = 'group/group'/>
 
+<@block_title '小组管理'/>
+
 <#include '/admin/group/layout.ftl'/>
-<#macro blockTitle>小组管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
-<div class="page-header">
-    <a href="${ctx}/group/add" class="btn btn-success btn-sm pull-right" target="_blank">创建小组</a>
-    <h1>小组管理</h1>
-</div>
+    <div class="page-header">
+        <a href="${ctx}/group/add" class="btn btn-success btn-sm pull-right" target="_blank">创建小组</a>
+        <h1>小组管理</h1>
+    </div>
 
-<form id="message-search-form" class="form-inline well well-sm" action="" method="get" novalidate>
+    <form id="message-search-form" class="form-inline well well-sm" action="" method="get" novalidate>
 
     <div class="form-group">
 

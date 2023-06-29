@@ -1,5 +1,7 @@
 <#assign menu = 'site'/>
 
+<@block_title '站点设置'/>
+
 <#include '/admin/system/layout.ftl'/>
 
 <#macro blockMain>

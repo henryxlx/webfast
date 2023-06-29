@@ -1,15 +1,18 @@
 <#assign menu = 'tag'/>
 <#assign script_controller = 'tag/list'/>
 
+<@block_title '标签管理'/>
+
 <#include '/admin/course/layout.ftl'/>
-<#macro blockTitle>标签管理 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<div class="page-header clearfix">
-    <button class="btn btn-success btn-sm pull-right" id="add-tag-btn" data-toggle="modal" data-target="#modal" data-url="${ctx}/admin/tag/create">新增标签</button>
-    <h1 class="pull-left">标签管理</h1>
-</div>
+    <div class="page-header clearfix">
+        <button class="btn btn-success btn-sm pull-right" id="add-tag-btn" data-toggle="modal" data-target="#modal"
+                data-url="${ctx}/admin/tag/create">新增标签
+        </button>
+        <h1 class="pull-left">标签管理</h1>
+    </div>
 
 <table id="tag-table" class="table table-striped">
     <thead>

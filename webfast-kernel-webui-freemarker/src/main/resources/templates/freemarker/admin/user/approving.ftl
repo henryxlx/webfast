@@ -1,16 +1,17 @@
 <#assign menu = 'approval'/>
 <#assign submenu = 'approving'/>
 
+<@block_title '用户认证审核'/>
+
 <#include '/admin/user/layout.ftl'/>
-<#macro blockTitle>用户认证审核 - ${blockTitleParent}</#macro>
 
 <#macro blockMain>
 
-<#include '/admin/user/approval-header.ftl'/>
+    <#include '/admin/user/approval-header.ftl'/>
 
-<#if users??>
-<table class="table table-striped">
-    <thead>
+    <#if users??>
+        <table class="table table-striped">
+            <thead>
     <tr>
         <th>ID</th>
         <th>用户昵称</th>
