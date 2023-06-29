@@ -54,9 +54,15 @@
                 <label for="logo">网站LOGO</label>
             </div>
             <div class="col-md-8 controls">
-                <div id="site-logo-container"><#if (site.logo)?? && site.logo != ''><img src="${ctx}/assets/${site.logo}"></#if></div>
-                <button class="btn btn-default btn-sm" id="site-logo-upload" type="button" data-url="${ctx}/admin/setting/logo/upload">上传</button>
-                <button class="btn btn-default btn-sm" id="site-logo-remove" type="button" data-url="${ctx}/admin/setting/logo/remove" <#if !(site.logo)??>style="display:none;"</#if>>删除</button>
+                <div id="site-logo-container"><#if (site.logo)?? && site.logo != ''><img
+                        src="${ctx}/assets/${site.logo}"></#if></div>
+                <button class="btn btn-default btn-sm" id="site-logo-upload" type="button"
+                        data-url="${ctx}/admin/setting/logo/upload">上传
+                </button>
+                <button class="btn btn-default btn-sm" id="site-logo-remove" type="button"
+                        data-url="${ctx}/admin/setting/logo/remove"
+                        <#if !(site.logo)?? || site.logo == ''>style="display:none;"</#if>>删除
+                </button>
                 <p class="help-block">请上传png, gif, jpg格式的图片文件。LOGO图片建议不要超过50*250。</p>
                 <input type="hidden" name="logo" value="${(site.logo)!}">
             </div>
@@ -67,9 +73,16 @@
                 <label for="favicon">浏览器图标</label>
             </div>
             <div class="col-md-8 controls">
-                <div id="site-favicon-container"><#if (site.favicon)??><img src="${ctx}/${site.favicon!'assets/img/favicon.ico'}"></#if></div>
-                <button class="btn btn-default" id="site-favicon-upload" type="button" data-url="${ctx}/admin/setting/favicon/upload">上传</button>
-                <button class="btn btn-default" id="site-favicon-remove" type="button" data-url="${ctx}/admin/setting/favicon/remove" <#if !(site.favicon)??>style="display:none;"</#if>>删除</button>
+                <div id="site-favicon-container"><img
+                            src="${ctx}/<#if (site.favicon)?? && site.favicon != ''>${site.favicon}<#else>assets/img/favicon.ico</#if>">
+                </div>
+                <button class="btn btn-default" id="site-favicon-upload" type="button"
+                        data-url="${ctx}/admin/setting/favicon/upload">上传
+                </button>
+                <button class="btn btn-default" id="site-favicon-remove" type="button"
+                        data-url="${ctx}/admin/setting/favicon/remove"
+                        <#if !(site.favicon)?? || site.favicon == ''>style="display:none;"</#if>>删除
+                </button>
                 <p class="help-block">请上传ico格式的图标文件。</p>
                 <input type="hidden" name="favicon" value="${(site.favicon)!}">
             </div>
