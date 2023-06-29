@@ -1,4 +1,3 @@
-<#import '/web_macro.ftl' as web_macro>
 <div class="modal-dialog ${modal_class!''}">
     <div class="modal-content">
         <div class="modal-header">
