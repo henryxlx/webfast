@@ -34,6 +34,16 @@
     </#list>
 </#macro>
 
+<#-- blockTitle宏定义用于浏览器窗口显示的标题，可能被高层次页面多次使用，注意必须在模板包含之前调用 -->
+<#--  调用方法：<@block_title topic="..."/> 或 <@block_title "..."/>  -->
+<#macro block_title topic=''>
+    <#if varBreadCrumbTitle??>
+        <#assign varBreadCrumbTitle = varBreadCrumbTitle + " - " + topic />
+    <#else>
+        <#assign varBreadCrumbTitle = topic />
+    </#if>
+</#macro>
+
 <#function default_path category uri='' size = '' absolute=false>
     <#return webExtPack.getDefaultPath(category, uri, size, absolute)/>
 </#function>
