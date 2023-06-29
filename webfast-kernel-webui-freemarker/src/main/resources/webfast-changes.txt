@@ -3,6 +3,17 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.26: @2023-06-28
+* 升级SpringBoot 2.3.12.RELEASE，主要是为升级FreeMarker2.3.31，使用该版本新的函数eval_json
+  item-default.ftl使用FreeMarker2.3.31新的函数eval_json代替原来的eval函数，更好的将JSON字符串转换为对象
+* 升级SpringBoot 2.3.12.RELEASE后原来的ErrorController被废弃，使用SuppressWarning抑制
+* 在库文件html_extension.ftl定义新的页面标题显示的全局宏定义block_title
+  blockTitle宏定义用于浏览器窗口显示的标题，可能被高层次页面多次使用，注意必须在模板包含之前调用 -->
+  调用方法：<@block_title topic="..."/> 或 <@block_title "..."/>
+* 后台管理重新使用新的标题处理方式，使用新的block_title宏调用完成多级标题显示
+* 后台->系统->站点设置->网站基本信息中的网站Logo和浏览器图标删除状态不正确，浏览器图标未正常显示
+  保存时对浏览器图标未提供时设置默认值
+
 0.9.25: @2023-06-27
 * 删除fillQuestionStemText方法造成测试无效没有及时处理，保留对字符串replaceAll的正则表达式用法测试
 * FreeMarker页面自动包含的HTML扩展库html_extension.ftl添加处理BBCode的函数bbCode2Html
