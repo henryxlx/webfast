@@ -1,15 +1,16 @@
 <#assign script_controller = 'auth/password-reset'/>
+
+<@block_title '重设密码'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>重设密码 - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="row row-6">
-    <div class="col-md-6 col-md-offset-3 ptl">
-        <div class="panel panel-default panel-page">
-            <div class="panel-heading"><h2>重设密码</h2></div>
+    <div class="row row-6">
+        <div class="col-md-6 col-md-offset-3 ptl">
+            <div class="panel panel-default panel-page">
+                <div class="panel-heading"><h2>重设密码</h2></div>
 
-            <ul class="nav nav-tabs mbl">
+                <ul class="nav nav-tabs mbl">
 
                 <li class="active js-find-by-email">
                     <a style="cursor: pointer;">邮箱地址

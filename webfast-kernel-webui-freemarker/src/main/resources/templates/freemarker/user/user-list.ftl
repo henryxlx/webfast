@@ -3,9 +3,9 @@
 <#assign metaKeywords>用户介绍 ${setting('site.name')!}</#assign>
 <#assign metaDescription>${setting('site.name')!}的用户介绍。</#assign>
 
-<#include '/layout.ftl'/>
+<@block_title '用户介绍'/>
 
-<#macro blockTitle>用户介绍 - ${blockTitleParent}</#macro>
+<#include '/layout.ftl'/>
 
 <#macro blockContent>
 

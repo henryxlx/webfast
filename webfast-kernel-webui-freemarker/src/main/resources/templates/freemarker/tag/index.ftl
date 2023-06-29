@@ -1,6 +1,6 @@
-<#include '/default/layout.ftl'/>
+<@block_title '标签'/>
 
-<#macro blockTitle>标签 - ${blockTitleParent}</#macro>
+<#include '/default/layout.ftl'/>
 
 <#macro blockContent>
 

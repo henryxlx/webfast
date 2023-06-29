@@ -1,18 +1,18 @@
 <#assign side_nav = 'avatar'/>
 <#assign script_controller = 'settings/avatar-crop'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '头像'/>
 
-<#macro blockTitle>头像 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
 
-<div class="panel panel-default panel-col">
-  <div class="panel-heading">
-    头像设置
-  </div>
+  <div class="panel panel-default panel-col">
+    <div class="panel-heading">
+      头像设置
+    </div>
 
-  <div class="panel-body">
+    <div class="panel-body">
     <form id="avatar-crop-form" method="post" enctype="multipart/form-data">
       <@web_macro.flash_messages />
 

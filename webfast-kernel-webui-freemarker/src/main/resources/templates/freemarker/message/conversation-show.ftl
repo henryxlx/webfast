@@ -1,7 +1,8 @@
 <#assign script_controller = 'message/show'/>
-<#include '/layout.ftl'/>
 
-<#macro blockTitle>私信 - ${blockTitleParent!}</#macro>
+<@block_title '私信'/>
+
+<#include '/layout.ftl'/>
 
 <#macro blockContent>
 

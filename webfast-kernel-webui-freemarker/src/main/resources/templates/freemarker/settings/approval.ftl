@@ -1,13 +1,13 @@
 <#assign side_nav = 'profile'/>
 <#assign script_controller = 'settings/approval'/>
 
+<@block_title '实名认证'/>
+
 <#include '/settings/layout.ftl'/>
 
-<#macro blockTitle>实名认证 - ${blockTitleParent}</#macro>
-
 <#macro blockMain>
-    <#local modal_class = 'panel-col'/>
-    <#include '/bootstrap/panel.ftl'>
+	<#local modal_class = 'panel-col'/>
+	<#include '/bootstrap/panel.ftl'>
 </#macro>
 
 <#macro blockHeading>实名认证</#macro>

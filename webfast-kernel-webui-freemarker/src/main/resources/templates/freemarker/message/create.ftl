@@ -1,17 +1,20 @@
 <#assign script_controller = 'message/create'/>
+<#assign script_arguments>{'followingMatchByNickname': "path('following_match_bynickname')" }</#assign>
+
+<@block_title '写私信'/>
+
 <#include '/layout.ftl'/>
-<#macro blockTitle>写私信 - ${blockTitleParent!}</#macro>
-<#assign script_arguments>{ 'followingMatchByNickname': "path('following_match_bynickname')" }</#assign>
 
 <#macro blockContent>
-<style>
+    <style>
 
-.ui-autocomplete {
-    border:1px solid #ccc;
-    background-color: #FFFFFF;
-    box-shadow: 2px 2px 3px #EEEEEE;
-}
-.ui-autocomplete-ctn{
+        .ui-autocomplete {
+            border: 1px solid #ccc;
+            background-color: #FFFFFF;
+            box-shadow: 2px 2px 3px #EEEEEE;
+        }
+
+        .ui-autocomplete-ctn {
     margin:0;
     padding:0;
 }

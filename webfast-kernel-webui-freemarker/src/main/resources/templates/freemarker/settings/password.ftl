@@ -1,9 +1,9 @@
 <#assign side_nav = 'security'/>
 <#assign script_controller = 'settings/password'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '密码修改'/>
 
-<#macro blockTitle>密码修改 - 安全设置 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
 

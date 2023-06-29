@@ -1,16 +1,17 @@
 <#assign script_controller = 'auth/login'/>
+
+<@block_title '登录'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>登录 - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="row row-6">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="row row-6">
+        <div class="col-md-6 col-md-offset-3">
 
-        <div class="panel panel-default panel-page">
-            <div class="panel-heading"><h2>登录</h2></div>
+            <div class="panel panel-default panel-page">
+                <div class="panel-heading"><h2>登录</h2></div>
 
-            <form id="login-form" class="form-vertical" method="post" action="${ctx}/login">
+                <form id="login-form" class="form-vertical" method="post" action="${ctx}/login">
 
                 <#if errorMessage??>
                 <div class="alert alert-danger">${errorMessage}</div>

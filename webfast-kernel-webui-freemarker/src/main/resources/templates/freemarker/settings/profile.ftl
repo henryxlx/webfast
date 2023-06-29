@@ -1,9 +1,9 @@
 <#assign side_nav = 'profile'/>
 <#assign script_controller = 'settings/profile'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '基础信息'/>
 
-<#macro blockTitle>基础信息 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
     <#local class='panel-col'/>

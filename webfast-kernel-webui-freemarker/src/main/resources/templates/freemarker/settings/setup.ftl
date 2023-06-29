@@ -2,18 +2,18 @@
 
 <#assign hideSetupHint = true />
 
+<@block_title '设置帐号'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>设置帐号 - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="row row-6">
-    <div class="col-md-6 col-md-offset-3">
+    <div class="row row-6">
+        <div class="col-md-6 col-md-offset-3">
 
-        <div class="panel panel-default panel-page">
-            <div class="panel-heading"><h2>设置帐号</h2></div>
+            <div class="panel panel-default panel-page">
+                <div class="panel-heading"><h2>设置帐号</h2></div>
 
-            <#if !(appUser.setup)??>
+                <#if !(appUser.setup)??>
             <form id="setup-form" class="form-vertical" method="post" action="${ctx}/settings/setup">
 
                 <div class="alert alert-warning"> 为了帐号的安全以及更好的使用体验，请设置以下信息。 </div>

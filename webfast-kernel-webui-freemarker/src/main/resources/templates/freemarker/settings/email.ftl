@@ -1,9 +1,9 @@
 <#assign side_nav = 'email'/>
 <#assign script_controller = 'settings/email'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '邮箱设置'/>
 
-<#macro blockTitle>邮箱设置 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
     <#local class='panel-col'/>

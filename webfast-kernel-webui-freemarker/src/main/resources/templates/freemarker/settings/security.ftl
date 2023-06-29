@@ -1,8 +1,8 @@
 <#assign side_nav = 'security'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '安全设置'/>
 
-<#macro blockTitle>安全设置 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
     <#local class='panel-col'/>

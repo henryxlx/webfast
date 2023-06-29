@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=""> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,14 +13,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
         <#assign siteSlogan = setting('site.slogan')!''/>
-        <#assign blockTitleParent>${setting('site.name', 'WebFast')}<#if siteSlogan != ''> - siteSlogan</#if><#if setting('copyright.owned')??><#else> - Powered By WebFast</#if></#assign>
-        <#if blockTitle??><@blockTitle/><#else>${blockTitleParent}</#if>
+        <#if varBreadCrumbTitle??>${varBreadCrumbTitle} - </#if>${setting('site.name', 'WebFast')}<#if siteSlogan != ''> - ${siteSlogan}</#if>
+        - ${setting('copyright.owned', 'Powered By WebFast')}
     </title>
-    <meta name="keywords" content="${metaKeywords!}" />
-    <meta name="description" content="${metaDescription!}" />
-    <meta content="${csrf_token('site')}" name="csrf-token" />
+    <meta name="keywords" content="${metaKeywords!}"/>
+    <meta name="description" content="${metaDescription!}"/>
+    <meta content="${csrf_token('site')}" name="csrf-token"/>
     ${setting('login_bind.verify_code', '')}
-    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon" />
+    <link href="${ctx}/${setting('site.favicon', 'assets/img/favicon.ico')}" rel="shortcut icon"/>
 
     <#if blockStylesheets??>
         <@blockStylesheets/>

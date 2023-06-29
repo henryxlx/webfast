@@ -1,15 +1,16 @@
 <#assign script_controller = 'auth/register-submited'/>
+
+<@block_title '注册'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>注册 - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="row">
-  <div class="col-md-6 col-md-offset-3 ptl">
-    <div class="panel panel-default panel-page">
-      <div class="panel-heading"><h2>注册成功</h2></div>
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 ptl">
+      <div class="panel panel-default panel-page">
+        <div class="panel-heading"><h2>注册成功</h2></div>
 
-      <div id="email-sending" class="alert alert-info" style="display:none;">正在发送注册验证邮件，请稍等...</div>
+        <div id="email-sending" class="alert alert-info" style="display:none;">正在发送注册验证邮件，请稍等...</div>
 
       <div id="email-send-success">
         <p class="text-success">注册确认信已经发到你的邮箱<strong>${(user.email)!}</strong>，你需要点击邮件中的确认链接来完成邮箱验证。</p>

@@ -1,16 +1,17 @@
 <#assign script_controller = 'auth/register'/>
+
+<@block_title '注册'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>注册 - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="row row-6">
-    <div class="col-md-6 col-md-offset-3 ptl">
-        <#if isRegisterEnabled??>
-        <div class="panel panel-default panel-page">
-            <div class="panel-heading"><h2>注册</h2></div>
+    <div class="row row-6">
+        <div class="col-md-6 col-md-offset-3 ptl">
+            <#if isRegisterEnabled??>
+                <div class="panel panel-default panel-page">
+                    <div class="panel-heading"><h2>注册</h2></div>
 
-            <form id="register-form" class="form-vertical" method="post" action="">
+                    <form id="register-form" class="form-vertical" method="post" action="">
                 <@web_macro.flash_messages />
                 <#if registerSort?? && registerSort?is_enumerable>
                 <#list registerSort! as field>

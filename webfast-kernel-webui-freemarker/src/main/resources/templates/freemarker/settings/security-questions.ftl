@@ -1,9 +1,9 @@
 <#assign side_nav = 'security'/>
 <#assign script_controller = 'settings/security-questions'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '安全问题'/>
 
-<#macro blockTitle>安全问题 - 安全设置 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
   <#local class='panel-col'/>

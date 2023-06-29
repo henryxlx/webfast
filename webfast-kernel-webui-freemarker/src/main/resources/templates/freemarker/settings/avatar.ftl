@@ -1,9 +1,9 @@
 <#assign side_nav = 'avatar'/>
 <#assign script_controller = 'settings/avatar'/>
 
-<#include '/settings/layout.ftl'/>
+<@block_title '头像'/>
 
-<#macro blockTitle>头像 - ${blockTitleParent}</#macro>
+<#include '/settings/layout.ftl'/>
 
 <#macro blockMain>
     <#local class='panel-col'/>

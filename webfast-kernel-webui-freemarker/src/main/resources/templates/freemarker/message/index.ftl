@@ -1,15 +1,16 @@
 <#assign script_controller = 'message/conversation-list'/>
 
+<@block_title '私信'/>
+
 <#include '/layout.ftl'/>
-<#macro blockTitle>私信 - ${blockTitleParent}</#macro>
 
 <#macro blockContent>
-<div class="row row-8">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-default panel-page">
-            <div class="panel-heading">
-                <a class="btn btn-primary pull-right" href="${ctx}/message/send">写私信</a>
-                <h2>私信</h2>
+    <div class="row row-8">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default panel-page">
+                <div class="panel-heading">
+                    <a class="btn btn-primary pull-right" href="${ctx}/message/send">写私信</a>
+                    <h2>私信</h2>
             </div>
 
             <ul class="media-list conversation-list">

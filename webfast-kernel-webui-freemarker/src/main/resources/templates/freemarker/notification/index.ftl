@@ -1,7 +1,9 @@
 <#assign script_controller = 'message/notification-list'/>
 
+<@block_title '通知'/>
+
 <#include '/layout.ftl'/>
-<#macro blockTitle>通知 - ${blockTitleParent}</#macro>
+
 <#macro blockContent>
     <div class="row row-8">
         <div class="col-md-8 col-md-offset-2">
