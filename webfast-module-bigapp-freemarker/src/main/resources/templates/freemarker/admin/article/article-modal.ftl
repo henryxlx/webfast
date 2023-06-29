@@ -2,7 +2,7 @@
 <#assign menu = 'article'/>
 <#assign script_controller = 'article/article-modal'/>
 
-<@block_title '资讯管理${(article??)?then("编辑", "添加")}资讯' />
+<@block_title "资讯管理${(article??)?then('编辑', '添加')}资讯" />
 
 <#include '/admin/content/layout.ftl'/>
 

@@ -1,6 +1,6 @@
 <#assign menu = 'category'/>
 
-<@block_title '${(group.name)!'未设置组名'}管理'/>
+<@block_title "${(group.name)!'未设置组名'}管理"/>
 
 <#include layout!'/admin/course/layout.ftl' />
 

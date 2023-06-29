@@ -1,7 +1,7 @@
 <#assign bodyClass = 'userpage'/>
 <#assign script_controller = 'user/user'/>
 
-<@block_title '${(user.username)!"佚名"}的公共主页'/>
+<@block_title "${(user.username)!'佚名'}的公共主页"/>
 
 <#include '/layout.ftl'/>
 
