@@ -1,5 +1,5 @@
 <#assign script_controller = 'message/create'/>
-<#assign script_arguments>{'followingMatchByNickname': "path('following_match_bynickname')" }</#assign>
+<#assign script_arguments>{"followingMatchByNickname": "${ctx}/following/bynickname/match_jsonp"}</#assign>
 
 <@block_title '写私信'/>
 
