@@ -179,7 +179,7 @@ public class MessageController {
         String callback = request.getParameter("callback");
         List<AppUser> findedUsersByNickname = userService.searchUsers(
                 new ParamMap().add("username", queryString).toMap(),
-                OrderBy.build(1).addDesc("registerDate"), 0, 10);
+                OrderBy.build(1).addDesc("createdTime"), 0, 10);
         Set<Object> findedFollowingIds = userService.filterFollowingIds(currentUserId,
                 ArrayToolkitOnJava8.column(findedUsersByNickname, AppUser::getId));
 
