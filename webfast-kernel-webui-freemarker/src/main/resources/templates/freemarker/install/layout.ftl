@@ -1,16 +1,20 @@
 <#assign ctx = request.contextPath />
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+<!--[if lt IE 7]>
+<html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class=""> <!--<![endif]-->
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><#if blockTitle??><@blockTitle/><#else>WebFast安装程序</#if></title>
-    <link href="${ctx}/assets/libs/gallery2/bootstrap/3.0.1/css/bootstrap.css" rel="stylesheet" />
-    <link href="${ctx}/install/assets/install.css" rel="stylesheet" />
+    <title><#if varBreadCrumbTitle??>${varBreadCrumbTitle} - </#if>WebFast安装程序</title>
+    <link href="${ctx}/assets/libs/gallery2/bootstrap/3.0.1/css/bootstrap.css" rel="stylesheet"/>
+    <link href="${ctx}/install/assets/install.css" rel="stylesheet"/>
     <!--[if lt IE 9]>
     <script src="${ctx}/assets/libs/html5shiv.js"></script>
     <![endif]-->
