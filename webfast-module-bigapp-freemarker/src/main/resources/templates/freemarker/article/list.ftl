@@ -1,16 +1,17 @@
 <#if category.seoKeyword??><#assign metaKeywords = category.seoKeyword /></#if>
 <#if category.seoDesc??><#assign metaDescription = category.seoDesc /></#if>
 
+<@block_title '${(category.seoTitle)!category.name!}'/>
+
 <#include '/article/layout.ftl'>
-<#macro blockTitle>${(category.seoTitle)!category.name!} - ${blockTitleParent!}</#macro>
 
 <#macro blockArticleMain>
 
-  <#include '/article/nav.ftl'/>
-  <#if articles??>
-    <ul class="article-wide-list">
-      <#list articles as article>
-        <li class="media article-item clearfix">
+    <#include '/article/nav.ftl'/>
+    <#if articles??>
+        <ul class="article-wide-list">
+            <#list articles as article>
+                <li class="media article-item clearfix">
           <div class="article-title text-muted">
             <div class="pull-left">
               <#if categories??>

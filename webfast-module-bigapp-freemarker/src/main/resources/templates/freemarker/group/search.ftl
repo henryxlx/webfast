@@ -1,5 +1,6 @@
+<@block_title '搜索'/>
+
 <#include '/layout.ftl'>
-<#macro blockTitle>搜索 - ${blockTitleParent}</#macro>
 
 <#macro blockContent>
 
@@ -29,19 +30,19 @@
 
     <div class="panel-body">
       <#if groups??>
-      <div class="row">
-        {% for group in groups %}
+        <div class="row">
+          {% for group in groups %}
           <div class="col-md-3">
 
             {% include 'TopxiaWebBundle:Group:group-media-small.html.twig'  %}
-            
-          </div>
-        {% endfor %}
-      </div>
 
-      {{ web_macro.paginator(paginator) }}
+          </div>
+          {% endfor %}
+        </div>
+
+        {{ web_macro.paginator(paginator) }}
       <#else>
-      <div class="empty">暂无小组信息</div>
+        <div class="empty">暂无小组信息</div>
       </#if>
 
     </div>

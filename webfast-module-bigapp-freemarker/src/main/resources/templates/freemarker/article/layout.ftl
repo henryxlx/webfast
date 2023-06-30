@@ -1,12 +1,13 @@
 <#assign bodyClass = 'articlepage'/>
 <#assign script_controller = 'index'/>
+
+<@block_title '${(articleSetting.name)!}'/>
+
 <#include '/layout.ftl'>
 
 <#macro blockStylesheetsExtra>
-<link rel="stylesheet" media="screen" href="${ctx}/bundles/topxiaweb/css/article.css" />
+  <link rel="stylesheet" media="screen" href="${ctx}/bundles/topxiaweb/css/article.css"/>
 </#macro>
-
-<#macro blockTitle>${(articleSetting.name)!} - ${blockTitleParent}</#macro>
 
 <#macro blockContent>
 

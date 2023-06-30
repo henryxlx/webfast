@@ -1,15 +1,17 @@
 <#assign metaKeywords = '小组'/>
 <#assign metaDescription = '小组首页'/>
+
+<@block_title '小组'/>
+
 <#include '/layout.ftl'>
-<#macro blockTitle>小组 - ${blockTitleParent}</#macro>
 
 <#macro blockContent>
-<div class="row">
-  <div class="col-md-8">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        热门小组<a href="${ctx}/group/search-group" class="pull-right">&raquo;更多</a>
-      </div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    热门小组<a href="${ctx}/group/search-group" class="pull-right">&raquo;更多</a>
+                </div>
       <div class="panel-body">
         <div class="row group-grids">
           <#list activeGroup! as group>

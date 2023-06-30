@@ -3,17 +3,18 @@
 
 <#assign siteNav = "page/${(content.alias)!(content.id)!}"/>
 <#assign bodyClass = "contentpage" />
+
+<@block_title '${(content.title)!}'/>
+
 <#include '/layout.ftl'>
 
-<#macro blockTitle>${(content.title)!} - ${blockTitleParent}</#macro>
-
 <#macro blockContent>
-<div class="es-row-wrap container-gap">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="page-header"><h1>${(content.title)!}</h1></div>
+  <div class="es-row-wrap container-gap">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="page-header"><h1>${(content.title)!}</h1></div>
+      </div>
     </div>
-  </div>
 
   <div class="row">
     <div class="col-md-12">

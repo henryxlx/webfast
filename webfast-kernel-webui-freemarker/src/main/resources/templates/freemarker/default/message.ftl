@@ -10,17 +10,18 @@
   </#if>
 </#if>
 
-<#include '/layout.ftl'>
+<@block_title '${title}'/>
 
-<#macro blockTitle>${title} - ${blockTitleParent}</#macro>
+<#include '/layout.ftl'>
 
 <#macro blockHeadScripts>${script!}</#macro>
 
 <#macro blockContent>
 
-<div id="page-message-container" class="page-message-container" data-goto="${ctx}/${gotoUrl!}" data-duration=${duration!}>
-  <div class="page-message-panel">
-    <div class="page-message-heading">
+  <div id="page-message-container" class="page-message-container" data-goto="${ctx}/${gotoUrl!}"
+       data-duration=${duration!}>
+    <div class="page-message-panel">
+      <div class="page-message-heading">
       <h2 class="page-message-title">${title}</h2>
     </div>
     <div class="page-message-body">${message!}</div>

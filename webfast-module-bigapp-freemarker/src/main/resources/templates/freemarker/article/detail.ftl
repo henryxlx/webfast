@@ -2,17 +2,17 @@
 
 <#assign metaDescription = seoDesc[0..*100] />
 
-<#include '/article/layout.ftl'/>
+<@block_title '${article.title}'/>
 
-<#macro blockTitle>${article.title} - ${blockTitleParent!}</#macro>
+<#include '/article/layout.ftl'/>
 
 <#macro blockArticleMain>
 
-  <ul class="breadcrumb">
-      <li><a href="${ctx}/article">${articleSetting.name}</a></li>
-      <#list breadcrumbs! as breadcrumb>
-        <li><a href="${ctx}/article/category/${breadcrumb.code}">${breadcrumb.name}</a></li>
-      </#list>
+    <ul class="breadcrumb">
+        <li><a href="${ctx}/article">${articleSetting.name}</a></li>
+        <#list breadcrumbs! as breadcrumb>
+            <li><a href="${ctx}/article/category/${breadcrumb.code}">${breadcrumb.name}</a></li>
+        </#list>
       <li class="active">正文</li>
   </ul>
 
