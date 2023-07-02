@@ -91,4 +91,21 @@ public final class ArrayUtil {
         }
         return arr;
     }
+
+    public static int count(Object objMass) {
+        if (objMass.getClass().isArray()) {
+            Object[] objArray = (Object[]) objMass;
+            return objArray.length;
+        }
+        return objMass == null ? 0 : 1;
+    }
+
+    public static Object[] toArray(Object objMass) {
+        if (objMass != null) {
+            if (objMass.getClass().isArray()) {
+                return (Object[]) objMass;
+            }
+        }
+        return objMass == null ? new Object[0] : new Object[]{objMass};
+    }
 }
