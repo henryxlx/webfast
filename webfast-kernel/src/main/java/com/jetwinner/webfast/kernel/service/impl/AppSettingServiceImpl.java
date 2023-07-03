@@ -4,8 +4,10 @@ import com.jetwinner.webfast.kernel.dao.AppSettingDao;
 import com.jetwinner.webfast.kernel.service.AppSettingService;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,9 +19,13 @@ public class AppSettingServiceImpl implements AppSettingService {
     private static final String SETTING_CACHE_NAME = "webfastSettingCache";
 
     private final AppSettingDao settingDao;
+    private final Environment environment;
 
-    public AppSettingServiceImpl(AppSettingDao settingDao) {
+    public AppSettingServiceImpl(AppSettingDao settingDao,
+                                 Environment environment) {
+
         this.settingDao = settingDao;
+        this.environment = environment;
     }
 
     @Override
@@ -51,5 +57,14 @@ public class AppSettingServiceImpl implements AppSettingService {
     @Override
     public String getSettingValue(String key) {
         return getSettingValue(key, null);
+    }
+
+    @Override
+    public List<?> getContainerParameter(String name, List<?> defaultLit) {
+        List<?> result = null;
+        if (this.environment != null) {
+            result = this.environment.getProperty(name, List.class);
+        }
+        return result == null ? defaultLit : result;
     }
 }

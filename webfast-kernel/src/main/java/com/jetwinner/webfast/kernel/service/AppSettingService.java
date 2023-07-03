@@ -1,5 +1,6 @@
 package com.jetwinner.webfast.kernel.service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,4 +15,10 @@ public interface AppSettingService {
     String getSettingValue(String key, String defaultValue);
 
     String getSettingValue(String key);
+
+    default List<?> getContainerParameter(String name) {
+        return this.getContainerParameter(name, null);
+    }
+
+    List<?> getContainerParameter(String name, List<?> defaultList);
 }
