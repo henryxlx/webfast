@@ -3,6 +3,11 @@ TODO list
 # 连接池使用Hikari配置DataSource
 # 文件上传设置及内置函数实现
 -------------------------------------------------------------------------------
+0.9.27: @2023-07-03
+* 工具类ArrayUtil添加获取数组长度的方法count和转换Object[]数组的方法toArray
+* 内部带有EL表达式的内容字符串外部使用双引号，Groovy语法的风格
+* 应用程序配置服务AppSettingService添加getContainerParameter多态方法直接获取程序程序中的配置
+
 0.9.26: @2023-06-28
 * 升级SpringBoot 2.3.12.RELEASE，主要是为升级FreeMarker2.3.31，使用该版本新的函数eval_json
   item-default.ftl使用FreeMarker2.3.31新的函数eval_json代替原来的eval函数，更好的将JSON字符串转换为对象
